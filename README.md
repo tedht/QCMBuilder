@@ -1,16 +1,18 @@
 
-# Application de Création de Questionnaire
+# QCM Builder
 
 ## Table des matières
 
-- [Description](#description)
-- [Fonctionnalités](#fonctionnalités)
-- [Prérequis](#prérequis)
-- [Lancer l'application](#lancer-lapplication)
-	- [Sous Linux](#sous-linux)
-	- [Sous Windows](#sous-windows)
-- [Exemple d’utilisation](#exemple-dutilisation)
-- [Auteurs](#auteurs)
+- [QCM Builder](#qcm-builder)
+	- [Table des matières](#table-des-matières)
+	- [Description](#description)
+	- [Fonctionnalités](#fonctionnalités)
+	- [Prérequis](#prérequis)
+	- [Lancer l'application](#lancer-lapplication)
+		- [Sous Linux](#sous-linux)
+		- [Sous Windows](#sous-windows)
+	- [Exemple d’utilisation](#exemple-dutilisation)
+	- [Auteurs](#auteurs)
 
 
 ## Description
