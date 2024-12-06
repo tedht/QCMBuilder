@@ -14,6 +14,14 @@ import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
 
+/**
+ * Classe JPanel qui contient les composents de la fenêtre de la base de questions.
+ * 
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/06
+ * @version 1.0
+ */
 public class PanelBaseDeQuestions extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
@@ -22,6 +30,11 @@ public class PanelBaseDeQuestions extends JPanel implements ActionListener
 	private JButton btnRetour, btnNouvelleRessource, btnGenererQuestionnaire;
 	private JLabel  lblTitre;
 
+	/**
+	 * Constructeur de la classe PanelBaseDeQuestions.
+	 *
+	 * @param ctrl le contrôleur
+	 */
 	public PanelBaseDeQuestions(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
