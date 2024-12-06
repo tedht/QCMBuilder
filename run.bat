@@ -5,6 +5,6 @@ javac @compile.list -d bin
 
 REM Exécution
 cd bin
-java Controleur
+java controleur/Controleur
 
 pause
