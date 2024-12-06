@@ -1,5 +1,5 @@
 package ihm.generationQuestionnaire;
 
-public class PanelExport {
+public class PanelExporter {
 	
 }

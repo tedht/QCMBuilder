@@ -1,5 +1,5 @@
 package ihm.gestionRessource;
 
-public class FrameCreerRessource {
+public class PanelGestionRessource {
 	
 }
