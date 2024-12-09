@@ -8,6 +8,8 @@ public class Question
 {
 	/* Attributs */
 	private int       id;
+	private String    intitule;
+	private String    explication;
 	private String    difficulte;
 	private Ressource ressource;
 	private Notion    notion;
@@ -16,26 +18,44 @@ public class Question
 
 
 	/* Constructeur */
-	public Question(int id, String difficulte, Ressource ressource, Notion notion,
+	public Question(int id, String intitule, String explication,
+	                String difficulte, Ressource ressource, Notion notion,
 	                int temps, int note)
 	{
-		this.id         = id;
-		this.difficulte = difficulte;
-		this.ressource  = ressource;
-		this.notion     = notion;
-		this.temps      = temps;
-		this.note       = note;
+		this.id          = id;
+		this.intitule    = intitule;
+		this.explication = explication;
+		this.difficulte  = difficulte;
+		this.ressource   = ressource;
+		this.notion      = notion;
+		this.temps       = temps;
+		this.note        = note;
 	}
 
 	/* Getters */
-	public int       getId        () { return this.id;         }
-	public String    getDifficulte() { return this.difficulte; }
-	public Ressource getRessource () { return this.ressource;  }
-	public Notion    getNotion    () { return this.notion;     }
-	public int       getTemps     () { return this.temps;      }
-	public int       getNote      () { return this.note;       }
+	public int       getId        ()  { return this.id;          }
+	public String    getIntitule  ()  { return this.intitule;    }
+	public String    getExplication() { return this.explication; }
+	public String    getDifficulte()  { return this.difficulte;  }
+	public Ressource getRessource ()  { return this.ressource;   }
+	public Notion    getNotion    ()  { return this.notion;      }
+	public int       getTemps     ()  { return this.temps;       }
+	public int       getNote      ()  { return this.note;        }
 
 	/* Setters */
+	public boolean setIntitule (String intitule)
+	{
+		if (intitule.equals("")) return false;
+
+		this.intitule = intitule;
+		return true;
+	}
+
+	public void setExplication (String explication)
+	{
+		this.explication = explication;
+	}
+
 	public boolean setDifficulte (String difficulte)
 	{
 		if (!difficulte.equals("TF") && !difficulte.equals("F") &&
@@ -81,11 +101,33 @@ public class Question
 	/* toString */
 	public String toString()
 	{
-		return "Question :\n" +
-		       "difficulte : " + this.difficulte + "\n" +
-		       " ressource : " + this.ressource  + "\n" +
-		       "    notion : " + this.notion     + "\n" +
-		       "     temps : " + this.temps      + "\n" +
-		       "      note : " + this.note                ;
+		return "Question " + this.id + " :\n" +
+		       "\tintitulé    : " + this.intitule              + "\n" +
+		       "\texplication : " + this.explication           + "\n" +
+		       "\tdifficulte  : " + this.difficulte            + "\n" +
+		       "\t ressource  : " + this.ressource.getNom()    + "\n" +
+		       "\t    notion  : " + this.notion   .getNom()    + "\n" +
+		       "\t     temps  : " + this.temps + " seconde(s)" + "\n" +
+		       "\t      note  : " + this.note                  + "\n"   ;
+	}
+
+
+	/* Main */
+	public static void main(String[] args)
+	{
+		Question q1, q2, q3;
+
+
+		q1 = new Question(0, "C'est quoi le principe d'encapsulation ?", "c'est de limiter l'accès", "F", new Ressource("Init dev"), new Notion("Encapsulation"),  0, 1);
+		q2 = new Question(1, "A quoi sert une jointure ?", "Lier des tables entre elles","D", new Ressource("Init bd" ), new Notion("Jointure"     ), 30, 2);
+		q3 = new Question(2, "Quels sont les différentes couches du modèle OSI ?", "", "M", new Ressource("Réseaux" ), new Notion("Modele OSI"   ),  0, 3);
+
+		System.out.println(q1);
+		System.out.println(q2);
+		System.out.println(q3);
+
+		System.out.println(q1.getIntitule());
+		System.out.println(q2.getNote());
+		System.out.println(q3.getTemps());
 	}
 }
