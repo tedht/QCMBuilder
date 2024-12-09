@@ -11,7 +11,11 @@ import java.io.PrintWriter;
 
 import controleur.Controleur;
 
-public class BaseDeQuestions 
+/** Classe BanqueDeQuestions
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
+public class BanqueDeQuestions 
 {
 	/* Attributs */
 	private Controleur     ctrl;
@@ -19,7 +23,7 @@ public class BaseDeQuestions
 
 
 	/* Constructeur */
-	public BaseDeQuestions(Controleur ctrl)
+	public BanqueDeQuestions(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 		this.questions = new ArrayList<Question>();
