@@ -10,7 +10,7 @@ public class Ressource
 
 	public Ressource(String nom)
 	{
-		if(!nom.equals(null))
+		if (!nom.equals(null))
 		{
 			this.nom = nom;
 			this.notions = new ArrayList<Notion>();
@@ -41,7 +41,7 @@ public class Ressource
 
 	public boolean setNom(String nom) 
 	{
-		if(!nom.equals(null) && !nom.equals(this.nom))
+		if (!nom.equals(null) && !nom.equals(this.nom))
 		{
 			this.nom = nom;
 			return true;
@@ -83,13 +83,13 @@ public class Ressource
 	}
 	
 
-	public boolean modifierNotion(int id, String nouveauNom) 
+	public boolean modifierNotion(Notion notion, String nouveauNom) 
 	{
-		if((id >= 0 && id <= this.notions.size())	&&
-			!nouveauNom.equals(null) 		&& 
-			!nouveauNom.equals(this.nom))
+		if (this.notions.contains(notion) &&
+			!nouveauNom.equals(null) &&
+			!notion.getNom().equals(nouveauNom))
 		{
-			this.notions.get(id).setNom(nouveauNom);
+			notion.setNom(nouveauNom);
 			return true;
 		}
 
@@ -98,11 +98,11 @@ public class Ressource
 		// Et le nouveauNom de ne peut pas être null ou égal au nom actuel
 	}
 
-	public boolean supprimerNotion(int id) 
+	public boolean supprimerNotion(Notion notion) 
 	{
-		if(id >= 0 && id <= this.notions.size())
+		if (this.notions.contains(notion))
 		{
-			this.notions.remove(id);
+			this.notions.remove(notion);
 		}
 
 		return false;
