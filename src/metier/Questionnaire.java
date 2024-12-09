@@ -73,7 +73,9 @@ public class Questionnaire
 
 		public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
 		{
-
+			for (int i = 0; i < nbrQuestions; i++) {
+				//trop de trucs avec fichier rtf
+			}
 		}
 
 		public String toString()
