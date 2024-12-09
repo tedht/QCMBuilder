@@ -51,8 +51,9 @@ public class Qcm extends Question {
 	public String toString()
 	{
 		return	"Question QCM :\n" +
-				"Propositions : " + this.proposition + "\n" +
-				"Réponse      : " + this.reponse     + "\n" ;
+				"Intitulé     : " + this.getIntitule() + "\n" +
+				"Propositions : " + this.proposition   + "\n" +
+				"Réponse      : " + this.reponse       + "\n" ;
 	}
 
 }

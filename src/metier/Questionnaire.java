@@ -1,6 +1,10 @@
 package metier;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -14,97 +18,140 @@ public class Questionnaire
 	private List<Notion>   notions;
 	private boolean        chronometre;
 	private List<Question> questions;
-	
-		/* Constructeur */
-		public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
+
+	/* Constructeur */
+	public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
+	{
+		this.ressource   = ressource;
+		this.chronometre = chronometre;
+		this.notions     = notions;
+		this.questions = new ArrayList<Question>();
+	}
+
+	/* Getter */
+	public Ressource      getRessource () { return ressource;  }
+	public List<Notion>   getNotions   () { return notions;    }
+	public boolean        isChronometre() { return chronometre;}
+	public List<Question> getQuestions () { return questions;  }
+
+	/* Setter */
+	public boolean setQuestions  (List<Question> questions  ) 
 		{
-			this.ressource   = ressource;
-			this.chronometre = chronometre;
-			this.notions     = notions;
-			this.questions = new ArrayList<Question>();
-		}
+			if (questions == null) return false;
 
-		/* Getter */
-		public Ressource      getRessource () { return ressource;  }
-		public List<Notion>   getNotions   () { return notions;    }
-		public boolean        isChronometre() { return chronometre;}
-		public List<Question> getQuestions () { return questions;  }
-
-		/* Setter */
-		public boolean setQuestions  (List<Question> questions  ) 
-			{
-				if (questions == null) return false;
-
-				this.questions = questions;
-				return true;
-			}
-		public boolean setChronometre(boolean chronometre) 
-		{
-			if (this.chronometre == chronometre) return false;
-			this.chronometre = chronometre;
+			this.questions = questions;
 			return true;
 		}
+	public boolean setChronometre(boolean chronometre) 
+	{
+		if (this.chronometre == chronometre) return false;
+		this.chronometre = chronometre;
+		return true;
+	}
 
-		public boolean setNotions (List<Notion> notions) 
+	public boolean setNotions (List<Notion> notions) 
+	{
+		if (notions == null) return false;
+		this.notions = notions;
+		return true;
+	}
+
+	public boolean setRessource  (Ressource ressource) 
+	{
+		if (ressource == null) return false;
+		this.ressource = ressource;
+		return true;
+	}
+
+	public void ajouterNotion(Notion autre)
+	{
+		if (!notions.contains(autre)) 
 		{
-			if (notions == null) return false;
-			this.notions = notions;
-			return true;
+			this.notions.add(autre);	
+			return;
 		}
+		System.out.println("Notion déjà présente.");
+		
+	}
 
-		public boolean setRessource  (Ressource ressource) 
+	public void supprimerNotion(Notion autre)
+	{
+		if (notions.contains(autre)) 
 		{
-			if (ressource == null) return false;
-			this.ressource = ressource;
-			return true;
+			this.notions.remove(autre);	
+			return; 	
 		}
+		System.out.println("Notion non trouvée.");
+	}
 
-		public void ajouterNotion(Notion autre)
+	public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
+	{
+		for (int i = 0; i < nbrQuestions; i++) {
+			//trop de trucs avec fichier rtf
+		}
+	}
+
+	// Méthode utilitaire pour nettoyer une valeur extraite
+	private String nettoyerValeur(String valeur)
+	{
+		return valeur.replaceAll("\\\\[a-zA-Z]+", "").trim();
+	}
+
+	// Méthodes pour manipuler les questions
+	public void ajouterQuestionsDepuisRTF(String cheminFichier, String difficulte)
+	{
+		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier)))
 		{
-			if (!notions.contains(autre)) 
+			String ligne;
+			while ((ligne = br.readLine()) != null)
 			{
-				this.notions.add(autre);	
-				return;
+				if (ligne.startsWith("Intitule"))
+				{
+					String intitule = nettoyerValeur(ligne.split(": ")[1]);
+					String explication = nettoyerValeur(br.readLine().split(": ")[1]);
+					String difficulteLue = nettoyerValeur(br.readLine().split(": ")[1]);
+					String[] propositions = nettoyerValeur(br.readLine().split(": ")[1]).split(";");
+					String[] reponses = nettoyerValeur(br.readLine().split(": ")[1]).split(";");
+					int temps = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
+					int note = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
+
+					Qcm nouvelleQuestion = new Qcm(questions.size() + 1, intitule, explication, difficulteLue,
+							ressource, notions.isEmpty() ? null : notions.get(0), temps, note,
+							Arrays.asList(propositions), Arrays.asList(reponses));
+					questions.add(nouvelleQuestion);
+				}
 			}
-			System.out.println("Notion déjà présente.");
-			
-		}
-
-		public void supprimerNotion(Notion autre)
+		} catch (IOException e)
 		{
-			if (notions.contains(autre)) 
-			{
-				this.notions.remove(autre);	
-			}
+			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
-
-		public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
-		{
-			for (int i = 0; i < nbrQuestions; i++) {
-				//trop de trucs avec fichier rtf
-			}
-		}
+	}
 
 
-		public String toString()
-		{
-			return "Questionnaire :\n" +
-				   "   ressource : " + this.ressource   + "\n" +
-				   "   questions : " + this.questions   + "\n" + 
-				   "     notions : " + this.notions     + "\n" +
-				   " chronometre : " + this.chronometre + "\n" ;
-		}
+	public String toString()
+	{
+		return "Questionnaire :\n" +
+				"   ressource : " + this.ressource   + "\n" +
+				"   questions : " + this.questions   + "\n" + 
+				"     notions : " + this.notions     + "\n" +
+				" chronometre : " + this.chronometre + "\n" ;
+	}
 
-		public static void main(String[] args) {
-			Ressource r1 = new Ressource("r3.01");
-			Notion n1 = new Notion("algo");
-			List<Notion> l1 = new ArrayList<>();
-			l1.add(n1);
+	public static void main(String[] args) 
+	{
+		Ressource r1 = new Ressource("R3.01");
+		Notion n1 = new Notion("Algorithmique");
+		List<Notion> l1 = new ArrayList<>();
+		l1.add(n1);
 
-			Questionnaire q1 = new Questionnaire(r1, l1,false);
-			System.out.println(q1);
-			Notion n2 = new Notion("ide");
-			q1.ajouterNotion(n2);
-			System.out.println(q1);
-		}
+		Questionnaire q1 = new Questionnaire(r1, l1, false);
+		System.out.println(q1);
+
+		Notion n2 = new Notion("Programmation");
+		q1.ajouterNotion(n2);
+		System.out.println(q1);
+
+		q1.ajouterQuestionsDepuisRTF("C:\\Users\\gaime\\Documents\\GitHub\\QCMBuilder\\src\\metier\\questions_qcm.rtf", "Facile");
+		System.out.println(q1);
+	}
 }
