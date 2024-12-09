@@ -80,12 +80,10 @@ public class BanqueDeRessources
 
 			for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
 			{
-				System.out.println(this.ressources.get(cpt));
-				notions = this.ressources.get(cpt).getNotions();
-				System.out.println(notions);
+				Ressource res = this.ressources.get(cpt);
+				notions = res.getNotions();
 				for (Notion notion : notions)
 				{
-					System.out.println("hello there !");
 					pw.print(this.ressources.get(cpt).getNom() + "\t");
 					pw.println(notion.getNom() + "\t");
 				}
@@ -148,23 +146,19 @@ public class BanqueDeRessources
 	{
 		BanqueDeRessources bqr;
 		Ressource r1;
-		List<Notion> lstNotions;
 
 
 		bqr = new BanqueDeRessources();
 		r1 = new Ressource("r1.01 Init dev");
 
-		bqr.ajouterRessource(new Ressource("r1.01 Init dev"));
-		bqr.ajouterRessource(new Ressource("r1.02 Web"));
+
 
 		r1.ajouterNotion(new Notion("Encapsulation"));
 		r1.ajouterNotion(new Notion("Les Tableaux"));
-		
-		lstNotions = r1.getNotions();
-		System.out.println(lstNotions);
+	
 
-
-		System.out.println(bqr.toString());
+		bqr.ajouterRessource(r1);
+		bqr.ajouterRessource(new Ressource("r1.02 Web"));
 
 		bqr.sauvegarderRessources("./test.csv");
 	}
