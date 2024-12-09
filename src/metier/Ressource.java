@@ -94,8 +94,6 @@ public class Ressource
 		}
 
 		return false;
-		// L'id doit être compris entre 0 et la taille de la liste de notions
-		// Et le nouveauNom de ne peut pas être null ou égal au nom actuel
 	}
 
 	public boolean supprimerNotion(Notion notion) 
@@ -106,7 +104,5 @@ public class Ressource
 		}
 
 		return false;
-		// L'id doit être valide :
-		// compris entre 0 et la taille de la liste de notions
 	}
 }
