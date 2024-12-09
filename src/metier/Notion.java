@@ -40,14 +40,9 @@ public class Notion
 
 	@Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Notion notion = (Notion) o;
-        return Objects.equals(nom, notion.nom);
-    }
+		Notion autre = (Notion) o;
+        if (autre == null || getClass() != autre.getClass()) return false;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.equals(nom, autre.getNom());
     }
 }
