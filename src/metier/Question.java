@@ -35,12 +35,12 @@ public class Question
 	public int       getNote      () { return note;       }
 
 	/* Setters */
-	public boolean setDifficulte(String difficulte)   { this.difficulte = difficulte; }
-	public boolean setRessource (Ressource ressource) { this.ressource  = ressource;  }
-	public boolean setNotion    (Notion notion)       { this.notion     = notion;     }
-	public boolean setType      (String type)         { this.type       = type;       }
-	public boolean setTemps     (int temps)           { this.temps      = temps;      }
-	public boolean setNote      (int note)            { this.note       = note;       }
+	public void setDifficulte(String difficulte)   { this.difficulte = difficulte; }
+	public void setRessource (Ressource ressource) { this.ressource  = ressource;  }
+	public void setNotion    (Notion notion)       { this.notion     = notion;     }
+	public void setType      (String type)         { this.type       = type;       }
+	public void setTemps     (int temps)           { this.temps      = temps;      }
+	public void setNote      (int note)            { this.note       = note;       }
 
 	/* toString */
 	public String toString()
