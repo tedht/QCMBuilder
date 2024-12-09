@@ -102,7 +102,7 @@ public class Question
 	public String toString()
 	{
 		return "Question " + this.id + " :\n" +
-		       "\tintitulé    : " + this.intitule              + "\n" +
+		       "\t   intitulé : " + this.intitule              + "\n" +
 		       "\texplication : " + this.explication           + "\n" +
 		       "\tdifficulte  : " + this.difficulte            + "\n" +
 		       "\t ressource  : " + this.ressource.getNom()    + "\n" +
