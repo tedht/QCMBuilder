@@ -2,6 +2,11 @@ package metier;
 
 import java.util.List;
 
+
+/** Classe Questionnaire
+ * @author Equipe 03
+ * @version 1.0 du 09/12/2024
+ */
 public class Questionnaire 
 {
 	private Ressource      ressource;
@@ -26,10 +31,33 @@ public class Questionnaire
 		public List<Question> getQuestions () { return questions;  }
 
 		/* Setter */
-		public void setQuestions  (List<Question> questions  ) {this.questions   = questions;  }
-		public void setChronometre(boolean        chronometre) {this.chronometre = chronometre;}
-		public void setNotions    (List<Notion>   notions    ) {this.notions     = notions;    }
-		public void setRessource  (Ressource      ressource  ) {this.ressource   = ressource;  }
+		public boolean setQuestions  (List<Question> questions  ) 
+			{
+				if (questions == null) return false;
+
+				this.questions = questions;
+				return true;
+			}
+		public boolean setChronometre(boolean chronometre) 
+		{
+			if (this.chronometre == chronometre) return false;
+			this.chronometre = chronometre;
+			return true;
+		}
+
+		public boolean setNotions (List<Notion> notions) 
+		{
+			if (notions == null) return false;
+			this.notions = notions;
+			return true;
+		}
+
+		public boolean setRessource  (Ressource ressource) 
+		{
+			if (ressource == null) return false;
+			this.ressource = ressource;
+			return true;
+		}
 
 		public void ajouterNotion(Notion autre)
 		{
