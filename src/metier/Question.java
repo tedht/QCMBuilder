@@ -104,11 +104,11 @@ public class Question
 		return "Question " + this.id + " :\n" +
 		       "\t   intitulé : " + this.intitule              + "\n" +
 		       "\texplication : " + this.explication           + "\n" +
-		       "\tdifficulte  : " + this.difficulte            + "\n" +
-		       "\t ressource  : " + this.ressource.getNom()    + "\n" +
-		       "\t    notion  : " + this.notion   .getNom()    + "\n" +
-		       "\t     temps  : " + this.temps + " seconde(s)" + "\n" +
-		       "\t      note  : " + this.note                  + "\n"   ;
+		       "\t difficulte : " + this.difficulte            + "\n" +
+		       "\t  ressource : " + this.ressource.getNom()    + "\n" +
+		       "\t     notion : " + this.notion   .getNom()    + "\n" +
+		       "\t      temps : " + this.temps + " seconde(s)" + "\n" +
+		       "\t       note : " + this.note                  + "\n"   ;
 	}
 
 

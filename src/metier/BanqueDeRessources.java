@@ -3,6 +3,9 @@ package metier;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
@@ -17,35 +20,45 @@ import controleur.Controleur;
 public class BanqueDeRessources
 {
 	/* Attributs */
-	private Controleur      ctrl;
+	// private Controleur      ctrl;
 	private List<Ressource> ressources;
 
 
 	/* Constructeur */
-	public BanqueDeRessources(Controleur ctrl)
+	public BanqueDeRessources(/*Controleur ctrl*/)
 	{
-		this.ctrl = ctrl;
+		// this.ctrl = ctrl;
 		this.ressources = new ArrayList<Ressource>();
 	}
 
-	/* Lecture du fichier RTF qui contient les questions */
-	public void lireQuestions(String nomFichier)
+	/* Lecture du fichier CSV qui contient les ressources */
+	public void lireRessources(String nomFichier)
 	{
 		Scanner sc;
 
 		String enreg;
 
+		Ressource ressource;
+		String[] donnees;
+
 
 		try
 		{
-			sc = new Scanner( new FileInputStream(nomFichier), "UTF-8");
-
+			sc = new Scanner( new FileInputStream(nomFichier), "UTF8");
 
 			while (sc.hasNextLine())
 			{
 				enreg = sc.nextLine();
 
-				// TODO : Lecture du fichier CSV
+				donnees = enreg.split("\t");
+
+				ressource = new Ressource(donnees[0]);
+				for (int cpt = 1 ; cpt < donnees.length ; cpt++)
+				{
+					ressource.ajouterNotion(new Notion(donnees[cpt]));
+				}
+				
+				this.ressources.add(ressource);
 			}
 		}
 		catch (FileNotFoundException fnfe)
@@ -54,22 +67,28 @@ public class BanqueDeRessources
 		}
 	}
 
-	/* Ecriture du fichier RTF qui contient les questions */
-	public void sauvegarderQuestions(String nomFichier)
+	/* Ecriture du fichier CSV qui contient les ressources */
+	public void sauvegarderRessources(String nomFichier)
 	{
+		List<Notion> notions;
 		PrintWriter pw;
 
 
 		try
 		{
-			pw = new PrintWriter(nomFichier, "UTF-8");
-
+			pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream(nomFichier), "UTF8" ) );
 
 			for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
 			{
-				
-
-				// TODO : Ecriture du fichier CSV
+				System.out.println(this.ressources.get(cpt));
+				notions = this.ressources.get(cpt).getNotions();
+				System.out.println(notions);
+				for (Notion notion : notions)
+				{
+					System.out.println("hello there !");
+					pw.print(this.ressources.get(cpt).getNom() + "\t");
+					pw.println(notion.getNom() + "\t");
+				}
 			}
 		}
 		catch (FileNotFoundException fnfe)
@@ -113,5 +132,40 @@ public class BanqueDeRessources
 		}
 
 		return false;
+	}
+
+	public String toString()
+	{
+		String sRet = "";
+
+
+		for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
+			sRet += this.ressources.get(cpt).getNom() + " ";
+		return sRet;
+	}
+
+	public static void main(String[] args)
+	{
+		BanqueDeRessources bqr;
+		Ressource r1;
+		List<Notion> lstNotions;
+
+
+		bqr = new BanqueDeRessources();
+		r1 = new Ressource("r1.01 Init dev");
+
+		bqr.ajouterRessource(new Ressource("r1.01 Init dev"));
+		bqr.ajouterRessource(new Ressource("r1.02 Web"));
+
+		r1.ajouterNotion(new Notion("Encapsulation"));
+		r1.ajouterNotion(new Notion("Les Tableaux"));
+		
+		lstNotions = r1.getNotions();
+		System.out.println(lstNotions);
+
+
+		System.out.println(bqr.toString());
+
+		bqr.sauvegarderRessources("./test.csv");
 	}
 }
