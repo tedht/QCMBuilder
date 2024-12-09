@@ -101,6 +101,7 @@ public class Ressource
 		if (this.notions.contains(notion))
 		{
 			this.notions.remove(notion);
+			return true;
 		}
 
 		return false;
