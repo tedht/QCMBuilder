@@ -2,12 +2,15 @@ package metier;
 
 import java.util.List;
 
-public class Qcm {
+public class Qcm extends Question {
 
 	private List<String>	proposition;
 	private List<String>	reponse;
 
-	public Qcm(List<String> proposition, List<String> reponse) {
+	public Qcm(	int id, String intitule, String explication, String difficulte,
+				Ressource ressource, Notion notion, int temps, int note, List<String> proposition, List<String> reponse)
+	{
+		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 		this.proposition	= proposition;
 		this.reponse		= reponse;
 	}
