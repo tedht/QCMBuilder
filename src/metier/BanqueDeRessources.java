@@ -71,6 +71,7 @@ public class BanqueDeRessources
 	public void sauvegarderRessources(String nomFichier)
 	{
 		List<Notion> notions;
+		Ressource res;
 		PrintWriter pw;
 
 
@@ -80,14 +81,19 @@ public class BanqueDeRessources
 
 			for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
 			{
-				Ressource res = this.ressources.get(cpt);
+				res = this.ressources.get(cpt);
 				notions = res.getNotions();
+
+				pw.print(res.getNom() + "\t");
 				for (Notion notion : notions)
 				{
-					pw.print(this.ressources.get(cpt).getNom() + "\t");
-					pw.println(notion.getNom() + "\t");
+					pw.print(notion.getNom() + "\t");
 				}
+
+				pw.print("\n");
 			}
+
+			pw.close();
 		}
 		catch (FileNotFoundException fnfe)
 		{
@@ -138,19 +144,28 @@ public class BanqueDeRessources
 
 
 		for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
-			sRet += this.ressources.get(cpt).getNom() + " ";
+		{
+			sRet += this.ressources.get(cpt).getNom() + "\n" + "Notions : ";
+			for (Notion notion : this.ressources.get(cpt).getNotions())
+			{
+				sRet += notion.getNom() + ", ";
+			}
+			sRet += "\n\n";
+		}
+			
+
 		return sRet;
 	}
 
 	public static void main(String[] args)
 	{
-		BanqueDeRessources bqr;
-		Ressource r1;
+		BanqueDeRessources bqr, bqr2;
+		Ressource r1, r2;
 
 
 		bqr = new BanqueDeRessources();
 		r1 = new Ressource("r1.01 Init dev");
-
+		r2 = new Ressource("r1.02 Web");
 
 
 		r1.ajouterNotion(new Notion("Encapsulation"));
@@ -158,8 +173,14 @@ public class BanqueDeRessources
 	
 
 		bqr.ajouterRessource(r1);
-		bqr.ajouterRessource(new Ressource("r1.02 Web"));
+		bqr.ajouterRessource(r2);
 
-		bqr.sauvegarderRessources("./test.csv");
+		bqr.sauvegarderRessources("test.csv");
+		
+		bqr2 = new BanqueDeRessources();
+		bqr2.lireRessources("test.csv");
+		System.out.println(bqr2);
+
+
 	}
 }
