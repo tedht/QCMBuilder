@@ -2,52 +2,86 @@ package metier;
 
 import java.util.List;
 
+
+/** Classe Questionnaire
+ * @author Equipe 03
+ * @version 1.0 du 09/12/2024
+ */
 public class Questionnaire 
 {
-    Ressource ressource;
-    List<Notion> notions;
-    boolean chronometre;
-    List<Question> questions;
-    
-        public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre, List<Question> questions) 
-        {
-            this.ressource = ressource;
-            this.chronometre = chronometre;
-            this.notions = notions;
-            this.questions = questions
+	private Ressource      ressource;
+	private List<Notion>   notions;
+	private boolean        chronometre;
+	private List<Question> questions;
+	
+		/* Constructeur */
+		public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre, List<Question> questions) 
+		{
+			this.ressource   = ressource;
+			this.chronometre = chronometre;
+			this.notions     = notions;
+			this.questions   = questions;
 
-        }
+		}
 
-        public Ressource getRessource() {return ressource;}
+		/* Getter */
+		public Ressource      getRessource () { return ressource;  }
+		public List<Notion>   getNotions   () { return notions;    }
+		public boolean        isChronometre() { return chronometre;}
+		public List<Question> getQuestions () { return questions;  }
 
-        public List<Notion> getNotions() {return notions;}
+		/* Setter */
+		public boolean setQuestions  (List<Question> questions  ) 
+			{
+				if (questions == null) return false;
 
-        public boolean isChronometre() {return chronometre;}
+				this.questions = questions;
+				return true;
+			}
+		public boolean setChronometre(boolean chronometre) 
+		{
+			if (this.chronometre == chronometre) return false;
+			this.chronometre = chronometre;
+			return true;
+		}
 
-        public List<Question> getQuestions() {return questions;}
+		public boolean setNotions (List<Notion> notions) 
+		{
+			if (notions == null) return false;
+			this.notions = notions;
+			return true;
+		}
 
-        public void setQuestions(List<Question> questions) {this.questions = questions;}
+		public boolean setRessource  (Ressource ressource) 
+		{
+			if (ressource == null) return false;
+			this.ressource = ressource;
+			return true;
+		}
 
-        public void setChronometre(boolean chronometre) {this.chronometre = chronometre;}
+		public void ajouterNotion(Notion autre)
+		{
+			this.notions.add(autre);
+		}
 
-        public void setNotions(List<Notion> notions) {this.notions = notions;}
+		public void supprimerNotion(Notion autre)
+		{
 
-        public void setRessource(Ressource ressource) {this.ressource = ressource;}
+			this.notions.remove(autre);
+			
+		}
 
-        public void ajouterNotion(Notion notion)
-        {
-            this.notions.add(Notion notion);
-        }
+		public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
+		{
 
-        public void supprimerNotion(Notion autre)
-        {
+		}
 
-            this.notions.remove(autre);
-            
-        }
-
-        public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
-        {
-            
-        }
+		public String toString()
+		{
+			return "Questionnaire :\n" +
+				   "   ressource : " + this.ressource   + "\n" +
+				   "   questions : " + this.questions   + "\n" + 
+				   "     notions : " + this.notions     + "\n" +
+				   " chronometre : " + this.chronometre + "\n" ;
+		}
 }
