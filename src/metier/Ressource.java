@@ -14,11 +14,9 @@ public class Ressource
 		{
 			this.nom = nom;
 			this.notions = new ArrayList<Notion>();
+		} else {
+			throw new IllegalArgumentException("Le nom de la ressource ne peut pas être null");
 		}
-		// else
-		// {
-		// 	System.out.println("Le nom de la ressource ne peut pas être null");
-		// }
 	}
 
 	/*--------------*/
@@ -60,7 +58,7 @@ public class Ressource
 	{
 		if (notion != null) 
 		{
-			if (!notions.contains(notion)) 
+			if (!this.notions.contains(notion)) 
 			{
 				this.notions.add(notion);
 				return true;

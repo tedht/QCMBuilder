@@ -1,5 +1,7 @@
 package metier;
 
+import java.util.Objects;
+
 public class Notion 
 {
 	private String nom;
@@ -35,4 +37,17 @@ public class Notion
 
 		return false;
 	}
+
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notion notion = (Notion) o;
+        return Objects.equals(nom, notion.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom);
+    }
 }
