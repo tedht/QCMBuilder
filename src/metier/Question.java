@@ -6,6 +6,8 @@ package metier;
  */
 public class Question
 {
+	/* Attributs */
+	private int       id;
 	private String    difficulte;
 	private Ressource ressource;
 	private Notion    notion;
@@ -14,9 +16,10 @@ public class Question
 
 
 	/* Constructeur */
-	public Question(String difficulte, Ressource ressource, Notion notion,
+	public Question(int id, String difficulte, Ressource ressource, Notion notion,
 	                int temps, int note)
 	{
+		this.id         = id;
 		this.difficulte = difficulte;
 		this.ressource  = ressource;
 		this.notion     = notion;
@@ -25,11 +28,12 @@ public class Question
 	}
 
 	/* Getters */
-	public String    getDifficulte() { return difficulte; }
-	public Ressource getRessource () { return ressource;  }
-	public Notion    getNotion    () { return notion;     }
-	public int       getTemps     () { return temps;      }
-	public int       getNote      () { return note;       }
+	public int       getId        () { return this.id;         }
+	public String    getDifficulte() { return this.difficulte; }
+	public Ressource getRessource () { return this.ressource;  }
+	public Notion    getNotion    () { return this.notion;     }
+	public int       getTemps     () { return this.temps;      }
+	public int       getNote      () { return this.note;       }
 
 	/* Setters */
 	public boolean setDifficulte (String difficulte)
