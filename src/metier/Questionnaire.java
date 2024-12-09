@@ -98,7 +98,7 @@ public class Questionnaire
 	}
 
 	// Méthodes pour manipuler les questions
-	public void ajouterQuestionsDepuisRTF(String cheminFichier, String difficulte)
+	public void ajouterQuestionQCM(String cheminFichier)
 	{
 		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier)))
 		{
@@ -151,7 +151,7 @@ public class Questionnaire
 		q1.ajouterNotion(n2);
 		System.out.println(q1);
 
-		q1.ajouterQuestionsDepuisRTF("C:\\Users\\gaime\\Documents\\GitHub\\QCMBuilder\\src\\metier\\questions_qcm.rtf", "Facile");
+		q1.ajouterQuestionQCM("questions_qcm.rtf");
 		System.out.println(q1);
 	}
 }
