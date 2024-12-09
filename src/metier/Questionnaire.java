@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,13 +16,12 @@ public class Questionnaire
 	private List<Question> questions;
 	
 		/* Constructeur */
-		public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre, List<Question> questions) 
+		public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
 		{
 			this.ressource   = ressource;
 			this.chronometre = chronometre;
 			this.notions     = notions;
-			this.questions   = questions;
-
+			this.questions = new ArrayList<>();
 		}
 
 		/* Getter */
@@ -61,14 +61,21 @@ public class Questionnaire
 
 		public void ajouterNotion(Notion autre)
 		{
-			this.notions.add(autre);
+			if (!notions.contains(autre)) 
+			{
+				this.notions.add(autre);	
+				return;
+			}
+			System.out.println("Notion déjà présente.");
+			
 		}
 
 		public void supprimerNotion(Notion autre)
 		{
-
-			this.notions.remove(autre);
-			
+			if (notions.contains(autre)) 
+			{
+				this.notions.remove(autre);	
+			}
 		}
 
 		public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
@@ -78,6 +85,7 @@ public class Questionnaire
 			}
 		}
 
+
 		public String toString()
 		{
 			return "Questionnaire :\n" +
@@ -85,5 +93,18 @@ public class Questionnaire
 				   "   questions : " + this.questions   + "\n" + 
 				   "     notions : " + this.notions     + "\n" +
 				   " chronometre : " + this.chronometre + "\n" ;
+		}
+
+		public static void main(String[] args) {
+			Ressource r1 = new Ressource("r3.01");
+			Notion n1 = new Notion("algo");
+			List<Notion> l1 = new ArrayList<>();
+			l1.add(n1);
+
+			Questionnaire q1 = new Questionnaire(r1, l1,false);
+			System.out.println(q1);
+			Notion n2 = new Notion("ide");
+			q1.ajouterNotion(n2);
+			System.out.println(q1);
 		}
 }
