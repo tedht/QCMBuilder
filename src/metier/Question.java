@@ -9,19 +9,17 @@ public class Question
 	private String    difficulte;
 	private Ressource ressource;
 	private Notion    notion;
-	private String    type;
 	private int       temps;
 	private int       note;
 
 
 	/* Constructeur */
 	public Question(String difficulte, Ressource ressource, Notion notion,
-	                String type, int temps, int note)
+	                int temps, int note)
 	{
 		this.difficulte = difficulte;
 		this.ressource  = ressource;
 		this.notion     = notion;
-		this.type       = type;
 		this.temps      = temps;
 		this.note       = note;
 	}
@@ -30,17 +28,51 @@ public class Question
 	public String    getDifficulte() { return difficulte; }
 	public Ressource getRessource () { return ressource;  }
 	public Notion    getNotion    () { return notion;     }
-	public String    getType      () { return type;       }
 	public int       getTemps     () { return temps;      }
 	public int       getNote      () { return note;       }
 
 	/* Setters */
-	public void setDifficulte(String difficulte)   { this.difficulte = difficulte; }
-	public void setRessource (Ressource ressource) { this.ressource  = ressource;  }
-	public void setNotion    (Notion notion)       { this.notion     = notion;     }
-	public void setType      (String type)         { this.type       = type;       }
-	public void setTemps     (int temps)           { this.temps      = temps;      }
-	public void setNote      (int note)            { this.note       = note;       }
+	public boolean setDifficulte (String difficulte)
+	{
+		if (!difficulte.equals("TF") && !difficulte.equals("F") &&
+		    !difficulte.equals("M")  && !difficulte.equals("D")    )
+			return false;
+
+		this.difficulte = difficulte;
+		return true;
+	}
+
+	public boolean setRessource (Ressource ressource)
+	{
+		if (ressource == null) return false;
+
+		this.ressource  = ressource;
+		return true;
+	}
+
+	public boolean setNotion (Notion notion)
+	{
+		if (notion == null) return false;
+
+		this.notion = notion;
+		return true;
+	}
+
+	public boolean setTemps (int temps)
+	{
+		if (temps < 0) return false;
+
+		this.temps = temps;
+		return true;
+	}
+
+	public boolean setNote (int note)
+	{
+		if (note < 0) return false;
+
+		this.note = note;
+		return true;
+	}
 
 	/* toString */
 	public String toString()
@@ -49,7 +81,6 @@ public class Question
 		       "difficulte : " + this.difficulte + "\n" +
 		       " ressource : " + this.ressource  + "\n" +
 		       "    notion : " + this.notion     + "\n" +
-		       "      type : " + this.type       + "\n" +
 		       "     temps : " + this.temps      + "\n" +
 		       "      note : " + this.note                ;
 	}
