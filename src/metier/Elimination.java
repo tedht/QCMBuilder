@@ -2,18 +2,22 @@ package metier;
 
 import java.util.List;
 
-public class Elimination {
+public class Elimination extends Question {
 
 	private List<String>	proposition;
 	private String			reponse;
 	private List<Integer>	ordreElimination;
 	private List<Integer>	nbPtPerdu;
 
-	public Elimination(List<String> proposition, String reponse, List<Integer> ordreElimination, List<Integer> nbPtPerdu) {
+	public Elimination(int id, String intitule, String explication, String difficulte, Ressource ressource, Notion notion, 
+	                   int temps,int note ,List<String> proposition, String reponse, List<Integer> ordreElimination, List<Integer> nbPtPerdu)
+	{
+		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 		this.proposition		= proposition;
 		this.reponse			= reponse;
 		this.ordreElimination	= ordreElimination;
 		this.nbPtPerdu			= nbPtPerdu;
+
 	}
 
 	/*---------*/

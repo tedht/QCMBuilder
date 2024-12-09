@@ -21,7 +21,7 @@ public class Questionnaire
 			this.ressource   = ressource;
 			this.chronometre = chronometre;
 			this.notions     = notions;
-			this.questions = new ArrayList<>();
+			this.questions = new ArrayList<Question>();
 		}
 
 		/* Getter */
