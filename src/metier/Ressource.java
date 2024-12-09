@@ -57,13 +57,30 @@ public class Ressource
 
 	public boolean ajouterNotion(Notion notion) 
 	{
-		if(notion != null && !notions.contains(notion))
+		if (notion != null) 
 		{
-			this.notions.add(notion);
-			return true;
+			if (!notions.contains(notion)) 
+			{
+				this.notions.add(notion);
+				return true;
+			} else {
+				String nom = notion.getNom();
+				char lastNameChar = nom.charAt(nom.length() - 1);
+	
+				if (Character.isDigit(lastNameChar)) 
+				{
+					int lastNumber = Character.getNumericValue(lastNameChar);
+					notion.setNom(nom.substring(0, nom.length() - 1) + (lastNumber + 1));
+				} else {
+					notion.setNom(nom + "1");
+				}
+	
+				return ajouterNotion(notion); 
+			}
 		}
 		return false;
 	}
+	
 
 	public boolean modifierNotion(int id, String nouveauNom) 
 	{
