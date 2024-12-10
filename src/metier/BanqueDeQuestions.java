@@ -119,8 +119,9 @@ public class BanqueDeQuestions
 			if (question != null) {
 				ajouterQuestions(question);
 			}
-			for (Question q : questions)
+			for (Question q : this.questions)
 			{
+				System.out.println(q);
 				if (q instanceof Qcm) {
 					q = (Qcm) q;				
 					System.out.println(q);
@@ -256,23 +257,26 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		Qcm qcm = new Qcm(1, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
+		Qcm qcm = new Qcm(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
 				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
 		banque.ajouterQuestions(qcm);
 
-		Association assoc = new Association(2, "Associez les éléments", "Reliez les pays et leurs capitales.", "M", r1, n1, 60, 10);
+		Association assoc = new Association(1, "Associez les éléments", "Reliez les pays et leurs capitales.", "M", r1, n1, 60, 10);
 		assoc.ajouterAssociation("France", "Paris");
 		assoc.ajouterAssociation("Allemagne", "Berlin");
 		banque.ajouterQuestions(assoc);
 
 
-		Elimination elim = new Elimination(3, "Éliminez les mauvaises réponses",
+		Elimination elim = new Elimination(2, "Éliminez les mauvaises réponses",
 		"Sélectionnez la bonne réponse après avoir éliminé.", "D", r1, n1, 45, 8,
 		Arrays.asList("Option A", "Option B", "Option C", "Option D"), "Option B", Arrays.asList(3, 1, 4, 2),
 		Arrays.asList(2, 3, 5, 7));
 		banque.ajouterQuestions(elim);
 
 		banque.sauvegarderQuestions("questions.rtf");
+		banque.supprimerQuestion(0);
+		banque.supprimerQuestion(1);
+		banque.supprimerQuestion(2);
 		banque.fermerRTF("questions.rtf");
 
 		System.out.println("Les questions ont été écrites dans le fichier RTF.");
