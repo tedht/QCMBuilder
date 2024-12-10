@@ -159,6 +159,8 @@ public class Questionnaire
 		       "\t\t</footer>\n" +
 		       "\t</body>\n" +
 		       "</html>";
+		
+		return head+body;
 	}
 
 
