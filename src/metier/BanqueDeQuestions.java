@@ -12,9 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import controleur.Controleur;
-import metier.Notion;
-import metier.Ressource;
-import metier.Question;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
