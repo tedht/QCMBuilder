@@ -52,14 +52,15 @@ public class BanqueDeQuestions
 			Question question = null;
 			while ((ligne = br.readLine()) != null) {
 				ligne = nettoyerValeur(ligne);
-				if (ligne.startsWith("Intitule")) {
+				if (ligne.startsWith("ID")) {
 					if (question != null) {
 						ajouterQuestions(question);
 					}
-					String intitule = ligne.split(": ")[1].trim();
+					
 					question = new Question(compteur, "", "", "", null, null, 0, 0);
 					compteur++;
-					question.setIntitule(intitule);
+				} else if (ligne.startsWith("Intitule")) {
+					question.setIntitule(ligne.split(": ")[1].trim());
 				} else if (ligne.startsWith("Explication")) {
 					question.setExplication(ligne.split(": ")[1].trim());
 
@@ -118,6 +119,21 @@ public class BanqueDeQuestions
 			if (question != null) {
 				ajouterQuestions(question);
 			}
+			for (Question q : questions)
+			{
+				if (q instanceof Qcm) {
+					q = (Qcm) q;				
+					System.out.println(q);
+				}
+				else if (q instanceof Elimination) {
+					q = (Elimination) q;
+					System.out.println(q);
+				}
+				else if (q instanceof Association) {
+					q = (Association) q;
+					System.out.println(q);
+				}
+			}
 		} catch (IOException e) {
 			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
@@ -127,6 +143,11 @@ public class BanqueDeQuestions
 	/* Ecriture du fichier RTF qui contient les questions */
 	public void sauvegarderQuestions(String cheminFichier) {
 		boolean nouveauFichier = !(new File(cheminFichier).exists());
+		File fichier = new File(cheminFichier);
+		if (fichier.exists()) {
+        	if (fichier.delete()) {
+				nouveauFichier = true;
+            System.out.println("Fichier supprimé : " + cheminFichier);}}
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true))) {
 			// Si c'est un nouveau fichier, ajouter l'en-tête RTF
 			if (nouveauFichier) {
@@ -235,18 +256,18 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		Qcm qcm = new Qcm(1, "Quel est le plus grand océan ?", "Choisissez une réponse.", "Facile", r1, n1, 30, 5,
+		Qcm qcm = new Qcm(1, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
 				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
 		banque.ajouterQuestions(qcm);
 
-		Association assoc = new Association(2, "Associez les éléments", "Reliez les pays et leurs capitales.", "Moyen", r1, n1, 60, 10);
+		Association assoc = new Association(2, "Associez les éléments", "Reliez les pays et leurs capitales.", "M", r1, n1, 60, 10);
 		assoc.ajouterAssociation("France", "Paris");
 		assoc.ajouterAssociation("Allemagne", "Berlin");
 		banque.ajouterQuestions(assoc);
 
 
 		Elimination elim = new Elimination(3, "Éliminez les mauvaises réponses",
-		"Sélectionnez la bonne réponse après avoir éliminé.", "Difficile", r1, n1, 45, 8,
+		"Sélectionnez la bonne réponse après avoir éliminé.", "D", r1, n1, 45, 8,
 		Arrays.asList("Option A", "Option B", "Option C", "Option D"), "Option B", Arrays.asList(3, 1, 4, 2),
 		Arrays.asList(2, 3, 5, 7));
 		banque.ajouterQuestions(elim);
@@ -258,10 +279,7 @@ public class BanqueDeQuestions
 
 		banque.lireQuestions("questions.rtf");
 		System.out.println("Les questions ont été lues depuis le fichier RTF.");
-		List<Question> questions = banque.getQuestions();
-		for (Question question : questions) {
-			System.out.println(question);
-		}
+		
 	}
 }
 
