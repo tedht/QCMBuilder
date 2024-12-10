@@ -93,29 +93,28 @@ public class Questionnaire
 
 	public String generer(String filePath) 
 	{
+		String head = "<!DOCTYPE html>\n"                                                                +
+		              "<html lang=\"fr\">\n"                                                             +
+		              "\t<head>\n"                                                                       +
+		              "\t\t<meta charset=\"UTF-8\">\n"                                                   +
+		              "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+		              "\t\t<title>Titre de la page</title>\n"                                            +
+		              "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n"                         +
+		              "\t</head>";
 
-	    String head = "<!DOCTYPE html>\n" +
-	                  "<html lang=\"fr\">\n" +
-	                  "\t<head>\n" +
-	                  "\t\t<meta charset=\"UTF-8\">\n" +
-	                  "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-	                  "\t\t<title>Titre de la page</title>\n" +
-	                  "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n" +
-	                  "\t</head>";
-
-	    String body = "\t<body>\n" +
-	                  "\t\t<header>\n" +
-	                  "\t\t\t<h1>Question X</h1>\n" +
-	                  "\t\t</header>\n\n\n" +
-	                  "\t\t<main>\n" +
-	                  "\t\t\t<p>Intitule</p>\n" +
-	                  "\t\t</main>\n\n\n" +
-	                  "\t\t<footer>" +
-	                  "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
-	                  "\t\t</footer>\n" +
-	                  "\t\t<script src=\"script/main.js\"></script>\n" +
-	                  "\t</body>\n" +
-	                  "</html>";
+		String body = "\t<body>\n"                                                             +
+		              "\t\t<header>\n"                                                         +
+		              "\t\t\t<h1>Question X</h1>\n"                                            +
+		              "\t\t</header>\n\n\n"                                                    +
+		              "\t\t<main>\n"                                                           +
+		              "\t\t\t<p>Intitule</p>\n"                                                +
+		              "\t\t</main>\n\n\n"                                                      +
+		              "\t\t<footer>"                                                           +
+		              "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
+		              "\t\t</footer>\n"                                                        +
+		              "\t\t<script src=\"script/main.js\"></script>\n"                         +
+		              "\t</body>\n"                                                            +
+		              "</html>";
 
 	    String htmlContent = head + body;
 
