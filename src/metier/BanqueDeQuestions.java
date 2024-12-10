@@ -4,17 +4,16 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import controleur.Controleur;
-import metier.Notion;
-import metier.Ressource;
-import metier.Question;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
@@ -34,31 +33,96 @@ public class BanqueDeQuestions
 		this.questions = new ArrayList<Question>();
 	}
 
-	/* Lecture du fichier RTF qui contient les questions */
-	public void lireQuestions(String nomFichier)
+	public List<Question> getQuestions()
 	{
-		Scanner sc;
-
-		String enreg;
-
-
-		try
-		{
-			sc = new Scanner( new FileInputStream(nomFichier), "UTF-8");
+		return questions;
+	}
 
 
-			while (sc.hasNextLine())
-			{
-				enreg = sc.nextLine();
+	// Méthode utilitaire pour nettoyer une valeur extraite
+	private String nettoyerValeur(String valeur)
+	{
+		return valeur.replaceAll("\\\\[a-zA-Z]+", "").trim();
+	}
 
-				// TODO : Lecture du fichier RTF
+	public void lireQuestions(String cheminFichier) {
+		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier))) {
+			String ligne;
+			int compteur = 0;
+			Question question = null;
+			while ((ligne = br.readLine()) != null) {
+				ligne = nettoyerValeur(ligne);
+				if (ligne.startsWith("Intitule")) {
+					if (question != null) {
+						ajouterQuestions(question);
+					}
+					String intitule = ligne.split(": ")[1].trim();
+					question = new Question(compteur, "", "", "", null, null, 0, 0);
+					compteur++;
+					question.setIntitule(intitule);
+				} else if (ligne.startsWith("Explication")) {
+					question.setExplication(ligne.split(": ")[1].trim());
+
+				} else if (ligne.startsWith("Difficulte")) {
+					question.setDifficulte(ligne.split(": ")[1].trim());
+
+				} else if (ligne.startsWith("Ressource")) {
+                String nomRessource = ligne.split(": ")[1].trim();
+                Ressource ressource = new Ressource(nomRessource);
+                question.setRessource(ressource);
+
+				} else if (ligne.startsWith("Notion")) {
+                String nomNotion = ligne.split(": ")[1].trim();
+                Notion notion = new Notion(nomNotion);
+                question.setNotion(notion);
+
+				} else if (ligne.startsWith("Propositions")) {
+					List<String> propositions = Arrays.asList(ligne.split(": ")[1].split(";"));
+					if (question instanceof Qcm) {
+						for (String proposition : propositions) {
+							((Qcm) question).ajouterProposition(proposition);
+						}
+					}
+				} else if (ligne.startsWith("Reponses")) {
+					List<String> reponses = Arrays.asList(ligne.split(": ")[1].split(";"));
+					if (question instanceof Qcm) {
+						((Qcm) question).setReponse(reponses);
+					}
+				} else if (ligne.startsWith("Temps")) {
+					question.setTemps(Integer.parseInt(ligne.split(": ")[1].trim()));
+				} else if (ligne.startsWith("Note")) {
+					question.setNote(Integer.parseInt(ligne.split(": ")[1].trim()));
+				} else if (ligne.startsWith("Association")) {
+					String[] parts = ligne.split(": ")[1].split(" -> ");
+					if (question instanceof Association) {
+						((Association) question).ajouterAssociation(parts[0], parts[1]);
+					}
+				} else if (ligne.startsWith("Ordre d'élimination")) {
+					List<Integer> ordre = Arrays
+							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
+							.map(Integer::parseInt).toList();
+					if (question instanceof Elimination) {
+						((Elimination) question).setOrdreElimination(ordre);
+					}
+				} else if (ligne.startsWith("Points perdus")) {
+					// Nettoyage des crochets et conversion en liste d'entiers
+					List<Integer> points = Arrays
+							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
+							.map(Integer::parseInt).toList();
+					if (question instanceof Elimination) {
+						((Elimination) question).setNbPtPerdu(points);
+					}
+				}
 			}
-		}
-		catch (FileNotFoundException fnfe)
-		{
-			System.out.println("Le fichier " + nomFichier + "n'a pas été trouvé : " + fnfe.getMessage());
+
+			if (question != null) {
+				ajouterQuestions(question);
+			}
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
 	}
+
 
 	/* Ecriture du fichier RTF qui contient les questions */
 	public void sauvegarderQuestions(String cheminFichier) {
@@ -71,9 +135,12 @@ public class BanqueDeQuestions
 			}
 
 			for (Question question : questions) {
-				bw.write("\n\nIntitule : " + question.getIntitule   () + "\\line\n");
-				bw.write("Explication  : " + question.getExplication() + "\\line\n");
-				bw.write("Difficulte   : " + question.getDifficulte () + "\\line\n");
+				bw.write("\n\nID       : " + question.getId         ()          + "\\line\n");
+				bw.write("Ressource    : " + question.getRessource  ().getNom() + "\\line\n");
+				bw.write("Notion       : " + question.getNotion     ().getNom() + "\\line\n"); 
+				bw.write("Intitule     : " + question.getIntitule   ()          + "\\line\n");
+				bw.write("Explication  : " + question.getExplication()          + "\\line\n");
+				bw.write("Difficulte   : " + question.getDifficulte ()          + "\\line\n");
 
 				if (question instanceof Qcm) {
 					Qcm qcm = (Qcm) question;
@@ -188,6 +255,13 @@ public class BanqueDeQuestions
 		banque.fermerRTF("questions.rtf");
 
 		System.out.println("Les questions ont été écrites dans le fichier RTF.");
+
+		banque.lireQuestions("questions.rtf");
+		System.out.println("Les questions ont été lues depuis le fichier RTF.");
+		List<Question> questions = banque.getQuestions();
+		for (Question question : questions) {
+			System.out.println(question);
+		}
 	}
 }
 
