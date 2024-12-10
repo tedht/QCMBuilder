@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controleur.Controleur;
-import metier.Notion;
-import metier.Ressource;
 
 /** Classe BanqueDeRessources
  * @author Equipe 03
@@ -182,7 +180,5 @@ public class BanqueDeRessources
 		bqr2 = new BanqueDeRessources();
 		bqr2.lireRessources("test.csv");
 		System.out.println(bqr2);
-
-
 	}
 }

@@ -17,7 +17,8 @@ public class Qcm extends Question
 	/*--------------*/
 
 	public Qcm(	int id, String intitule, String explication, String difficulte,
-				Ressource ressource, Notion notion, int temps, int note, List<String> proposition, List<String> reponse)
+	            Ressource ressource, Notion notion, int temps, int note,
+	            List<String> proposition, List<String> reponse)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 		this.proposition = proposition;
