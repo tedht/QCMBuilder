@@ -36,17 +36,12 @@ public class Questionnaire
 	public List<Question> getQuestions () { return questions;  }
 
 	/* Setters */
-	public boolean setQuestions  (List<Question> questions  ) 
+	public boolean setRessource  (Ressource ressource) 
 	{
-		if (questions == null) return false;
+		if (ressource == null) return false;
 
-		this.questions = questions;
+		this.ressource = ressource;
 		return true;
-	}
-
-	public void setChronometre() 
-	{
-		this.chronometre = !this.chronometre;
 	}
 
 	public boolean setNotions (List<Notion> notions) 
@@ -57,11 +52,16 @@ public class Questionnaire
 		return true;
 	}
 
-	public boolean setRessource  (Ressource ressource) 
+	public void setChronometre() 
 	{
-		if (ressource == null) return false;
+		this.chronometre = !this.chronometre;
+	}
 
-		this.ressource = ressource;
+	public boolean setQuestions  (List<Question> questions  ) 
+	{
+		if (questions == null) return false;
+
+		this.questions = questions;
 		return true;
 	}
 
@@ -131,6 +131,34 @@ public class Questionnaire
 		{
 			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
+	}
+
+	public String generer()
+	{
+		String head;
+		String body;
+
+
+		head = "<!DOCTYPE html>\n" +
+		       "<html lang=\"fr\">\n" +
+		       "\t<head>\n"          +
+		       "\t\t<meta charset=\"UTF-8\">\n" +
+		       "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+		       "\t\t<title>Titre de la page</title>\n" +
+		       "\t</head>";
+
+		body = "\t<body>\n" +
+		       "\t\t<header>\n" +
+		       "\t\t\t<h1>Question X</h1>\n" +
+		       "\t\t</header>\n\n\n" +
+		       "\t\t<main>\n" +
+		       "\t\t\t<p>Intitule</p>\n" +
+		       "\t\t</main>\n\n\n" +
+		       "\t\t<footer>" +
+		       "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
+		       "\t\t</footer>\n" +
+		       "\t</body>\n" +
+		       "</html>";
 	}
 
 
