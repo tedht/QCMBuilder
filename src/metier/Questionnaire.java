@@ -1,6 +1,8 @@
 package metier;
-
+import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,33 +135,52 @@ public class Questionnaire
 		}
 	}
 
-	public String generer()
+
+	public String generer(String filePath) 
 	{
-		String head;
-		String body;
 
+	    String head = "<!DOCTYPE html>\n" +
+	                  "<html lang=\"fr\">\n" +
+	                  "\t<head>\n" +
+	                  "\t\t<meta charset=\"UTF-8\">\n" +
+	                  "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+	                  "\t\t<title>Titre de la page</title>\n" +
+	                  "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n" +
+	                  "\t</head>";
 
-		head = "<!DOCTYPE html>\n" +
-		       "<html lang=\"fr\">\n" +
-		       "\t<head>\n"          +
-		       "\t\t<meta charset=\"UTF-8\">\n" +
-		       "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-		       "\t\t<title>Titre de la page</title>\n" +
-		       "\t</head>";
+	    String body = "\t<body>\n" +
+	                  "\t\t<header>\n" +
+	                  "\t\t\t<h1>Question X</h1>\n" +
+	                  "\t\t</header>\n\n\n" +
+	                  "\t\t<main>\n" +
+	                  "\t\t\t<p>Intitule</p>\n" +
+	                  "\t\t</main>\n\n\n" +
+	                  "\t\t<footer>" +
+	                  "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
+	                  "\t\t</footer>\n" +
+	                  "\t\t<script src=\"script/main.js\"></script>\n" +
+	                  "\t</body>\n" +
+	                  "</html>";
 
-		body = "\t<body>\n" +
-		       "\t\t<header>\n" +
-		       "\t\t\t<h1>Question X</h1>\n" +
-		       "\t\t</header>\n\n\n" +
-		       "\t\t<main>\n" +
-		       "\t\t\t<p>Intitule</p>\n" +
-		       "\t\t</main>\n\n\n" +
-		       "\t\t<footer>" +
-		       "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
-		       "\t\t</footer>\n" +
-		       "\t</body>\n" +
-		       "</html>";
+	    String htmlContent = head + body;
+
+	    try {
+	        File file = new File(filePath, "questionnaire.html");
+	        File parentDir = file.getParentFile();
+	        if (parentDir != null && !parentDir.exists()) {
+	            parentDir.mkdirs();
+	        }
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+	            writer.write(htmlContent);
+	        }
+	        System.out.println("Le fichier " + file.getAbsolutePath() + " a été créé avec succès !");
+	    } catch (IOException e) {
+	        System.err.println("Erreur lors de la création du fichier : " + e.getMessage());
+	    }
+
+	    return htmlContent;
 	}
+
 
 
 	public String toString()
@@ -195,5 +216,7 @@ public class Questionnaire
 
 		q1.ajouterQuestionQCM("questions_qcm.rtf");
 		System.out.println(q1);
+
+		q1.generer("./");
 	}
 }
