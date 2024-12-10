@@ -7,8 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.border.*;
 
 import controleur.Controleur;
 
@@ -23,11 +22,14 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 {
 	private Controleur ctrl;
 
-	private JPanel            panelInfo, panelAction, panelInfoNiveau;
+	private JPanel[]          tabPanelInfo;
+	private JPanel            panelAction;
+
 	private JTextField        txtPoints, txtTemps;
 	private JTextArea         txtQuestion;
 	private JComboBox<String> ddlstRessource, ddlstNotion, ddlstTypeQuestion;
-	private JButton           btnAnnuler, btnValider, btnPrecedent, btnSuivant;
+	private JButton           btnAnnuler, btnValider, btnPrecedent, btnSuivant,
+	                          btnAjouterProposition, btnAjouterExplication;
 	private JRadioButton[]    tabRbNiveau;
 	private ButtonGroup       btgNiveau;
 	
@@ -38,6 +40,14 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	 */
 	public PanelEditionQuestion(Controleur ctrl)
 	{
+		JPanel panelInfoPoints, panelInfoTemps, panelInfoRessource, 
+		       panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion,
+			   panelInfoQuestion, panelInfoAjout, panelInfoProposition;
+		
+		JPanel panelPoints, panelTemps, panelNiveau, panelAjout;
+
+		JScrollPane scrollPanelPropositions;
+
 		this.ctrl = ctrl;
 
 		this.setLayout(new BorderLayout());
@@ -45,24 +55,47 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/
+
 		/* Panel */
 		// Info
-		this.panelInfo = new JPanel(new GridBagLayout());
-		this.panelInfo.setBorder(new EmptyBorder(10,10,10,10));
-		//this.panelInfo.setOpaque(false);
-		
+		this.tabPanelInfo = new JPanel[2];
+		for(int i = 0; i < this.tabPanelInfo.length; i++)
+		{
+			this.tabPanelInfo[i] = new JPanel();
+			this.tabPanelInfo[i].setBorder(new EmptyBorder(10,10,10,10));
+		}
+
+		this.tabPanelInfo[0].setLayout(new GridBagLayout());
+		this.tabPanelInfo[1].setLayout(new BorderLayout());
+
+		panelInfoPoints       = new JPanel(new BorderLayout());
+		panelInfoTemps        = new JPanel(new BorderLayout());
+		panelInfoRessource    = new JPanel(new BorderLayout());
+		panelInfoNotion       = new JPanel(new BorderLayout());
+		panelInfoNiveau       = new JPanel(new BorderLayout());
+		panelInfoTypeQuestion = new JPanel(new BorderLayout());
+		panelInfoQuestion     = new JPanel(new BorderLayout());
+		panelInfoAjout        = new JPanel(new BorderLayout());
+
+		panelInfoProposition  = new JPanel(new GridLayout(0, 1, 5, 5));
+
+		panelPoints       = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelTemps        = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelNiveau       = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelAjout        = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
 		// Action
 		this.panelAction = new JPanel();
 		this.panelAction.setBackground(new Color(200, 200, 250));
-
-		// Niveau
-		this.panelInfoNiveau = new JPanel();
 
 		/* Champs de texte */
 		this.txtPoints = new JTextField(5);
 		this.txtTemps  = new JTextField(5);
 
-		this.txtQuestion = new JTextArea();
+		this.txtQuestion = new JTextArea(); 
+		this.txtQuestion.setRows(5);
+		this.txtQuestion.setLineWrap(true);     
+		this.txtQuestion.setWrapStyleWord(true);
 		this.txtQuestion.setBorder(new LineBorder(Color.GRAY));
 		this.txtQuestion.setFont(new Font("Arial", Font.PLAIN, 12));
 		this.txtQuestion.setCaretColor(Color.BLACK);
@@ -102,6 +135,9 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		this.btnValider   = new JButton("Valider");   //this.btnValider.setEnabled(false);
 		this.btnPrecedent = new JButton("Précédent");
 		this.btnSuivant   = new JButton("Suivant");   //this.btnSuivant.setEnabled(false);
+		
+		this.btnAjouterProposition = new JButton("+");
+		this.btnAjouterExplication = new JButton("Expl");
 
 		/* Boutons Radio */
 		tabRbNiveau = new JRadioButton[4];
@@ -120,8 +156,85 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		/*-------------------------------*/
 		/* Positionnement des composants */
 		/*-------------------------------*/
-		/* Panel Info */
-		this.add(this.panelInfo, BorderLayout.CENTER);
+		
+		/* ****** */
+		/* Page 1 */
+		/* ****** */
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets  = new Insets(0, 5, 10, 5);
+ 		gbc.anchor  = GridBagConstraints.WEST;
+		gbc.fill    = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+
+		/* Ligne 0 */
+		// Points
+		gbc.gridy = 0; gbc.gridx = 0; // (0,0)
+		this.tabPanelInfo[0].add(panelInfoPoints, gbc);
+		panelInfoPoints     .add(new JLabel("Nombre de Points :"), BorderLayout.NORTH);
+		panelInfoPoints     .add(panelPoints, BorderLayout.CENTER);
+		panelPoints         .add(this.txtPoints);
+
+		// Temps
+		gbc.gridy = 0; gbc.gridx = 1; // (0,1)
+		this.tabPanelInfo[0].add(panelInfoTemps, gbc);
+		panelInfoTemps      .add(new JLabel("Temps de Réponse (min:sec) :"), BorderLayout.NORTH);
+		panelInfoTemps      .add(panelTemps, BorderLayout.CENTER);
+		panelTemps          .add(this.txtTemps);
+
+		gbc.gridy = 0; gbc.gridx = 2; // (0,1)
+		this.tabPanelInfo[0].add(new JPanel());
+
+		/* Ligne 1 */
+		// Ressource
+		gbc.gridy = 1; gbc.gridx = 0; // (1,0)
+		this.tabPanelInfo[0].add(panelInfoRessource, gbc);
+		panelInfoRessource  .add(new JLabel("Ressource :"), BorderLayout.NORTH);
+		panelInfoRessource  .add(this.ddlstRessource, BorderLayout.CENTER);
+
+		// Notion
+		gbc.gridy = 1; gbc.gridx = 1; // (1,1)
+		this.tabPanelInfo[0].add(panelInfoNotion, gbc);
+		panelInfoNotion     .add(new JLabel("Notion :"), BorderLayout.NORTH);
+		panelInfoNotion     .add(this.ddlstNotion, BorderLayout.CENTER);
+
+		// Niveau
+		gbc.gridy = 1; gbc.gridx = 2; // (1,2)
+		this.tabPanelInfo[0].add(panelInfoNiveau, gbc);
+		panelInfoNiveau     .add(new JLabel("Nombre de Niveau :"), BorderLayout.NORTH);
+		panelInfoNiveau     .add(panelNiveau, BorderLayout.CENTER);
+		for(JRadioButton rb : tabRbNiveau)
+			panelNiveau.add(rb);
+
+		/* Ligne 2 */
+		// Type de Question
+		gbc.gridy = 2; gbc.gridx = 0; // (2,2)
+		gbc.gridwidth = 2;
+		this.tabPanelInfo[0].add(panelInfoTypeQuestion, gbc);
+		panelInfoTypeQuestion.add(new JLabel("Type de Question :"), BorderLayout.NORTH);
+		panelInfoTypeQuestion.add(this.ddlstTypeQuestion, BorderLayout.CENTER);
+
+		/* ****** */
+		/* Page 2 */
+		/* ****** */
+
+		this.tabPanelInfo[1].add(panelInfoQuestion, BorderLayout.NORTH);
+		panelInfoQuestion   .add(new JLabel("Question :"), BorderLayout.NORTH);
+		panelInfoQuestion   .add(this.txtQuestion, BorderLayout.CENTER);
+
+
+		this.tabPanelInfo[1].add(panelInfoProposition, BorderLayout.CENTER);
+		panelInfoProposition.add(panelInfoAjout);
+		panelInfoAjout.add(panelAjout);
+		panelAjout.add(this.btnAjouterProposition);
+		panelAjout.add(this.btnAjouterExplication);
+		panelAjout.add(new JPanel(), BorderLayout.WEST);
+		panelAjout.add(new JPanel(), BorderLayout.EAST);
+
+		/* ************ */
+		/* Panel Action */
+		/* ************ */
+
 		this.add(this.panelAction, BorderLayout.SOUTH);
 
 		this.pagePrecedente();
@@ -195,27 +308,12 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 	private void pageSuivante()
 	{
-		this.panelInfo  .removeAll();
+		// Panel Info
+		this.remove(this.tabPanelInfo[0]);
+		this.add(this.tabPanelInfo[1], BorderLayout.CENTER);
+
+		// Panel Action
 		this.panelAction.removeAll();
-
-		/* Panel Info */
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		// Ligne 0
-		gbc.gridy = 0; gbc.gridx = 0; // (0,0)
-		gbc.insets    = new Insets(0, 5, 0, 5);
- 		gbc.anchor    = GridBagConstraints.WEST;
-		gbc.fill      = GridBagConstraints.HORIZONTAL;
-		gbc.weightx   = 1.0;
-		gbc.gridwidth = 3;
-		this.panelInfo.add(new JLabel("Question :"), gbc);
-
-		// Ligne 1
-		gbc.gridy = 1; gbc.gridx = 0; // (1,0)
-		gbc.insets = new Insets(0, 5, 10, 5);
-		this.panelInfo.add(this.txtQuestion, gbc);
-
-		/* Panel Action */
 		this.panelAction.add(this.btnPrecedent);
 		this.panelAction.add(this.btnValider);
 
@@ -225,69 +323,12 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 	private void pagePrecedente()
 	{
-		this.panelInfo  .removeAll();
-		this.panelAction.removeAll();
-
-		/* Panel Info */
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		// Ligne 0
-		gbc.gridy = 0; gbc.gridx = 0; // (0,0)
-		gbc.insets  = new Insets(0, 5, 0, 5);
- 		gbc.anchor  = GridBagConstraints.WEST;
-		this.panelInfo.add(new JLabel("Nombre de Points :"), gbc);
-
-		gbc.gridx = 1; // (0,1)
-		this.panelInfo.add(new JLabel("Temps de Réponse (min:sec) :"), gbc);
-
-		gbc.gridx = 2; // (0,2)
-		this.panelInfo.add(new JLabel(" "), gbc);
-
-		// Ligne 1 
-		gbc.gridy = 1; gbc.gridx = 0; // (1,0)
-		gbc.insets  = new Insets(0, 5, 10, 5);
-		this.panelInfo.add(this.txtPoints, gbc);
-
-		gbc.gridx = 1;// (1,1)
-		this.panelInfo.add(this.txtTemps, gbc);
-
-		// Ligne 2
-		gbc.gridy = 2; gbc.gridx = 0; // (2,0)
-		gbc.insets  = new Insets(0, 5, 0, 5);
-		this.panelInfo.add(new JLabel("Ressource :"), gbc);
-
-		gbc.gridx = 1; // (2,1)
-		this.panelInfo.add(new JLabel("Notion :"), gbc);
-
-		gbc.gridx = 2; // (2,1)
-		this.panelInfo.add(new JLabel("Niveau :"), gbc);
-
-		// Ligne 3
-		gbc.gridy = 3; gbc.gridx = 0; // (3,0)
-		gbc.insets  = new Insets(0, 5, 10, 5);
-		this.panelInfo.add(this.ddlstRessource, gbc);
-
-		gbc.gridx = 1; // (3,1)
-		this.panelInfo.add(this.ddlstNotion, gbc);
-
-		gbc.gridx = 2; // (3,2)
-		this.panelInfo.add(this.panelInfoNiveau, gbc);
-
-		for(JRadioButton rb : tabRbNiveau)
-			this.panelInfoNiveau.add(rb);
-
-		// Ligne 4
-		gbc.gridy = 4; gbc.gridx = 0; // (4,0)
-		gbc.insets    = new Insets(0, 5, 0, 5);
-		gbc.gridwidth = 2;
-		this.panelInfo.add(new JLabel("Type de Question :"), gbc);
-
-		// Ligne 5
-		gbc.gridy = 5; gbc.gridx = 0; // (5,0)
-		gbc.insets  = new Insets(0, 5, 10, 5);
-		this.panelInfo.add(this.ddlstTypeQuestion, gbc);
+		// Panel Info
+		this.remove(this.tabPanelInfo[1]);
+		this.add(this.tabPanelInfo[0], BorderLayout.CENTER);
 		
-		/* Panel Action */
+		// Panel Action
+		this.panelAction.removeAll();
 		this.panelAction.add(this.btnAnnuler);
 		this.panelAction.add(this.btnSuivant);
 

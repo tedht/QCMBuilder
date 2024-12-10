@@ -49,7 +49,7 @@ public class FrameBanqueDeQuestions extends JFrame
 		// Positionnement de la fenêtre au centre de l'écran.
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        int x = (screenSize.width - this.getWidth()) / 2;
+        int x = (screenSize.width  - this.getWidth ()) / 2;
         int y = (screenSize.height - this.getHeight()) / 2;
         this.setLocation(x, y);
 
