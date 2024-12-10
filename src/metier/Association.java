@@ -3,6 +3,9 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import metier.Notion;
+import metier.Ressource;
+
 public class Association extends Question {
 
 	/*---------*/

@@ -1,14 +1,13 @@
 package ihm;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 import controleur.Controleur;
-import ihm.gestionRessourceNotion.FrameGestionNotion;
-import ihm.gestionRessourceNotion.FrameGestionRessource;
+import ihm.edition.notion.FrameEditionNotion;
+import ihm.edition.question.FrameEditionQuestion;
+import ihm.edition.ressource.FrameEditionRessource;
 
 /**
  * Classe représentant la fenêtre de la Banque de questions de l'application.
@@ -20,13 +19,17 @@ import ihm.gestionRessourceNotion.FrameGestionRessource;
 public class FrameBanqueDeQuestions extends JFrame
 {
 	private Controleur ctrl;
+
+	private FrameEditionRessource frameEditionRessource;
+	private FrameEditionNotion    frameEditionNotion;
+	private FrameEditionQuestion  frameEditionQuestion;
 	
 	private PanelBanqueDeQuestions panelBanqueDeQuestions;
 
 	/**
-     * Constructeur du frame.
+     * Constructeur de la classe FrameBanqueDeQuestions.
      * 
-     * @param ctrl Le contrôleur principal de l'application.
+     * @param ctrl Le contrôleur
      */
 	public FrameBanqueDeQuestions(Controleur ctrl)
 	{
@@ -63,7 +66,7 @@ public class FrameBanqueDeQuestions extends JFrame
 		this.panelBanqueDeQuestions.afficherNotions(ressource);
 	}
 	
-	public void afficherQuestions (String ressource, String notion)    
+	public void afficherQuestions(String ressource, String notion)    
 	{ 
 		this.panelBanqueDeQuestions.afficherQuestions(ressource, notion);   
 	}
@@ -72,17 +75,86 @@ public class FrameBanqueDeQuestions extends JFrame
 
 	public void creerRessource() 
 	{
-		new FrameGestionRessource(this.ctrl, this.getX(), this.getY(), this.getSize());
+		if(this.frameEditionRessource == null)
+		{
+			// Crée une nouvelle fenêtre d'édition de ressource
+			this.frameEditionRessource = new FrameEditionRessource(this.ctrl);
+
+			// Positionne frameEditionRessource au centre de la fenêtre principale
+			this.frameEditionRessource.setLocation(
+				this.getX() + this.getWidth () / 2 - this.frameEditionRessource.getWidth () / 2,
+				this.getY() + this.getHeight() / 2 - this.frameEditionRessource.getHeight() / 2
+			);
+
+			// Ajoute un WindowListener pour fermer la fenêtre correctement
+			this.frameEditionRessource.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) 
+				{
+                    FrameBanqueDeQuestions.this.frameEditionRessource = null;
+                }
+            });
+		}
+		else
+		{
+			// Si la frameEditionRessource existe déjà, elle est mise en avant
+			this.frameEditionRessource.toFront();
+		}
 	}
 
 	public void creerNotion() 
 	{
-		new FrameGestionNotion(this.ctrl, this.getX(), this.getY(), this.getSize());
+		if(this.frameEditionNotion == null)
+		{
+			// Crée une nouvelle fenêtre d'édition de notion
+			this.frameEditionNotion = new FrameEditionNotion(this.ctrl);
+
+			// Positionne frameEditionNotion au centre de la fenêtre principale
+			this.frameEditionNotion.setLocation(
+				this.getX() + this.getWidth () / 2 - this.frameEditionNotion.getWidth () / 2,
+				this.getY() + this.getHeight() / 2 - this.frameEditionNotion.getHeight() / 2
+			);
+
+			// Ajoute un WindowListener pour fermer la fenêtre correctement
+			this.frameEditionNotion.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    FrameBanqueDeQuestions.this.frameEditionNotion = null;
+                }
+            });
+		}
+		else
+		{
+			// Si la frameEditionNotion existe déjà, elle est mise en avant
+			this.frameEditionNotion.toFront();
+		}
 	}
 
 	public void creerQuestion() 
 	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'creerQuestion'");
+		if(this.frameEditionQuestion == null)
+		{
+			// Crée une nouvelle fenêtre d'édition de question
+			this.frameEditionQuestion = new FrameEditionQuestion(this.ctrl);
+
+			// Positionne frameEditionQuestion au centre de la fenêtre principale
+			this.frameEditionQuestion.setLocation(
+				this.getX() + this.getWidth () / 2 - this.frameEditionQuestion.getWidth () / 2,
+				this.getY() + this.getHeight() / 2 - this.frameEditionQuestion.getHeight() / 2
+			);
+
+			// Ajoute un WindowListener pour fermer la fenêtre correctement
+			this.frameEditionQuestion.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    FrameBanqueDeQuestions.this.frameEditionQuestion = null;
+                }
+            });
+		}
+		else
+		{
+			// Si la frameEditionQuestion existe déjà, elle est mise en avant
+			this.frameEditionQuestion.toFront();
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package ihm.composants;
+package ihm.carte;
 
 import java.awt.*;
 import javax.swing.*;
@@ -6,6 +6,13 @@ import java.awt.event.*;
 
 import controleur.Controleur;
 
+/**
+ * Classe JPanel pour afficher une Notion.
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/10
+ * @version 1.0
+ */
 public class PanelCarteQuestion extends PanelCarte
 {
 	private boolean detail;
@@ -14,6 +21,11 @@ public class PanelCarteQuestion extends PanelCarte
 
 	private JButton btnModifier, btnDupliquer, btnSupprimer;
 	
+	/**
+	 * Constructeur de la classe PanelCarteQuestion.
+	 *
+	 * @param ctrl Le contrôleur
+	 */
 	public PanelCarteQuestion(Controleur ctrl, String titre, String sousTitre, String cheminImg)
 	{
 		super(ctrl, titre, sousTitre, cheminImg);

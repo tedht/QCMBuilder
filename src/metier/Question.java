@@ -1,5 +1,8 @@
 package metier;
 
+import metier.Notion;
+import metier.Ressource;
+
 /** Classe Question
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601

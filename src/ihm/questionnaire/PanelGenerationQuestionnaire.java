@@ -1,4 +1,4 @@
-package ihm.generationQuestionnaire;
+package ihm.questionnaire;
 
 public class PanelGenerationQuestionnaire {
 	

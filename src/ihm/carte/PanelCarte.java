@@ -1,7 +1,8 @@
-package ihm.composants;
+package ihm.carte;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,16 +15,30 @@ import javax.swing.JPanel;
 
 import controleur.Controleur;
 
+/**
+ * Classe JPanel générique pour afficher une entité (ressource/notion/question).
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/10
+ * @version 1.0
+ */
 public abstract class PanelCarte extends JPanel
 {
 	protected Controleur ctrl;
 
 	protected JLabel lblTitre;
 	protected JLabel lblSousTitre;
+	protected JLabel lblImage;
+	
 	protected JPanel panelInfo;
 
 	protected ImageIcon imageIcon;
 
+	/**
+	 * Constructeur de la classe PanelCarte.
+	 *
+	 * @param ctrl Le contrôleur
+	 */
 	public PanelCarte(Controleur ctrl, String titre, String sousTitre, String cheminImg)
 	{
 		this.ctrl = ctrl;
@@ -45,6 +60,8 @@ public abstract class PanelCarte extends JPanel
 		this.panelInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		this.imageIcon = new ImageIcon(cheminImg);
+		this.lblImage  = new JLabel(imageIcon);
+		this.lblImage.setPreferredSize(new Dimension(200, 200));
 
 		/*-------------------------------*/
 		/* positionnement des composants */
@@ -53,7 +70,7 @@ public abstract class PanelCarte extends JPanel
 		this.panelInfo.add(this.lblSousTitre);
 		this.add(this.panelInfo, BorderLayout.SOUTH);
 
-		this.add(new JLabel(imageIcon), BorderLayout.CENTER);
+		this.add(this.lblImage, BorderLayout.CENTER);
 	}
 
 	public void setImage(String cheminImg)

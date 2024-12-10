@@ -1,12 +1,24 @@
-package ihm.composants;
+package ihm.carte;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import controleur.Controleur;
 
+/**
+ * Classe JPanel pour afficher une Notion.
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/10
+ * @version 1.0
+ */
 public class PanelCarteNotion extends PanelCarte
 {	
+	/**
+	 * Constructeur de la classe PanelCarteNotion.
+	 *
+	 * @param ctrl Le contrôleur
+	 */
 	public PanelCarteNotion(Controleur ctrl, String titre, String sousTitre, String cheminImg)
 	{
 		super(ctrl, titre, sousTitre, cheminImg);

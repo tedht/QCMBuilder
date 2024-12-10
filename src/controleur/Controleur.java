@@ -23,6 +23,18 @@ public class Controleur
 		lst.add("Dévelopement Orienté Objet");
 		lst.add("Dévelopement Efficace");
 		lst.add("Initiation au Développement");
+		/*
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		lst.add("Initiation au Développement");
+		*/
 
 		return lst;
 	}
@@ -100,15 +112,15 @@ public class Controleur
 	public String getRessourceActive()
 	{
 		//return this.metier.getRessourceActive();
-		//return "Dévelopement Orienté Objet";
 		return "Dévelopement Orienté Objet";
+		//return null;
 	}
 
 	public String getNotionActive()
 	{
 		//return this.metier.getNotionActive();
-		//return "Dévelopement Orienté Objet";
-		return null; 
+		return "Encapsulation";
+		//return null; 
 	}
 
 

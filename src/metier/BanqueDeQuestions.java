@@ -10,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import controleur.Controleur;
+import metier.Notion;
+import metier.Ressource;
+import metier.Question;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03

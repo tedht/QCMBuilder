@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controleur.Controleur;
+import metier.Notion;
+import metier.Ressource;
 
 /** Classe BanqueDeRessources
  * @author Equipe 03

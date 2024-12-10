@@ -1,4 +1,4 @@
-package ihm.gestionRessourceNotion;
+package ihm.edition;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,7 +15,15 @@ import javax.swing.filechooser.FileFilter;
 
 import controleur.Controleur;
 
-public abstract class PanelGestionGenerique extends JPanel implements ActionListener
+/**
+ * Classe JPanel générique utilisé par la frames d'édition de ressource et la frames d'édition de notion
+ * 
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/06
+ * @version 1.0
+ */
+public abstract class PanelEditionEntite extends JPanel implements ActionListener
 {
 	protected Controleur ctrl;
 
@@ -25,7 +33,12 @@ public abstract class PanelGestionGenerique extends JPanel implements ActionList
 	protected JTextField    txtNom, txtImage;
 	protected JToggleButton toggleImage;
 
-	public PanelGestionGenerique(Controleur ctrl)
+	/**
+	 * Constructeur de la classe PanelEditionEntite.
+	 *
+	 * @param ctrl Le contrôleur
+	 */
+	public PanelEditionEntite(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 

@@ -2,6 +2,9 @@ package metier;
 
 import java.util.List;
 
+import metier.Notion;
+import metier.Ressource;
+
 public class Elimination extends Question {
 
 	/*---------*/

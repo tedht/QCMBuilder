@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import metier.Qcm;
+import metier.Question;
+
 
 /** Classe Questionnaire
  * @author Equipe 03
