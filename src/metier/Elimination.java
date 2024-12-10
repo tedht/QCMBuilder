@@ -31,14 +31,14 @@ public class Elimination extends Question {
 
 	/*---------*/
 	/* Getteur */
-	public List<String> getProposition()			{ return this.proposition;		}
-	public String getReponse()						{ return this.reponse;			}
-	public List<Integer> getOrdreElimination()		{ return this.ordreElimination;	}
-	public List<Integer> getNbPtPerdu()				{ return this.nbPtPerdu;		}
+	public List<String>		getProposition()		{ return this.proposition;		}
+	public String			getReponse()			{ return this.reponse;			}
+	public List<Integer>	getOrdreElimination()	{ return this.ordreElimination;	}
+	public List<Integer>	getNbPtPerdu()			{ return this.nbPtPerdu;		}
 
 	/*---------*/
 	/* Setteur */
-	public void setReponse(String reponse)	{ this.reponse = reponse;		}
+	public void setReponse(String reponse)			{ this.reponse = reponse;		}
 
 
 	/* Ajouter une proposition */
@@ -53,7 +53,9 @@ public class Elimination extends Question {
 
 	/* Modifie une propoition */
 	public boolean modifierProposition(int id, String proposition) {
-		if(this.proposition.get(id).equals(proposition)) { return false; }	// Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
+		if(id>this.proposition.size() || id<0)				{ return false; }	// Si l'id est en dehors de la liste												-> renvoie faux
+		if(this.proposition.isEmpty())						{ return false; }	// Si la liste est vide																-> renvoie faux
+		if(this.proposition.get(id).equals(proposition))	{ return false; }	// Si la proposition modifié est égale à la même chose que la nouvelle proposition 	-> renvoie faux
 
 		this.proposition.set(id, proposition);								// Modifie la proposition
 		return true;
@@ -62,7 +64,8 @@ public class Elimination extends Question {
 
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(int id) {
-		if(this.proposition.get(id).isEmpty()) { return false; }	// Si la proposition n'éxiste pas -> renvoie faux
+		if(id>this.proposition.size() || id<0)	{ return false; }	// Si l'id est en dehors de la liste	-> renvoie faux
+		if(this.proposition.isEmpty())			{ return false; }	// Si la liste est vide					-> renvoie faux
 
 		this.proposition.remove(id);								// Supprime la proposition
 		return true;
@@ -78,4 +81,5 @@ public class Elimination extends Question {
 				"Ordre d'élimination   : " + this.ordreElimination + "\n" +
 				"Nombre de point perdu : " + this.nbPtPerdu        + "\n" ;
 	}
+
 }

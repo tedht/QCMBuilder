@@ -44,7 +44,9 @@ public class Qcm extends Question {
 
 	/* Modifier une proposition */
 	public boolean modifierProposition(int id, String proposition) {
-		if(!this.proposition.get(id).equals(proposition)) { return false; }	// Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
+		if(id>this.proposition.size() || id<0)				{ return false; }	// Si l'id est en dehors de la liste												-> renvoie faux
+		if(this.proposition.isEmpty())						{ return false; }	// Si la liste est vide																-> renvoie faux
+		if(!this.proposition.get(id).equals(proposition))	{ return false; }	// Si la proposition modifié est égale à la même chose que la nouvelle proposition 	-> renvoie faux
 
 		this.proposition.set(id, proposition);								// Modifie la proposition
 		return true;
@@ -52,7 +54,8 @@ public class Qcm extends Question {
 
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(int id) {
-		if(this.proposition.get(id).isEmpty()) { return false; }	// Si la proposition n'éxiste pas -> renvoie faux
+		if(id>this.proposition.size() || id<0)	{ return false; }	// Si l'id est en dehors de la liste	-> renvoie faux
+		if(this.proposition.isEmpty())			{ return false; }	// Si la liste est vide					-> renvoie faux
 
 		this.proposition.remove(id);								// Supprime la proposition
 		return true;
@@ -65,5 +68,6 @@ public class Qcm extends Question {
 				"Propositions : " + this.proposition + "\n" +
 				"Réponse      : " + this.reponse     + "\n" ;
 	}
+
 
 }

@@ -181,8 +181,6 @@ public class Questionnaire
 	    return htmlContent;
 	}
 
-
-
 	public String toString()
 	{
 		return "Questionnaire :\n" +
