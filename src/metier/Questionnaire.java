@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import metier.Qcm;
-import metier.Question;
-
 
 /** Classe Questionnaire
  * @author Equipe 03
@@ -93,77 +90,31 @@ public class Questionnaire
 		}
 	}
 
-	// Méthode utilitaire pour nettoyer une valeur extraite
-	private String nettoyerValeur(String valeur)
-	{
-		return valeur.replaceAll("\\\\[a-zA-Z]+", "").trim();
-	}
-
-	// Méthodes pour manipuler les questions
-	public void ajouterQuestionQCM(String cheminFichier)
-	{
-		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier)))
-		{
-			String   ligne;
-			String   intitule, explication;
-			String   difficulteLue;
-			String[] propositions, reponses;
-			int      temps, note;
-			Qcm      nouvelleQuestion;
-
-
-			while ((ligne = br.readLine()) != null)
-			{
-				if (ligne.startsWith("Intitule"))
-				{
-					intitule      =                  nettoyerValeur(ligne.split(": ")[1]);
-					explication   =                  nettoyerValeur(br.readLine().split(": ")[1]);
-					difficulteLue =                  nettoyerValeur(br.readLine().split(": ")[1]);
-					propositions  =                  nettoyerValeur(br.readLine().split(": ")[1]).split(";");
-					reponses      =                  nettoyerValeur(br.readLine().split(": ")[1]).split(";");
-					temps         = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
-					note          = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
-
-					nouvelleQuestion = new Qcm(questions.size() + 1, intitule, explication, difficulteLue,
-					                           ressource, notions.isEmpty() ? null : notions.get(0),
-					                           temps, note, Arrays.asList(propositions), Arrays.asList(reponses) );
-
-					questions.add(nouvelleQuestion);
-				}
-			}
-		}
-		catch (IOException e)
-		{
-			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
-		}
-	}
-
 
 	public String generer(String filePath) 
 	{
+		String head = "<!DOCTYPE html>\n"                                                                +
+		              "<html lang=\"fr\">\n"                                                             +
+		              "\t<head>\n"                                                                       +
+		              "\t\t<meta charset=\"UTF-8\">\n"                                                   +
+		              "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+		              "\t\t<title>Titre de la page</title>\n"                                            +
+		              "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n"                         +
+		              "\t</head>";
 
-	    String head = "<!DOCTYPE html>\n" +
-	                  "<html lang=\"fr\">\n" +
-	                  "\t<head>\n" +
-	                  "\t\t<meta charset=\"UTF-8\">\n" +
-	                  "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-	                  "\t\t<title>Titre de la page</title>\n" +
-	                  "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n" +
-	                  "\t</head>";
-
-	    String body = "\t<body>\n" +
-	                  "\t\t<header>\n" +
-	                  "\t\t\t<h1>Question X</h1>\n" +
-	                  "\t\t</header>\n\n\n" +
-	                  "\t\t<main>\n" +
-	                  "\t\t\t<p>Intitule</p>\n" +
-	                  "\t\t</main>\n\n\n" +
-	                  "\t\t<footer>" +
-	                  "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
-	                  "\t\t</footer>\n" +
-	                  "\t\t<script src=\"script/main.js\"></script>\n" +
-	                  "\t</body>\n" +
-	                  "</html>";
+		String body = "\t<body>\n"                                                             +
+		              "\t\t<header>\n"                                                         +
+		              "\t\t\t<h1>Question X</h1>\n"                                            +
+		              "\t\t</header>\n\n\n"                                                    +
+		              "\t\t<main>\n"                                                           +
+		              "\t\t\t<p>Intitule</p>\n"                                                +
+		              "\t\t</main>\n\n\n"                                                      +
+		              "\t\t<footer>"                                                           +
+		              "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
+		              "\t\t</footer>\n"                                                        +
+		              "\t\t<script src=\"script/main.js\"></script>\n"                         +
+		              "\t</body>\n"                                                            +
+		              "</html>";
 
 	    String htmlContent = head + body;
 
@@ -213,9 +164,6 @@ public class Questionnaire
 		System.out.println(q1);
 
 		q1.ajouterNotion(n2);
-		System.out.println(q1);
-
-		q1.ajouterQuestionQCM("questions_qcm.rtf");
 		System.out.println(q1);
 
 		q1.generer("./");
