@@ -2,6 +2,10 @@ package metier;
 
 import java.util.List;
 
+/** Classe Elimination
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class Elimination extends Question
 {
 	/* Attributs */
