@@ -3,9 +3,12 @@ package ihm.edition.question;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import controleur.Controleur;
 
@@ -16,13 +19,14 @@ import controleur.Controleur;
  * @date 2024/12/10
  * @version 1.0
  */
-public class PanelEditionQuestion extends JPanel implements ActionListener
+public class PanelEditionQuestion extends JPanel implements ActionListener, ItemListener
 {
 	private Controleur ctrl;
 
 	private JPanel            panelInfo, panelAction, panelInfoNiveau;
 	private JTextField        txtPoints, txtTemps;
-	private JComboBox<String> ddlstRssource, ddlstNotion;
+	private JTextArea         txtQuestion;
+	private JComboBox<String> ddlstRessource, ddlstNotion, ddlstTypeQuestion;
 	private JButton           btnAnnuler, btnValider, btnPrecedent, btnSuivant;
 	private JRadioButton[]    tabRbNiveau;
 	private ButtonGroup       btgNiveau;
@@ -58,24 +62,46 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 		this.txtPoints = new JTextField(5);
 		this.txtTemps  = new JTextField(5);
 
+		this.txtQuestion = new JTextArea();
+		this.txtQuestion.setBorder(new LineBorder(Color.GRAY));
+		this.txtQuestion.setFont(new Font("Arial", Font.PLAIN, 12));
+		this.txtQuestion.setCaretColor(Color.BLACK);
+		this.txtQuestion.setMargin(new Insets(2, 5, 2, 5));
+
 		/* Listes déroulantes */
 		// Ressource
-		this.ddlstRssource = new JComboBox<String>();
+		this.ddlstRessource = new JComboBox<String>();
+		this.ddlstRessource.setPreferredSize(new Dimension(200, 25));
 		for(String ressource : this.ctrl.getRessources())
 		{
-			this.ddlstRssource.addItem(ressource);
+			this.ddlstRessource.addItem(ressource);
 		}
-		this.ddlstRssource.setSelectedIndex(-1);
+		this.ddlstRessource.setSelectedIndex(-1);
 
 		// Notion
 		this.ddlstNotion = new JComboBox<String>();
+		this.ddlstNotion.setPreferredSize(new Dimension(200, 25));
+		for(String notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
+		{
+			this.ddlstNotion.addItem(notion);
+		}
 		this.ddlstNotion.setEnabled(false);
+		this.ddlstNotion.setSelectedIndex(-1);
+
+		// Type de Question 
+		this.ddlstTypeQuestion = new JComboBox<String>();
+		this.ddlstTypeQuestion.addItem("Question à Choix Multiple à Réponse Unique");
+		this.ddlstTypeQuestion.addItem("Question à Choix Multiple à Réponse Multiple");
+		this.ddlstTypeQuestion.addItem("Question à Association d'Eléments");
+		this.ddlstTypeQuestion.addItem("Question avec Elimination de Propositions de Réponses");
+		this.ddlstTypeQuestion.setEnabled(false);
+		this.ddlstTypeQuestion.setSelectedIndex(-1);
 
 		/* Boutons */
 		this.btnAnnuler   = new JButton("Annuler");
-		this.btnValider   = new JButton("Valider");
+		this.btnValider   = new JButton("Valider");   //this.btnValider.setEnabled(false);
 		this.btnPrecedent = new JButton("Précédent");
-		this.btnSuivant   = new JButton("Suivant");
+		this.btnSuivant   = new JButton("Suivant");   //this.btnSuivant.setEnabled(false);
 
 		/* Boutons Radio */
 		tabRbNiveau = new JRadioButton[4];
@@ -86,7 +112,10 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 
 		btgNiveau = new ButtonGroup();
 		for(JRadioButton rb : tabRbNiveau)
+		{
 			btgNiveau.add(rb);
+			rb.setEnabled(false);
+		}
 
 		/*-------------------------------*/
 		/* Positionnement des composants */
@@ -104,8 +133,13 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 		this.btnValider  .addActionListener(this);
 		this.btnPrecedent.addActionListener(this);
 		this.btnSuivant  .addActionListener(this);
+
 		for(JRadioButton rb : tabRbNiveau)
 			rb.addActionListener(this);
+
+		this.ddlstRessource   .addActionListener(this);
+		this.ddlstNotion      .addActionListener(this);
+		this.ddlstTypeQuestion.addActionListener(this);
 	}
 
 	@Override
@@ -128,6 +162,30 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 		{
 			this.pagePrecedente();
 		}
+
+		if(e.getSource() instanceof JComboBox)
+		{
+			if(e.getSource() == this.ddlstRessource)
+			{
+				this.ddlstNotion.setEnabled(true);
+			}
+	
+			if(e.getSource() == this.ddlstNotion)
+			{
+				for(JRadioButton rb : tabRbNiveau)
+					rb.setEnabled(true);
+			}
+
+			if(e.getSource() == this.ddlstTypeQuestion)
+			{
+				this.btnSuivant.setEnabled(true);
+			}
+		}
+
+		if(e.getSource() instanceof JRadioButton)
+		{
+			this.ddlstTypeQuestion.setEnabled(true);
+		}
 	}
 
 	private boolean valider()
@@ -141,8 +199,21 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 		this.panelAction.removeAll();
 
 		/* Panel Info */
+		GridBagConstraints gbc = new GridBagConstraints();
 
+		// Ligne 0
+		gbc.gridy = 0; gbc.gridx = 0; // (0,0)
+		gbc.insets    = new Insets(0, 5, 0, 5);
+ 		gbc.anchor    = GridBagConstraints.WEST;
+		gbc.fill      = GridBagConstraints.HORIZONTAL;
+		gbc.weightx   = 1.0;
+		gbc.gridwidth = 3;
+		this.panelInfo.add(new JLabel("Question :"), gbc);
 
+		// Ligne 1
+		gbc.gridy = 1; gbc.gridx = 0; // (1,0)
+		gbc.insets = new Insets(0, 5, 10, 5);
+		this.panelInfo.add(this.txtQuestion, gbc);
 
 		/* Panel Action */
 		this.panelAction.add(this.btnPrecedent);
@@ -194,7 +265,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 		// Ligne 3
 		gbc.gridy = 3; gbc.gridx = 0; // (3,0)
 		gbc.insets  = new Insets(0, 5, 10, 5);
-		this.panelInfo.add(this.ddlstRssource, gbc);
+		this.panelInfo.add(this.ddlstRessource, gbc);
 
 		gbc.gridx = 1; // (3,1)
 		this.panelInfo.add(this.ddlstNotion, gbc);
@@ -204,6 +275,17 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 
 		for(JRadioButton rb : tabRbNiveau)
 			this.panelInfoNiveau.add(rb);
+
+		// Ligne 4
+		gbc.gridy = 4; gbc.gridx = 0; // (4,0)
+		gbc.insets    = new Insets(0, 5, 0, 5);
+		gbc.gridwidth = 2;
+		this.panelInfo.add(new JLabel("Type de Question :"), gbc);
+
+		// Ligne 5
+		gbc.gridy = 5; gbc.gridx = 0; // (5,0)
+		gbc.insets  = new Insets(0, 5, 10, 5);
+		this.panelInfo.add(this.ddlstTypeQuestion, gbc);
 		
 		/* Panel Action */
 		this.panelAction.add(this.btnAnnuler);
@@ -211,5 +293,11 @@ public class PanelEditionQuestion extends JPanel implements ActionListener
 
 		this.revalidate();
 		this.repaint();
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) 
+	{
+		
 	}
 }

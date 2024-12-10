@@ -140,7 +140,7 @@ public class FrameBanqueDeQuestions extends JFrame
 			// Positionne frameEditionQuestion au centre de la fenêtre principale
 			this.frameEditionQuestion.setLocation(
 				this.getX() + this.getWidth () / 2 - this.frameEditionQuestion.getWidth () / 2,
-				this.getY() + this.getHeight() / 2 - this.frameEditionQuestion.getHeight() / 2
+				this.getY() + this.getHeight() / 4 - this.frameEditionQuestion.getHeight() / 2
 			);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
