@@ -13,11 +13,16 @@
 		- [Sous Windows](#sous-windows)
 	- [Exemple d’utilisation](#exemple-dutilisation)
 	- [Auteurs](#auteurs)
+	- [Roles de l'équipe](#roles-de-léquipe)
 
 
 ## Description
 
-Cette application...
+Cette application se compose de deux parties : une partie professeur et une partie étudiant.
+
+- **Partie professeur :** permet aux enseignants de générer des questionnaires à partir des questions qu'ils ont créées, en tenant compte de critères spécifiques.
+
+- **Partie étudiant :** donne aux élèves accès aux questionnaires via l'intranet pédagogique utilisé par les enseignants, leur permettant de s'autoévaluer.
 
 ## Fonctionnalités
 
@@ -25,7 +30,7 @@ Cette application...
 - **Autres :** ...
 
 ## Prérequis
-- Java 8 ou version supérieure.
+- Java 17 ou version supérieure.
 
 ## Lancer l'application
 ### Sous Linux
@@ -46,4 +51,38 @@ Vous pouvez également lancer l'application avec un double clic sur le fichier r
 
 ## Auteurs
 
-- **Auteur :** Ted Herambert
+- **Développeurs :**
+  - Ted HERAMBERT
+  - Lucas LANGLOIS
+  - Felix LE GARS
+  - Kylian LUCAS-THUILLIER
+  - Thibault MANGEANT
+
+- **Employeur :** PromInfo (Collectif de professeurs de l'IUT du Havre)
+
+## Roles de l'équipe
+**Partie professeur**
+- Développement backend
+  - Lucas LANGLOIS
+  - Felix LE GARS
+  - Kylian LUCAS-THUILLIER
+  - Thibault MANGEANT
+- Développement frontend
+  - Ted HERAMBERT
+- Design
+  - Ted HERAMBERT
+
+**Partie étudiant**
+- Développement frontend
+  - Lucas LANGLOIS
+- Design
+  - Lucas LANGLOIS
+
+**Documentation**
+- Diagramme de classes
+  - Thibault MANGEANT
+  - Felix LE GARS
+- README
+  - Thibault MANGEANT
+- LICENSE
+  - Thibault MANGEANT
