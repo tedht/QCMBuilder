@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Questionnaire 
 {
+	/* Attributs */
 	private Ressource      ressource;
 	private List<Notion>   notions;
 	private boolean        chronometre;
@@ -25,33 +26,33 @@ public class Questionnaire
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
 		this.notions     = notions;
-		this.questions = new ArrayList<Question>();
+		this.questions   = new ArrayList<Question>();
 	}
 
-	/* Getter */
+	/* Getters */
 	public Ressource      getRessource () { return ressource;  }
 	public List<Notion>   getNotions   () { return notions;    }
 	public boolean        isChronometre() { return chronometre;}
 	public List<Question> getQuestions () { return questions;  }
 
-	/* Setter */
+	/* Setters */
 	public boolean setQuestions  (List<Question> questions  ) 
-		{
-			if (questions == null) return false;
-
-			this.questions = questions;
-			return true;
-		}
-	public boolean setChronometre(boolean chronometre) 
 	{
-		if (this.chronometre == chronometre) return false;
-		this.chronometre = chronometre;
+		if (questions == null) return false;
+
+		this.questions = questions;
 		return true;
+	}
+
+	public void setChronometre() 
+	{
+		this.chronometre = !this.chronometre;
 	}
 
 	public boolean setNotions (List<Notion> notions) 
 	{
 		if (notions == null) return false;
+
 		this.notions = notions;
 		return true;
 	}
@@ -59,29 +60,25 @@ public class Questionnaire
 	public boolean setRessource  (Ressource ressource) 
 	{
 		if (ressource == null) return false;
+
 		this.ressource = ressource;
 		return true;
 	}
 
-	public void ajouterNotion(Notion autre)
+	public boolean ajouterNotion(Notion autre)
 	{
-		if (!notions.contains(autre)) 
-		{
-			this.notions.add(autre);	
-			return;
-		}
-		System.out.println("Notion déjà présente.");
-		
+		if (notions.contains(autre)) return false;
+
+		this.notions.add(autre);
+		return true;
 	}
 
-	public void supprimerNotion(Notion autre)
+	public boolean supprimerNotion(Notion autre)
 	{
-		if (notions.contains(autre)) 
-		{
-			this.notions.remove(autre);	
-			return; 	
-		}
-		System.out.println("Notion non trouvée.");
+		if (!notions.contains(autre)) return false;
+
+		this.notions.remove(autre);
+		return true;
 	}
 
 	public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
@@ -102,26 +99,35 @@ public class Questionnaire
 	{
 		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier)))
 		{
-			String ligne;
+			String   ligne;
+			String   intitule, explication;
+			String   difficulteLue;
+			String[] propositions, reponses;
+			int      temps, note;
+			Qcm      nouvelleQuestion;
+
+
 			while ((ligne = br.readLine()) != null)
 			{
 				if (ligne.startsWith("Intitule"))
 				{
-					String intitule = nettoyerValeur(ligne.split(": ")[1]);
-					String explication = nettoyerValeur(br.readLine().split(": ")[1]);
-					String difficulteLue = nettoyerValeur(br.readLine().split(": ")[1]);
-					String[] propositions = nettoyerValeur(br.readLine().split(": ")[1]).split(";");
-					String[] reponses = nettoyerValeur(br.readLine().split(": ")[1]).split(";");
-					int temps = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
-					int note = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
+					intitule      =                  nettoyerValeur(ligne.split(": ")[1]);
+					explication   =                  nettoyerValeur(br.readLine().split(": ")[1]);
+					difficulteLue =                  nettoyerValeur(br.readLine().split(": ")[1]);
+					propositions  =                  nettoyerValeur(br.readLine().split(": ")[1]).split(";");
+					reponses      =                  nettoyerValeur(br.readLine().split(": ")[1]).split(";");
+					temps         = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
+					note          = Integer.parseInt(nettoyerValeur(br.readLine().split(": ")[1]));
 
-					Qcm nouvelleQuestion = new Qcm(questions.size() + 1, intitule, explication, difficulteLue,
-							ressource, notions.isEmpty() ? null : notions.get(0), temps, note,
-							Arrays.asList(propositions), Arrays.asList(reponses));
+					nouvelleQuestion = new Qcm(questions.size() + 1, intitule, explication, difficulteLue,
+					                           ressource, notions.isEmpty() ? null : notions.get(0),
+					                           temps, note, Arrays.asList(propositions), Arrays.asList(reponses) );
+
 					questions.add(nouvelleQuestion);
 				}
 			}
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
@@ -139,15 +145,23 @@ public class Questionnaire
 
 	public static void main(String[] args) 
 	{
-		Ressource r1 = new Ressource("R3.01");
-		Notion n1 = new Notion("Algorithmique");
-		List<Notion> l1 = new ArrayList<>();
+		Ressource r1;
+		Notion    n1, n2;
+		List<Notion> l1;
+		Questionnaire q1;
+
+		r1 = new Ressource("R3.01");
+
+		n1 = new Notion("Algorithmique");
+		n2 = new Notion("Programmation");
+
+		l1 = new ArrayList<Notion>();
 		l1.add(n1);
 
-		Questionnaire q1 = new Questionnaire(r1, l1, false);
+		q1 = new Questionnaire(r1, l1, false);
+
 		System.out.println(q1);
 
-		Notion n2 = new Notion("Programmation");
 		q1.ajouterNotion(n2);
 		System.out.println(q1);
 
