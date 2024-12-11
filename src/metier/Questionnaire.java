@@ -14,7 +14,7 @@ import java.util.List;
  * @author Equipe 03
  * @version 1.0 du 09/12/2024
  */
-public class Questionnaire 
+public class Questionnaire
 {
 	/* Attributs */
 	private Ressource      ressource;

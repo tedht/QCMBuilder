@@ -31,6 +31,12 @@ public class BanqueDeRessources
 		this.ressources = new ArrayList<Ressource>();
 	}
 
+	/* Getters */
+	public List<Ressource> getRessources()
+	{
+		return this.ressources;
+	}
+
 	/* Lecture du fichier CSV qui contient les ressources */
 	public void lireRessources(String nomFichier)
 	{

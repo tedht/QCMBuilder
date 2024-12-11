@@ -4,54 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ihm.FrameBanqueDeQuestions;
+import metier.BanqueDeQuestions;
+import metier.BanqueDeRessources;
+
+import metier.Ressource;
+import metier.Notion;
 
 public class Controleur 
 {
-	//private BanqueDeQuestions metier
+	private BanqueDeQuestions      banqueQuestion;
+	private BanqueDeRessources     banqueRessource;
 	private	FrameBanqueDeQuestions ihm;
 	
 	public Controleur()
 	{
-		//this.metier = new BanqueDeQuestions(this);
+		this.banqueQuestion  = new BanqueDeQuestions(this);
+		this.banqueRessource = new BanqueDeRessources(); 
 		this.ihm = new FrameBanqueDeQuestions(this);
 	}
 
 	public List<String> getRessources()
 	{
-		List<String> lst = new ArrayList<String>();
+		List<Ressource> lstRessource;
+		List<String>    lstNomRessource;
 
-		lst.add("Dévelopement Orienté Objet");
-		lst.add("Dévelopement Efficace");
-		lst.add("Initiation au Développement");
-		/*
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		lst.add("Initiation au Développement");
-		*/
 
-		return lst;
+		lstRessource = this.banqueRessource.getRessources();
+
+		lstNomRessource = new ArrayList<String>();
+		for (Ressource ressource : lstRessource)
+			lstNomRessource.add(ressource.getNom());
+
+		return lstNomRessource;
 	}
 
-	public List<String> getNotions(String ressource)
+	public List<String> getNotions(Ressource ressource)
 	{
-		List<String> lst = new ArrayList<String>();
+		List<String>    lstNomNotion;
 
-		lst.add("Encapsulation");
+
+		lstNomNotion = new ArrayList<String>();
+		for (Notion notion : ressource.getNotions())
+			lstNomNotion.add(notion.getNom());
+
+
+		/*lst.add("Encapsulation");
 		lst.add("Héritage");
 		lst.add("Polymorphisme");
-		lst.add("Abstraction");
+		lst.add("Abstraction");*/
 
-		return lst;
+		return lstNomNotion;
 	}
 
-	public List<String> getQuestions(String ressource, String notion)
+	public List<String> getQuestions(Ressource ressource, Notion notion)
 	{
 		return new ArrayList<String>();
 	}
@@ -61,19 +66,19 @@ public class Controleur
 		new Controleur();
 	}
 
-	public void afficherRessources()                 
+	public void afficherRessources()
 	{
-		this.ihm.afficherRessources();         
+		this.ihm.afficherRessources();
 	}
 
-	public void afficherNotions(String ressource) 
+	public void afficherNotions(String ressource)
 	{ 
-		this.ihm.afficherNotions(ressource); 
+		this.ihm.afficherNotions(ressource);
 	}
 
-	public void afficherQuestions(String ressource, String notion)    
+	public void afficherQuestions(String ressource, String notion)
 	{ 
-		this.ihm.afficherQuestions(ressource, notion);    
+		this.ihm.afficherQuestions(ressource, notion);
 	}
 
 	/* tmp */
@@ -81,8 +86,8 @@ public class Controleur
 
 	public void setRessourceActive(String ressource) 
 	{
-		//this.metier.setRessourceActive(ressource);
-		// => DANS LE METIER : On met à jour l'historique et on appel afficherNotions
+		//this.banqueQuestion.setRessourceActive(ressource);
+		// => DANS LE banqueQuestion : On met à jour l'historique et on appel afficherNotions
 		
 		/* tmp */
 		this.ihm.majHistorique("R");
@@ -91,34 +96,34 @@ public class Controleur
 
 	public void setNotionActive(String notion) 
 	{
-		//this.metier.setNotionActive(notion);
-		// => DANS LE METIER : On met à jour l'historique et on appel afficherQuestions
+		//this.banqueQuestion.setNotionActive(notion);
+		// => DANS LE banqueQuestion : On met à jour l'historique et on appel afficherQuestions
 		
 		/* tmp */
 		this.ihm.majHistorique("N"+this.getRessourceActive());
 		this.ihm.afficherQuestions(this.getRessourceActive(), notion);
 	}
 
-	public int getNbNotions(String ressource) 
+	public int getNbNotions(Ressource ressource) 
 	{
 		return this.getNotions(ressource).size();
 	}
 
-	public int getNbQuestions(String ressource, String notion) 
+	public int getNbQuestions(Ressource ressource, Notion notion) 
 	{
 		return this.getQuestions(ressource, notion).size();
 	}
 
 	public String getRessourceActive()
 	{
-		//return this.metier.getRessourceActive();
+		//return this.banqueQuestion.getRessourceActive();
 		return "Dévelopement Orienté Objet";
 		//return null;
 	}
 
 	public String getNotionActive()
 	{
-		//return this.metier.getNotionActive();
+		//return this.banqueQuestion.getNotionActive();
 		return "Encapsulation";
 		//return null; 
 	}
@@ -126,7 +131,7 @@ public class Controleur
 
 	public void ajouterElement() 
 	{
-		// Tout ça est censé être dans le metier
+		// Tout ça est censé être dans le banqueQuestion
 		if(this.getRessourceActive() == null)
 		{
 			this.ihm.creerRessource();
@@ -143,11 +148,11 @@ public class Controleur
 
 	public void creerRessource(String nomRessource, String cheminImg) 
 	{
-		//this.metier.creerRessource(nomRessource, cheminImg);
+		//this.banqueQuestion.creerRessource(nomRessource, cheminImg);
 	}
 
 	public void creerNotion(String nomNotion, String cheminImg)  
 	{
-		//this.metier.creerNotion(nomNotion, cheminImg);
+		//this.banqueQuestion.creerNotion(nomNotion, cheminImg);
 	}
 }
