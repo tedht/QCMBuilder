@@ -103,9 +103,13 @@ public class BanqueDeRessources
 				notions = res.getNotions();
 
 				pw.print(res.getNom() + "\t");
+				if (res.getCheminFichier() != null) {
+					pw.print("Image associée : " + res.getCheminFichier());
+				}
 				for (Notion notion : notions)
 				{
 					pw.print(notion.getNom() + "\t");
+					
 				}
 
 				pw.print("\n");

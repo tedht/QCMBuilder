@@ -6,17 +6,23 @@ import java.util.List;
 public class Ressource 
 {
 	private String nom;
+	private String cheminFichier;
 	private List<Notion> lstNotions;
 
-	public Ressource(String nom)
+	public Ressource(String nom, String cheminFichier)
 	{
 		if (!nom.equals(null))
 		{
 			this.nom        = nom;
 			this.lstNotions = new ArrayList<Notion>();
+			this.cheminFichier = cheminFichier;
 		} else {
 			throw new IllegalArgumentException("Le nom de la ressource ne peut pas être null");
 		}
+	}
+	public Ressource(String nom)
+	{
+		this(nom,null);
 	}
 
 	/*--------------*/
@@ -27,6 +33,11 @@ public class Ressource
 	{
 		return this.nom;
 	} 
+
+	public String getCheminFichier()
+	{
+		return this.cheminFichier;
+	}
 
 	public List<Notion> getNotions() 
 	{
@@ -47,6 +58,17 @@ public class Ressource
 
 		return false;
 		// Le nouveau Nom ne peut pas être null ou égal au nom actuel
+	}
+
+	public boolean setCheminFichier(String cheminFichier)
+	{
+		if (!cheminFichier.equals(null) && !cheminFichier.equals(this.cheminFichier)) {
+			this.cheminFichier = cheminFichier;
+			return true;
+		}
+
+		return false;
+		// Le nouveau cheminFichier ne peux pas être null au nom actuel
 	}
 
 
@@ -103,6 +125,12 @@ public class Ressource
 		}
 
 		return false;
+	}
+
+	public boolean supprimerFichier()
+	{
+		this.cheminFichier = null;
+		return true;
 	}
 
 	public Notion getNotion(String nomNotion) 
