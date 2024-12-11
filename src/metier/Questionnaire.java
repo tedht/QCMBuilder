@@ -20,7 +20,7 @@ public class Questionnaire
 	private Ressource      ressource;
 	private List<Notion>   notions;
 	private boolean        chronometre;
-	private List<Question> lstQuestions;
+	private List<Question> questions;
 
 	/* Constructeur */
 	public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
@@ -28,14 +28,14 @@ public class Questionnaire
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
 		this.notions     = notions;
-		this.lstQuestions   = new ArrayList<Question>();
+		this.questions   = new ArrayList<Question>();
 	}
 
 	/* Getters */
 	public Ressource      getRessource () { return ressource;  }
 	public List<Notion>   getNotions   () { return notions;    }
 	public boolean        isChronometre() { return chronometre;}
-	public List<Question> getQuestions () { return lstQuestions;  }
+	public List<Question> getQuestions () { return questions;  }
 
 	/* Setters */
 	public boolean setRessource  (Ressource ressource) 
@@ -59,11 +59,11 @@ public class Questionnaire
 		this.chronometre = !this.chronometre;
 	}
 
-	public boolean setQuestions  (List<Question> lstQuestions  ) 
+	public boolean setQuestions  (List<Question> questions  ) 
 	{
-		if (lstQuestions == null) return false;
+		if (questions == null) return false;
 
-		this.lstQuestions = lstQuestions;
+		this.questions = questions;
 		return true;
 	}
 
@@ -83,11 +83,13 @@ public class Questionnaire
 		return true;
 	}
 
-	public void ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
+	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
 	{
 		for (int i = 0; i < nbrQuestions; i++) {
 			//trop de trucs avec fichier rtf
 		}
+
+		return true;
 	}
 
 
@@ -139,7 +141,7 @@ public class Questionnaire
 	{
 		return "Questionnaire :\n" +
 				"   ressource : " + this.ressource   + "\n" +
-				"   lstQuestions : " + this.lstQuestions   + "\n" + 
+				"   questions : " + this.questions   + "\n" + 
 				"     notions : " + this.notions     + "\n" +
 				" chronometre : " + this.chronometre + "\n" ;
 	}
