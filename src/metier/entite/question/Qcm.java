@@ -9,7 +9,7 @@ import metier.entite.Ressource;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class Qcm extends Question
+public class QCM extends Question
 {
 	/* Attributs */
 	private List<String> proposition;
@@ -19,7 +19,7 @@ public class Qcm extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Qcm(	int id, String intitule, String explication, String difficulte,
+	public QCM(	int id, String intitule, String explication, String difficulte,
 	            Ressource ressource, Notion notion, int temps, int note,
 	            List<String> proposition, List<String> reponse)
 	{
