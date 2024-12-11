@@ -29,8 +29,8 @@ public class Association extends Question
 
 	public List<List<String>> getProposition() { return this.proposition; }
 
-	/* Ajouter une association (Proposition, Réponse) */
-	public boolean ajouterAssociation(String newProposition, String newReponse)
+	/* Ajouter une proposition */
+	public boolean ajouterProposition(String newProposition)
 	{
 		List<String> association;
 
@@ -38,11 +38,27 @@ public class Association extends Question
 		for(List<String> proposition : this.proposition)
 		{
 			if(proposition.get(0) == newProposition) { return false; } // Si la proposition existe déjà -> renvoie faux
-			if(proposition.get(1) == newReponse)     { return false; } // Si la réponse existe déjà     -> renvoie faux
 		}
 
 		association = new ArrayList<String>(); // Création de l'association (Proposition, Réponse)
 		association.add(newProposition);
+
+		this.proposition.add(association); // Ajout de l'association dans la liste des associations
+		return true;
+	}
+
+	/* Ajouter une réponse */
+	public boolean ajouterReponse(String newReponse)
+	{
+		List<String> association;
+
+
+		for(List<String> proposition : this.proposition)
+		{
+			if(proposition.get(0) == newReponse) { return false; } // Si la proposition existe déjà -> renvoie faux
+		}
+
+		association = new ArrayList<String>(); // Création de l'association (Proposition, Réponse)
 		association.add(newReponse);
 
 		this.proposition.add(association); // Ajout de l'association dans la liste des associations
@@ -76,9 +92,9 @@ public class Association extends Question
 		List<String> association;
 
 
-		if(id>this.proposition.size() || id<0)	{ return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())			{ return false; } // Si la liste est vide              -> renvoie faux
-		if(this.proposition.get(id).isEmpty())	{ return false; } // Si l'association n'éxiste pas     -> renvoie faux
+		if (id > this.proposition.size() || id < 0) { return false; } // Si l'id est en dehors de la liste -> renvoie faux
+		if (this.proposition.isEmpty())             { return false; } // Si la liste est vide              -> renvoie faux
+		if (this.proposition.get(id).isEmpty())     { return false; } // Si l'association n'éxiste pas     -> renvoie faux
 
 		for(List<String> proposition : this.proposition)
 		{
@@ -92,11 +108,21 @@ public class Association extends Question
 	}
 
 
-	/* Ajouter une association (Proposition, Réponse) */
-	public boolean supprimerAssociation(int id)
+	/* Supprimer une proposition */
+	public boolean supprimerProposition(int id)
 	{
-		if(id>this.proposition.size() || id<0)  { return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())          { return false; } // Si la liste est vide              -> renvoie faux
+		if(id > this.proposition.size() || id < 0) { return false; } // Si l'id est en dehors de la liste -> renvoie faux
+		if(this.proposition.isEmpty())             { return false; } // Si la liste est vide              -> renvoie faux
+
+		this.proposition.remove(id);
+		return true;
+	}
+
+	/* Supprimer une réponse */
+	public boolean supprimerReponse(int id)
+	{
+		if(id > this.proposition.size() || id < 0) { return false; } // Si l'id est en dehors de la liste -> renvoie faux
+		if(this.proposition.isEmpty())             { return false; } // Si la liste est vide              -> renvoie faux
 
 		this.proposition.remove(id);
 		return true;
@@ -120,7 +146,7 @@ public class Association extends Question
 
 	public static void main(String[] args)
 	{
-		Association asso, asso2;
+		/*Association asso, asso2;
 
 
 		asso = new Association(0, null, null, null, null, null, 0, 0);
@@ -138,7 +164,7 @@ public class Association extends Question
 		System.out.println(asso);
 
 		asso2 = new Association(0, null, null, null, null, null, 0, 0);
-		asso2.supprimerAssociation(0);
+		asso2.supprimerAssociation(0);*/
 	}
 
 }
