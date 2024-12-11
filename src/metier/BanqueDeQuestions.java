@@ -49,16 +49,31 @@ public class BanqueDeQuestions
 		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier))) {
 			String ligne;
 			int compteur = 0;
+			BanqueDeRessources banque = new BanqueDeRessources();
 			Question question = null;
 			while ((ligne = br.readLine()) != null) {
 				ligne = nettoyerValeur(ligne);
-				if (ligne.startsWith("ID")) {
-					if (question != null) {
+				if (ligne.startsWith("Type")) {
+					if (question != null) { // Ajouter l'ancienne question
 						ajouterQuestions(question);
 					}
-					
-					question = new Question(compteur, "", "", "", null, null, 0, 0);
+					// Création de la nouvelle question (QCM, Association, ou Elimination)
+					if (ligne.startsWith("Type : QCM")) {
+						System.out.println("qcm");
+						List<String> liste = new ArrayList<>();
+
+						question = new Qcm(compteur, "", "", "", null, null, 0, 0, liste, liste);
+					} else if (ligne.startsWith("Type : Elimination")) {
+						System.out.println("elim");
+						question = new Elimination(compteur, "", "", "", null, null, 0, 0,  null, "", null, null);
+
+					} else if (ligne.startsWith("Type : Association")) {
+						System.out.println("asso");
+						question = new Association(compteur, "", "", "", null, null, 0, 0);
+					}
+					else {System.out.println("slt");}
 					compteur++;
+
 				} else if (ligne.startsWith("Intitule"    )) {
 					question.setIntitule   (ligne.split(": ")[1].trim());
 				} else if (ligne.startsWith("Explication" )) {
@@ -69,6 +84,7 @@ public class BanqueDeQuestions
 
 				} else if (ligne.startsWith("Ressource"   )) {
 					String nomRessource =   ligne.split(": ")[1].trim();
+					System.out.println(nomRessource);
 					Ressource ressource = new Ressource(nomRessource);
 					question.setRessource(ressource);
 
@@ -85,6 +101,9 @@ public class BanqueDeQuestions
 							((Qcm) question).ajouterProposition(proposition);
 						}
 					}
+					else if (question instanceof Elimination) {
+
+					}
 				} else if (ligne.startsWith("Reponses")) {
 					List<String> reponses = Arrays.asList(ligne.split(": ")[1].split(";"));
 					if (question instanceof Qcm) {
@@ -97,7 +116,8 @@ public class BanqueDeQuestions
 				} else if (ligne.startsWith("Association")) {
 					String[] parts = ligne.split(": ")[1].split(" -> ");
 					if (question instanceof Association) {
-						((Association) question).ajouterAssociation(parts[0], parts[1]);
+						((Association) question ).ajouterProposition(parts[0]);
+						((Association) question ).ajouterReponse    (parts[1]);
 					}
 				} else if (ligne.startsWith("Ordre d'élimination")) {
 					List<Integer> ordre = Arrays
@@ -158,7 +178,15 @@ public class BanqueDeQuestions
 			}
 
 			for (Question question : lstQuestions) {
-				bw.write("\n\nID       : " + question.getId         ()          + "\\line\n");
+				if (question instanceof Qcm) {
+					bw.write("\n\nType : QCM\\line\n");
+				} else if (question instanceof Association) {
+					bw.write("\n\nType : Association\\line\n");
+				} else if (question instanceof Elimination) {
+					bw.write("\n\nType : Elimination\\line\n");
+				}
+				
+				bw.write("ID           : " + question.getId         ()          + "\\line\n");
 				bw.write("Ressource    : " + question.getRessource  ().getNom() + "\\line\n");
 				bw.write("Notion       : " + question.getNotion     ().getNom() + "\\line\n"); 
 				bw.write("Intitule     : " + question.getIntitule   ()          + "\\line\n");
@@ -171,9 +199,9 @@ public class BanqueDeQuestions
 					bw.write("Reponses     : " + String.join(";", qcm.getReponse    ()) + "\\line\n");
 				} else if (question instanceof Association) {
 					Association assoc = (Association) question;
-					for (List<String> pair : assoc.getProposition()) {
+					/*for (List<String> pair : assoc.getLiaison()) {
 						bw.write("Association : " + pair.get(0) + " -> " + pair.get(1) + "\\line\n");
-					}
+					}*/
 				} else if (question instanceof Elimination) {
 					Elimination elim = (Elimination) question;
 					bw.write("Propositions        : " + String.join(";", elim.getProposition()) + "\\line\n");
@@ -183,7 +211,7 @@ public class BanqueDeQuestions
 				}
 
 				bw.write("Temps : " + question.getTemps() + "\\line\n");
-				bw.write("Note : " + question.getNote() + "\\line\n");
+				bw.write("Note  : " + question.getNote() + "\\line\n");
 				bw.write("");
 			}
 		} catch (IOException e) {
@@ -263,8 +291,10 @@ public class BanqueDeQuestions
 		banque.ajouterQuestions(qcm);
 
 		Association assoc = new Association(1, "Associez les éléments", "Reliez les pays et leurs capitales.", "M", r1, n1, 60, 10);
-		assoc.ajouterAssociation("France", "Paris");
-		assoc.ajouterAssociation("Allemagne", "Berlin");
+		assoc.ajouterProposition("France");
+		assoc.ajouterReponse("Paris");
+		assoc.ajouterProposition("Allemagne");
+		assoc.ajouterReponse( "Berlin");
 		banque.ajouterQuestions(assoc);
 
 
