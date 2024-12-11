@@ -27,8 +27,13 @@ public class PanelEditionNotion extends PanelEditionEntite
 		return "Notion";
 	}
 
-	public void valider()
+	public boolean valider()
 	{
-		this.ctrl.creerNotion(this.ctrl.getRessourceActive(), this.txtNom.getText(), this.txtImage.getText());
+		if(this.ctrl.getRessourceActive().getNotion(this.txtNom.getText()) == null)
+		{
+			this.ctrl.creerNotion(this.ctrl.getRessourceActive(), this.txtNom.getText(), this.txtImage.getText());
+			return true;
+		}
+		return false;
 	}
 }

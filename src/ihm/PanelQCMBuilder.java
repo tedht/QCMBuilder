@@ -209,6 +209,14 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 			this.panelContenu.add(panelCarte);
 		}
 		this.panelContenu.add(this.panelBtnAjouter);
+
+		for(int i = this.lstPanelCartes.size(); i >= 0; i--)
+		{
+			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, " ", " ", " ");
+			panelCarte.setVisible(false);
+			this.lstPanelCartes.add(new JPanel());
+			this.panelContenu.add(panelCarte);
+		}
 	}
 
 	public void afficherNotions(Ressource ressource) 

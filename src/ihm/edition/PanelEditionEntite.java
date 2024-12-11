@@ -133,8 +133,10 @@ public abstract class PanelEditionEntite extends JPanel implements ActionListene
 		}
 		if(e.getSource() == this.btnValider)
 		{
-			this.valider();
-			SwingUtilities.getWindowAncestor(this).dispose();
+			if(this.valider())
+			{
+				SwingUtilities.getWindowAncestor(this).dispose();
+			}
 		}
 		if(e.getSource() == this.toggleImage)
 		{
@@ -196,6 +198,6 @@ public abstract class PanelEditionEntite extends JPanel implements ActionListene
 		}
 	}
 
-	public abstract String getType();
-	public abstract void   valider();
+	public abstract String  getType();
+	public abstract boolean valider();
 }

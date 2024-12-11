@@ -28,8 +28,13 @@ public class PanelEditionRessource extends PanelEditionEntite
 		return "Ressource";
 	}
 
-	public void valider()
+	public boolean valider()
 	{
-		this.ctrl.creerRessource(this.txtNom.getText(), this.txtImage.getText());
+		if(this.ctrl.getRessource(this.txtNom.getText()) == null)
+		{
+			this.ctrl.creerRessource(this.txtNom.getText(), this.txtImage.getText());
+			return true;
+		}
+		return false;
 	}
 }
