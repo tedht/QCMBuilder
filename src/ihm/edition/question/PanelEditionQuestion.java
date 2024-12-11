@@ -319,6 +319,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 	private boolean valider()
 	{
+		this.ctrl.creerQuestion();
 		return true;
 	}
 
@@ -365,6 +366,6 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 	private void ajouterExplication()
 	{
-		
+
 	}
 }

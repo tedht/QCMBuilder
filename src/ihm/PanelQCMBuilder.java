@@ -277,7 +277,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		 
 		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, question.getIntitule(), " ", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, question.getIntitule(), 
+			                                            question.getNote() + " point(s), " + question.getTemps() + "s", 
+														"tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 
 			gbc.gridy = this.lstPanelCartes.size()-1;

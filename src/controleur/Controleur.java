@@ -108,6 +108,10 @@ public class Controleur
 		this.metier.creerNotion(ressource, nomNotion, cheminImg);
 	}
 
+	public void creerQuestion() 
+	{
+		this.metier.creerQuestion();
+	}
 
 	public static void main(String[] args) 
 	{

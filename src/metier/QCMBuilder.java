@@ -109,4 +109,10 @@ public class QCMBuilder
 		this.ctrl.afficherNotions(ressource);
 	}
 
+	public void creerQuestion() 
+	{
+		this.banqueQuestion.ajouterQuestions(new Question(0, "A quoi sert le chiffrement ?", "", "Facile", ressourceActive, notionActive, 30, 1));
+		this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
+	}
+
 }
