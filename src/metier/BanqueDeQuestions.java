@@ -17,6 +17,7 @@ import controleur.Controleur;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Association;
+import metier.entite.question.Difficulte;
 import metier.entite.question.Elimination;
 import metier.entite.question.QCM;
 import metier.entite.question.Question;
@@ -82,13 +83,13 @@ public class BanqueDeQuestions
 					else if (ligne.startsWith("Type : Elimination")) 
 					{
 						System.out.println("elim");
-						question = new Elimination(cpt, "", "", "", null, null, 0, 0,  null, "", null, null);
+						question = new Elimination(cpt, "", "", null, null, null, 0, 0,  null, "", null, null);
 
 					} 
 					else if (ligne.startsWith("Type : Association")) 
 					{
 						System.out.println("asso");
-						question = new Association(cpt, "", "", "", null, null, 0, 0);
+						question = new Association(cpt, "", "", null, null, null, 0, 0);
 					}
 					else 
 					{
@@ -97,20 +98,20 @@ public class BanqueDeQuestions
 					cpt++;
 
 				} 
-				else if (ligne.startsWith("Intitule"    )) 
+				else if (ligne.startsWith("Intitule"    ))
 				{
 					question.setIntitule   (ligne.split(": ")[1].trim());
 				} 
-				else if (ligne.startsWith("Explication" )) 
+				else if (ligne.startsWith("Explication" ))
 				{
 					question.setExplication(ligne.split(": ")[1].trim());
 
 				} 
-				else if (ligne.startsWith("Difficulte"  )) 
+				else if (ligne.startsWith("Difficulte"  ))
 				{
 					question.setDifficulte (ligne.split(": ")[1].trim());
 				} 
-				else if (ligne.startsWith("Ressource"   )) 
+				else if (ligne.startsWith("Ressource"   ))
 				{
 					String nomRessource =   ligne.split(": ")[1].trim();
 					System.out.println(nomRessource);
@@ -366,11 +367,11 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
+		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", Difficulte.FACILE, r1, n1, 30, 5,
 				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
 		banque.ajouterQuestions(qcm);
 
-		Association assoc = new Association(1, "Associez les éléments", "Reliez les pays et leurs capitales.", "M", r1, n1, 60, 10);
+		Association assoc = new Association(1, "Associez les éléments", "Reliez les pays et leurs capitales.", Difficulte.MOYEN, r1, n1, 60, 10);
 		assoc.ajouterProposition("France");
 		assoc.ajouterReponse("Paris");
 		assoc.ajouterProposition("Allemagne");
@@ -379,7 +380,7 @@ public class BanqueDeQuestions
 
 
 		Elimination elim = new Elimination(2, "Éliminez les mauvaises réponses",
-		"Sélectionnez la bonne réponse après avoir éliminé.", "D", r1, n1, 45, 8,
+		"Sélectionnez la bonne réponse après avoir éliminé.", Difficulte.DIFFICILE, r1, n1, 45, 8,
 		Arrays.asList("Option A", "Option B", "Option C", "Option D"), "Option B", Arrays.asList(3, 1, 4, 2),
 		Arrays.asList(2, 3, 5, 7));
 		banque.ajouterQuestions(elim);
