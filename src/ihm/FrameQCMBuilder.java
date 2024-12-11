@@ -18,7 +18,7 @@ import metier.Ressource;
  * @date 2024/12/06
  * @version 1.0
  */
-public class FrameBanqueDeQuestions extends JFrame
+public class FrameQCMBuilder extends JFrame
 {
 	private Controleur ctrl;
 
@@ -26,14 +26,14 @@ public class FrameBanqueDeQuestions extends JFrame
 	private FrameEditionNotion    frameEditionNotion;
 	private FrameEditionQuestion  frameEditionQuestion;
 	
-	private PanelBanqueDeQuestions panelBanqueDeQuestions;
+	private PanelQCMBuilder panelQCMBuilder;
 
 	/**
-     * Constructeur de la classe FrameBanqueDeQuestions.
+     * Constructeur de la classe FrameQCMBuilder.
      * 
      * @param ctrl Le contrôleur
      */
-	public FrameBanqueDeQuestions(Controleur ctrl)
+	public FrameQCMBuilder(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
@@ -42,8 +42,8 @@ public class FrameBanqueDeQuestions extends JFrame
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelBanqueDeQuestions = new PanelBanqueDeQuestions(this.ctrl);
-        this.add(this.panelBanqueDeQuestions);
+        this.panelQCMBuilder = new PanelQCMBuilder(this.ctrl);
+        this.add(this.panelQCMBuilder);
 
         // Définition des dimensions.
         this.setSize(new Dimension(800, 800));
@@ -60,17 +60,17 @@ public class FrameBanqueDeQuestions extends JFrame
 
 	public void afficherRessources()
 	{ 
-		this.panelBanqueDeQuestions.afficherRessources();          
+		this.panelQCMBuilder.afficherRessources();          
 	}
 
 	public void afficherNotions(Ressource ressource) 
 	{ 
-		this.panelBanqueDeQuestions.afficherNotions(ressource);
+		this.panelQCMBuilder.afficherNotions(ressource);
 	}
 	
 	public void afficherQuestions(Ressource ressource, Notion notion)    
 	{ 
-		this.panelBanqueDeQuestions.afficherQuestions(ressource, notion);   
+		this.panelQCMBuilder.afficherQuestions(ressource, notion);   
 	}
 
 	public void creerRessource() 
@@ -91,7 +91,7 @@ public class FrameBanqueDeQuestions extends JFrame
                 @Override
                 public void windowClosed(WindowEvent e) 
 				{
-                    FrameBanqueDeQuestions.this.frameEditionRessource = null;
+                    FrameQCMBuilder.this.frameEditionRessource = null;
                 }
             });
 		}
@@ -119,7 +119,7 @@ public class FrameBanqueDeQuestions extends JFrame
 			this.frameEditionNotion.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    FrameBanqueDeQuestions.this.frameEditionNotion = null;
+                    FrameQCMBuilder.this.frameEditionNotion = null;
                 }
             });
 		}
@@ -147,7 +147,7 @@ public class FrameBanqueDeQuestions extends JFrame
 			this.frameEditionQuestion.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    FrameBanqueDeQuestions.this.frameEditionQuestion = null;
+                    FrameQCMBuilder.this.frameEditionQuestion = null;
                 }
             });
 		}

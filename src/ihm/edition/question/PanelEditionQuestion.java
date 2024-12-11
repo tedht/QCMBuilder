@@ -48,7 +48,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		
 		JPanel panelPoints, panelTemps, panelNiveau, panelAjout;
 
-		JScrollPane scrollPanelPropositions;
+		//JScrollPane scrollPanelPropositions;
 
 		this.ctrl = ctrl;
 

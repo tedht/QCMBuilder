@@ -1,11 +1,8 @@
 package controleur;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ihm.FrameBanqueDeQuestions;
-import metier.BanqueDeQuestions;
-import metier.BanqueDeRessources;
+import ihm.FrameQCMBuilder;
 
 import metier.Ressource;
 import metier.Notion;
@@ -15,12 +12,12 @@ import metier.Question;
 public class Controleur
 {
 	private QCMBuilder             metier;
-	private	FrameBanqueDeQuestions ihm;
+	private	FrameQCMBuilder ihm;
 	
 	public Controleur()
 	{
 		this.metier = new QCMBuilder(this);
-		this.ihm    = new FrameBanqueDeQuestions(this);
+		this.ihm    = new FrameQCMBuilder(this);
 	}
 
 	public List<Ressource> getRessources()
@@ -30,13 +27,6 @@ public class Controleur
 
 	public List<Notion> getNotions(Ressource ressource)
 	{
-		/*List<String>    lstNomNotion;
-		lstNomNotion = new ArrayList<String>();
-		lst.add("Encapsulation");
-		lst.add("Héritage");
-		lst.add("Polymorphisme");
-		lst.add("Abstraction");*/
-
 		return this.metier.getNotions(ressource);
 	}
 
