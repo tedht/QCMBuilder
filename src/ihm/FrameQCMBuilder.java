@@ -8,8 +8,6 @@ import controleur.Controleur;
 import ihm.edition.notion.FrameEditionNotion;
 import ihm.edition.question.FrameEditionQuestion;
 import ihm.edition.ressource.FrameEditionRessource;
-import metier.entite.Notion;
-import metier.entite.Ressource;
 
 /**
  * Classe représentant la fenêtre de la Banque de lstQuestions de l'application.
@@ -58,19 +56,9 @@ public class FrameQCMBuilder extends JFrame
 		this.setVisible(true);
 	}
 
-	public void afficherRessources()
+	public void reinitAffichage()
 	{ 
-		this.panelQCMBuilder.afficherRessources();          
-	}
-
-	public void afficherNotions() 
-	{ 
-		this.panelQCMBuilder.afficherNotions();
-	}
-	
-	public void afficherQuestions()    
-	{ 
-		this.panelQCMBuilder.afficherQuestions();   
+		this.panelQCMBuilder.reinitAffichage();          
 	}
 
 	public void creerRessource() 

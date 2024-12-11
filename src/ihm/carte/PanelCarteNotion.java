@@ -1,6 +1,5 @@
 package ihm.carte;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import controleur.Controleur;
@@ -36,7 +35,7 @@ public class PanelCarteNotion extends PanelCarte
 			PanelCarteNotion.this.ctrl.setNotionActive(
 				PanelCarteNotion.this.ctrl.getRessourceActive().getNotion(PanelCarteNotion.this.lblTitre.getText())
 			);
-			PanelCarteNotion.this.framePrincipale.afficherQuestions();
+			PanelCarteNotion.this.framePrincipale.reinitAffichage();
 		}
 	}
 }

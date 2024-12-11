@@ -35,7 +35,7 @@ public class PanelCarteRessource extends PanelCarte
 			PanelCarteRessource.this.ctrl.setRessourceActive(
 				PanelCarteRessource.this.ctrl.getRessource(PanelCarteRessource.this.lblTitre.getText())
 			);
-			PanelCarteRessource.this.framePrincipale.afficherNotions();
+			PanelCarteRessource.this.framePrincipale.reinitAffichage();
 		}
 	}
 }

@@ -83,9 +83,9 @@ public class Controleur
 		this.metier.creerQuestion();
 	}
 
-	public void retour() 
+	public void popHistorique() 
 	{
-		this.metier.retour();
+		this.metier.popHistorique();
 	}
 
 	public Ressource getRessource(String nomRessource) 
