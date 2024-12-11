@@ -67,10 +67,16 @@ public class QCMBuilder
 			String retour = this.historique.pop();
 			switch(retour.charAt(0))
 			{
-				case 'R' : this.ctrl.afficherRessources(); break;
-				case 'N' : this.ctrl.afficherNotions(
-					this.banqueRessource.getRessource(retour.substring(1))
-				); break;
+				case 'R' : 
+					this.ctrl.afficherRessources(); 
+					this.ressourceActive = null;
+				break;
+				case 'N' : 
+					this.ctrl.afficherNotions(
+						this.banqueRessource.getRessource(retour.substring(1))
+					);
+					this.notionActive = null; 
+				break;
 				default : break;
 			}
 		}

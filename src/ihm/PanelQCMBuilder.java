@@ -195,27 +195,27 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblFilAriane.setText("Ressources");
 		this.lblTitre    .setText("Ressources");
 		this.lblSousTitre.setText(this.ctrl.getRessources().size() + " ressource(s)");
-
-		this.btnAjouter.setText("Créer une Nouvelle Ressource");
 		
 		/* Contenu */
 		this.reinitContenu();
-
 		this.panelContenu.setLayout(new GridLayout(0,2, 30,30));
+
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
 			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
-			this.panelContenu.add(panelCarte);
+			this.panelContenu  .add(panelCarte);
 		}
+
+		this.btnAjouter.setText("Créer une Nouvelle Ressource");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = this.lstPanelCartes.size(); i >= 0; i--)
+		for(int i = 3 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteRessource(null, " ", " ", " ");
 			panelCarte.setVisible(false);
-			this.lstPanelCartes.add(new JPanel());
-			this.panelContenu.add(panelCarte);
+			this.lstPanelCartes.add(panelCarte);
+			this.panelContenu  .add(panelCarte);
 		}
 	}
 
@@ -232,7 +232,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/* Contenu */
 		this.reinitContenu();
 
-		this.panelContenu.setLayout(new GridLayout(0,3, 30,30));
+		GridLayout gridLayout = new GridLayout(0,3, 30,30);
+		this.panelContenu.setLayout(gridLayout);
+
 		for(Notion notion : this.ctrl.getNotions(ressource))
 		{
 			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
@@ -242,6 +244,14 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		this.btnAjouter.setText("Créer une Nouvelle Notion");
 		this.panelContenu.add(this.panelBtnAjouter);
+
+		for(int i = 5 - this.lstPanelCartes.size(); i > 0; i--)
+		{
+			PanelCarte panelCarte = new PanelCarteNotion(null, " ", " ", " ");
+			panelCarte.setVisible(false);
+			this.lstPanelCartes.add(panelCarte);
+			this.panelContenu.add(panelCarte);
+		}
 	}
 
 	public void afficherQuestions(Ressource ressource, Notion notion) 
