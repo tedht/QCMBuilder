@@ -28,6 +28,7 @@ public class QCMBuilder
 		this.notionActive    = null;
 
 		this.historique = new Stack<String>();
+
 	}
 
 	public List<Ressource> getRessources() 
@@ -88,6 +89,18 @@ public class QCMBuilder
 	public Ressource getRessource(String nomRessource) 
 	{
 		return this.banqueRessource.getRessource(nomRessource);
+	}
+
+	public void creerRessource(String nomRessource, String cheminImg) 
+	{
+		this.banqueRessource.ajouterRessource(new Ressource(nomRessource));
+		this.ctrl.afficherRessources();
+	}
+
+	public void creerNotion(Ressource ressource, String nomNotion, String cheminImg) 
+	{
+		ressource.ajouterNotion(new Notion(nomNotion));
+		this.ctrl.afficherNotions(ressource);
 	}
 
 }
