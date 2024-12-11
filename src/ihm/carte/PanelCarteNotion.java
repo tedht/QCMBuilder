@@ -35,7 +35,7 @@ public class PanelCarteNotion extends PanelCarte
 			PanelCarteNotion.this.ctrl.setNotionActive(
 				PanelCarteNotion.this.ctrl.getRessourceActive().getNotion(PanelCarteNotion.this.lblTitre.getText())
 			);
-			setBackground(Color.LIGHT_GRAY);
+			PanelCarteNotion.this.setBackground(Color.LIGHT_GRAY);
 		}
 	}
 }

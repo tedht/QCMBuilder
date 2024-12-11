@@ -1,7 +1,10 @@
- package metier;
+ package metier.entite.question;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import metier.entite.Notion;
+import metier.entite.Ressource;
 
 import java.util.HashMap;
 import java.util.Collection;

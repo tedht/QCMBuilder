@@ -84,7 +84,7 @@ public class PanelCarteQuestion extends PanelCarte
 		public void mouseClicked(MouseEvent e) 
 		{
 			PanelCarteQuestion.this.detail = !PanelCarteQuestion.this.detail;
-			setBackground(Color.LIGHT_GRAY);
+			PanelCarteQuestion.this.setBackground(Color.LIGHT_GRAY);
 		}
 	}
 }

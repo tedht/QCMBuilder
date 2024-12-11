@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Stack;
 
 import controleur.Controleur;
+import metier.entite.Notion;
+import metier.entite.Ressource;
+import metier.entite.question.Question;
 
 public class QCMBuilder 
 {
@@ -50,14 +53,14 @@ public class QCMBuilder
 	{
 		this.ressourceActive = ressource;
 		this.historique.add("R");
-		this.ctrl.afficherNotions(this.ressourceActive);
+		//this.ctrl.afficherNotions(this.ressourceActive);
 	}
 
 	public void setNotionActive(Notion notion) 
 	{
 		this.notionActive = notion;
 		this.historique.add("N"+this.ressourceActive.getNom());
-		this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
+		//this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
 	}
 
 	public void retour()
@@ -68,13 +71,13 @@ public class QCMBuilder
 			switch(retour.charAt(0))
 			{
 				case 'R' : 
-					this.ctrl.afficherRessources(); 
+					//this.ctrl.afficherRessources(); 
 					this.ressourceActive = null;
 				break;
 				case 'N' : 
-					this.ctrl.afficherNotions(
+					/*this.ctrl.afficherNotions(
 						this.banqueRessource.getRessource(retour.substring(1))
-					);
+					);*/
 					this.notionActive = null; 
 				break;
 				default : break;
@@ -100,19 +103,19 @@ public class QCMBuilder
 	public void creerRessource(String nomRessource, String cheminImg) 
 	{
 		this.banqueRessource.ajouterRessource(new Ressource(nomRessource));
-		this.ctrl.afficherRessources();
+		//this.ctrl.afficherRessources();
 	}
 
 	public void creerNotion(Ressource ressource, String nomNotion, String cheminImg) 
 	{
 		ressource.ajouterNotion(new Notion(nomNotion));
-		this.ctrl.afficherNotions(ressource);
+		//this.ctrl.afficherNotions(ressource);
 	}
 
 	public void creerQuestion() 
 	{
 		this.banqueQuestion.ajouterQuestions(new Question(0, "A quoi sert le chiffrement ?", "", "Facile", ressourceActive, notionActive, 30, 1));
-		this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
+		//this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
 	}
 
 }

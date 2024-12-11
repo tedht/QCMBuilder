@@ -1,17 +1,8 @@
 package ihm.carte;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import controleur.Controleur;
 
@@ -70,7 +61,7 @@ public abstract class PanelCarte extends JPanel
 		this.panelInfo.add(this.lblSousTitre);
 		this.add(this.panelInfo, BorderLayout.SOUTH);
 
-		this.add(this.lblImage, BorderLayout.CENTER);
+		this.add(this.lblImage,  BorderLayout.CENTER);
 	}
 
 	public void setImage(String cheminImg)
@@ -82,13 +73,15 @@ public abstract class PanelCarte extends JPanel
 	{
 		
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			setBackground(Color.GRAY);
+		public void mouseEntered(MouseEvent e) 
+		{
+			PanelCarte.this.setBackground(Color.GRAY);
 		}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			setBackground(Color.WHITE);
+		public void mouseExited(MouseEvent e) 
+		{
+			PanelCarte.this.setBackground(Color.WHITE);
 		}
 	}
 }

@@ -26,7 +26,8 @@ import metier.Ressource;
  */
 public class PanelQCMBuilder extends JPanel implements ActionListener
 {
-	private Controleur ctrl;
+	private Controleur      ctrl;
+	private FrameQCMBuilder framePrincipal;
 
 	private List<PanelCarte> lstPanelCartes;
 
@@ -44,11 +45,10 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelQCMBuilder(Controleur ctrl)
+	public PanelQCMBuilder(Controleur ctrl, FrameQCMBuilder frame)
 	{
-		this.ctrl = ctrl;
-
-
+		this.ctrl           = ctrl;
+		this.framePrincipal = frame;
 
 		this.setLayout(new BorderLayout());
 		
@@ -67,9 +67,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		this.scrollPanelContenu = new JScrollPane(this.panelContenu);
         this.scrollPanelContenu.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.scrollPanelContenu.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.scrollPanelContenu.getVerticalScrollBar().setUnitIncrement(16);
 		this.scrollPanelContenu.getVerticalScrollBar().setBlockIncrement(32);
+		this.scrollPanelContenu.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		/* Boutons */
 		this.btnRetour               = new JButton("Retour");
@@ -168,7 +168,18 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		}
 		if(e.getSource() == this.btnAjouter)
 		{
-			this.ctrl.ajouterElement();
+			if(this.ctrl.getRessourceActive() == null)
+			{
+				this.framePrincipal.creerRessource();
+			}
+			else if(this.ctrl.getNotionActive() == null)
+			{
+				this.framePrincipal.creerNotion();
+			}
+			else
+			{
+				this.framePrincipal.creerQuestion();
+			}
 		}
 	}
 

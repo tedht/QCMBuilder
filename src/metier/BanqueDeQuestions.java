@@ -14,6 +14,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import controleur.Controleur;
+import metier.entite.Notion;
+import metier.entite.Ressource;
+import metier.entite.question.Association;
+import metier.entite.question.Elimination;
+import metier.entite.question.Qcm;
+import metier.entite.question.Question;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03

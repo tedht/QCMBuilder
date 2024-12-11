@@ -11,13 +11,17 @@ import metier.Question;
 
 public class Controleur
 {
-	private QCMBuilder      metier;
-	private	FrameQCMBuilder ihm;
+	private QCMBuilder metier;
 	
 	public Controleur()
 	{
 		this.metier = new QCMBuilder(this);
-		this.ihm    = new FrameQCMBuilder(this);
+		new FrameQCMBuilder(this);
+	}
+
+	public static void main(String[] args) 
+	{
+		new Controleur();
 	}
 
 	public List<Ressource> getRessources()
@@ -33,21 +37,6 @@ public class Controleur
 	public List<Question> getQuestions(Ressource ressource, Notion notion)
 	{
 		return this.metier.getQuestions(ressource, notion);
-	}
-
-	public void afficherRessources()
-	{
-		this.ihm.afficherRessources();
-	}
-
-	public void afficherNotions(Ressource ressource)
-	{ 
-		this.ihm.afficherNotions(ressource);
-	}
-
-	public void afficherQuestions(Ressource ressource, Notion notion)
-	{
-		this.ihm.afficherQuestions(ressource, notion);
 	}
 
 	public void setRessourceActive(Ressource ressource) 
@@ -80,24 +69,6 @@ public class Controleur
 		return this.metier.getNotionActive();
 	}
 
-
-	public void ajouterElement() 
-	{
-		// Tout ça est censé être dans le banqueQuestion
-		if(this.getRessourceActive() == null)
-		{
-			this.ihm.creerRessource();
-		}
-		else if(this.getNotionActive() == null)
-		{
-			this.ihm.creerNotion();
-		}
-		else
-		{
-			this.ihm.creerQuestion();
-		}
-	}
-
 	public void creerRessource(String nomRessource, String cheminImg) 
 	{
 		this.metier.creerRessource(nomRessource, cheminImg);
@@ -111,11 +82,6 @@ public class Controleur
 	public void creerQuestion() 
 	{
 		this.metier.creerQuestion();
-	}
-
-	public static void main(String[] args) 
-	{
-		new Controleur();
 	}
 
 	public void retour() 

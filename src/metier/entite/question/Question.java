@@ -1,4 +1,7 @@
-package metier;
+package metier.entite.question;
+
+import metier.entite.Notion;
+import metier.entite.Ressource;
 
 /** Classe Question
  * @author Equipe 03

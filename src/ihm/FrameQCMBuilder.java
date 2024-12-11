@@ -42,7 +42,7 @@ public class FrameQCMBuilder extends JFrame
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelQCMBuilder = new PanelQCMBuilder(this.ctrl);
+        this.panelQCMBuilder = new PanelQCMBuilder(this.ctrl, this);
         this.add(this.panelQCMBuilder);
 
         // Définition des dimensions.

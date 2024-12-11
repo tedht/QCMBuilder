@@ -35,7 +35,7 @@ public class PanelCarteRessource extends PanelCarte
 			PanelCarteRessource.this.ctrl.setRessourceActive(
 				PanelCarteRessource.this.ctrl.getRessource(PanelCarteRessource.this.lblTitre.getText())
 			);
-			setBackground(Color.LIGHT_GRAY);
+			PanelCarteRessource.this.setBackground(Color.LIGHT_GRAY);
 		}
 	}
 }
