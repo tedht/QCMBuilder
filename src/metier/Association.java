@@ -1,7 +1,10 @@
-package metier;
+ package metier;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.HashMap;
+import java.util.Collection;
 
 /** Classe Association
  * @author Equipe 03
@@ -10,7 +13,9 @@ import java.util.List;
 public class Association extends Question
 {
 	/* Attributs */
-	private List<List<String>> proposition;
+	private List<String> lstPropositons;
+	private List<String> lstReponses;
+	private HashMap<String, String> liaisons;
 
 	/*--------------*/
 	/* Constructeur */
@@ -20,91 +25,103 @@ public class Association extends Question
 						Ressource ressource, Notion notion, int temps, int note)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
-		this.proposition = new ArrayList<>();
+
+		this.lstPropositons = new ArrayList<String>();
+		this.lstReponses    = new ArrayList<String>();
+		this.liaisons       = new HashMap<String, String>();
 	}
 
 	/*----------*/
 	/* Getteurs */
 	/*----------*/
 
-	public List<List<String>> getProposition() { return this.proposition; }
+	public List<String>            getPropositions() { return this.lstPropositons; }
+	public List<String>            getReponses    () { return this.lstReponses;    }
+	public HashMap<String, String> getLiaison     () { return this.liaisons;       }
 
-	/* Ajouter une association (Proposition, Réponse) */
-	public boolean ajouterAssociation(String newProposition, String newReponse)
+	/* Ajouter une proposition */
+	public boolean ajouterProposition(String proposition)
 	{
-		List<String> association;
+		if (proposition == null)    return false;
+		if (proposition.equals("")) return false;
+		this.lstPropositons.add(proposition);
+		return true;
+	}
 
+	/* Ajouter une réponse */
+	public boolean ajouterReponse(String reponse)
+	{
+		if (reponse  == null)       return false;
+		if (reponse.equals(""))     return false;
 
-		for(List<String> proposition : this.proposition)
-		{
-			if(proposition.get(0) == newProposition) { return false; } // Si la proposition existe déjà -> renvoie faux
-			if(proposition.get(1) == newReponse)     { return false; } // Si la réponse existe déjà     -> renvoie faux
-		}
-
-		association = new ArrayList<String>(); // Création de l'association (Proposition, Réponse)
-		association.add(newProposition);
-		association.add(newReponse);
-
-		this.proposition.add(association); // Ajout de l'association dans la liste des associations
+		this.lstReponses.add(reponse);
 		return true;
 	}
 
 
 	/* Modifier */
-	public boolean modifierProposition(int id, String newProposition)
+	public boolean modifierProposition(String propositionActuelle, String nouvelleProposition)
 	{
-		List<String> association;
+		if(this.lstPropositons.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 
+		if (propositionActuelle == null) return false;
+		if (propositionActuelle.equals("")) return false;
 
-		if(id > this.proposition.size() || id < 0)  { return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())              { return false; } // Si la liste est vide              -> renvoie faux
-		if(this.proposition.get(id).isEmpty())      { return false; } // Si l'association n'éxiste pas     -> renvoie faux
+		if (nouvelleProposition == null) return false;
+		if (nouvelleProposition.equals("")) return false;
 
-		for(List<String> proposition : this.proposition)
+		for(int cpt = 0; cpt < this.lstPropositons.size(); cpt++)
 		{
-			if ( !proposition.get(0).equals(newProposition) ) { return false; } // Si il n'y a pas de modification -> renvoie faux
+			if(this.lstPropositons.get(cpt).equals(propositionActuelle))
+			{
+				this.lstPropositons.set(cpt, nouvelleProposition);
+			}
 		}
 
-		association = this.proposition.get(id);   // Récupération de l'association
-		association.set(0, newProposition); // Modification de Proposition dans l'association
-		this.proposition.set(id, association);    // Modifications dans la liste des associations avec l'association modifiée
+		
 		return true;
 	}
 
-	public boolean modifierReponse(int id, String newReponse)
+	public boolean modifierReponse(String reponseActuelle, String nouvelleReponse)
 	{
-		List<String> association;
+		if(this.lstReponses.isEmpty()) return false; // Si la liste est vide -> renvoie faux
 
+		if (reponseActuelle == null) return false;
+		if (reponseActuelle.equals("")) return false;
 
-		if(id>this.proposition.size() || id<0)	{ return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())			{ return false; } // Si la liste est vide              -> renvoie faux
-		if(this.proposition.get(id).isEmpty())	{ return false; } // Si l'association n'éxiste pas     -> renvoie faux
+		if (nouvelleReponse == null) return false;
+		if (nouvelleReponse.equals("")) return false;
 
-		for(List<String> proposition : this.proposition)
-		{
-			if(proposition.get(0).equals(newReponse)) { return false; } // Si il n'y a pas de modification -> renvoie faux
-		}
+		for (int cpt = 0 ; cpt < this.lstReponses.size() ; cpt++)
+			if (this.lstReponses.get(cpt).equals(reponseActuelle))
+				this.lstReponses.set(cpt, nouvelleReponse);
 
-		association = this.proposition.get(id); // Récupération de l'association
-		association.set(1, newReponse);   // Modification de Réponse dans l'association
-		this.proposition.set(id, association);  // Modifications dans la liste des associations avec l'association modifiée
 		return true;
 	}
 
 
-	/* Ajouter une association (Proposition, Réponse) */
-	public boolean supprimerAssociation(int id)
+	/* Supprimer une proposition */
+	public boolean supprimerProposition(String proposition)
 	{
-		if(id>this.proposition.size() || id<0)  { return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())          { return false; } // Si la liste est vide              -> renvoie faux
+		if(this.lstPropositons.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		
+		this.lstPropositons.remove(proposition);
+		return true;
+	}
 
-		this.proposition.remove(id);
+	/* Supprimer une réponse */
+	public boolean supprimerReponse(String reponse)
+	{
+		if(this.lstReponses.isEmpty()) return false; // Si la liste est vide -> renvoie faux
+
+		this.lstReponses.remove(reponse);
+
 		return true;
 	}
 
 
 	/* toString */
-	public String toString()
+	/*public String toString()
 	{
 		String result = "";
 
@@ -116,11 +133,11 @@ public class Association extends Question
 		}
 
 		return result;
-	}
+	}*/
 
 	public static void main(String[] args)
 	{
-		Association asso, asso2;
+		/*Association asso, asso2;
 
 
 		asso = new Association(0, null, null, null, null, null, 0, 0);
@@ -138,7 +155,7 @@ public class Association extends Question
 		System.out.println(asso);
 
 		asso2 = new Association(0, null, null, null, null, null, 0, 0);
-		asso2.supprimerAssociation(0);
+		asso2.supprimerAssociation(0);*/
 	}
 
 }
