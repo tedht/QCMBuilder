@@ -6,14 +6,14 @@ import java.util.List;
 public class Ressource 
 {
 	private String nom;
-	private List<Notion> notions;
+	private List<Notion> lstNotions;
 
 	public Ressource(String nom)
 	{
 		if (!nom.equals(null))
 		{
-			this.nom = nom;
-			this.notions = new ArrayList<Notion>();
+			this.nom        = nom;
+			this.lstNotions = new ArrayList<Notion>();
 		} else {
 			throw new IllegalArgumentException("Le nom de la ressource ne peut pas être null");
 		}
@@ -30,7 +30,7 @@ public class Ressource
 
 	public List<Notion> getNotions() 
 	{
-		return this.notions;
+		return this.lstNotions;
 	}
 
 	/*--------------*/
@@ -58,9 +58,9 @@ public class Ressource
 	{
 		if (notion != null) 
 		{
-			if (!this.notions.contains(notion)) 
+			if (!this.lstNotions.contains(notion)) 
 			{
-				this.notions.add(notion);
+				this.lstNotions.add(notion);
 				return true;
 			} else {
 				String nom = notion.getNom();
@@ -83,7 +83,7 @@ public class Ressource
 
 	public boolean modifierNotion(Notion notion, String nouveauNom) 
 	{
-		if (this.notions.contains(notion) &&
+		if (this.lstNotions.contains(notion) &&
 			!nouveauNom.equals(null) &&
 			!notion.getNom().equals(nouveauNom))
 		{
@@ -96,12 +96,21 @@ public class Ressource
 
 	public boolean supprimerNotion(Notion notion) 
 	{
-		if (this.notions.contains(notion))
+		if (this.lstNotions.contains(notion))
 		{
-			this.notions.remove(notion);
+			this.lstNotions.remove(notion);
 			return true;
 		}
 
 		return false;
+	}
+
+	public Notion getNotion(String nomNotion) 
+	{
+		for(Notion notion : this.lstNotions)
+		{
+			if(notion.getNom().equals(nomNotion)) return notion;
+		}
+		return null;
 	}
 }

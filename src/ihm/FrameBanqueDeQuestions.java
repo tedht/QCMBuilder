@@ -8,9 +8,11 @@ import controleur.Controleur;
 import ihm.edition.notion.FrameEditionNotion;
 import ihm.edition.question.FrameEditionQuestion;
 import ihm.edition.ressource.FrameEditionRessource;
+import metier.Notion;
+import metier.Ressource;
 
 /**
- * Classe représentant la fenêtre de la Banque de questions de l'application.
+ * Classe représentant la fenêtre de la Banque de lstQuestions de l'application.
  * 
  * @author Ted Herambert
  * @date 2024/12/06
@@ -61,17 +63,15 @@ public class FrameBanqueDeQuestions extends JFrame
 		this.panelBanqueDeQuestions.afficherRessources();          
 	}
 
-	public void afficherNotions(String ressource) 
+	public void afficherNotions(Ressource ressource) 
 	{ 
 		this.panelBanqueDeQuestions.afficherNotions(ressource);
 	}
 	
-	public void afficherQuestions(String ressource, String notion)    
+	public void afficherQuestions(Ressource ressource, Notion notion)    
 	{ 
 		this.panelBanqueDeQuestions.afficherQuestions(ressource, notion);   
 	}
-
-	public void majHistorique(String action) { this.panelBanqueDeQuestions.majHistorique(action); }
 
 	public void creerRessource() 
 	{

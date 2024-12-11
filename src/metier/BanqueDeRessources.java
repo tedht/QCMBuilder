@@ -21,23 +21,35 @@ public class BanqueDeRessources
 {
 	/* Attributs */
 	// private Controleur      ctrl;
-	private List<Ressource> ressources;
+	private List<Ressource> lstRessources;
 
 
 	/* Constructeur */
 	public BanqueDeRessources(/*Controleur ctrl*/)
 	{
 		// this.ctrl = ctrl;
-		this.ressources = new ArrayList<Ressource>();
+		this.lstRessources = new ArrayList<Ressource>();
 	}
 
 	/* Getters */
 	public List<Ressource> getRessources()
 	{
-		return this.ressources;
+		return this.lstRessources;
 	}
 
-	/* Lecture du fichier CSV qui contient les ressources */
+	public List<Notion> getNotions(Ressource ressource) 
+	{
+		for(Ressource rsrc : this.lstRessources)
+		{
+			if(rsrc == ressource)
+			{
+				return ressource.getNotions();
+			}
+		}
+		return null;
+	}
+
+	/* Lecture du fichier CSV qui contient les lstRessources */
 	public void lireRessources(String nomFichier)
 	{
 		Scanner sc;
@@ -64,7 +76,7 @@ public class BanqueDeRessources
 					ressource.ajouterNotion(new Notion(donnees[cpt]));
 				}
 				
-				this.ressources.add(ressource);
+				this.lstRessources.add(ressource);
 			}
 		}
 		catch (FileNotFoundException fnfe)
@@ -73,7 +85,7 @@ public class BanqueDeRessources
 		}
 	}
 
-	/* Ecriture du fichier CSV qui contient les ressources */
+	/* Ecriture du fichier CSV qui contient les lstRessources */
 	public void sauvegarderRessources(String nomFichier)
 	{
 		List<Notion> notions;
@@ -85,9 +97,9 @@ public class BanqueDeRessources
 		{
 			pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream(nomFichier), "UTF8" ) );
 
-			for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
+			for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 			{
-				res = this.ressources.get(cpt);
+				res = this.lstRessources.get(cpt);
 				notions = res.getNotions();
 
 				pw.print(res.getNom() + "\t");
@@ -116,13 +128,13 @@ public class BanqueDeRessources
 	{
 		if (ressource == null) return false;
 
-		this.ressources.add(ressource);
+		this.lstRessources.add(ressource);
 		return true;
 	}
 
 	public boolean modifierRessource(Ressource ressource, String nouveauNom)
 	{
-		if (this.ressources.contains(ressource) &&
+		if (this.lstRessources.contains(ressource) &&
 			!nouveauNom.equals(null) &&
 			!ressource.getNom().equals(nouveauNom))
 		{
@@ -135,9 +147,9 @@ public class BanqueDeRessources
 
 	public boolean supprimerRessource(Ressource ressource)
 	{
-		if (this.ressources.contains(ressource))
+		if (this.lstRessources.contains(ressource))
 		{
-			this.ressources.remove(ressource);
+			this.lstRessources.remove(ressource);
 			return true;
 		}
 
@@ -149,10 +161,10 @@ public class BanqueDeRessources
 		String sRet = "";
 
 
-		for (int cpt = 0 ; cpt < this.ressources.size() ; cpt++)
+		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
-			sRet += this.ressources.get(cpt).getNom() + "\n" + "Notions : ";
-			for (Notion notion : this.ressources.get(cpt).getNotions())
+			sRet += this.lstRessources.get(cpt).getNom() + "\n" + "Notions : ";
+			for (Notion notion : this.lstRessources.get(cpt).getNotions())
 			{
 				sRet += notion.getNom() + ", ";
 			}
@@ -186,5 +198,14 @@ public class BanqueDeRessources
 		bqr2 = new BanqueDeRessources();
 		bqr2.lireRessources("test.csv");
 		System.out.println(bqr2);
+	}
+
+	public Ressource getRessource(String nomRessource) 
+	{
+		for(Ressource ressource : this.lstRessources)
+		{
+			if(ressource.getNom().equals(nomRessource)) return ressource;
+		}
+		return null;
 	}
 }

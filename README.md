@@ -20,7 +20,7 @@
 
 Cette application se compose de deux parties : une partie professeur et une partie étudiant.
 
-- **Partie professeur :** permet aux enseignants de générer des questionnaires à partir des questions qu'ils ont créées, en tenant compte de critères spécifiques.
+- **Partie professeur :** permet aux enseignants de générer des questionnaires à partir des lstQuestions qu'ils ont créées, en tenant compte de critères spécifiques.
 
 - **Partie étudiant :** donne aux élèves accès aux questionnaires via l'intranet pédagogique utilisé par les enseignants, leur permettant de s'autoévaluer.
 

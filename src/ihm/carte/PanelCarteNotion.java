@@ -32,7 +32,9 @@ public class PanelCarteNotion extends PanelCarte
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
-			PanelCarteNotion.this.ctrl.setNotionActive(PanelCarteNotion.this.lblTitre.getText());
+			PanelCarteNotion.this.ctrl.setNotionActive(
+				PanelCarteNotion.this.ctrl.getRessourceActive().getNotion(PanelCarteNotion.this.lblTitre.getText())
+			);
 			setBackground(Color.LIGHT_GRAY);
 		}
 	}

@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import controleur.Controleur;
+import metier.Notion;
+import metier.Ressource;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une question
@@ -105,18 +107,18 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		// Ressource
 		this.ddlstRessource = new JComboBox<String>();
 		this.ddlstRessource.setPreferredSize(new Dimension(200, 25));
-		for(String ressource : this.ctrl.getRessources())
+		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			this.ddlstRessource.addItem(ressource);
+			this.ddlstRessource.addItem(ressource.getNom());
 		}
 		this.ddlstRessource.setSelectedIndex(-1);
 
 		// Notion
 		this.ddlstNotion = new JComboBox<String>();
 		this.ddlstNotion.setPreferredSize(new Dimension(200, 25));
-		for(String notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
+		for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
 		{
-			this.ddlstNotion.addItem(notion);
+			this.ddlstNotion.addItem(notion.getNom());
 		}
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);

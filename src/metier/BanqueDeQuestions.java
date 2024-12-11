@@ -23,19 +23,19 @@ public class BanqueDeQuestions
 {
 	/* Attributs */
 	private Controleur     ctrl;
-	private List<Question> questions;
+	private List<Question> lstQuestions;
 
 
 	/* Constructeur */
 	public BanqueDeQuestions(Controleur ctrl)
 	{
-		this.ctrl = ctrl;
-		this.questions = new ArrayList<Question>();
+		this.ctrl         = ctrl;
+		this.lstQuestions = new ArrayList<Question>();
 	}
 
 	public List<Question> getQuestions()
 	{
-		return questions;
+		return lstQuestions;
 	}
 
 
@@ -119,7 +119,7 @@ public class BanqueDeQuestions
 			if (question != null) {
 				ajouterQuestions(question);
 			}
-			for (Question q : this.questions)
+			for (Question q : this.lstQuestions)
 			{
 				System.out.println(q);
 				if (q instanceof Qcm) {
@@ -141,7 +141,7 @@ public class BanqueDeQuestions
 	}
 
 
-	/* Ecriture du fichier RTF qui contient les questions */
+	/* Ecriture du fichier RTF qui contient les lstQuestions */
 	public void sauvegarderQuestions(String cheminFichier) {
 		boolean nouveauFichier = !(new File(cheminFichier).exists());
 		File fichier = new File(cheminFichier);
@@ -156,7 +156,7 @@ public class BanqueDeQuestions
 				bw.write("{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}\n}");
 			}
 
-			for (Question question : questions) {
+			for (Question question : lstQuestions) {
 				bw.write("\n\nID       : " + question.getId         ()          + "\\line\n");
 				bw.write("Ressource    : " + question.getRessource  ().getNom() + "\\line\n");
 				bw.write("Notion       : " + question.getNotion     ().getNom() + "\\line\n"); 
@@ -206,7 +206,7 @@ public class BanqueDeQuestions
 	{
 		if (question == null) return false;
 
-		this.questions.add(question);
+		this.lstQuestions.add(question);
 		return true;
 	}
 
@@ -216,7 +216,7 @@ public class BanqueDeQuestions
 
 
 		question = null;
-		for (Question q : this.questions)
+		for (Question q : this.lstQuestions)
 			if (q.getId() == id)
 				question = q;
 
@@ -239,13 +239,13 @@ public class BanqueDeQuestions
 
 
 		question = null;
-		for (Question q : this.questions)
+		for (Question q : this.lstQuestions)
 			if (q.getId() == id)
 				question = q;
 
 		if (question == null) return false; // N'a pas trouvé la question
 
-		this.questions.remove(id);
+		this.lstQuestions.remove(id);
 		return true;		
 	}
 
@@ -273,17 +273,31 @@ public class BanqueDeQuestions
 		Arrays.asList(2, 3, 5, 7));
 		banque.ajouterQuestions(elim);
 
-		banque.sauvegarderQuestions("questions.rtf");
+		banque.sauvegarderQuestions("lstQuestions.rtf");
 		banque.supprimerQuestion(0);
 		banque.supprimerQuestion(1);
 		banque.supprimerQuestion(2);
-		banque.fermerRTF("questions.rtf");
+		banque.fermerRTF("lstQuestions.rtf");
 
-		System.out.println("Les questions ont été écrites dans le fichier RTF.");
+		System.out.println("Les lstQuestions ont été écrites dans le fichier RTF.");
 
-		banque.lireQuestions("questions.rtf");
-		System.out.println("Les questions ont été lues depuis le fichier RTF.");
+		banque.lireQuestions("lstQuestions.rtf");
+		System.out.println("Les lstQuestions ont été lues depuis le fichier RTF.");
 		
 	}
+
+		public List<Question> getQuestions(Ressource ressource, Notion notion) 
+		{
+			List<Question> lstQuestions = new ArrayList<Question>();
+
+			for(Question question : this.lstQuestions)
+			{
+				if(question.getRessource() == ressource && question.getNotion() == notion)
+				{
+					lstQuestions.add(question);
+				}
+			}
+			return lstQuestions;
+		}
 }
 

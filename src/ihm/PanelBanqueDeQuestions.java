@@ -13,9 +13,12 @@ import ihm.carte.PanelCarte;
 import ihm.carte.PanelCarteNotion;
 import ihm.carte.PanelCarteQuestion;
 import ihm.carte.PanelCarteRessource;
+import metier.Notion;
+import metier.Question;
+import metier.Ressource;
 
 /**
- * Classe JPanel qui contient les composents de la fenêtre de la Banque de questions.
+ * Classe JPanel qui contient les composents de la fenêtre de la Banque de lstQuestions.
  * 
  * 
  * @author Ted Herambert
@@ -26,7 +29,6 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 
-	private Stack<String>    historique;
 	private List<PanelCarte> lstPanelCartes;
 
 	private JPanel panelEntete;
@@ -47,7 +49,7 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 
-		this.historique = new Stack<String>();
+
 
 		this.setLayout(new BorderLayout());
 		
@@ -159,16 +161,7 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 	{
 		if(e.getSource() == this.btnRetour)
 		{
-			if(!this.historique.empty())
-			{
-				String retour = this.historique.pop();
-				switch(retour.charAt(0))
-				{
-					case 'R' : this.ctrl.afficherRessources(); break;
-					case 'N' : this.ctrl.afficherNotions(retour.substring(1)); break;
-					default : break;
-				}
-			}
+			this.ctrl.retour();
 		}
 		if(e.getSource() == this.btnGenererQuestionnaire)
 		{
@@ -196,7 +189,7 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 
 	public void afficherRessources() 
 	{
-		System.out.println("afficher ressources");
+		System.out.println("afficher lstRessources");
 		/* Entête */
 		this.btnRetour.setEnabled(false);
 
@@ -210,32 +203,32 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 		this.reinitContenu();
 
 		this.panelContenu.setLayout(new GridLayout(0,2, 30,30));
-		for(String ressource : this.ctrl.getRessources())
+		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, ressource, this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
 		this.panelContenu.add(this.panelBtnAjouter);
 	}
 
-	public void afficherNotions(String ressource) 
+	public void afficherNotions(Ressource ressource) 
 	{
 		System.out.println("afficher notions");
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
 		this.lblFilAriane.setText("Ressources >> " + ressource);
-		this.lblTitre    .setText(ressource);
+		this.lblTitre    .setText(ressource.getNom());
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
 		/* Contenu */
 		this.reinitContenu();
 
 		this.panelContenu.setLayout(new GridLayout(0,3, 30,30));
-		for(String notion : this.ctrl.getNotions(ressource))
+		for(Notion notion : this.ctrl.getNotions(ressource))
 		{
-			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, notion, this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
@@ -244,14 +237,14 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 		this.panelContenu.add(this.panelBtnAjouter);
 	}
 
-	public void afficherQuestions(String ressource, String notion) 
+	public void afficherQuestions(Ressource ressource, Notion notion) 
 	{
-		System.out.println("afficher questions");
+		System.out.println("afficher lstQuestions");
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
 		this.lblFilAriane.setText("Ressources >> " + ressource + " >> " + notion);
-		this.lblTitre    .setText(notion);
+		this.lblTitre    .setText(notion.getNom());
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
 		/* Contenu */
@@ -265,24 +258,18 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 		gbc.weightx = 1;
 		gbc.gridx = 0; 
 		 
-		for(String question : this.ctrl.getQuestions(ressource, notion))
+		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, question, question, "tmp.png");
+			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, question.getIntitule(), " ", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 
 			gbc.gridy = this.lstPanelCartes.size()-1;
 			this.panelContenu.add(panelCarte, gbc);
 		}
-		
-		PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, "QUESTION", "INFOS QUESTION", " ");
-		this.lstPanelCartes.add(panelCarte);
-		this.panelContenu.add(panelCarte, gbc);
 
 		this.btnAjouter.setText("Créer une Nouvelle Question");
 		gbc.weighty = 1;
 		gbc.gridy = 1;
 		this.panelContenu.add(this.panelBtnAjouter, gbc);
 	}
-
-	public void majHistorique(String action) { this.historique.add(action); }
 }

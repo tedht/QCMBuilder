@@ -32,7 +32,9 @@ public class PanelCarteRessource extends PanelCarte
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
-			PanelCarteRessource.this.ctrl.setRessourceActive(PanelCarteRessource.this.lblTitre.getText());
+			PanelCarteRessource.this.ctrl.setRessourceActive(
+				PanelCarteRessource.this.ctrl.getRessource(PanelCarteRessource.this.lblTitre.getText())
+			);
 			setBackground(Color.LIGHT_GRAY);
 		}
 	}

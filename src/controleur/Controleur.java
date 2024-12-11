@@ -9,56 +9,40 @@ import metier.BanqueDeRessources;
 
 import metier.Ressource;
 import metier.Notion;
+import metier.QCMBuilder;
+import metier.Question;
 
 public class Controleur
 {
-	private BanqueDeQuestions      banqueQuestion;
-	private BanqueDeRessources     banqueRessource;
+	private QCMBuilder             metier;
 	private	FrameBanqueDeQuestions ihm;
 	
 	public Controleur()
 	{
-		this.banqueQuestion  = new BanqueDeQuestions(this);
-		this.banqueRessource = new BanqueDeRessources(); 
-		this.ihm = new FrameBanqueDeQuestions(this);
+		this.metier = new QCMBuilder(this);
+		this.ihm    = new FrameBanqueDeQuestions(this);
 	}
 
-	public List<String> getRessources()
+	public List<Ressource> getRessources()
 	{
-		List<Ressource> lstRessource;
-		List<String>    lstNomRessource;
-
-
-		lstRessource = this.banqueRessource.getRessources();
-
-		lstNomRessource = new ArrayList<String>();
-		for (Ressource ressource : lstRessource)
-			lstNomRessource.add(ressource.getNom());
-
-		return lstNomRessource;
+		return this.metier.getRessources();
 	}
 
-	public List<String> getNotions(Ressource ressource)
+	public List<Notion> getNotions(Ressource ressource)
 	{
-		List<String>    lstNomNotion;
-
-
+		/*List<String>    lstNomNotion;
 		lstNomNotion = new ArrayList<String>();
-		for (Notion notion : ressource.getNotions())
-			lstNomNotion.add(notion.getNom());
-
-
-		/*lst.add("Encapsulation");
+		lst.add("Encapsulation");
 		lst.add("Héritage");
 		lst.add("Polymorphisme");
 		lst.add("Abstraction");*/
 
-		return lstNomNotion;
+		return this.metier.getNotions(ressource);
 	}
 
-	public List<String> getQuestions(Ressource ressource, Notion notion)
+	public List<Question> getQuestions(Ressource ressource, Notion notion)
 	{
-		return new ArrayList<String>();
+		return this.metier.getQuestions(ressource, notion);
 	}
 
 	public void afficherRessources()
@@ -76,27 +60,14 @@ public class Controleur
 		this.ihm.afficherQuestions(ressource, notion);
 	}
 
-	/* tmp */
-	public void majHistorique(String action) { this.ihm.majHistorique(action); }
-
-	public void setRessourceActive(String ressource) 
+	public void setRessourceActive(Ressource ressource) 
 	{
-		//this.banqueQuestion.setRessourceActive(ressource);
-		// => DANS LE banqueQuestion : On met à jour l'historique et on appel afficherNotions
-		
-		/* tmp */
-		this.ihm.majHistorique("R");
-		this.ihm.afficherNotions(ressource);
+		this.metier.setRessourceActive(ressource);
 	}
 
-	public void setNotionActive(String notion) 
+	public void setNotionActive(Notion notion) 
 	{
-		//this.banqueQuestion.setNotionActive(notion);
-		// => DANS LE banqueQuestion : On met à jour l'historique et on appel afficherQuestions
-		
-		/* tmp */
-		this.ihm.majHistorique("N"+this.getRessourceActive());
-		this.ihm.afficherQuestions(this.getRessourceActive(), notion);
+		this.metier.setNotionActive(notion);
 	}
 
 	public int getNbNotions(Ressource ressource) 
@@ -109,18 +80,14 @@ public class Controleur
 		return this.getQuestions(ressource, notion).size();
 	}
 
-	public String getRessourceActive()
+	public Ressource getRessourceActive()
 	{
-		// return this.banqueQuestion.getRessourceActive();
-		return "Dévelopement Orienté Objet";
-		// return null;
+		return this.metier.getRessourceActive();
 	}
 
-	public String getNotionActive()
+	public Notion getNotionActive()
 	{
-		//return this.banqueQuestion.getNotionActive();
-		return "Encapsulation";
-		//return null;
+		return this.metier.getNotionActive();
 	}
 
 
@@ -155,5 +122,15 @@ public class Controleur
 	public static void main(String[] args) 
 	{
 		new Controleur();
+	}
+
+	public void retour() 
+	{
+		this.metier.retour();
+	}
+
+	public Ressource getRessource(String nomRessource) 
+	{
+		return this.metier.getRessource(nomRessource);
 	}
 }

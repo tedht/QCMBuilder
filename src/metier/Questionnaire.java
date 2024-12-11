@@ -20,7 +20,7 @@ public class Questionnaire
 	private Ressource      ressource;
 	private List<Notion>   notions;
 	private boolean        chronometre;
-	private List<Question> questions;
+	private List<Question> lstQuestions;
 
 	/* Constructeur */
 	public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
@@ -28,14 +28,14 @@ public class Questionnaire
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
 		this.notions     = notions;
-		this.questions   = new ArrayList<Question>();
+		this.lstQuestions   = new ArrayList<Question>();
 	}
 
 	/* Getters */
 	public Ressource      getRessource () { return ressource;  }
 	public List<Notion>   getNotions   () { return notions;    }
 	public boolean        isChronometre() { return chronometre;}
-	public List<Question> getQuestions () { return questions;  }
+	public List<Question> getQuestions () { return lstQuestions;  }
 
 	/* Setters */
 	public boolean setRessource  (Ressource ressource) 
@@ -59,11 +59,11 @@ public class Questionnaire
 		this.chronometre = !this.chronometre;
 	}
 
-	public boolean setQuestions  (List<Question> questions  ) 
+	public boolean setQuestions  (List<Question> lstQuestions  ) 
 	{
-		if (questions == null) return false;
+		if (lstQuestions == null) return false;
 
-		this.questions = questions;
+		this.lstQuestions = lstQuestions;
 		return true;
 	}
 
@@ -139,7 +139,7 @@ public class Questionnaire
 	{
 		return "Questionnaire :\n" +
 				"   ressource : " + this.ressource   + "\n" +
-				"   questions : " + this.questions   + "\n" + 
+				"   lstQuestions : " + this.lstQuestions   + "\n" + 
 				"     notions : " + this.notions     + "\n" +
 				" chronometre : " + this.chronometre + "\n" ;
 	}
