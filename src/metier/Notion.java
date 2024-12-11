@@ -1,14 +1,12 @@
 package metier;
 
-import java.util.Objects;
-
 public class Notion 
 {
 	private String nom;
 	
-	public Notion(String nom) 
+	public Notion(String nom)
 	{
-		if(!nom.equals(null))
+		if(nom != null)
 		{
 			this.nom = nom;
 		}
@@ -29,7 +27,7 @@ public class Notion
 
 	public boolean setNom(String nom) 
 	{
-		if(!nom.equals(null) && !nom.equals(this.nom))
+		if(nom != null && !nom.equals(this.nom))
 		{
 			this.nom = nom;
 			return true;
@@ -37,12 +35,4 @@ public class Notion
 
 		return false;
 	}
-
-	@Override
-    public boolean equals(Object o) {
-		Notion autre = (Notion) o;
-        if (autre == null || getClass() != autre.getClass()) return false;
-
-        return Objects.equals(nom, autre.getNom());
-    }
 }
