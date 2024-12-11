@@ -10,7 +10,7 @@ import metier.BanqueDeRessources;
 import metier.Ressource;
 import metier.Notion;
 
-public class Controleur 
+public class Controleur
 {
 	private BanqueDeQuestions      banqueQuestion;
 	private BanqueDeRessources     banqueRessource;
@@ -60,24 +60,19 @@ public class Controleur
 	{
 		return new ArrayList<String>();
 	}
-	
-	public static void main(String[] args) 
-	{
-		new Controleur();
-	}
 
 	public void afficherRessources()
 	{
 		this.ihm.afficherRessources();
 	}
 
-	public void afficherNotions(String ressource)
+	public void afficherNotions(Ressource ressource)
 	{ 
 		this.ihm.afficherNotions(ressource);
 	}
 
-	public void afficherQuestions(String ressource, String notion)
-	{ 
+	public void afficherQuestions(Ressource ressource, Notion notion)
+	{
 		this.ihm.afficherQuestions(ressource, notion);
 	}
 
@@ -116,16 +111,16 @@ public class Controleur
 
 	public String getRessourceActive()
 	{
-		//return this.banqueQuestion.getRessourceActive();
+		// return this.banqueQuestion.getRessourceActive();
 		return "Dévelopement Orienté Objet";
-		//return null;
+		// return null;
 	}
 
 	public String getNotionActive()
 	{
 		//return this.banqueQuestion.getNotionActive();
 		return "Encapsulation";
-		//return null; 
+		//return null;
 	}
 
 
@@ -154,5 +149,11 @@ public class Controleur
 	public void creerNotion(String nomNotion, String cheminImg)  
 	{
 		//this.banqueQuestion.creerNotion(nomNotion, cheminImg);
+	}
+
+
+	public static void main(String[] args) 
+	{
+		new Controleur();
 	}
 }
