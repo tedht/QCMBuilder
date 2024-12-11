@@ -35,9 +35,9 @@ public class Association extends Question
 	/* Getteurs */
 	/*----------*/
 
-	public List<String>            getPropositions()           { return this.lstPropositons; }
-	public List<String>            getReponses()               { return this.lstReponses;    }
-	public HashMap<String, String> getProposition() { return this.liaisons;       }
+	public List<String>            getPropositions() { return this.lstPropositons; }
+	public List<String>            getReponses    () { return this.lstReponses;    }
+	public HashMap<String, String> getLiaison     () { return this.liaisons;       }
 
 	/* Ajouter une proposition */
 	public boolean ajouterProposition(String proposition)
