@@ -45,9 +45,11 @@ public class PanelProposition extends JPanel implements ActionListener
 		/*-------------------------------*/
 		/* Positionnement des composants */
 		/*-------------------------------*/
-		this.add(this.txtProposition,    BorderLayout.CENTER);
-		this.add(panelBtnSupprimer,      BorderLayout.WEST);
+		this.add(this.txtProposition, BorderLayout.CENTER);
+
+		this.add(panelBtnSupprimer, BorderLayout.WEST);
 		panelBtnSupprimer.add(this.btnSupprimer);
+
 		this.add(this.cbReponseCorrecte, BorderLayout.EAST);
 
 		/*---------------------------*/

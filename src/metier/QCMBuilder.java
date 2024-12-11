@@ -58,12 +58,12 @@ public class QCMBuilder
 		//this.ctrl.afficherQuestions(this.ressourceActive, this.notionActive);
 	}
 
-	public void retour()
+	public void popHistorique()
 	{
 		if(!this.historique.empty())
 		{
-			String retour = this.historique.pop();
-			switch(retour.charAt(0))
+			String action = this.historique.pop();
+			switch(action.charAt(0))
 			{
 				case 'R' : 
 					this.ressourceActive = null;

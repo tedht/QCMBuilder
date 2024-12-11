@@ -34,7 +34,7 @@ public class PanelEditionRessource extends PanelEditionEntite
 		if(this.ctrl.getRessource(this.txtNom.getText()) == null)
 		{
 			this.ctrl.creerRessource(this.txtNom.getText(), this.txtImage.getText());
-			this.framePrincipale.afficherRessources();
+			this.framePrincipale.reinitAffichage();
 			return true;
 		}
 		return false;

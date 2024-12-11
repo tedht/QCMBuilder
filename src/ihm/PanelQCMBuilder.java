@@ -160,7 +160,8 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	{
 		if(e.getSource() == this.btnRetour)
 		{
-			this.ctrl.retour();
+			this.ctrl.popHistorique();
+			this.frame.reinitAffichage();
 		}
 		if(e.getSource() == this.btnGenererQuestionnaire)
 		{
@@ -183,7 +184,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		}
 	}
 
-	private void reinitContenu()
+	public void reinitAffichage()
 	{
 		for(PanelCarte panelCarte : this.lstPanelCartes)
 		{
@@ -192,12 +193,25 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lstPanelCartes.clear();
 		this.panelContenu.remove(this.panelBtnAjouter);
 
+		if(this.ctrl.getRessourceActive() == null)
+		{
+			this.afficherRessources();
+		}
+		else if(this.ctrl.getNotionActive() == null)
+		{
+			this.afficherNotions();
+		}
+		else
+		{
+			this.afficherQuestions();
+		}
+
 		this.revalidate();
 		this.repaint();
 	}
 
 
-	public void afficherRessources() 
+	private void afficherRessources() 
 	{
 		/* Entête */
 		this.btnRetour.setEnabled(false);
@@ -207,7 +221,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getRessources().size() + " ressource(s)");
 		
 		/* Contenu */
-		this.reinitContenu();
 		this.panelContenu.setLayout(new GridLayout(0,2, 30,30));
 
 		for(Ressource ressource : this.ctrl.getRessources())
@@ -229,7 +242,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		}
 	}
 
-	public void afficherNotions() 
+	private void afficherNotions() 
 	{
 		Ressource ressource = this.ctrl.getRessourceActive();
 		
@@ -241,8 +254,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
 		/* Contenu */
-		this.reinitContenu();
-
 		GridLayout gridLayout = new GridLayout(0,3, 30,30);
 		this.panelContenu.setLayout(gridLayout);
 
@@ -265,7 +276,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		}
 	}
 
-	public void afficherQuestions() 
+	private void afficherQuestions() 
 	{
 		Ressource ressource = this.ctrl.getRessourceActive();
 		Notion    notion    = this.ctrl.getNotionActive();
@@ -278,7 +289,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
 		/* Contenu */
-		this.reinitContenu();
 
 		this.panelContenu.setLayout(new GridLayout(0, 1, 5, 10));
 		 

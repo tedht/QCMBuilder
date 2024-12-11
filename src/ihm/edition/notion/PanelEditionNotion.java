@@ -33,7 +33,7 @@ public class PanelEditionNotion extends PanelEditionEntite
 		if(this.ctrl.getRessourceActive().getNotion(this.txtNom.getText()) == null)
 		{
 			this.ctrl.creerNotion(this.ctrl.getRessourceActive(), this.txtNom.getText(), this.txtImage.getText());
-			this.framePrincipale.afficherNotions();
+			this.framePrincipale.reinitAffichage();
 			return true;
 		}
 		return false;

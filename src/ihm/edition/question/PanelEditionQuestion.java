@@ -323,7 +323,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	private boolean valider()
 	{
 		this.ctrl.creerQuestion();
-		this.framePrincipale.afficherQuestions();
+		this.framePrincipale.reinitAffichage();
 		return true;
 	}
 
