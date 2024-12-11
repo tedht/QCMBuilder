@@ -20,7 +20,7 @@ public enum Difficulte
 
 	public String toString()
 	{
-		return "Difficulte : " + this.difficulte;
+		return this.difficulte;
 	}
 
 	public static void main(String[] args)
