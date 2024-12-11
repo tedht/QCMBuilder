@@ -12,18 +12,18 @@ public class Notion
 		}
 	}
 
-	/*--------------*/
-	//    GETTER    //
-	/*--------------*/
+	/*==============*/
+	/*    GETTER    */
+	/*==============*/
 
 	public String getNom()
 	{
 		return this.nom;
 	}
 
-	/*--------------*/
-	//    SETTER    //
-	/*--------------*/
+	/*==============*/
+	/*    SETTER    */
+	/*==============*/
 
 	public boolean setNom(String nom) 
 	{

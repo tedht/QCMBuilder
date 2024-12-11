@@ -2,7 +2,7 @@ package controleur;
 
 import java.util.List;
 
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Question;
@@ -15,7 +15,8 @@ public class Controleur
 	public Controleur()
 	{
 		this.metier = new QCMBuilder();
-		new FrameQCMBuilder(this);
+		
+		new IHM(this);
 	}
 
 	public static void main(String[] args) 
@@ -68,14 +69,14 @@ public class Controleur
 		return this.metier.getNotionActive();
 	}
 
-	public void creerRessource(String nomRessource, String cheminImg) 
+	public void creerRessource(String nomRessource) 
 	{
-		this.metier.creerRessource(nomRessource, cheminImg);
+		this.metier.creerRessource(nomRessource);
 	}
 
-	public void creerNotion(Ressource ressource, String nomNotion, String cheminImg)  
+	public void creerNotion(String nomNotion)  
 	{
-		this.metier.creerNotion(ressource, nomNotion, cheminImg);
+		this.metier.creerNotion(nomNotion);
 	}
 
 	public void creerQuestion() 

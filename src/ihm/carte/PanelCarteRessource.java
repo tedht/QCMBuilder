@@ -3,7 +3,7 @@ package ihm.carte;
 import java.awt.event.MouseEvent;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe JPanel pour afficher une Notion.
@@ -19,9 +19,9 @@ public class PanelCarteRessource extends PanelCarte
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelCarteRessource(Controleur ctrl, FrameQCMBuilder framePrincipale, String titre, String sousTitre, String cheminImg)
+	public PanelCarteRessource(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
-		super(ctrl, framePrincipale, titre, sousTitre, cheminImg);
+		super(ctrl, ihm, titre, sousTitre);
 		
 		// Activation des composants
 		this.addMouseListener(new GereSourisRessource());
@@ -35,7 +35,7 @@ public class PanelCarteRessource extends PanelCarte
 			PanelCarteRessource.this.ctrl.setRessourceActive(
 				PanelCarteRessource.this.ctrl.getRessource(PanelCarteRessource.this.lblTitre.getText())
 			);
-			PanelCarteRessource.this.framePrincipale.reinitAffichage();
+			PanelCarteRessource.this.ihm.reinitAffichage();
 		}
 	}
 }

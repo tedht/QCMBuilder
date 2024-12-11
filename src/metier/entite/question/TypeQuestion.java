@@ -3,7 +3,6 @@ package metier.entite.question;
 public enum TypeQuestion 
 {
 	QCM        ("QCM"),
-	QRM        ("QRM" ),
 	ASSOCIATION("Association" ),
 	ELIMINATION("Elimination" );
 

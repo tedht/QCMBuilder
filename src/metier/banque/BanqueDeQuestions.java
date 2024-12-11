@@ -1,4 +1,4 @@
-package metier;
+package metier.banque;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -41,6 +41,28 @@ public class BanqueDeQuestions
 	public List<Question> getQuestions()
 	{
 		return lstQuestions;
+	}
+
+	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	{
+		List<Question> lstQuestions = new ArrayList<Question>();
+
+		for(Question question : this.lstQuestions)
+		{
+			if(question.getRessource() == ressource && question.getNotion() == notion)
+			{
+				lstQuestions.add(question);
+			}
+		}
+		return lstQuestions;
+	}
+
+	public boolean ajouterQuestions(Question question)
+	{
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		return true;
 	}
 
 
@@ -105,7 +127,6 @@ public class BanqueDeQuestions
 				else if (ligne.startsWith("Explication" ))
 				{
 					question.setExplication(ligne.split(": ")[1].trim());
-
 				} 
 				else if (ligne.startsWith("Difficulte"  ))
 				{
@@ -217,7 +238,7 @@ public class BanqueDeQuestions
 		{
 			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
-	}
+	}*/
 
 
 	/* Ecriture du fichier RTF qui contient les lstQuestions */
@@ -314,15 +335,6 @@ public class BanqueDeQuestions
 		}
 	}
 
-
-	public boolean ajouterQuestions(Question question)
-	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		return true;
-	}
-
 	public boolean modifierQuestion(int id, String critere, Object modif)
 	{
 		Question question;
@@ -397,19 +409,5 @@ public class BanqueDeQuestions
 		System.out.println("Les lstQuestions ont été lues depuis le fichier RTF.");
 		
 	}
-
-		public List<Question> getQuestions(Ressource ressource, Notion notion) 
-		{
-			List<Question> lstQuestions = new ArrayList<Question>();
-
-			for(Question question : this.lstQuestions)
-			{
-				if(question.getRessource() == ressource && question.getNotion() == notion)
-				{
-					lstQuestions.add(question);
-				}
-			}
-			return lstQuestions;
-		}
 }
 

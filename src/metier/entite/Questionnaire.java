@@ -1,4 +1,4 @@
-package metier;
+package metier.entite;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,8 +8,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import metier.entite.Notion;
-import metier.entite.Ressource;
 import metier.entite.question.Question;
 
 

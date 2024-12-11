@@ -1,4 +1,4 @@
-package metier;
+package metier.banque;
 
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import controleur.Controleur;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -22,7 +21,6 @@ import metier.entite.Ressource;
 public class BanqueDeRessources
 {
 	/* Attributs */
-	// private Controleur      ctrl;
 	private List<Ressource> lstRessources;
 
 

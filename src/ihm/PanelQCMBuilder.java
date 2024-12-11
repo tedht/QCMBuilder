@@ -26,8 +26,8 @@ import metier.entite.question.Question;
  */
 public class PanelQCMBuilder extends JPanel implements ActionListener
 {
-	private Controleur      ctrl;
-	private FrameQCMBuilder frame;
+	private Controleur ctrl;
+	private IHM        ihm;
 
 	private List<PanelCarte> lstPanelCartes;
 
@@ -45,10 +45,10 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelQCMBuilder(Controleur ctrl, FrameQCMBuilder frame)
+	public PanelQCMBuilder(Controleur ctrl, IHM ihm)
 	{
-		this.ctrl  = ctrl;
-		this.frame = frame;
+		this.ctrl = ctrl;
+		this.ihm  = ihm;
 
 		this.setLayout(new BorderLayout());
 		
@@ -62,6 +62,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		this.panelEntete .setBorder(new EmptyBorder(10,20,10,20));
 		this.panelContenu.setBorder(new EmptyBorder(20,20,20,20));
+		this.panelContenu.setLayout(new GridLayout(0, 1, 5, 10));
 
 		this.lstPanelCartes = new ArrayList<PanelCarte>();
 
@@ -161,7 +162,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		if(e.getSource() == this.btnRetour)
 		{
 			this.ctrl.popHistorique();
-			this.frame.reinitAffichage();
+			this.ihm.reinitAffichage();
 		}
 		if(e.getSource() == this.btnGenererQuestionnaire)
 		{
@@ -171,15 +172,15 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		{
 			if(this.ctrl.getRessourceActive() == null)
 			{
-				this.frame.creerRessource();
+				this.ihm.creerRessource();
 			}
 			else if(this.ctrl.getNotionActive() == null)
 			{
-				this.frame.creerNotion();
+				this.ihm.creerNotion();
 			}
 			else
 			{
-				this.frame.creerQuestion();
+				this.ihm.creerQuestion();
 			}
 		}
 	}
@@ -221,11 +222,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getRessources().size() + " ressource(s)");
 		
 		/* Contenu */
-		this.panelContenu.setLayout(new GridLayout(0,2, 30,30));
-
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, this.frame, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, this.ihm, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu  .add(panelCarte);
 		}
@@ -233,12 +232,12 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.btnAjouter.setText("Créer une Nouvelle Ressource");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = 3 - this.lstPanelCartes.size(); i > 0; i--)
+		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(null, null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
-			this.panelContenu  .add(panelCarte);
+			this.panelContenu.add(panelCarte);
 		}
 	}
 
@@ -254,12 +253,10 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
 		/* Contenu */
-		GridLayout gridLayout = new GridLayout(0,3, 30,30);
-		this.panelContenu.setLayout(gridLayout);
 
 		for(Notion notion : this.ctrl.getNotions(ressource))
 		{
-			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, this.frame, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, this.ihm, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
@@ -267,9 +264,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.btnAjouter.setText("Créer une Nouvelle Notion");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = 5 - this.lstPanelCartes.size(); i > 0; i--)
+		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteNotion(null, null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
@@ -289,14 +286,11 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
 		/* Contenu */
-
-		this.panelContenu.setLayout(new GridLayout(0, 1, 5, 10));
 		 
 		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, this.frame, question.getIntitule(), 
-			                                            question.getNote() + " point(s), " + question.getTemps() + "s", 
-														"tmp.png");
+			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, this.ihm, question.getIntitule(), 
+			                                            question.getNote() + " point(s), " + question.getTemps() + "s");
 			this.lstPanelCartes.add(panelCarte);
 
 			this.panelContenu.add(panelCarte);
@@ -307,7 +301,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(null, null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);

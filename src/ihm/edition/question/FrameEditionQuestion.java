@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe représentant la fenêtre d'édition (création ou modification) d'une question
@@ -22,13 +22,13 @@ public class FrameEditionQuestion extends JFrame
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public FrameEditionQuestion(Controleur ctrl, FrameQCMBuilder framePrincipale) 
+	public FrameEditionQuestion(Controleur ctrl, IHM ihm) 
 	{
 		this.setTitle("Créer une Question");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditionQuestion = new PanelEditionQuestion(ctrl, framePrincipale);
+		this.panelEditionQuestion = new PanelEditionQuestion(ctrl, ihm);
 		this.add(this.panelEditionQuestion);
 
 		this.pack();

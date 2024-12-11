@@ -37,7 +37,7 @@ public class QCM extends Question
 
 	public TypeQuestion getTypeQuestion()
 	{
-		return  this.reponse.size() == 1 ? TypeQuestion.QCM : TypeQuestion.QRM;
+		return TypeQuestion.QCM;
 	}
 
 	/*----------*/

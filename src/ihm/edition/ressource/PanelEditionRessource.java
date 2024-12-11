@@ -1,7 +1,7 @@
 package ihm.edition.ressource;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 import ihm.edition.PanelEditionEntite;
 
 /**
@@ -19,9 +19,9 @@ public class PanelEditionRessource extends PanelEditionEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionRessource(Controleur ctrl, FrameQCMBuilder framePrincipale)
+	public PanelEditionRessource(Controleur ctrl, IHM ihm)
 	{
-		super(ctrl, framePrincipale);
+		super(ctrl, ihm);
 	}
 
 	public String getType()
@@ -33,8 +33,8 @@ public class PanelEditionRessource extends PanelEditionEntite
 	{
 		if(this.ctrl.getRessource(this.txtNom.getText()) == null)
 		{
-			this.ctrl.creerRessource(this.txtNom.getText(), this.txtImage.getText());
-			this.framePrincipale.reinitAffichage();
+			this.ctrl.creerRessource(this.txtNom.getText());
+			this.ihm.reinitAffichage();
 			return true;
 		}
 		return false;

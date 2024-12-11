@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe représentant la fenêtre d'édition (création ou modification) d'une ressource.
@@ -22,13 +22,13 @@ public class FrameEditionRessource extends JFrame
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public FrameEditionRessource(Controleur ctrl, FrameQCMBuilder framePrincipale)
+	public FrameEditionRessource(Controleur ctrl, IHM ihm)
 	{
 		this.setTitle("Créer une Ressource");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditionRessource = new PanelEditionRessource(ctrl, framePrincipale);
+		this.panelEditionRessource = new PanelEditionRessource(ctrl, ihm);
 		this.add(this.panelEditionRessource);
 
 		this.pack();

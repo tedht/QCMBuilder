@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe JPanel pour afficher une Notion.
@@ -27,31 +27,15 @@ public class PanelCarteQuestion extends PanelCarte
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelCarteQuestion(Controleur ctrl, FrameQCMBuilder framePrincipale, String titre, String sousTitre, String cheminImg)
+	public PanelCarteQuestion(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
-		super(ctrl, framePrincipale, titre, sousTitre, cheminImg);
+		super(ctrl, ihm, titre, sousTitre);
 		
-		this.ctrl = ctrl;
 		this.detail = false;
-
-		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/
-
-		this.lblTitre = new JLabel(titre);
-		this.lblTitre.setFont(new Font("Arial", Font.BOLD, 20));
-
-		this.lblSousTitre = new JLabel(sousTitre);
-		this.lblSousTitre.setFont(new Font("Arial", Font.BOLD, 12));
-
-		this.panelInfo = new JPanel();
-		this.panelInfo.setLayout(new BoxLayout(this.panelInfo, BoxLayout.Y_AXIS));
-		this.panelInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-		this.imageIcon = new ImageIcon(cheminImg);
 
 		this.btnModifier  = new JButton("M");
 		this.btnDupliquer = new JButton("D");
@@ -65,8 +49,6 @@ public class PanelCarteQuestion extends PanelCarte
 		this.panelInfo.add(this.lblTitre);
 		this.panelInfo.add(this.lblSousTitre);
 		this.add(this.panelInfo, BorderLayout.CENTER);
-
-		//this.add(new JLabel(imageIcon), BorderLayout.WEST);
 
 		this.panelAction.add(this.btnModifier);
 		this.panelAction.add(this.btnDupliquer);

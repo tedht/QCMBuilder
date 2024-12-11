@@ -3,6 +3,8 @@ package metier;
 import java.util.List;
 import java.util.Stack;
 
+import metier.banque.BanqueDeQuestions;
+import metier.banque.BanqueDeRessources;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
@@ -20,13 +22,13 @@ public class QCMBuilder
 	
 	public QCMBuilder()
 	{
-		this.banqueQuestion  = new BanqueDeQuestions();
-		this.banqueRessource = new BanqueDeRessources(); 
-
 		this.ressourceActive = null;
 		this.notionActive    = null;
 
 		this.historique = new Stack<String>();
+
+		this.banqueQuestion  = new BanqueDeQuestions();
+		this.banqueRessource = new BanqueDeRessources(); 
 	}
 
 	public List<Ressource> getRessources() 
@@ -89,19 +91,19 @@ public class QCMBuilder
 		return this.banqueRessource.getRessource(nomRessource);
 	}
 
-	public void creerRessource(String nomRessource, String cheminImg) 
+	public void creerRessource(String nomRessource) 
 	{
 		this.banqueRessource.ajouterRessource(new Ressource(nomRessource));
 	}
 
-	public void creerNotion(Ressource ressource, String nomNotion, String cheminImg) 
+	public void creerNotion(String nomNotion) 
 	{
-		ressource.ajouterNotion(new Notion(nomNotion));
+		if(this.ressourceActive != null)
+			this.ressourceActive.ajouterNotion(new Notion(nomNotion));
 	}
 
 	public void creerQuestion() 
 	{
 		this.banqueQuestion.ajouterQuestions(new Question(0, "A quoi sert le chiffrement ?", "", Difficulte.FACILE, ressourceActive, notionActive, 30, 1));
 	}
-
 }

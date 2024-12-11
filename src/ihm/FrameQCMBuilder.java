@@ -19,11 +19,8 @@ import ihm.edition.ressource.FrameEditionRessource;
 public class FrameQCMBuilder extends JFrame
 {
 	private Controleur ctrl;
+	private IHM        ihm;
 
-	private FrameEditionRessource frameEditionRessource;
-	private FrameEditionNotion    frameEditionNotion;
-	private FrameEditionQuestion  frameEditionQuestion;
-	
 	private PanelQCMBuilder panelQCMBuilder;
 
 	/**
@@ -31,16 +28,17 @@ public class FrameQCMBuilder extends JFrame
      * 
      * @param ctrl Le contrôleur
      */
-	public FrameQCMBuilder(Controleur ctrl)
+	public FrameQCMBuilder(Controleur ctrl, IHM ihm)
 	{
 		this.ctrl = ctrl;
+		this.ihm  = ihm;
 
 		this.setTitle("Banque de Questions");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelQCMBuilder = new PanelQCMBuilder(this.ctrl, this);
+        this.panelQCMBuilder = new PanelQCMBuilder(ctrl, ihm);
         this.add(this.panelQCMBuilder);
 
         // Définition des dimensions.
@@ -59,99 +57,5 @@ public class FrameQCMBuilder extends JFrame
 	public void reinitAffichage()
 	{ 
 		this.panelQCMBuilder.reinitAffichage();          
-	}
-
-	public void creerRessource() 
-	{
-		if(this.frameEditionRessource == null)
-		{
-			// Crée une nouvelle fenêtre d'édition de ressource
-			this.frameEditionRessource = new FrameEditionRessource(this.ctrl, this);
-
-			// Positionne frameEditionRessource au centre de la fenêtre principale
-			this.frameEditionRessource.setLocation(
-				this.getX() + this.getWidth () / 2 - this.frameEditionRessource.getWidth () / 2,
-				this.getY() + this.getHeight() / 2 - this.frameEditionRessource.getHeight() / 2
-			);
-
-			// Rend la fenêtre visible
-			this.frameEditionRessource.setVisible(true);
-
-			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionRessource.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) 
-				{
-                    FrameQCMBuilder.this.frameEditionRessource = null;
-                }
-            });
-		}
-		else
-		{
-			// Si la frameEditionRessource existe déjà, elle est mise en avant
-			this.frameEditionRessource.toFront();
-		}
-	}
-
-	public void creerNotion() 
-	{
-		if(this.frameEditionNotion == null)
-		{
-			// Crée une nouvelle fenêtre d'édition de notion
-			this.frameEditionNotion = new FrameEditionNotion(this.ctrl, this);
-
-			// Positionne frameEditionNotion au centre de la fenêtre principale
-			this.frameEditionNotion.setLocation(
-				this.getX() + this.getWidth () / 2 - this.frameEditionNotion.getWidth () / 2,
-				this.getY() + this.getHeight() / 2 - this.frameEditionNotion.getHeight() / 2
-			);
-
-			// Rend la fenêtre visible
-			this.frameEditionNotion.setVisible(true);
-
-			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionNotion.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    FrameQCMBuilder.this.frameEditionNotion = null;
-                }
-            });
-		}
-		else
-		{
-			// Si la frameEditionNotion existe déjà, elle est mise en avant
-			this.frameEditionNotion.toFront();
-		}
-	}
-
-	public void creerQuestion() 
-	{
-		if(this.frameEditionQuestion == null)
-		{
-			// Crée une nouvelle fenêtre d'édition de question
-			this.frameEditionQuestion = new FrameEditionQuestion(this.ctrl, this);
-
-			// Positionne frameEditionQuestion au centre de la fenêtre principale
-			this.frameEditionQuestion.setLocation(
-				this.getX() + this.getWidth () / 2 - this.frameEditionQuestion.getWidth () / 2,
-				this.getY() + this.getHeight() / 4 - this.frameEditionQuestion.getHeight() / 2
-			);
-
-			// Rend la fenêtre visible
-			this.frameEditionQuestion.setVisible(true);
-
-			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionQuestion.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    FrameQCMBuilder.this.frameEditionQuestion = null;
-                }
-            });
-		}
-		else
-		{
-			// Si la frameEditionQuestion existe déjà, elle est mise en avant
-			this.frameEditionQuestion.toFront();
-		}
 	}
 }

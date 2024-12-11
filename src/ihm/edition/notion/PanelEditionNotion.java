@@ -1,7 +1,7 @@
 package ihm.edition.notion;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 import ihm.edition.PanelEditionEntite;
 
 /**
@@ -18,9 +18,9 @@ public class PanelEditionNotion extends PanelEditionEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionNotion(Controleur ctrl, FrameQCMBuilder framePrincipale)
+	public PanelEditionNotion(Controleur ctrl, IHM ihm)
 	{
-		super(ctrl, framePrincipale);
+		super(ctrl, ihm);
 	}
 
 	public String getType()
@@ -32,8 +32,8 @@ public class PanelEditionNotion extends PanelEditionEntite
 	{
 		if(this.ctrl.getRessourceActive().getNotion(this.txtNom.getText()) == null)
 		{
-			this.ctrl.creerNotion(this.ctrl.getRessourceActive(), this.txtNom.getText(), this.txtImage.getText());
-			this.framePrincipale.reinitAffichage();
+			this.ctrl.creerNotion(this.txtNom.getText());
+			this.ihm.reinitAffichage();
 			return true;
 		}
 		return false;

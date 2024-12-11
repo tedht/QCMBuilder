@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -20,8 +20,8 @@ import metier.entite.Ressource;
  */
 public class PanelEditionQuestion extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur      ctrl;
-	private FrameQCMBuilder framePrincipale;
+	private Controleur ctrl;
+	private IHM        ihm;
 
 	private JPanel[]          tabPanelInfo;
 	private JPanel            panelAction;
@@ -40,7 +40,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionQuestion(Controleur ctrl, FrameQCMBuilder framePrincipale)
+	public PanelEditionQuestion(Controleur ctrl, IHM ihm)
 	{
 		JPanel panelInfoPoints, panelInfoTemps, panelInfoRessource, 
 		       panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion,
@@ -50,8 +50,8 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 		//JScrollPane scrollPanelPropositions;
 
-		this.ctrl            = ctrl;
-		this.framePrincipale = framePrincipale;
+		this.ctrl = ctrl;
+		this.ihm  = ihm;
 
 		this.setLayout(new BorderLayout(5, 5));
 
@@ -323,7 +323,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	private boolean valider()
 	{
 		this.ctrl.creerQuestion();
-		this.framePrincipale.reinitAffichage();
+		this.ihm.reinitAffichage();
 		return true;
 	}
 
@@ -368,8 +368,10 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		revalidate();
 	}
 
+	/*
 	private void ajouterExplication()
 	{
 
 	}
+	*/
 }

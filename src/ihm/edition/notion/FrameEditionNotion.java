@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe représentant la fenêtre d'édition (création ou modification) d'une notion.
@@ -22,13 +22,13 @@ public class FrameEditionNotion extends JFrame
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public FrameEditionNotion(Controleur ctrl, FrameQCMBuilder framePrincipale)
+	public FrameEditionNotion(Controleur ctrl, IHM ihm)
 	{
 		this.setTitle("Créer une Notion");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditionNotion = new PanelEditionNotion(ctrl, framePrincipale);
+		this.panelEditionNotion = new PanelEditionNotion(ctrl, ihm);
 		this.add(this.panelEditionNotion);
 
 		this.pack();

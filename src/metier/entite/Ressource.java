@@ -16,7 +16,9 @@ public class Ressource
 			this.nom        = nom;
 			this.lstNotions = new ArrayList<Notion>();
 			this.cheminFichier = cheminFichier;
-		} else {
+		} 
+		else 
+		{
 			throw new IllegalArgumentException("Le nom de la ressource ne peut pas être null");
 		}
 	}
@@ -25,9 +27,9 @@ public class Ressource
 		this(nom,null);
 	}
 
-	/*--------------*/
-	//    GETTER    //
-	/*--------------*/
+	/*==============*/
+	/*    GETTER    */
+	/*==============*/
 
 	public String getNom()
 	{
@@ -44,9 +46,9 @@ public class Ressource
 		return this.lstNotions;
 	}
 
-	/*--------------*/
-	//    SETTER    //
-	/*--------------*/
+	/*==============*/
+	/*    SETTER    */
+	/*==============*/
 
 	public boolean setNom(String nom) 
 	{
@@ -72,9 +74,9 @@ public class Ressource
 	}
 
 
-	/*--------------*/
-	//   MÉTHODES   //
-	/*--------------*/
+	/*==============*/
+	/*   MÉTHODES   */
+	/*==============*/
 
 	public boolean ajouterNotion(Notion notion) 
 	{

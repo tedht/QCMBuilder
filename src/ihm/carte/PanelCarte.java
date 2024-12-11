@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import controleur.Controleur;
-import ihm.FrameQCMBuilder;
+import ihm.IHM;
 
 /**
  * Classe JPanel générique pour afficher une entité (ressource/notion/question).
@@ -16,27 +16,24 @@ import ihm.FrameQCMBuilder;
  */
 public abstract class PanelCarte extends JPanel
 {
-	protected Controleur      ctrl;
-	protected FrameQCMBuilder framePrincipale;
+	protected Controleur ctrl;
+	protected IHM        ihm;
 
 	protected JLabel lblTitre;
 	protected JLabel lblSousTitre;
-	protected JLabel lblImage;
 	
 	protected JPanel panelInfo;
 
-	protected ImageIcon imageIcon;
 
 	/**
 	 * Constructeur de la classe PanelCarte.
 	 *
 	 * @param ctrl  Le contrôleur
-	 * @param framePrincipale La frame principale
 	 */
-	public PanelCarte(Controleur ctrl, FrameQCMBuilder framePrincipale, String titre, String sousTitre, String cheminImg)
+	public PanelCarte(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
-		this.ctrl            = ctrl;
-		this.framePrincipale = framePrincipale;
+		this.ctrl = ctrl;
+		this.ihm  = ihm;
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
@@ -54,23 +51,12 @@ public abstract class PanelCarte extends JPanel
 		this.panelInfo.setLayout(new BoxLayout(this.panelInfo, BoxLayout.Y_AXIS));
 		this.panelInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		this.imageIcon = new ImageIcon(cheminImg);
-		this.lblImage  = new JLabel(imageIcon);
-		this.lblImage.setPreferredSize(new Dimension(200, 200));
-
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/
 		this.panelInfo.add(this.lblTitre);
 		this.panelInfo.add(this.lblSousTitre);
-		this.add(this.panelInfo, BorderLayout.SOUTH);
-
-		this.add(this.lblImage,  BorderLayout.CENTER);
-	}
-
-	public void setImage(String cheminImg)
-	{
-		this.imageIcon = new ImageIcon(cheminImg); 
+		this.add(this.panelInfo, BorderLayout.CENTER);
 	}
 
 	protected class GereSouris extends MouseAdapter
