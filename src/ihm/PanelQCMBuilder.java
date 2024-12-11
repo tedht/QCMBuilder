@@ -2,7 +2,6 @@ package ihm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -18,14 +17,14 @@ import metier.Question;
 import metier.Ressource;
 
 /**
- * Classe JPanel qui contient les composents de la fenêtre de la Banque de lstQuestions.
+ * Classe JPanel qui contient les composents de la fenêtre de l'application.
  * 
  * 
  * @author Ted Herambert
  * @date 2024/12/06
  * @version 1.0
  */
-public class PanelBanqueDeQuestions extends JPanel implements ActionListener
+public class PanelQCMBuilder extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 
@@ -41,11 +40,11 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 	private JScrollPane scrollPanelContenu;
 
 	/**
-	 * Constructeur de la classe PanelBanqueDeQuestions.
+	 * Constructeur de la classe PanelQCMBuilder.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelBanqueDeQuestions(Controleur ctrl)
+	public PanelQCMBuilder(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
@@ -218,7 +217,7 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
-		this.lblFilAriane.setText("Ressources >> " + ressource);
+		this.lblFilAriane.setText("Ressources >> " + ressource.getNom());
 		this.lblTitre    .setText(ressource.getNom());
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
@@ -243,7 +242,7 @@ public class PanelBanqueDeQuestions extends JPanel implements ActionListener
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
-		this.lblFilAriane.setText("Ressources >> " + ressource + " >> " + notion);
+		this.lblFilAriane.setText("Ressources >> " + ressource.getNom() + " >> " + notion.getNom());
 		this.lblTitre    .setText(notion.getNom());
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
