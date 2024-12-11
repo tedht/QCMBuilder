@@ -31,7 +31,5 @@ public class FrameEditionNotion extends JFrame
 		this.add(this.panelEditionNotion);
 
 		this.pack();
-
-		this.setVisible(true);
 	}
 }

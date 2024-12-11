@@ -31,7 +31,5 @@ public class FrameEditionRessource extends JFrame
 		this.add(this.panelEditionRessource);
 
 		this.pack();
-
-		this.setVisible(true);
 	}
 }

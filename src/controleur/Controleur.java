@@ -11,7 +11,7 @@ import metier.Question;
 
 public class Controleur
 {
-	private QCMBuilder             metier;
+	private QCMBuilder      metier;
 	private	FrameQCMBuilder ihm;
 	
 	public Controleur()

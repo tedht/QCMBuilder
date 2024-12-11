@@ -31,8 +31,6 @@ public class FrameEditionQuestion extends JFrame
 		this.add(this.panelEditionQuestion);
 
 		this.pack();
-
-		this.setVisible(true);
 	}
 	
 }

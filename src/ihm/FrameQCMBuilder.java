@@ -86,6 +86,9 @@ public class FrameQCMBuilder extends JFrame
 				this.getY() + this.getHeight() / 2 - this.frameEditionRessource.getHeight() / 2
 			);
 
+			// Rend la fenêtre visible
+			this.frameEditionRessource.setVisible(true);
+
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditionRessource.addWindowListener(new WindowAdapter() {
                 @Override
@@ -115,6 +118,9 @@ public class FrameQCMBuilder extends JFrame
 				this.getY() + this.getHeight() / 2 - this.frameEditionNotion.getHeight() / 2
 			);
 
+			// Rend la fenêtre visible
+			this.frameEditionNotion.setVisible(true);
+
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditionNotion.addWindowListener(new WindowAdapter() {
                 @Override
@@ -142,6 +148,9 @@ public class FrameQCMBuilder extends JFrame
 				this.getX() + this.getWidth () / 2 - this.frameEditionQuestion.getWidth () / 2,
 				this.getY() + this.getHeight() / 4 - this.frameEditionQuestion.getHeight() / 2
 			);
+
+			// Rend la fenêtre visible
+			this.frameEditionQuestion.setVisible(true);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditionQuestion.addWindowListener(new WindowAdapter() {
