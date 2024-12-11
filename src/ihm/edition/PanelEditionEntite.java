@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 
 import controleur.Controleur;
+import ihm.FrameQCMBuilder;
 
 /**
  * Classe JPanel générique utilisé par la frames d'édition de ressource et la frames d'édition de notion
@@ -25,7 +26,8 @@ import controleur.Controleur;
  */
 public abstract class PanelEditionEntite extends JPanel implements ActionListener
 {
-	protected Controleur ctrl;
+	protected Controleur      ctrl;
+	protected FrameQCMBuilder framePrincipale;
 
 	protected JPanel        panelInfo, panelAction;
 	protected JButton       btnAnnuler, btnValider, btnOuvrirExplorateur;
@@ -38,9 +40,10 @@ public abstract class PanelEditionEntite extends JPanel implements ActionListene
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionEntite(Controleur ctrl)
+	public PanelEditionEntite(Controleur ctrl, FrameQCMBuilder framePrincipale)
 	{
-		this.ctrl = ctrl;
+		this.ctrl            = ctrl;
+		this.framePrincipale = framePrincipale;
 
 		this.setLayout(new BorderLayout());
 

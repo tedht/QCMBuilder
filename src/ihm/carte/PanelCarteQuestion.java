@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import controleur.Controleur;
+import ihm.FrameQCMBuilder;
 
 /**
  * Classe JPanel pour afficher une Notion.
@@ -26,9 +27,9 @@ public class PanelCarteQuestion extends PanelCarte
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelCarteQuestion(Controleur ctrl, String titre, String sousTitre, String cheminImg)
+	public PanelCarteQuestion(Controleur ctrl, FrameQCMBuilder framePrincipale, String titre, String sousTitre, String cheminImg)
 	{
-		super(ctrl, titre, sousTitre, cheminImg);
+		super(ctrl, framePrincipale, titre, sousTitre, cheminImg);
 		
 		this.ctrl = ctrl;
 		this.detail = false;

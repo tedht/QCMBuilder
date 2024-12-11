@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import controleur.Controleur;
+import ihm.FrameQCMBuilder;
 
 /**
  * Classe JPanel générique pour afficher une entité (ressource/notion/question).
@@ -15,7 +16,8 @@ import controleur.Controleur;
  */
 public abstract class PanelCarte extends JPanel
 {
-	protected Controleur ctrl;
+	protected Controleur      ctrl;
+	protected FrameQCMBuilder framePrincipale;
 
 	protected JLabel lblTitre;
 	protected JLabel lblSousTitre;
@@ -28,11 +30,13 @@ public abstract class PanelCarte extends JPanel
 	/**
 	 * Constructeur de la classe PanelCarte.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl  Le contrôleur
+	 * @param framePrincipale La frame principale
 	 */
-	public PanelCarte(Controleur ctrl, String titre, String sousTitre, String cheminImg)
+	public PanelCarte(Controleur ctrl, FrameQCMBuilder framePrincipale, String titre, String sousTitre, String cheminImg)
 	{
-		this.ctrl = ctrl;
+		this.ctrl            = ctrl;
+		this.framePrincipale = framePrincipale;
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 

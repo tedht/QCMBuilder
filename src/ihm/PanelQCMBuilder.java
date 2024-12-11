@@ -12,9 +12,9 @@ import ihm.carte.PanelCarte;
 import ihm.carte.PanelCarteNotion;
 import ihm.carte.PanelCarteQuestion;
 import ihm.carte.PanelCarteRessource;
-import metier.Notion;
-import metier.Question;
-import metier.Ressource;
+import metier.entite.Notion;
+import metier.entite.Ressource;
+import metier.entite.question.Question;
 
 /**
  * Classe JPanel qui contient les composents de la fenêtre de l'application.
@@ -27,7 +27,7 @@ import metier.Ressource;
 public class PanelQCMBuilder extends JPanel implements ActionListener
 {
 	private Controleur      ctrl;
-	private FrameQCMBuilder framePrincipal;
+	private FrameQCMBuilder frame;
 
 	private List<PanelCarte> lstPanelCartes;
 
@@ -47,8 +47,8 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	 */
 	public PanelQCMBuilder(Controleur ctrl, FrameQCMBuilder frame)
 	{
-		this.ctrl           = ctrl;
-		this.framePrincipal = frame;
+		this.ctrl  = ctrl;
+		this.frame = frame;
 
 		this.setLayout(new BorderLayout());
 		
@@ -170,15 +170,15 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		{
 			if(this.ctrl.getRessourceActive() == null)
 			{
-				this.framePrincipal.creerRessource();
+				this.frame.creerRessource();
 			}
 			else if(this.ctrl.getNotionActive() == null)
 			{
-				this.framePrincipal.creerNotion();
+				this.frame.creerNotion();
 			}
 			else
 			{
-				this.framePrincipal.creerQuestion();
+				this.frame.creerQuestion();
 			}
 		}
 	}
@@ -212,7 +212,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteRessource(this.ctrl, this.frame, ressource.getNom(), this.ctrl.getNbNotions(ressource) + " notion(s)", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu  .add(panelCarte);
 		}
@@ -222,15 +222,17 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(int i = 3 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteRessource(null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteRessource(null, null, " ", " ", " ");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu  .add(panelCarte);
 		}
 	}
 
-	public void afficherNotions(Ressource ressource) 
+	public void afficherNotions() 
 	{
+		Ressource ressource = this.ctrl.getRessourceActive();
+		
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
@@ -246,7 +248,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(Notion notion : this.ctrl.getNotions(ressource))
 		{
-			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
+			PanelCarte panelCarte = new PanelCarteNotion(this.ctrl, this.frame, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)", "tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
@@ -256,15 +258,18 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(int i = 5 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteNotion(null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteNotion(null, null, " ", " ", " ");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
 	}
 
-	public void afficherQuestions(Ressource ressource, Notion notion) 
+	public void afficherQuestions() 
 	{
+		Ressource ressource = this.ctrl.getRessourceActive();
+		Notion    notion    = this.ctrl.getNotionActive();
+		
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
@@ -279,7 +284,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		 
 		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, question.getIntitule(), 
+			PanelCarte panelCarte = new PanelCarteQuestion(this.ctrl, this.frame, question.getIntitule(), 
 			                                            question.getNote() + " point(s), " + question.getTemps() + "s", 
 														"tmp.png");
 			this.lstPanelCartes.add(panelCarte);
@@ -292,7 +297,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
 		{
-			PanelCarte panelCarte = new PanelCarteQuestion(null, " ", " ", " ");
+			PanelCarte panelCarte = new PanelCarteQuestion(null, null, " ", " ", " ");
 			panelCarte.setVisible(false);
 			this.lstPanelCartes.add(panelCarte);
 			this.panelContenu.add(panelCarte);

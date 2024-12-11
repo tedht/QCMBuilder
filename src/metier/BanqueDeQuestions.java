@@ -28,14 +28,12 @@ import metier.entite.question.Question;
 public class BanqueDeQuestions 
 {
 	/* Attributs */
-	private Controleur     ctrl;
 	private List<Question> lstQuestions;
 
 
 	/* Constructeur */
-	public BanqueDeQuestions(Controleur ctrl)
+	public BanqueDeQuestions()
 	{
-		this.ctrl         = ctrl;
 		this.lstQuestions = new ArrayList<Question>();
 	}
 
@@ -285,9 +283,7 @@ public class BanqueDeQuestions
 	}
 
 	public static void main(String[] args) {
-		
-		Controleur ctrl = new Controleur();
-		BanqueDeQuestions banque = new BanqueDeQuestions(ctrl);
+		BanqueDeQuestions banque = new BanqueDeQuestions();
 
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");

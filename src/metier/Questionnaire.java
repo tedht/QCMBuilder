@@ -8,6 +8,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import metier.entite.Notion;
+import metier.entite.Ressource;
+import metier.entite.question.Question;
+
 
 /** Classe Questionnaire
  * @author Equipe 03

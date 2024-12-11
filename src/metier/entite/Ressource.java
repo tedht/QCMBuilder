@@ -1,4 +1,4 @@
-package metier;
+package metier.entite;
 
 import java.util.ArrayList;
 import java.util.List;

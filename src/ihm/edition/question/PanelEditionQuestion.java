@@ -7,8 +7,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import controleur.Controleur;
-import metier.Notion;
-import metier.Ressource;
+import ihm.FrameQCMBuilder;
+import metier.entite.Notion;
+import metier.entite.Ressource;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une question
@@ -19,7 +20,8 @@ import metier.Ressource;
  */
 public class PanelEditionQuestion extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur ctrl;
+	private Controleur      ctrl;
+	private FrameQCMBuilder framePrincipale;
 
 	private JPanel[]          tabPanelInfo;
 	private JPanel            panelAction;
@@ -38,7 +40,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionQuestion(Controleur ctrl)
+	public PanelEditionQuestion(Controleur ctrl, FrameQCMBuilder framePrincipale)
 	{
 		JPanel panelInfoPoints, panelInfoTemps, panelInfoRessource, 
 		       panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion,
@@ -48,7 +50,8 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 		//JScrollPane scrollPanelPropositions;
 
-		this.ctrl = ctrl;
+		this.ctrl            = ctrl;
+		this.framePrincipale = framePrincipale;
 
 		this.setLayout(new BorderLayout(5, 5));
 
@@ -320,6 +323,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	private boolean valider()
 	{
 		this.ctrl.creerQuestion();
+		this.framePrincipale.afficherQuestions();
 		return true;
 	}
 

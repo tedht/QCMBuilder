@@ -10,8 +10,6 @@ import metier.entite.question.Question;
 
 public class QCMBuilder 
 {
-	private Controleur ctrl;
-	
 	private BanqueDeQuestions  banqueQuestion;
 	private BanqueDeRessources banqueRessource;
 
@@ -20,18 +18,15 @@ public class QCMBuilder
 
 	private Stack<String> historique;
 	
-	public QCMBuilder(Controleur ctrl)
+	public QCMBuilder()
 	{
-		this.ctrl = ctrl;
-
-		this.banqueQuestion  = new BanqueDeQuestions(ctrl);
+		this.banqueQuestion  = new BanqueDeQuestions();
 		this.banqueRessource = new BanqueDeRessources(); 
 
 		this.ressourceActive = null;
 		this.notionActive    = null;
 
 		this.historique = new Stack<String>();
-
 	}
 
 	public List<Ressource> getRessources() 
@@ -71,13 +66,9 @@ public class QCMBuilder
 			switch(retour.charAt(0))
 			{
 				case 'R' : 
-					//this.ctrl.afficherRessources(); 
 					this.ressourceActive = null;
 				break;
 				case 'N' : 
-					/*this.ctrl.afficherNotions(
-						this.banqueRessource.getRessource(retour.substring(1))
-					);*/
 					this.notionActive = null; 
 				break;
 				default : break;

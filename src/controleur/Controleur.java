@@ -3,11 +3,10 @@ package controleur;
 import java.util.List;
 
 import ihm.FrameQCMBuilder;
-
-import metier.Ressource;
-import metier.Notion;
+import metier.entite.Notion;
+import metier.entite.Ressource;
+import metier.entite.question.Question;
 import metier.QCMBuilder;
-import metier.Question;
 
 public class Controleur
 {
@@ -15,7 +14,7 @@ public class Controleur
 	
 	public Controleur()
 	{
-		this.metier = new QCMBuilder(this);
+		this.metier = new QCMBuilder();
 		new FrameQCMBuilder(this);
 	}
 

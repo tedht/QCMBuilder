@@ -8,8 +8,8 @@ import controleur.Controleur;
 import ihm.edition.notion.FrameEditionNotion;
 import ihm.edition.question.FrameEditionQuestion;
 import ihm.edition.ressource.FrameEditionRessource;
-import metier.Notion;
-import metier.Ressource;
+import metier.entite.Notion;
+import metier.entite.Ressource;
 
 /**
  * Classe représentant la fenêtre de la Banque de lstQuestions de l'application.
@@ -63,14 +63,14 @@ public class FrameQCMBuilder extends JFrame
 		this.panelQCMBuilder.afficherRessources();          
 	}
 
-	public void afficherNotions(Ressource ressource) 
+	public void afficherNotions() 
 	{ 
-		this.panelQCMBuilder.afficherNotions(ressource);
+		this.panelQCMBuilder.afficherNotions();
 	}
 	
-	public void afficherQuestions(Ressource ressource, Notion notion)    
+	public void afficherQuestions()    
 	{ 
-		this.panelQCMBuilder.afficherQuestions(ressource, notion);   
+		this.panelQCMBuilder.afficherQuestions();   
 	}
 
 	public void creerRessource() 
@@ -78,7 +78,7 @@ public class FrameQCMBuilder extends JFrame
 		if(this.frameEditionRessource == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de ressource
-			this.frameEditionRessource = new FrameEditionRessource(this.ctrl);
+			this.frameEditionRessource = new FrameEditionRessource(this.ctrl, this);
 
 			// Positionne frameEditionRessource au centre de la fenêtre principale
 			this.frameEditionRessource.setLocation(
@@ -110,7 +110,7 @@ public class FrameQCMBuilder extends JFrame
 		if(this.frameEditionNotion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de notion
-			this.frameEditionNotion = new FrameEditionNotion(this.ctrl);
+			this.frameEditionNotion = new FrameEditionNotion(this.ctrl, this);
 
 			// Positionne frameEditionNotion au centre de la fenêtre principale
 			this.frameEditionNotion.setLocation(
@@ -141,7 +141,7 @@ public class FrameQCMBuilder extends JFrame
 		if(this.frameEditionQuestion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de question
-			this.frameEditionQuestion = new FrameEditionQuestion(this.ctrl);
+			this.frameEditionQuestion = new FrameEditionQuestion(this.ctrl, this);
 
 			// Positionne frameEditionQuestion au centre de la fenêtre principale
 			this.frameEditionQuestion.setLocation(

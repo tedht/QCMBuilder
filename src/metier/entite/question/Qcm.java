@@ -1,6 +1,9 @@
-package metier;
+package metier.entite.question;
 
 import java.util.List;
+
+import metier.entite.Notion;
+import metier.entite.Ressource;
 
 /** Classe Qcm
  * @author Equipe 03
