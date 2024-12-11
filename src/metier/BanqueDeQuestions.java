@@ -59,25 +59,26 @@ public class BanqueDeQuestions
 					
 					question = new Question(compteur, "", "", "", null, null, 0, 0);
 					compteur++;
-				} else if (ligne.startsWith("Intitule")) {
-					question.setIntitule(ligne.split(": ")[1].trim());
-				} else if (ligne.startsWith("Explication")) {
+				} else if (ligne.startsWith("Intitule"    )) {
+					question.setIntitule   (ligne.split(": ")[1].trim());
+				} else if (ligne.startsWith("Explication" )) {
 					question.setExplication(ligne.split(": ")[1].trim());
 
-				} else if (ligne.startsWith("Difficulte")) {
-					question.setDifficulte(ligne.split(": ")[1].trim());
+				} else if (ligne.startsWith("Difficulte"  )) {
+					question.setDifficulte (ligne.split(": ")[1].trim());
 
-				} else if (ligne.startsWith("Ressource")) {
-                String nomRessource = ligne.split(": ")[1].trim();
-                Ressource ressource = new Ressource(nomRessource);
-                question.setRessource(ressource);
+				} else if (ligne.startsWith("Ressource"   )) {
+					String nomRessource =   ligne.split(": ")[1].trim();
+					Ressource ressource = new Ressource(nomRessource);
+					question.setRessource(ressource);
 
-				} else if (ligne.startsWith("Notion")) {
-                String nomNotion = ligne.split(": ")[1].trim();
-                Notion notion = new Notion(nomNotion);
-                question.setNotion(notion);
+				} else if (ligne.startsWith("Notion"      )) {
+					String nomNotion    =   ligne.split(": ")[1].trim();
+					Notion notion = new Notion(nomNotion);
+					question.setNotion(notion);
 
 				} else if (ligne.startsWith("Propositions")) {
+					
 					List<String> propositions = Arrays.asList(ligne.split(": ")[1].split(";"));
 					if (question instanceof Qcm) {
 						for (String proposition : propositions) {
