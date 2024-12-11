@@ -249,7 +249,7 @@ public class BanqueDeQuestions
 		return true;		
 	}
 
-		public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		Controleur ctrl = new Controleur();
 		BanqueDeQuestions banque = new BanqueDeQuestions(ctrl);

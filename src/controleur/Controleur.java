@@ -110,12 +110,12 @@ public class Controleur
 
 	public void creerRessource(String nomRessource, String cheminImg) 
 	{
-		//this.banqueQuestion.creerRessource(nomRessource, cheminImg);
+		this.metier.creerRessource(nomRessource, cheminImg);
 	}
 
-	public void creerNotion(String nomNotion, String cheminImg)  
+	public void creerNotion(Ressource ressource, String nomNotion, String cheminImg)  
 	{
-		//this.banqueQuestion.creerNotion(nomNotion, cheminImg);
+		this.metier.creerNotion(ressource, nomNotion, cheminImg);
 	}
 
 

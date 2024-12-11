@@ -29,6 +29,6 @@ public class PanelEditionNotion extends PanelEditionEntite
 
 	public void valider()
 	{
-		this.ctrl.creerNotion(this.txtNom.getText(), this.txtImage.getText());
+		this.ctrl.creerNotion(this.ctrl.getRessourceActive(), this.txtNom.getText(), this.txtImage.getText());
 	}
 }
