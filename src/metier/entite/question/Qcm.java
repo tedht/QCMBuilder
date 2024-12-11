@@ -4,6 +4,7 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.Difficulte;
 
 /** Classe Qcm
  * @author Equipe 03
@@ -19,7 +20,7 @@ public class Qcm extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Qcm(	int id, String intitule, String explication, String difficulte,
+	public Qcm(	int id, String intitule, String explication, Difficulte difficulte,
 	            Ressource ressource, Notion notion, int temps, int note,
 	            List<String> proposition, List<String> reponse)
 	{

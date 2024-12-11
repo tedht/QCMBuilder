@@ -5,6 +5,7 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.Difficulte;
 
 import java.util.HashMap;
 import java.util.Collection;
@@ -24,7 +25,7 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Association(	int id, String intitule, String explication, String difficulte,
+	public Association(	int id, String intitule, String explication, Difficulte difficulte,
 						Ressource ressource, Notion notion, int temps, int note)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);

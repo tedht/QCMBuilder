@@ -4,6 +4,7 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.Difficulte;
 
 public class Elimination extends Question
 {
@@ -17,7 +18,7 @@ public class Elimination extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Elimination(int id, String intitule, String explication, String difficulte, Ressource ressource, Notion notion, 
+	public Elimination(int id, String intitule, String explication, Difficulte difficulte, Ressource ressource, Notion notion, 
 	                   int temps,int note ,List<String> proposition, String reponse, List<Integer> ordreElimination, List<Integer> nbPtPerdu)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
