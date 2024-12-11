@@ -11,7 +11,7 @@ public enum Difficulte
 	private String difficulte;
 
 	// Constructeur
-	Difficulte(String difficulte)
+	private Difficulte(String difficulte)
 	{
 		this.difficulte = difficulte;
 	}
