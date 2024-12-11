@@ -77,18 +77,18 @@ public class BanqueDeQuestions
 						System.out.println("qcm");
 						List<String> liste = new ArrayList<>();
 
-						question = new Qcm(cpt, "", "", "", null, null, 0, 0, liste, liste);
+						question = new Qcm(cpt, "", "", null, null, null, 0, 0, liste, liste);
 					} 
 					else if (ligne.startsWith("Type : Elimination")) 
 					{
 						System.out.println("elim");
-						question = new Elimination(cpt, "", "", "", null, null, 0, 0,  null, "", null, null);
+						question = new Elimination(cpt, "", "", null, null, null, 0, 0,  null, "", null, null);
 
 					} 
 					else if (ligne.startsWith("Type : Association")) 
 					{
 						System.out.println("asso");
-						question = new Association(cpt, "", "", "", null, null, 0, 0);
+						question = new Association(cpt, "", "", null, null, null, 0, 0);
 					}
 					else 
 					{
@@ -97,20 +97,20 @@ public class BanqueDeQuestions
 					cpt++;
 
 				} 
-				else if (ligne.startsWith("Intitule"    )) 
+				else if (ligne.startsWith("Intitule"    ))
 				{
 					question.setIntitule   (ligne.split(": ")[1].trim());
 				} 
-				else if (ligne.startsWith("Explication" )) 
+				else if (ligne.startsWith("Explication" ))
 				{
 					question.setExplication(ligne.split(": ")[1].trim());
 
 				} 
-				else if (ligne.startsWith("Difficulte"  )) 
+				else if (ligne.startsWith("Difficulte"  ))
 				{
 					question.setDifficulte (ligne.split(": ")[1].trim());
 				} 
-				else if (ligne.startsWith("Ressource"   )) 
+				else if (ligne.startsWith("Ressource"   ))
 				{
 					String nomRessource =   ligne.split(": ")[1].trim();
 					System.out.println(nomRessource);
