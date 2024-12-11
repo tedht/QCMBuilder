@@ -73,7 +73,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		
 		/* Boutons */
 		this.btnRetour               = new JButton("Retour");
-		this.btnGenererQuestionnaire = new JButton("Générer une Questionnaire");
+		this.btnGenererQuestionnaire = new JButton("Générer un Questionnaire");
 		this.btnAjouter              = new JButton(" ");
 
 		/* Labels */
@@ -188,7 +188,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 	public void afficherRessources() 
 	{
-		System.out.println("afficher lstRessources");
 		/* Entête */
 		this.btnRetour.setEnabled(false);
 
@@ -221,7 +220,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 	public void afficherNotions(Ressource ressource) 
 	{
-		System.out.println("afficher notions");
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
@@ -256,7 +254,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 	public void afficherQuestions(Ressource ressource, Notion notion) 
 	{
-		System.out.println("afficher lstQuestions");
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
@@ -267,13 +264,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/* Contenu */
 		this.reinitContenu();
 
-		this.panelContenu.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 20, 0);
-		gbc.anchor = GridBagConstraints.NORTH;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.gridx = 0; 
+		this.panelContenu.setLayout(new GridLayout(0, 1, 5, 10));
 		 
 		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
@@ -282,13 +273,18 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 														"tmp.png");
 			this.lstPanelCartes.add(panelCarte);
 
-			gbc.gridy = this.lstPanelCartes.size()-1;
-			this.panelContenu.add(panelCarte, gbc);
+			this.panelContenu.add(panelCarte);
 		}
 
 		this.btnAjouter.setText("Créer une Nouvelle Question");
-		gbc.weighty = 1;
-		gbc.gridy = 1;
-		this.panelContenu.add(this.panelBtnAjouter, gbc);
+		this.panelContenu.add(this.panelBtnAjouter);
+
+		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
+		{
+			PanelCarte panelCarte = new PanelCarteQuestion(null, " ", " ", " ");
+			panelCarte.setVisible(false);
+			this.lstPanelCartes.add(panelCarte);
+			this.panelContenu.add(panelCarte);
+		}
 	}
 }
