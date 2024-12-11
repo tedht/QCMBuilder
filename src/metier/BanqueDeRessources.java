@@ -49,6 +49,16 @@ public class BanqueDeRessources
 		return null;
 	}
 
+	public Ressource getRessource(String nomRessource)
+	{
+		for (Ressource ressource : this.lstRessources)
+		{
+			if (ressource.getNom().equals(nomRessource))
+				return ressource;
+		}
+		return null;
+	}
+
 	/* Lecture du fichier CSV qui contient les lstRessources */
 	public void lireRessources(String nomFichier)
 	{
@@ -179,6 +189,8 @@ public class BanqueDeRessources
 		return sRet;
 	}
 
+
+
 	public static void main(String[] args)
 	{
 		BanqueDeRessources bqr, bqr2;
@@ -204,12 +216,4 @@ public class BanqueDeRessources
 		System.out.println(bqr2);
 	}
 
-	public Ressource getRessource(String nomRessource) 
-	{
-		for(Ressource ressource : this.lstRessources)
-		{
-			if(ressource.getNom().equals(nomRessource)) return ressource;
-		}
-		return null;
-	}
 }
