@@ -7,7 +7,6 @@ public enum Difficulte
 	MOYEN      ("M" ),
 	DIFFICILE  ("D" );
 
-
 	private String difficulte;
 
 	// Constructeur

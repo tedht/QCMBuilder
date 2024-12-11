@@ -49,144 +49,215 @@ public class BanqueDeQuestions
 		return valeur.replaceAll("\\\\[a-zA-Z]+", "").trim();
 	}
 
-	public void lireQuestions(String cheminFichier) {
-		try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier))) {
+	public void lireQuestions(String cheminFichier) 
+	{
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader(cheminFichier));
+
 			String ligne;
-			int compteur = 0;
+			int    cpt = 0;
 			BanqueDeRessources banque = new BanqueDeRessources();
 			Question question = null;
-			while ((ligne = br.readLine()) != null) {
+
+			while ((ligne = br.readLine()) != null) 
+			{
 				ligne = nettoyerValeur(ligne);
-				if (ligne.startsWith("Type")) {
-					if (question != null) { // Ajouter l'ancienne question
+
+				if (ligne.startsWith("Type")) 
+				{
+					if (question != null) 
+					{ // Ajouter l'ancienne question
 						ajouterQuestions(question);
 					}
+
 					// Création de la nouvelle question (QCM, Association, ou Elimination)
-					if (ligne.startsWith("Type : QCM")) {
+					if (ligne.startsWith("Type : QCM")) 
+					{
 						System.out.println("qcm");
 						List<String> liste = new ArrayList<>();
 
-						question = new Qcm(compteur, "", "", "", null, null, 0, 0, liste, liste);
-					} else if (ligne.startsWith("Type : Elimination")) {
+						question = new Qcm(cpt, "", "", "", null, null, 0, 0, liste, liste);
+					} 
+					else if (ligne.startsWith("Type : Elimination")) 
+					{
 						System.out.println("elim");
-						question = new Elimination(compteur, "", "", "", null, null, 0, 0,  null, "", null, null);
+						question = new Elimination(cpt, "", "", "", null, null, 0, 0,  null, "", null, null);
 
-					} else if (ligne.startsWith("Type : Association")) {
+					} 
+					else if (ligne.startsWith("Type : Association")) 
+					{
 						System.out.println("asso");
-						question = new Association(compteur, "", "", "", null, null, 0, 0);
+						question = new Association(cpt, "", "", "", null, null, 0, 0);
 					}
-					else {System.out.println("slt");}
-					compteur++;
+					else 
+					{
+						System.out.println("slt");
+					}
+					cpt++;
 
-				} else if (ligne.startsWith("Intitule"    )) {
+				} 
+				else if (ligne.startsWith("Intitule"    )) 
+				{
 					question.setIntitule   (ligne.split(": ")[1].trim());
-				} else if (ligne.startsWith("Explication" )) {
+				} 
+				else if (ligne.startsWith("Explication" )) 
+				{
 					question.setExplication(ligne.split(": ")[1].trim());
 
-				} else if (ligne.startsWith("Difficulte"  )) {
+				} 
+				else if (ligne.startsWith("Difficulte"  )) 
+				{
 					question.setDifficulte (ligne.split(": ")[1].trim());
-
-				} else if (ligne.startsWith("Ressource"   )) {
+				} 
+				else if (ligne.startsWith("Ressource"   )) 
+				{
 					String nomRessource =   ligne.split(": ")[1].trim();
 					System.out.println(nomRessource);
 					Ressource ressource = new Ressource(nomRessource);
 					question.setRessource(ressource);
 
-				} else if (ligne.startsWith("Notion"      )) {
+				} 
+				else if (ligne.startsWith("Notion"      )) 
+				{
 					String nomNotion    =   ligne.split(": ")[1].trim();
 					Notion notion = new Notion(nomNotion);
 					question.setNotion(notion);
 
-				} else if (ligne.startsWith("Propositions")) {
-					
+				} 
+				else if (ligne.startsWith("Propositions")) 
+				{
 					List<String> propositions = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof Qcm) {
-						for (String proposition : propositions) {
+					if (question instanceof Qcm) 
+					{
+						for (String proposition : propositions) 
+						{
 							((Qcm) question).ajouterProposition(proposition);
 						}
 					}
-					else if (question instanceof Elimination) {
+					else if (question instanceof Elimination) 
+					{
 
 					}
-				} else if (ligne.startsWith("Reponses")) {
+				} 
+				else if (ligne.startsWith("Reponses"))
+				{
 					List<String> reponses = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof Qcm) {
+					if (question instanceof Qcm) 
+					{
 						((Qcm) question).setReponse(reponses);
 					}
-				} else if (ligne.startsWith("Temps")) {
+				} else if (ligne.startsWith("Temps")) 
+				{
 					question.setTemps(Integer.parseInt(ligne.split(": ")[1].trim()));
-				} else if (ligne.startsWith("Note")) {
+				} 
+				else if (ligne.startsWith("Note")) 
+				{
 					question.setNote(Integer.parseInt(ligne.split(": ")[1].trim()));
-				} else if (ligne.startsWith("Association")) {
+				} 
+				else if (ligne.startsWith("Association")) 
+				{
 					String[] parts = ligne.split(": ")[1].split(" -> ");
-					if (question instanceof Association) {
+					
+					if (question instanceof Association) 
+					{
 						((Association) question ).ajouterProposition(parts[0]);
 						((Association) question ).ajouterReponse    (parts[1]);
 					}
-				} else if (ligne.startsWith("Ordre d'élimination")) {
+				} 
+				else if (ligne.startsWith("Ordre d'élimination")) 
+				{
 					List<Integer> ordre = Arrays
 							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
 							.map(Integer::parseInt).toList();
-					if (question instanceof Elimination) {
+					if (question instanceof Elimination) 
+					{
 						((Elimination) question).setOrdreElimination(ordre);
 					}
-				} else if (ligne.startsWith("Points perdus")) {
+				} 
+				else if (ligne.startsWith("Points perdus")) 
+				{
 					// Nettoyage des crochets et conversion en liste d'entiers
 					List<Integer> points = Arrays
 							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
 							.map(Integer::parseInt).toList();
-					if (question instanceof Elimination) {
+					if (question instanceof Elimination) 
+					{
 						((Elimination) question).setNbPtPerdu(points);
 					}
 				}
 			}
 
-			if (question != null) {
+			if (question != null) 
+			{
 				ajouterQuestions(question);
 			}
+
 			for (Question q : this.lstQuestions)
 			{
 				System.out.println(q);
-				if (q instanceof Qcm) {
+				if (q instanceof Qcm) 
+				{
 					q = (Qcm) q;				
 					System.out.println(q);
 				}
-				else if (q instanceof Elimination) {
+				else if (q instanceof Elimination)
+				{
 					q = (Elimination) q;
 					System.out.println(q);
 				}
-				else if (q instanceof Association) {
+				else if (q instanceof Association) 
+				{
 					q = (Association) q;
 					System.out.println(q);
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
 			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
 		}
 	}
 
 
 	/* Ecriture du fichier RTF qui contient les lstQuestions */
-	public void sauvegarderQuestions(String cheminFichier) {
+	public void sauvegarderQuestions(String cheminFichier) 
+	{
 		boolean nouveauFichier = !(new File(cheminFichier).exists());
+
 		File fichier = new File(cheminFichier);
-		if (fichier.exists()) {
-        	if (fichier.delete()) {
+		if (fichier.exists()) 
+		{
+        	
+			if (fichier.delete()) 
+			{
 				nouveauFichier = true;
-            System.out.println("Fichier supprimé : " + cheminFichier);}}
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true))) {
+           		System.out.println("Fichier supprimé : " + cheminFichier);
+			}
+		}
+
+		try 
+		{
+			BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true));
+
 			// Si c'est un nouveau fichier, ajouter l'en-tête RTF
-			if (nouveauFichier) {
+			if (nouveauFichier) 
+			{
 				bw.write("{\\rtf1\\ansi\\ansicpg65001\\deff0\n");
 				bw.write("{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}\n}");
 			}
 
-			for (Question question : lstQuestions) {
-				if (question instanceof Qcm) {
+			for (Question question : lstQuestions) 
+			{
+				if (question instanceof Qcm)
+				{
 					bw.write("\n\nType : QCM\\line\n");
-				} else if (question instanceof Association) {
+				} 
+				else if (question instanceof Association) 
+				{
 					bw.write("\n\nType : Association\\line\n");
-				} else if (question instanceof Elimination) {
+				} 
+				else if (question instanceof Elimination) 
+				{
 					bw.write("\n\nType : Elimination\\line\n");
 				}
 				
@@ -197,16 +268,21 @@ public class BanqueDeQuestions
 				bw.write("Explication  : " + question.getExplication()          + "\\line\n");
 				bw.write("Difficulte   : " + question.getDifficulte ()          + "\\line\n");
 
-				if (question instanceof Qcm) {
+				if (question instanceof Qcm) 
+				{
 					Qcm qcm = (Qcm) question;
 					bw.write("Propositions : " + String.join(";", qcm.getProposition()) + "\\line\n");
 					bw.write("Reponses     : " + String.join(";", qcm.getReponse    ()) + "\\line\n");
-				} else if (question instanceof Association) {
+				} 
+				else if (question instanceof Association) 
+				{
 					Association assoc = (Association) question;
 					/*for (List<String> pair : assoc.getLiaison()) {
 						bw.write("Association : " + pair.get(0) + " -> " + pair.get(1) + "\\line\n");
 					}*/
-				} else if (question instanceof Elimination) {
+				} 
+				else if (question instanceof Elimination) 
+				{
 					Elimination elim = (Elimination) question;
 					bw.write("Propositions        : " + String.join(";", elim.getProposition()) + "\\line\n");
 					bw.write("Reponse             : " + elim.getReponse         () + "\\line\n");
@@ -218,7 +294,9 @@ public class BanqueDeQuestions
 				bw.write("Note  : " + question.getNote() + "\\line\n");
 				bw.write("");
 			}
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			System.err.println("Erreur lors de l'écriture dans le fichier : " + e.getMessage());
 		}
 	}
@@ -228,7 +306,8 @@ public class BanqueDeQuestions
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true)))
 		{
 			bw.write("}");
-		} catch (IOException e)
+		} 
+		catch (IOException e)
 		{
 			System.err.println("Erreur lors de la fermeture du fichier RTF : " + e.getMessage());
 		}
@@ -246,7 +325,6 @@ public class BanqueDeQuestions
 	public boolean modifierQuestion(int id, String critere, Object modif)
 	{
 		Question question;
-
 
 		question = null;
 		for (Question q : this.lstQuestions)
