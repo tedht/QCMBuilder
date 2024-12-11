@@ -1,4 +1,4 @@
-package metier.entite;
+package metier.entite.question;
 
 public enum Difficulte
 {
@@ -15,9 +15,6 @@ public enum Difficulte
 		this.difficulte = difficulte;
 	}
 
-	// Getters
-	public String getDifficulte() { return this.difficulte; }
-
 	public String toString()
 	{
 		return this.difficulte;
@@ -26,7 +23,6 @@ public enum Difficulte
 	public static void main(String[] args)
 	{
 		Difficulte d = Difficulte.TRES_FACILE;
-		System.out.println(d.getDifficulte());
 		System.out.println(d);
 	}
 }

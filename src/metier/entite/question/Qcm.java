@@ -4,7 +4,6 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.Difficulte;
 
 /** Classe Qcm
  * @author Equipe 03
@@ -33,8 +32,13 @@ public class QCM extends Question
 	/* Getteurs */
 	/*----------*/
 
-	public List<String> getProposition() { return this.proposition; }
-	public List<String> getReponse()     { return this.reponse;     }
+	public List<String> getProposition () { return this.proposition;  }
+	public List<String> getReponse     () { return this.reponse;      }
+
+	public TypeQuestion getTypeQuestion()
+	{
+		return  this.reponse.size() == 1 ? TypeQuestion.QCM : TypeQuestion.QRM;
+	}
 
 	/*----------*/
 	/* Setteurs */

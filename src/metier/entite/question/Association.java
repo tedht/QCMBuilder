@@ -5,10 +5,8 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.Difficulte;
 
 import java.util.HashMap;
-import java.util.Collection;
 
 /** Classe Association
  * @author Equipe 03
@@ -25,7 +23,7 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Association(	int id, String intitule, String explication, Difficulte difficulte,
+	public Association(int id, String intitule, String explication, Difficulte difficulte,
 						Ressource ressource, Notion notion, int temps, int note)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
@@ -42,6 +40,8 @@ public class Association extends Question
 	public List<String>            getPropositions() { return this.lstPropositons; }
 	public List<String>            getReponses    () { return this.lstReponses;    }
 	public HashMap<String, String> getLiaison     () { return this.liaisons;       }
+
+	public TypeQuestion getTypeQuestion() { return TypeQuestion.ASSOCIATION; }
 
 	/* Ajouter une proposition */
 	public boolean ajouterProposition(String proposition)

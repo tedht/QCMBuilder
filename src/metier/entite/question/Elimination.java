@@ -4,7 +4,6 @@ import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.Difficulte;
 
 public class Elimination extends Question
 {
@@ -34,10 +33,12 @@ public class Elimination extends Question
 	/* Getteurs */
 	/*----------*/
 
-	public List<String>  getProposition()        { return this.proposition;      }
-	public String        getReponse()            { return this.reponse;          }
-	public List<Integer> getOrdreElimination()   { return this.ordreElimination; }
-	public List<Integer> getNbPtPerdu()          { return this.nbPtPerdu;        }
+	public List<String>  getProposition     () { return this.proposition;      }
+	public String        getReponse         () { return this.reponse;          }
+	public List<Integer> getOrdreElimination() { return this.ordreElimination; }
+	public List<Integer> getNbPtPerdu       () { return this.nbPtPerdu;        }
+
+	public TypeQuestion getTypeQuestion() { return TypeQuestion.ELIMINATION; }
 
 	/*----------*/
 	/* Setteurs */

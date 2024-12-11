@@ -3,23 +3,22 @@ package metier.entite.question;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
-import metier.entite.Difficulte;
-
 /** Classe Question
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
+//public abstract class Question
 public class Question
 {
 	/* Attributs */
-	private int        id;
-	private String     intitule;
-	private String     explication;
-	private Difficulte difficulte;
-	private Ressource  ressource;
-	private Notion     notion;
-	private int        temps;
-	private int        note;
+	private int          id;
+	private String       intitule;
+	private String       explication;
+	private Difficulte   difficulte;
+	private Ressource    ressource;
+	private Notion       notion;
+	private int          temps;
+	private int          note;
 
 
 	/* Constructeur */
@@ -46,6 +45,9 @@ public class Question
 	public Notion     getNotion     () { return this.notion;      }
 	public int        getTemps      () { return this.temps;       }
 	public int        getNote       () { return this.note;        }
+
+	//public abstract TypeQuestion getTypeQuestion();
+	public TypeQuestion getTypeQuestion() { return TypeQuestion.QCM; }
 
 	/* Setters */
 	public boolean setIntitule (String intitule)
@@ -113,6 +115,7 @@ public class Question
 
 
 	/* Main */
+	/*
 	public static void main(String[] args)
 	{
 		Question q1, q2, q3;
@@ -129,5 +132,5 @@ public class Question
 		System.out.println(q1.getIntitule());
 		System.out.println(q2.getNote());
 		System.out.println(q3.getTemps());
-	}
+	}*/
 }

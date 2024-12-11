@@ -18,7 +18,7 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Association;
 import metier.entite.question.Elimination;
-import metier.entite.question.Qcm;
+import metier.entite.question.QCM;
 import metier.entite.question.Question;
 
 /** Classe BanqueDeQuestions
@@ -77,7 +77,7 @@ public class BanqueDeQuestions
 						System.out.println("qcm");
 						List<String> liste = new ArrayList<>();
 
-						question = new Qcm(cpt, "", "", "", null, null, 0, 0, liste, liste);
+						question = new QCM(cpt, "", "", "", null, null, 0, 0, liste, liste);
 					} 
 					else if (ligne.startsWith("Type : Elimination")) 
 					{
@@ -128,11 +128,11 @@ public class BanqueDeQuestions
 				else if (ligne.startsWith("Propositions")) 
 				{
 					List<String> propositions = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof Qcm) 
+					if (question instanceof QCM) 
 					{
 						for (String proposition : propositions) 
 						{
-							((Qcm) question).ajouterProposition(proposition);
+							((QCM) question).ajouterProposition(proposition);
 						}
 					}
 					else if (question instanceof Elimination) 
@@ -143,9 +143,9 @@ public class BanqueDeQuestions
 				else if (ligne.startsWith("Reponses"))
 				{
 					List<String> reponses = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof Qcm) 
+					if (question instanceof QCM) 
 					{
-						((Qcm) question).setReponse(reponses);
+						((QCM) question).setReponse(reponses);
 					}
 				} else if (ligne.startsWith("Temps")) 
 				{
@@ -196,9 +196,9 @@ public class BanqueDeQuestions
 			for (Question q : this.lstQuestions)
 			{
 				System.out.println(q);
-				if (q instanceof Qcm) 
+				if (q instanceof QCM) 
 				{
-					q = (Qcm) q;				
+					q = (QCM) q;				
 					System.out.println(q);
 				}
 				else if (q instanceof Elimination)
@@ -248,7 +248,7 @@ public class BanqueDeQuestions
 
 			for (Question question : lstQuestions) 
 			{
-				if (question instanceof Qcm)
+				if (question instanceof QCM)
 				{
 					bw.write("\n\nType : QCM\\line\n");
 				} 
@@ -268,9 +268,9 @@ public class BanqueDeQuestions
 				bw.write("Explication  : " + question.getExplication()          + "\\line\n");
 				bw.write("Difficulte   : " + question.getDifficulte ()          + "\\line\n");
 
-				if (question instanceof Qcm) 
+				if (question instanceof QCM) 
 				{
-					Qcm qcm = (Qcm) question;
+					QCM qcm = (QCM) question;
 					bw.write("Propositions : " + String.join(";", qcm.getProposition()) + "\\line\n");
 					bw.write("Reponses     : " + String.join(";", qcm.getReponse    ()) + "\\line\n");
 				} 
@@ -366,7 +366,7 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		Qcm qcm = new Qcm(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
+		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", "F", r1, n1, 30, 5,
 				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
 		banque.ajouterQuestions(qcm);
 
