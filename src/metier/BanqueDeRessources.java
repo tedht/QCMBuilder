@@ -209,10 +209,10 @@ public class BanqueDeRessources
 		bqr.ajouterRessource(r1);
 		bqr.ajouterRessource(r2);
 
-		bqr.sauvegarderRessources("test.csv");
+		bqr.sauvegarderRessources("testEcrire.csv");
 		
 		bqr2 = new BanqueDeRessources();
-		bqr2.lireRessources("test.csv");
+		bqr2.lireRessources("testLire.csv");
 		System.out.println(bqr2);
 	}
 
