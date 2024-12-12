@@ -100,7 +100,7 @@ public class BanqueDeQuestions
 						System.out.println("qcm");
 						List<String> liste = new ArrayList<>();
 
-						question = new QCM(cpt, "", "", "", null, null, 0, 0, liste, liste);
+						question = new QCM(cpt, "", "", null, null, null, 0, 0, liste, liste);
 					} 
 					else if (ligne.startsWith("Type : Elimination")) 
 					{
