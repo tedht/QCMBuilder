@@ -21,6 +21,7 @@ import metier.entite.question.Difficulte;
 import metier.entite.question.Elimination;
 import metier.entite.question.QCM;
 import metier.entite.question.Question;
+import metier.entite.question.TypeQuestion;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
@@ -66,256 +67,129 @@ public class BanqueDeQuestions
 	}
 
 
-	// Méthode utilitaire pour nettoyer une valeur extraite
-	private String nettoyerValeur(String valeur)
+	public void lireQuestions(String cheminFichierCSV) {
+        try (BufferedReader brCSV = new BufferedReader(new FileReader(cheminFichierCSV))) {
+            String ligneCSV;
+
+            // Lecture de l'en-tête CSV pour l'ignorer
+            brCSV.readLine();
+
+            // Lecture des questions à partir du fichier CSV
+            while ((ligneCSV = brCSV.readLine()) != null) {
+                String[] elements = ligneCSV.split(";");
+                int          id               = Integer.parseInt                     (elements[0]) ;
+                Ressource    ressource        = new Ressource                        (elements[1]) ;
+                Notion       notion           = new Notion                           (elements[2]) ;
+                TypeQuestion type             = TypeQuestion.fromInt(Integer.parseInt(elements[3]));
+				Difficulte   difficulte       = Difficulte.fromInt  (Integer.parseInt(elements[4]));
+                String       cheminFichierTXT =                                       elements[5]  ;
+                int          temps            = Integer.parseInt                     (elements[6]) ;
+                int          note             = Integer.parseInt                     (elements[7]) ;
+
+                // Lecture du fichier TXT pour récupérer l'intitulé et l'explication
+                String intitule    = "";
+                String explication = "";
+
+                try (BufferedReader brTXT = new BufferedReader(new FileReader(cheminFichierTXT))) {
+                    String ligneTXT;
+                    while ((ligneTXT = brTXT.readLine()) != null) {
+
+                        String[] elementsTXT = ligneTXT.split(" | ");
+
+                        if (Integer.parseInt(elementsTXT[0]) == id) {
+                            intitule    = elementsTXT[1];
+                            explication = elementsTXT[2];
+                            break;
+                        }
+                    }
+                } catch (IOException e) {
+                    System.err.println("Erreur lors de la lecture du fichier TXT : " + cheminFichierTXT);
+                }
+
+                // Créer l'objet Question en fonction du type
+                Question question = null;
+                switch (question.getTypeQuestion()) {
+					case QCM:
+				
+					case ELIMINATION:
+
+					case ASSOCIATION:
+
+					default:
+						break;
+				}
+
+                if (question != null) {
+                    ajouterQuestion(question);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la lecture du fichier CSV : " + cheminFichierCSV);
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur de formatage dans le fichier CSV : " + e.getMessage());
+        }
+    }
+
+
+	/* Ecriture des fichiers csv et txt qui contiennent la lstQuestions */
+	public void sauvegarderQuestions(String cheminFichierCSV,String cheminFichierTXT) 
 	{
-		return valeur.replaceAll("\\\\[a-zA-Z]+", "").trim();
-	}
+		boolean nouveauFichier = !(new File(cheminFichierCSV).exists());
 
-	public void lireQuestions(String cheminFichier) 
-	{
-		try
-		{
-			BufferedReader br = new BufferedReader(new FileReader(cheminFichier));
-
-			String ligne;
-			int    cpt = 0;
-			BanqueDeRessources banque = new BanqueDeRessources();
-			Question question = null;
-
-			while ((ligne = br.readLine()) != null) 
-			{
-				ligne = nettoyerValeur(ligne);
-
-				if (ligne.startsWith("Type")) 
-				{
-					if (question != null) 
-					{ // Ajouter l'ancienne question
-						ajouterQuestions(question);
-					}
-
-					// Création de la nouvelle question (QCM, Association, ou Elimination)
-					if (ligne.startsWith("Type : QCM")) 
-					{
-						System.out.println("qcm");
-						List<String> liste = new ArrayList<>();
-
-						question = new QCM(cpt, "", "", null, null, null, 0, 0, liste, liste);
-					} 
-					else if (ligne.startsWith("Type : Elimination")) 
-					{
-						System.out.println("elim");
-						question = new Elimination(cpt, "", "", null, null, null, 0, 0,  null, "", null, null);
-
-					} 
-					else if (ligne.startsWith("Type : Association")) 
-					{
-						System.out.println("asso");
-						question = new Association(cpt, "", "", null, null, null, 0, 0);
-					}
-					else 
-					{
-						System.out.println("slt");
-					}
-					cpt++;
-
-				} 
-				else if (ligne.startsWith("Intitule"    ))
-				{
-					question.setIntitule   (ligne.split(": ")[1].trim());
-				} 
-				else if (ligne.startsWith("Explication" ))
-				{
-					question.setExplication(ligne.split(": ")[1].trim());
-				} 
-				else if (ligne.startsWith("Difficulte"  ))
-				{
-					question.setDifficulte (ligne.split(": ")[1].trim());
-				} 
-				else if (ligne.startsWith("Ressource"   ))
-				{
-					String nomRessource =   ligne.split(": ")[1].trim();
-					System.out.println(nomRessource);
-					Ressource ressource = new Ressource(nomRessource);
-					question.setRessource(ressource);
-
-				} 
-				else if (ligne.startsWith("Notion"      )) 
-				{
-					String nomNotion    =   ligne.split(": ")[1].trim();
-					Notion notion = new Notion(nomNotion);
-					question.setNotion(notion);
-
-				} 
-				else if (ligne.startsWith("Propositions")) 
-				{
-					List<String> propositions = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof QCM) 
-					{
-						for (String proposition : propositions) 
-						{
-							((QCM) question).ajouterProposition(proposition);
-						}
-					}
-					else if (question instanceof Elimination) 
-					{
-
-					}
-				} 
-				else if (ligne.startsWith("Reponses"))
-				{
-					List<String> reponses = Arrays.asList(ligne.split(": ")[1].split(";"));
-					if (question instanceof QCM) 
-					{
-						((QCM) question).setReponse(reponses);
-					}
-				} else if (ligne.startsWith("Temps")) 
-				{
-					question.setTemps(Integer.parseInt(ligne.split(": ")[1].trim()));
-				} 
-				else if (ligne.startsWith("Note")) 
-				{
-					question.setNote(Integer.parseInt(ligne.split(": ")[1].trim()));
-				} 
-				else if (ligne.startsWith("Association")) 
-				{
-					String[] parts = ligne.split(": ")[1].split(" -> ");
-					
-					if (question instanceof Association) 
-					{
-						((Association) question ).ajouterProposition(parts[0]);
-						((Association) question ).ajouterReponse    (parts[1]);
-					}
-				} 
-				else if (ligne.startsWith("Ordre d'élimination")) 
-				{
-					List<Integer> ordre = Arrays
-							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
-							.map(Integer::parseInt).toList();
-					if (question instanceof Elimination) 
-					{
-						((Elimination) question).setOrdreElimination(ordre);
-					}
-				} 
-				else if (ligne.startsWith("Points perdus")) 
-				{
-					// Nettoyage des crochets et conversion en liste d'entiers
-					List<Integer> points = Arrays
-							.stream(ligne.split(": ")[1].replace("[", "").replace("]", "").split(",")).map(String::trim)
-							.map(Integer::parseInt).toList();
-					if (question instanceof Elimination) 
-					{
-						((Elimination) question).setNbPtPerdu(points);
-					}
-				}
-			}
-
-			if (question != null) 
-			{
-				ajouterQuestions(question);
-			}
-
-			for (Question q : this.lstQuestions)
-			{
-				System.out.println(q);
-				if (q instanceof QCM) 
-				{
-					q = (QCM) q;				
-					System.out.println(q);
-				}
-				else if (q instanceof Elimination)
-				{
-					q = (Elimination) q;
-					System.out.println(q);
-				}
-				else if (q instanceof Association) 
-				{
-					q = (Association) q;
-					System.out.println(q);
-				}
-			}
-		} catch (IOException e) 
-		{
-			System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
-		}
-	}*/
-
-
-	/* Ecriture du fichier RTF qui contient les lstQuestions */
-	public void sauvegarderQuestions(String cheminFichier) 
-	{
-		boolean nouveauFichier = !(new File(cheminFichier).exists());
-
-		File fichier = new File(cheminFichier);
+		File fichier = new File(cheminFichierCSV);
 		if (fichier.exists()) 
 		{
         	
 			if (fichier.delete()) 
 			{
 				nouveauFichier = true;
-           		System.out.println("Fichier supprimé : " + cheminFichier);
+           		System.out.println("Fichier supprimé : " + cheminFichierCSV);
+			}
+		}
+		File fichier2 = new File(cheminFichierTXT);
+		if (fichier2.exists())
+		{
+
+			if (fichier2.delete())
+			{
+				nouveauFichier = true;
+				System.out.println("Fichier supprimé : " + cheminFichierTXT);
 			}
 		}
 
 		try 
 		{
-			BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichierCSV, true));
+			BufferedWriter bw2 = new BufferedWriter(new FileWriter(cheminFichierTXT, true));
 
-			// Si c'est un nouveau fichier, ajouter l'en-tête RTF
-			if (nouveauFichier) 
-			{
-				bw.write("{\\rtf1\\ansi\\ansicpg65001\\deff0\n");
-				bw.write("{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}\n}");
-			}
+			bw.write("ID;Ressource;Notion;Type;Intitule;Explication;temps;note;Prop1...propn \n");
+			
 
 			for (Question question : lstQuestions) 
 			{
-				if (question instanceof QCM)
-				{
-					bw.write("\n\nType : QCM\\line\n");
-				} 
-				else if (question instanceof Association) 
-				{
-					bw.write("\n\nType : Association\\line\n");
-				} 
-				else if (question instanceof Elimination) 
-				{
-					bw.write("\n\nType : Elimination\\line\n");
-				}
+				bw.write(question.getId                      () + ";");
+				bw.write(question.getRessource   ().getNom   () + ";");
+				bw.write(question.getNotion      ().getNom   () + ";");
+				bw.write(question.getTypeQuestion().getValeur() + ";");
+				bw.write(question.getDifficulte  ().getValeur() + ";");
+				bw.write(cheminFichierTXT                       + ";");
 				
-				bw.write("ID           : " + question.getId         ()          + "\\line\n");
-				bw.write("Ressource    : " + question.getRessource  ().getNom() + "\\line\n");
-				bw.write("Notion       : " + question.getNotion     ().getNom() + "\\line\n"); 
-				bw.write("Intitule     : " + question.getIntitule   ()          + "\\line\n");
-				bw.write("Explication  : " + question.getExplication()          + "\\line\n");
-				bw.write("Difficulte   : " + question.getDifficulte ()          + "\\line\n");
+				bw.write(question.getTemps                   () + ";");
+				bw.write(question.getNote                    () + ";");
+				/*for (Proposition propositon : question.getPropositions()) {
+					bw.write(proposition.getTexte() + ";");
+				}*/
+				bw.write("\n");
 
-				if (question instanceof QCM) 
-				{
-					QCM qcm = (QCM) question;
-					bw.write("Propositions : " + String.join(";", qcm.getProposition()) + "\\line\n");
-					bw.write("Reponses     : " + String.join(";", qcm.getReponse    ()) + "\\line\n");
-				} 
-				else if (question instanceof Association) 
-				{
-					Association assoc = (Association) question;
-					/*for (List<String> pair : assoc.getLiaison()) {
-						bw.write("Association : " + pair.get(0) + " -> " + pair.get(1) + "\\line\n");
-					}*/
-				} 
-				else if (question instanceof Elimination) 
-				{
-					Elimination elim = (Elimination) question;
-					bw.write("Propositions        : " + String.join(";", elim.getProposition()) + "\\line\n");
-					bw.write("Reponse             : " + elim.getReponse         () + "\\line\n");
-					bw.write("Ordre d'élimination : " + elim.getOrdreElimination() + "\\line\n");
-					bw.write("Points perdus       : " + elim.getNbPtPerdu       () + "\\line\n");
-				}
-
-				bw.write("Temps : " + question.getTemps() + "\\line\n");
-				bw.write("Note  : " + question.getNote() + "\\line\n");
-				bw.write("");
+				bw2.write(question.getId         () + " | ");
+				bw2.write(question.getIntitule   () + " | ");
+				bw2.write(question.getExplication() + "\n");
+				
 			}
+
+			bw.close();
+			bw2.close();
+			
 		} 
 		catch (IOException e) 
 		{
@@ -323,17 +197,6 @@ public class BanqueDeQuestions
 		}
 	}
 
-	public void fermerRTF(String cheminFichier)
-	{
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichier, true)))
-		{
-			bw.write("}");
-		} 
-		catch (IOException e)
-		{
-			System.err.println("Erreur lors de la fermeture du fichier RTF : " + e.getMessage());
-		}
-	}
 
 	public boolean modifierQuestion(int id, String critere, Object modif)
 	{
@@ -348,7 +211,7 @@ public class BanqueDeQuestions
 
 		switch (critere)
 		{
-			case "difficulte" -> question.setDifficulte((String)    modif);
+			case "difficulte" -> question.setDifficulte((Difficulte)modif);
 			case "ressource"  -> question.setRessource ((Ressource) modif);
 			case "notion"     -> question.setNotion    ((Notion)    modif);
 			case "temps"      -> question.setTemps     ((int)       modif);
@@ -379,11 +242,11 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "Choisissez une réponse.", Difficulte.FACILE, r1, n1, 30, 5,
+		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "En effet, de par sa superficie, l'océan Pacifique est le plus grand.", Difficulte.FACILE, r1, n1, 30, 5,
 				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
 		banque.ajouterQuestions(qcm);
 
-		Association assoc = new Association(1, "Associez les éléments", "Reliez les pays et leurs capitales.", Difficulte.MOYEN, r1, n1, 60, 10);
+		Association assoc = new Association(1, "Associez les éléments", "France -> Paris / Allemagne -> Berlin.", Difficulte.MOYEN, r1, n1, 60, 10);
 		assoc.ajouterProposition("France");
 		assoc.ajouterReponse("Paris");
 		assoc.ajouterProposition("Allemagne");
@@ -391,17 +254,14 @@ public class BanqueDeQuestions
 		banque.ajouterQuestions(assoc);
 
 
-		Elimination elim = new Elimination(2, "Éliminez les mauvaises réponses",
-		"Sélectionnez la bonne réponse après avoir éliminé.", Difficulte.DIFFICILE, r1, n1, 45, 8,
-		Arrays.asList("Option A", "Option B", "Option C", "Option D"), "Option B", Arrays.asList(3, 1, 4, 2),
-		Arrays.asList(2, 3, 5, 7));
+		Elimination elim = new Elimination(2, "Quel est le plus grand océan ?",
+		"Toujours l'océan Pacifique.", Difficulte.DIFFICILE, r1, n1, 45, 8,Arrays.asList("Pacifique", "Atlantique", "Indien", "Arctique"), "Pacifique", Arrays.asList(3,2),Arrays.asList(2, 3));
 		banque.ajouterQuestions(elim);
 
-		banque.sauvegarderQuestions("lstQuestions.rtf");
+		banque.sauvegarderQuestions("lstQuestions.csv","lstQuestions.txt");
 		banque.supprimerQuestion(0);
 		banque.supprimerQuestion(1);
 		banque.supprimerQuestion(2);
-		banque.fermerRTF("lstQuestions.rtf");
 
 		System.out.println("Les lstQuestions ont été écrites dans le fichier RTF.");
 
