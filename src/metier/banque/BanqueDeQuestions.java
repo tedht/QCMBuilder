@@ -2,7 +2,6 @@ package metier.banque;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,15 +12,12 @@ import java.io.PrintWriter;
 import metier.QCMBuilder;
 import metier.entite.Notion;
 import metier.entite.Ressource;
-
-import metier.entite.question.Difficulte;
-
-import metier.entite.question.Question;
-import metier.entite.question.QCM;
-import metier.entite.question.Elimination;
 import metier.entite.question.Association;
+import metier.entite.question.Difficulte;
+import metier.entite.question.Elimination;
+import metier.entite.question.QCM;
+import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
-
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
@@ -41,6 +37,7 @@ public class BanqueDeQuestions
 		this.lstQuestions = new ArrayList<Question>();
 
 		this.lireQuestions("data/questions.csv");
+		System.out.println(this.lstQuestions.getFirst());
 	}
 
 	public List<Question> getQuestions()
@@ -112,10 +109,9 @@ public class BanqueDeQuestions
 				intitule     = scDonnee.next();
 				explication  = scDonnee.next();
 				
-				switch (typeQuestion)
+				switch (typeQuestion) 
 				{
-					case QCM ->
-					{
+					case QCM:
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
 						ind = 0;
 						/*
@@ -131,16 +127,15 @@ public class BanqueDeQuestions
 						}
 						*/
 					break;
-					case TypeQuestion.ASSOCIATION:
+					case ASSOCIATION:
 						question = new Association(id, ressource, notion, difficulte, temps, note);
 					break;
-					case TypeQuestion.ELIMINATION:
+					case ELIMINATION:
 						question = new Elimination(id, ressource, notion, difficulte, temps, note);
-					}
-					default ->
-					{
+					break;
+					default: 
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
-					}
+					break;
 				}
 
 				question.setIntitule(intitule);
