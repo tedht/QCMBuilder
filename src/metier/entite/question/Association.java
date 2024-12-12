@@ -6,8 +6,6 @@ import java.util.List;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
-import java.util.HashMap;
-
 /** Classe Association
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -15,9 +13,9 @@ import java.util.HashMap;
 public class Association extends Question
 {
 	/* Attributs */
-	private List<String> lstPropositons;
-	private List<String> lstReponses;
-	private HashMap<String, String> liaisons;
+	private List<String  > lstPropositions;
+	private List<String  > lstReponses;
+	private List<String[]> lstLiaisons;
 
 	/*--------------*/
 	/* Constructeur */
@@ -28,18 +26,18 @@ public class Association extends Question
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 
-		this.lstPropositons = new ArrayList<String>();
-		this.lstReponses    = new ArrayList<String>();
-		this.liaisons       = new HashMap<String, String>();
+		this.lstPropositions = new ArrayList<String  >();
+		this.lstReponses    = new ArrayList<String  >();
+		this.lstLiaisons       = new ArrayList<String[]>();
 	}
 
 	/*----------*/
 	/* Getteurs */
 	/*----------*/
 
-	public List<String>            getPropositions() { return this.lstPropositons; }
-	public List<String>            getReponses    () { return this.lstReponses;    }
-	public HashMap<String, String> getLiaison     () { return this.liaisons;       }
+	public List<String  > getPropositions() { return this.lstPropositions; }
+	public List<String  > getReponses    () { return this.lstReponses;    }
+	public List<String[]> getLiaison     () { return this.lstLiaisons;       }
 
 	public TypeQuestion getTypeQuestion() { return TypeQuestion.ASSOCIATION; }
 
@@ -48,7 +46,12 @@ public class Association extends Question
 	{
 		if (proposition == null)    return false;
 		if (proposition.equals("")) return false;
-		this.lstPropositons.add(proposition);
+
+		for (String prop : this.lstPropositions)
+			if (prop == proposition)
+				return false; // Proposition déja existante
+
+		this.lstPropositions.add(proposition);
 		return true;
 	}
 
@@ -58,7 +61,24 @@ public class Association extends Question
 		if (reponse  == null)       return false;
 		if (reponse.equals(""))     return false;
 
+		for (String rep : this.lstReponses)
+			if (rep == reponse)
+				return false; // Réponse déja existante
+
 		this.lstReponses.add(reponse);
+		return true;
+	}
+
+	public boolean ajouterLiaison(String proposition, String reponse)
+	{
+		if (proposition == null || reponse == null) return false;
+		if (proposition.equals("") || reponse.equals("")) return false;
+
+		for (String[] liaison : this.lstLiaisons)
+			if (liaison[0] == proposition && liaison[1] == reponse)
+				return false; // Liaison déja existante
+
+		this.lstLiaisons.add(new String[] {proposition, reponse});
 		return true;
 	}
 
@@ -66,7 +86,7 @@ public class Association extends Question
 	/* Modifier */
 	public boolean modifierProposition(String propositionActuelle, String nouvelleProposition)
 	{
-		if(this.lstPropositons.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if(this.lstPropositions.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 
 		if (propositionActuelle == null) return false;
 		if (propositionActuelle.equals("")) return false;
@@ -74,14 +94,17 @@ public class Association extends Question
 		if (nouvelleProposition == null) return false;
 		if (nouvelleProposition.equals("")) return false;
 
-		for(int cpt = 0; cpt < this.lstPropositons.size(); cpt++)
+		for(int cpt = 0; cpt < this.lstPropositions.size(); cpt++)
 		{
-			if(this.lstPropositons.get(cpt).equals(propositionActuelle))
+			if(this.lstPropositions.get(cpt).equals(propositionActuelle))
 			{
-				this.lstPropositons.set(cpt, nouvelleProposition);
+				this.lstPropositions.set(cpt, nouvelleProposition);
 			}
 		}
 
+		for (String[] liaison : this.lstLiaisons)
+			if (liaison[0] == propositionActuelle)
+				liaison[0] = nouvelleProposition;
 		
 		return true;
 	}
@@ -100,6 +123,33 @@ public class Association extends Question
 			if (this.lstReponses.get(cpt).equals(reponseActuelle))
 				this.lstReponses.set(cpt, nouvelleReponse);
 
+		for (String[] liaison : this.lstLiaisons)
+			if (liaison[1] == reponseActuelle)
+				liaison[1] = nouvelleReponse;
+
+		return true;
+	}
+
+	public boolean modifierLiaison(char modif, String proposition, String reponse, String nouvelleProposition, String nouvelleReponse)
+	{
+		this.supprimerLiaison(proposition, reponse);
+
+		if (modif == 'P')
+		{
+			this.ajouterLiaison(nouvelleProposition, reponse);
+		}
+		else
+		{
+			if (modif == 'R')
+			{
+				this.ajouterLiaison(proposition, nouvelleReponse);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -107,9 +157,14 @@ public class Association extends Question
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(String proposition)
 	{
-		if(this.lstPropositons.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if(this.lstPropositions.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 		
-		this.lstPropositons.remove(proposition);
+		this.lstPropositions.remove(proposition);
+
+		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
+			if (this.lstLiaisons.get(cpt)[0] == proposition || this.lstLiaisons.get(cpt)[1] == proposition)
+				this.lstLiaisons.remove(cpt);
+
 		return true;
 	}
 
@@ -120,46 +175,76 @@ public class Association extends Question
 
 		this.lstReponses.remove(reponse);
 
+		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
+			if (this.lstLiaisons.get(cpt)[0] == reponse || this.lstLiaisons.get(cpt)[1] == reponse)
+				this.lstLiaisons.remove(cpt);
+
+		return true;
+	}
+
+	public boolean supprimerLiaison(String proposition, String reponse)
+	{
+		if (proposition == null || reponse == null) return false;
+		if (proposition.equals("") || reponse.equals("")) return false;
+
+		this.lstLiaisons.remove(new String[] {proposition, reponse});
 		return true;
 	}
 
 
 	/* toString */
-	/*public String toString()
+	public String toString()
 	{
-		String result = "";
+		String sRet;
 
-		if(this.proposition.isEmpty()) { return "Il n'y a pas de propostions"; }
 
-		for (List<String> proposition : this.proposition)
-		{
-			result += proposition.get(0) + " --> " + proposition.get(1) + "\n"; 
-		}
+		if (this.lstPropositions.isEmpty()) { return "Il n'y a pas de propostions"; }
+		if (this.lstReponses    .isEmpty()) { return "Il n'y a pas de réponses";    }
 
-		return result;
-	}*/
+		sRet = "";
+		for (String proposition : this.lstPropositions)
+			 sRet += proposition + "\t";
+
+		sRet += "\n\n";
+
+		for (String reponse : this.lstReponses)
+			sRet += reponse + "\t";
+
+		sRet += "\n\nLiaisons :\n";
+
+		for (String[] liaison : this.lstLiaisons)
+			sRet += liaison[0] + " --- " + liaison[1] + "\n";
+		System.out.println("\n------------------");
+
+		return sRet;
+	}
 
 	public static void main(String[] args)
 	{
-		/*Association asso, asso2;
+		Association asso, asso2;
 
 
 		asso = new Association(0, null, null, null, null, null, 0, 0);
-		asso.ajouterAssociation("Prop1", "Rep1");
-		asso.ajouterAssociation("Prop2", "Rep2");
+		asso.ajouterProposition("Prop1");
+		asso.ajouterReponse("Rep1");
+		asso.ajouterLiaison("Prop1", "Rep1");
 		System.out.println(asso);
 
-		asso.modifierReponse(0, "Rep3");
-		asso.ajouterAssociation("Prop3", "Rep1");
+		asso.modifierReponse("Rep1", "Rep1Bis");
+		asso.ajouterProposition("Prop2");
+		asso.ajouterLiaison("Prop2", "Rep1Bis");
 		System.out.println(asso);
 
-		asso.supprimerAssociation(1);
-		asso.supprimerAssociation(-1);
-		asso.supprimerAssociation(4); // Ne le fait pas car en dehors de la liste
+		asso.supprimerProposition("Prop1");
+		asso.supprimerReponse("Rep1Bis");
+		asso.supprimerReponse("Rep3"); // Ne le fait pas car Rep3 n'existe pas
 		System.out.println(asso);
 
-		asso2 = new Association(0, null, null, null, null, null, 0, 0);
-		asso2.supprimerAssociation(0);*/
+		asso2 = new Association(1, "Relier les mots français à leurs traductions anglaises", "with veut dire avec donc withOUT veut dire sans", Difficulte.FACILE, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), 0, 1);
+		asso2.ajouterProposition("Without");
+		asso2.ajouterReponse("Sans");
+		asso2.ajouterLiaison("Without", "Sans");
+		System.out.println(asso2);
 	}
 
 }
