@@ -13,8 +13,8 @@ import metier.entite.question.Question;
 
 public class QCMBuilder 
 {
-	private BanqueDeQuestions  banqueQuestion;
-	private BanqueDeRessources banqueRessource;
+	private BanqueDeQuestions  banqueQuestions;
+	private BanqueDeRessources banqueRessources;
 
 	private Ressource ressourceActive;
 	private Notion    notionActive;
@@ -28,23 +28,23 @@ public class QCMBuilder
 
 		this.historique = new Stack<String>();
 
-		this.banqueRessource = new BanqueDeRessources(); 
-		this.banqueQuestion  = new BanqueDeQuestions(this);
+		this.banqueRessources = new BanqueDeRessources(); 
+		this.banqueQuestions  = new BanqueDeQuestions(this);
 	}
 
 	public List<Ressource> getRessources() 
 	{
-		return this.banqueRessource.getRessources();
+		return this.banqueRessources.getRessources();
 	}
 
 	public List<Notion> getNotions(Ressource ressource) 
 	{
-		return this.banqueRessource.getNotions(ressource);
+		return this.banqueRessources.getNotions(ressource);
 	}
 
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
-		return this.banqueQuestion.getQuestions(ressource, notion);
+		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
 
 	public void setRessourceActive(Ressource ressource) 
@@ -89,24 +89,29 @@ public class QCMBuilder
 
 	public Ressource getRessource(String nomRessource) 
 	{
-		return this.banqueRessource.getRessource(nomRessource);
+		return this.banqueRessources.getRessource(nomRessource);
 	}
 
 	public void creerRessource(String nomRessource) 
 	{
-		this.banqueRessource.ajouterRessource(new Ressource(nomRessource));
+		this.banqueRessources.ajouterRessource(new Ressource(nomRessource));
+		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 	}
 
 	public void creerNotion(String nomNotion) 
 	{
 		if(this.ressourceActive != null)
+		{
 			this.ressourceActive.ajouterNotion(new Notion(nomNotion));
+			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
+		}
 	}
 
 	public void creerQuestion() 
 	{
 		QCM qcm = new QCM(0, ressourceActive, notionActive, Difficulte.FACILE,  30, 1);
 		qcm.setIntitule("A quoi sert le chiffrement ?");
-		this.banqueQuestion.ajouterQuestions(qcm);
+		this.banqueQuestions.ajouterQuestions(qcm);
+		this.banqueQuestions.sauvegarderQuestions("data/questions.csv");
 	}
 }
