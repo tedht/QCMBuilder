@@ -13,8 +13,8 @@ import metier.entite.Ressource;
 public class Association extends Question
 {
 	/* Attributs */
-	private List<String  > lstPropositions;
-	private List<String  > lstReponses;
+	private List<String  > lstPropositionsGauche;
+	private List<String  > lstPropositionsDroite;
 	private List<String[]> lstLiaisons;
 
 	/*--------------*/
@@ -26,8 +26,8 @@ public class Association extends Question
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 
-		this.lstPropositions = new ArrayList<String  >();
-		this.lstReponses    = new ArrayList<String  >();
+		this.lstPropositionsGauche = new ArrayList<String  >();
+		this.lstPropositionsDroite    = new ArrayList<String  >();
 		this.lstLiaisons       = new ArrayList<String[]>();
 	}
 
@@ -35,8 +35,8 @@ public class Association extends Question
 	/* Getteurs */
 	/*----------*/
 
-	public List<String  > getPropositions() { return this.lstPropositions; }
-	public List<String  > getReponses    () { return this.lstReponses;    }
+	public List<String  > getPropositions() { return this.lstPropositionsGauche; }
+	public List<String  > getReponses    () { return this.lstPropositionsDroite;    }
 	public List<String[]> getLiaison     () { return this.lstLiaisons;       }
 
 	public TypeQuestion getTypeQuestion() { return TypeQuestion.ASSOCIATION; }
@@ -47,11 +47,11 @@ public class Association extends Question
 		if (proposition == null)    return false;
 		if (proposition.equals("")) return false;
 
-		for (String prop : this.lstPropositions)
+		for (String prop : this.lstPropositionsGauche)
 			if (prop == proposition)
 				return false; // Proposition déja existante
 
-		this.lstPropositions.add(proposition);
+		this.lstPropositionsGauche.add(proposition);
 		return true;
 	}
 
@@ -61,11 +61,11 @@ public class Association extends Question
 		if (reponse  == null)       return false;
 		if (reponse.equals(""))     return false;
 
-		for (String rep : this.lstReponses)
+		for (String rep : this.lstPropositionsDroite)
 			if (rep == reponse)
 				return false; // Réponse déja existante
 
-		this.lstReponses.add(reponse);
+		this.lstPropositionsDroite.add(reponse);
 		return true;
 	}
 
@@ -86,7 +86,7 @@ public class Association extends Question
 	/* Modifier */
 	public boolean modifierProposition(String propositionActuelle, String nouvelleProposition)
 	{
-		if(this.lstPropositions.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if(this.lstPropositionsGauche.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 
 		if (propositionActuelle == null) return false;
 		if (propositionActuelle.equals("")) return false;
@@ -94,11 +94,11 @@ public class Association extends Question
 		if (nouvelleProposition == null) return false;
 		if (nouvelleProposition.equals("")) return false;
 
-		for(int cpt = 0; cpt < this.lstPropositions.size(); cpt++)
+		for(int cpt = 0; cpt < this.lstPropositionsGauche.size(); cpt++)
 		{
-			if(this.lstPropositions.get(cpt).equals(propositionActuelle))
+			if(this.lstPropositionsGauche.get(cpt).equals(propositionActuelle))
 			{
-				this.lstPropositions.set(cpt, nouvelleProposition);
+				this.lstPropositionsGauche.set(cpt, nouvelleProposition);
 			}
 		}
 
@@ -111,7 +111,7 @@ public class Association extends Question
 
 	public boolean modifierReponse(String reponseActuelle, String nouvelleReponse)
 	{
-		if(this.lstReponses.isEmpty()) return false; // Si la liste est vide -> renvoie faux
+		if(this.lstPropositionsDroite.isEmpty()) return false; // Si la liste est vide -> renvoie faux
 
 		if (reponseActuelle == null) return false;
 		if (reponseActuelle.equals("")) return false;
@@ -119,9 +119,9 @@ public class Association extends Question
 		if (nouvelleReponse == null) return false;
 		if (nouvelleReponse.equals("")) return false;
 
-		for (int cpt = 0 ; cpt < this.lstReponses.size() ; cpt++)
-			if (this.lstReponses.get(cpt).equals(reponseActuelle))
-				this.lstReponses.set(cpt, nouvelleReponse);
+		for (int cpt = 0 ; cpt < this.lstPropositionsDroite.size() ; cpt++)
+			if (this.lstPropositionsDroite.get(cpt).equals(reponseActuelle))
+				this.lstPropositionsDroite.set(cpt, nouvelleReponse);
 
 		for (String[] liaison : this.lstLiaisons)
 			if (liaison[1] == reponseActuelle)
@@ -157,9 +157,9 @@ public class Association extends Question
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(String proposition)
 	{
-		if(this.lstPropositions.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if(this.lstPropositionsGauche.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 		
-		this.lstPropositions.remove(proposition);
+		this.lstPropositionsGauche.remove(proposition);
 
 		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
 			if (this.lstLiaisons.get(cpt)[0] == proposition || this.lstLiaisons.get(cpt)[1] == proposition)
@@ -171,9 +171,9 @@ public class Association extends Question
 	/* Supprimer une réponse */
 	public boolean supprimerReponse(String reponse)
 	{
-		if(this.lstReponses.isEmpty()) return false; // Si la liste est vide -> renvoie faux
+		if(this.lstPropositionsDroite.isEmpty()) return false; // Si la liste est vide -> renvoie faux
 
-		this.lstReponses.remove(reponse);
+		this.lstPropositionsDroite.remove(reponse);
 
 		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
 			if (this.lstLiaisons.get(cpt)[0] == reponse || this.lstLiaisons.get(cpt)[1] == reponse)
@@ -198,16 +198,16 @@ public class Association extends Question
 		String sRet;
 
 
-		if (this.lstPropositions.isEmpty()) { return "Il n'y a pas de propostions"; }
-		if (this.lstReponses    .isEmpty()) { return "Il n'y a pas de réponses";    }
+		if (this.lstPropositionsGauche.isEmpty()) { return "Il n'y a pas de propostions"; }
+		if (this.lstPropositionsDroite    .isEmpty()) { return "Il n'y a pas de réponses";    }
 
 		sRet = "";
-		for (String proposition : this.lstPropositions)
+		for (String proposition : this.lstPropositionsGauche)
 			 sRet += proposition + "\t";
 
 		sRet += "\n\n";
 
-		for (String reponse : this.lstReponses)
+		for (String reponse : this.lstPropositionsDroite)
 			sRet += reponse + "\t";
 
 		sRet += "\n\nLiaisons :\n";
