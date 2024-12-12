@@ -82,6 +82,7 @@ Vous pouvez également lancer l'application avec un double clic sur le fichier r
 - Diagramme de classes
   - Thibault MANGEANT
   - Felix LE GARS
+  - Kylian LUCAS-THUILLIER
 - README
   - Thibault MANGEANT
 - LICENSE
