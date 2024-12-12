@@ -130,11 +130,13 @@ public class BanqueDeQuestions
 							ind++;
 						}
 						*/
-					break;
-					case TypeQuestion.ASSOCIATION:
+					}
+					case ASSOCIATION ->
+					{
 						question = new Association(id, ressource, notion, difficulte, temps, note);
-					break;
-					case TypeQuestion.ELIMINATION:
+					}
+					case ELIMINATION ->
+					{
 						question = new Elimination(id, ressource, notion, difficulte, temps, note);
 					}
 					default ->
