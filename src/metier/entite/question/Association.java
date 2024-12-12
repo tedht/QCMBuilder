@@ -22,13 +22,13 @@ public class Association extends Question
 	/*--------------*/
 
 	public Association(int id, String intitule, String explication, Difficulte difficulte,
-						Ressource ressource, Notion notion, int temps, int note)
+	                   Ressource ressource, Notion notion, int temps, int note)
 	{
 		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
 
 		this.lstPropositionsGauche = new ArrayList<String  >();
-		this.lstPropositionsDroite    = new ArrayList<String  >();
-		this.lstLiaisons       = new ArrayList<String[]>();
+		this.lstPropositionsDroite = new ArrayList<String  >();
+		this.lstLiaisons           = new ArrayList<String[]>();
 	}
 
 	/*----------*/
@@ -37,38 +37,31 @@ public class Association extends Question
 
 	public List<String  > getPropositionsGauche() { return this.lstPropositionsGauche; }
 	public List<String  > getPropositionsDroite() { return this.lstPropositionsDroite; }
-	public List<String[]> getLiaison           () { return this.lstLiaisons;       }
+	public List<String[]> getLiaisons          () { return this.lstLiaisons;           }
 
 	public TypeQuestion getTypeQuestion() { return TypeQuestion.ASSOCIATION; }
 
-	/* Ajouter une proposition */
-	public boolean ajouterPropositionGauche(String propositionGauche)
+	/* Ajouter une proposition gauche et droite */
+	public boolean ajouterProposition(String propositionGauche, String propositionDroite)
 	{
-		if (propositionGauche == null)    return false;
-		if (propositionGauche.equals("")) return false;
+		if (propositionGauche == null || propositionDroite == null) return false;
+		if (propositionGauche.equals("") || propositionDroite.equals("")) return false;
 
 		for (String prop : this.lstPropositionsGauche)
 			if (prop == propositionGauche)
-				return false; // Proposition déja existante
-
-		this.lstPropositionsGauche.add(propositionGauche);
-		return true;
-	}
-
-	/* Ajouter une réponse */
-	public boolean ajouterPropositionDroite(String propositionDroite)
-	{
-		if (propositionDroite == null) return false;
-		if (propositionDroite.equals(""))     return false;
+				return false; // Proposition Gauche déja existante
 
 		for (String prop : this.lstPropositionsDroite)
 			if (prop == propositionDroite)
-				return false; // Réponse déja existante
+				return false; // Proposition Droite déja existante
 
+		this.lstPropositionsGauche.add(propositionGauche);
 		this.lstPropositionsDroite.add(propositionDroite);
+		this.ajouterLiaison(propositionGauche, propositionDroite);
 		return true;
 	}
 
+	/* Ajoute la liaison entre la propositionGauche et propositionDroite */
 	public boolean ajouterLiaison(String propositionGauche, String propositionDroite)
 	{
 		if (propositionGauche == null || propositionDroite == null) return false;
@@ -84,9 +77,10 @@ public class Association extends Question
 
 
 	/* Modifier */
-	public boolean modifierPropositionGauche(String propositionGaucheActuelle, String nouvellePropositionGauche)
+	/*public boolean modifierProposition(String propositionGaucheActuelle, String nouvellePropositionGauche)
 	{
-		if(this.lstPropositionsGauche.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if (this.lstPropositionsGauche.isEmpty() && // Si les listes sont vides -> renvoie faux
+		    this.lstPropositionsDroite.isEmpty())
 
 		if (propositionGaucheActuelle == null) return false;
 		if (propositionGaucheActuelle.equals("")) return false;
@@ -107,28 +101,7 @@ public class Association extends Question
 				liaison[0] = nouvellePropositionGauche;
 		
 		return true;
-	}
-
-	public boolean modifierPropositionDroite(String propositionDroiteActuelle, String nouvellePropositionDroite)
-	{
-		if(this.lstPropositionsDroite.isEmpty()) return false; // Si la liste est vide -> renvoie faux
-
-		if (propositionDroiteActuelle == null) return false;
-		if (propositionDroiteActuelle.equals("")) return false;
-
-		if (nouvellePropositionDroite == null) return false;
-		if (nouvellePropositionDroite.equals("")) return false;
-
-		for (int cpt = 0 ; cpt < this.lstPropositionsDroite.size() ; cpt++)
-			if (this.lstPropositionsDroite.get(cpt).equals(propositionDroiteActuelle))
-				this.lstPropositionsDroite.set(cpt, nouvellePropositionDroite);
-
-		for (String[] liaison : this.lstLiaisons)
-			if (liaison[1] == propositionDroiteActuelle)
-				liaison[1] = nouvellePropositionDroite;
-
-		return true;
-	}
+	}*/
 
 	public boolean modifierLiaison(char modif, String proposition, String propositionDroite, String nouvelleProposition, String nouvellepropositionDroite)
 	{
@@ -155,28 +128,16 @@ public class Association extends Question
 
 
 	/* Supprimer une proposition */
-	public boolean supprimerPropositionGauche(String propositionGauche)
+	public boolean supprimerProposition(String proposition)
 	{
-		if(this.lstPropositionsGauche.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+		if (this.lstPropositionsGauche.isEmpty() && // Si les listes sont vides -> renvoie faux
+		    this.lstPropositionsDroite.isEmpty())
 		
-		this.lstPropositionsGauche.remove(propositionGauche);
+		this.lstPropositionsGauche.remove(proposition);
+		this.lstPropositionsDroite.remove(proposition);
 
 		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
-			if (this.lstLiaisons.get(cpt)[0] == propositionGauche || this.lstLiaisons.get(cpt)[1] == propositionGauche)
-				this.lstLiaisons.remove(cpt);
-
-		return true;
-	}
-
-	/* Supprimer une réponse */
-	public boolean supprimerpropositionDroite(String propositionDroite)
-	{
-		if(this.lstPropositionsDroite.isEmpty()) return false; // Si la liste est vide -> renvoie faux
-
-		this.lstPropositionsDroite.remove(propositionDroite);
-
-		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
-			if (this.lstLiaisons.get(cpt)[0] == propositionDroite || this.lstLiaisons.get(cpt)[1] == propositionDroite)
+			if (this.lstLiaisons.get(cpt)[0] == proposition || this.lstLiaisons.get(cpt)[1] == proposition)
 				this.lstLiaisons.remove(cpt);
 
 		return true;
@@ -184,6 +145,8 @@ public class Association extends Question
 
 	public boolean supprimerLiaison(String propositionGauche, String propositionDroite)
 	{
+		if (this.lstLiaisons.isEmpty()) return false;
+
 		if (propositionGauche == null || propositionDroite == null) return false;
 		if (propositionGauche.equals("") || propositionDroite.equals("")) return false;
 
