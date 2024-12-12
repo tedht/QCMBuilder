@@ -159,17 +159,6 @@ public class Association extends Question
 		return true;
 	}
 
-	private boolean supprimerLiaison(String propositionGauche, String propositionDroite)
-	{
-		if (this.lstLiaisons.isEmpty()) return false;
-
-		if (propositionGauche == null || propositionDroite == null) return false;
-		if (propositionGauche.equals("") || propositionDroite.equals("")) return false;
-
-		this.lstLiaisons.remove(new String[] {propositionGauche, propositionDroite});
-		return true;
-	}
-
 
 	/* toString */
 	public String toString()
