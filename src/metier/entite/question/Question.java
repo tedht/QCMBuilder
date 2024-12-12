@@ -1,8 +1,5 @@
 package metier.entite.question;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import metier.entite.Notion;
 import metier.entite.Ressource;
 

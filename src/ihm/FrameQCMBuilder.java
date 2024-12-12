@@ -2,12 +2,9 @@ package ihm;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
 import controleur.Controleur;
-import ihm.edition.notion.FrameEditionNotion;
-import ihm.edition.question.FrameEditionQuestion;
-import ihm.edition.ressource.FrameEditionRessource;
+
 
 /**
  * Classe représentant la fenêtre de la Banque de lstQuestions de l'application.
@@ -38,7 +35,7 @@ public class FrameQCMBuilder extends JFrame
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelQCMBuilder = new PanelQCMBuilder(ctrl, ihm);
+        this.panelQCMBuilder = new PanelQCMBuilder(this.ctrl, this.ihm);
         this.add(this.panelQCMBuilder);
 
         // Définition des dimensions.

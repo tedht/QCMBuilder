@@ -74,7 +74,7 @@ public class BanqueDeQuestions
 		String enreg;
 
 		int id  = 0;
-		int ind = 0;
+		//int ind = 0;
 
 		Ressource    ressource;
 		Notion       notion;
@@ -84,7 +84,7 @@ public class BanqueDeQuestions
 		int          note;
 		String       intitule;
 		String       explication;
-		String       proposition;
+		//String       proposition;
 		Question     question;
 
 		try
@@ -114,8 +114,8 @@ public class BanqueDeQuestions
 					case QCM ->
 					{
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
-						ind = 0;
 						/*
+						ind = 0;
 						while(scDonnee.hasNext())
 						{
 							proposition = scDonnee.next();
