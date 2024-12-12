@@ -35,6 +35,9 @@ public abstract class Question
 		this.difficulte  = difficulte;
 		this.temps       = temps;
 		this.note        = note;
+
+		this.intitule    = "";
+		this.explication = "";
 	}
 
 	/*---------*/

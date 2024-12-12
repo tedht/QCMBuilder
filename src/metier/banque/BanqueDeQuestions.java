@@ -111,7 +111,7 @@ public class BanqueDeQuestions
 				
 				switch (typeQuestion) 
 				{
-					case TypeQuestion.QCM:
+					case QCM:
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
 						ind = 0;
 						/*
@@ -127,10 +127,10 @@ public class BanqueDeQuestions
 						}
 						*/
 					break;
-					case TypeQuestion.ASSOCIATION:
+					case ASSOCIATION:
 						question = new Association(id, ressource, notion, difficulte, temps, note);
 					break;
-					case TypeQuestion.ELIMINATION:
+					case ELIMINATION:
 						question = new Elimination(id, ressource, notion, difficulte, temps, note);
 					break;
 					default: 
@@ -165,16 +165,15 @@ public class BanqueDeQuestions
 			pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tintitulé\texplication\tproposition 1\tproposition 2\tproposition N");
 
 			for (Question question : this.lstQuestions)
-			{
-				pw.print(question.getRessource().getNom() + "\t");
-				pw.print(question.getNotion().getNom() + "\t");
-				pw.print(question.getDifficulte().getValeur() + "\t");
-				pw.print(question.getType().getValeur() + "\t");
-				pw.print(question.getType().getValeur() + "\t");
-				pw.print(question.getTemps() + "\t");
-				pw.print(question.getNote() + "\t");
-				pw.print(question.getIntitule() + "\t");
-				pw.print(question.getExplication() + "\t");
+			{   
+				pw.print(question.getRessource  ().getNom   () + "\t");
+				pw.print(question.getNotion     ().getNom   () + "\t");
+				pw.print(question.getDifficulte ().getValeur() + "\t");
+				pw.print(question.getType       ().getValeur() + "\t");
+				pw.print(question.getTemps      ()             + "\t");
+				pw.print(question.getNote       ()             + "\t");
+				pw.print(question.getIntitule   ()             + "\t");
+				pw.print(question.getExplication()             + "\t");
 
 				pw.print("\n");
 			}
