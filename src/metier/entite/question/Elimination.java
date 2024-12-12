@@ -20,11 +20,7 @@ public class Elimination extends Question
 	public Elimination(int id, String intitule, String explication, Difficulte difficulte, Ressource ressource, Notion notion, 
 	                   int temps,int note ,List<String> proposition, String reponse, List<Integer> ordreElimination, List<Integer> nbPtPerdu)
 	{
-		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
-		this.proposition        = proposition;
-		this.reponse            = reponse;
-		this.ordreElimination   = ordreElimination;
-		this.nbPtPerdu          = nbPtPerdu;
+		super(id, ressource, notion, difficulte, temps, note);
 
 	}
 
@@ -38,7 +34,8 @@ public class Elimination extends Question
 	public List<Integer> getOrdreElimination() { return this.ordreElimination; }
 	public List<Integer> getNbPtPerdu       () { return this.nbPtPerdu;        }
 
-	public TypeQuestion getTypeQuestion() { return TypeQuestion.ELIMINATION; }
+	@Override
+	public TypeQuestion getType() { return TypeQuestion.ELIMINATION; }
 
 	/*----------*/
 	/* Setteurs */

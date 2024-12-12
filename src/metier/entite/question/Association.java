@@ -1,10 +1,13 @@
- package metier.entite.question;
+ package metier.entite.question.association;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.question.Difficulte;
+import metier.entite.question.Question;
+import metier.entite.question.TypeQuestion;
 
 /** Classe Association
  * @author Equipe 03
@@ -21,10 +24,9 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	public Association(int id, String intitule, String explication, Difficulte difficulte,
-						Ressource ressource, Notion notion, int temps, int note)
+	public Association(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
 	{
-		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
+		super(id, ressource, notion, difficulte, temps, note);
 
 		this.lstPropositionsGauche = new ArrayList<String  >();
 		this.lstPropositionsDroite    = new ArrayList<String  >();
@@ -39,7 +41,11 @@ public class Association extends Question
 	public List<String  > getPropositionsDroite() { return this.lstPropositionsDroite; }
 	public List<String[]> getLiaison           () { return this.lstLiaisons;       }
 
-	public TypeQuestion getTypeQuestion() { return TypeQuestion.ASSOCIATION; }
+	@Override
+	public TypeQuestion getType() 
+	{
+		return TypeQuestion.ASSOCIATION;
+	}
 
 	/* Ajouter une proposition */
 	public boolean ajouterPropositionGauche(String propositionGauche)
@@ -219,6 +225,7 @@ public class Association extends Question
 		return sRet;
 	}
 
+	/*
 	public static void main(String[] args)
 	{
 		Association asso, asso2;
@@ -245,6 +252,5 @@ public class Association extends Question
 		asso2.ajouterPropositionDroite("Sans");
 		asso2.ajouterLiaison("Without", "Sans");
 		System.out.println(asso2);
-	}
-
+	} */
 }

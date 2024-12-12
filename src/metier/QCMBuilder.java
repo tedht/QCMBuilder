@@ -8,6 +8,7 @@ import metier.banque.BanqueDeRessources;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
+import metier.entite.question.QCM;
 import metier.entite.question.Question;
 
 public class QCMBuilder 
@@ -104,6 +105,8 @@ public class QCMBuilder
 
 	public void creerQuestion() 
 	{
-		this.banqueQuestion.ajouterQuestions(new Question(0, "A quoi sert le chiffrement ?", "", Difficulte.FACILE, ressourceActive, notionActive, 30, 1));
+		QCM qcm = new QCM(0, ressourceActive, notionActive, Difficulte.FACILE,  30, 1);
+		qcm.setIntitule("A quoi sert le chiffrement ?");
+		this.banqueQuestion.ajouterQuestions(qcm);
 	}
 }

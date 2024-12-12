@@ -1,5 +1,8 @@
 package metier.entite.question;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -7,67 +10,51 @@ import metier.entite.Ressource;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-//public abstract class Question
-public class Question
+public abstract class Question
 {
+	/*-----------*/
 	/* Attributs */
+	/*-----------*/
 	private int          id;
-	private String       intitule;
-	private String       explication;
-	private Difficulte   difficulte;
 	private Ressource    ressource;
 	private Notion       notion;
+	private Difficulte   difficulte;
 	private int          temps;
 	private int          note;
+	private String       intitule;
+	private String       explication;
 
-
+	/*--------------*/
 	/* Constructeur */
-	public Question(int id, String intitule, String explication,
-	                Difficulte difficulte, Ressource ressource, Notion notion,
-	                int temps, int note)
+	/*--------------*/
+	public Question(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
 	{
 		this.id          = id;
-		this.intitule    = intitule;
-		this.explication = explication;
-		this.difficulte  = difficulte;
 		this.ressource   = ressource;
 		this.notion      = notion;
+		this.difficulte  = difficulte;
 		this.temps       = temps;
 		this.note        = note;
 	}
 
+	/*---------*/
 	/* Getters */
-	public int        getId         () { return this.id;          }
-	public String     getIntitule   () { return this.intitule;    }
-	public String     getExplication() { return this.explication; }
-	public Difficulte getDifficulte () { return this.difficulte;  }
-	public Ressource  getRessource  () { return this.ressource;   }
-	public Notion     getNotion     () { return this.notion;      }
-	public int        getTemps      () { return this.temps;       }
-	public int        getNote       () { return this.note;        }
+	/*---------*/
+	public int          getId         () { return this.id;          }
+	public Ressource    getRessource  () { return this.ressource;   }
+	public Notion       getNotion     () { return this.notion;      }
+	public Difficulte   getDifficulte () { return this.difficulte;  }
+	public int          getTemps      () { return this.temps;       }
+	public int          getNote       () { return this.note;        }
 
-	//public abstract TypeQuestion getTypeQuestion();
-	public TypeQuestion getTypeQuestion() { return TypeQuestion.QCM; }
+	public String       getIntitule   () { return this.intitule;    }
+	public String       getExplication() { return this.explication; }
 
+	public abstract TypeQuestion getType ();
+
+	/*---------*/
 	/* Setters */
-	public boolean setIntitule (String intitule)
-	{
-		if (intitule.equals("")) return false;
-
-		this.intitule = intitule;
-		return true;
-	}
-
-	public void setExplication (String explication)
-	{
-		this.explication = explication;
-	}
-
-	public void setDifficulte (Difficulte difficulte)
-	{
-		this.difficulte = difficulte;
-	}
-
+	/*---------*/
 	public boolean setRessource (Ressource ressource)
 	{
 		if (ressource == null) return false;
@@ -82,6 +69,11 @@ public class Question
 
 		this.notion = notion;
 		return true;
+	}
+
+	public void setDifficulte (Difficulte difficulte)
+	{
+		this.difficulte = difficulte;
 	}
 
 	public boolean setTemps (int temps)
@@ -100,7 +92,26 @@ public class Question
 		return true;
 	}
 
+	public boolean setIntitule (String intitule)
+	{
+		if (intitule.equals("")) return false;
+
+		this.intitule = intitule;
+		return true;
+	}
+
+	public void setExplication (String explication)
+	{
+		this.explication = explication;
+	}
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
+
+	/*----------*/
 	/* toString */
+	/*----------*/
 	public String toString()
 	{
 		return "Question " + this.id + " :\n" +
@@ -113,8 +124,9 @@ public class Question
 		       "\t       note : " + this.note                  + "\n"   ;
 	}
 
-
+	/*------*/
 	/* Main */
+	/*------*/
 	/*
 	public static void main(String[] args)
 	{

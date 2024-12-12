@@ -18,9 +18,9 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Association;
 import metier.entite.question.Difficulte;
-import metier.entite.question.Elimination;
 import metier.entite.question.QCM;
 import metier.entite.question.Question;
+import metier.entite.question.elimination.Elimination;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
