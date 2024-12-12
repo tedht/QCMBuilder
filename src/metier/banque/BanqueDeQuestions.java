@@ -18,6 +18,9 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Association;
 import metier.entite.question.Difficulte;
+import metier.entite.question.Elimination;
+import metier.entite.question.PropositionElimination;
+import metier.entite.question.PropositionQCM;
 import metier.entite.question.QCM;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -67,67 +70,96 @@ public class BanqueDeQuestions
 
 
 	public void lireQuestions(String cheminFichierCSV) {
-        try (BufferedReader brCSV = new BufferedReader(new FileReader(cheminFichierCSV))) {
-            String ligneCSV;
+		try (BufferedReader brCSV = new BufferedReader(new FileReader(cheminFichierCSV))) {
+			String ligneCSV;
 
-            // Lecture de l'en-tête CSV pour l'ignorer
-            brCSV.readLine();
+			// Lecture de l'en-tête CSV pour l'ignorer
+			brCSV.readLine();
 
-            // Lecture des questions à partir du fichier CSV
-            while ((ligneCSV = brCSV.readLine()) != null) {
-                String[] elements = ligneCSV.split(";");
-                int          id               = Integer.parseInt                     (elements[0]) ;
-                Ressource    ressource        = new Ressource                        (elements[1]) ;
-                Notion       notion           = new Notion                           (elements[2]) ;
-                TypeQuestion type             = TypeQuestion.fromInt(Integer.parseInt(elements[3]));
+			// Lecture des questions à partir du fichier CSV
+			while ((ligneCSV = brCSV.readLine()) != null) {
+				String[] elements = ligneCSV.split(";");
+				int          id               = Integer.parseInt                     (elements[0]) ;
+				Ressource    ressource        = new Ressource                        (elements[1]) ;
+				Notion       notion           = new Notion                           (elements[2]) ;
+				TypeQuestion type             = TypeQuestion.fromInt(Integer.parseInt(elements[3]));
 				Difficulte   difficulte       = Difficulte.fromInt  (Integer.parseInt(elements[4]));
-                String       cheminFichierTXT =                                       elements[5]  ;
-                int          temps            = Integer.parseInt                     (elements[6]) ;
-                int          note             = Integer.parseInt                     (elements[7]) ;
+				String       cheminFichierTXT =                                       elements[5]  ;
+				int          temps            = Integer.parseInt                     (elements[6]) ;
+				int          note             = Integer.parseInt                     (elements[7]) ;
 
-                // Lecture du fichier TXT pour récupérer l'intitulé et l'explication
-                String intitule    = "";
-                String explication = "";
+				// Lecture du fichier TXT pour récupérer l'intitulé et l'explication
+				String intitule    = "";
+				String explication = "";
 
-                try (BufferedReader brTXT = new BufferedReader(new FileReader(cheminFichierTXT))) {
-                    String ligneTXT;
-                    while ((ligneTXT = brTXT.readLine()) != null) {
+				try (BufferedReader brTXT = new BufferedReader(new FileReader(cheminFichierTXT))) {
+					String ligneTXT;
+					while ((ligneTXT = brTXT.readLine()) != null) {
 
-                        String[] elementsTXT = ligneTXT.split(" | ");
+						String[] elementsTXT = ligneTXT.split(" | ");
 
-                        if (Integer.parseInt(elementsTXT[0]) == id) {
-                            intitule    = elementsTXT[1];
-                            explication = elementsTXT[2];
-                            break;
-                        }
-                    }
-                } catch (IOException e) {
-                    System.err.println("Erreur lors de la lecture du fichier TXT : " + cheminFichierTXT);
-                }
+						if (Integer.parseInt(elementsTXT[0]) == id) {
+							intitule    = elementsTXT[1];
+							explication = elementsTXT[2];
+							break;
+						}
+					}
+				} catch (IOException e) {
+					System.err.println("Erreur lors de la lecture du fichier TXT : " + cheminFichierTXT);
+				}
 
-                // Créer l'objet Question en fonction du type
-                Question question = null;
-                switch (question.getType()) {
+				// Créer l'objet Question en fonction du type
+				switch (type) {
 					case QCM:
+						QCM qQcm = new QCM(id, ressource, notion, difficulte, temps, note);
+
+						for (int i = 8; i < elements.length; i++)
+						{
+							String[] prop = elements[i].split(",");
+							if (prop[1]== "true") {qQcm.ajouterProposition(prop[0], true );}
+							else                  {qQcm.ajouterProposition(prop[0], false);}
+						}
+						qQcm.setIntitule(intitule);
+						qQcm.setExplication(explication);
+
+						ajouterQuestions(qQcm);
+						break;
 				
 					case ELIMINATION:
+						Elimination qElim = new Elimination(id, ressource, notion, difficulte, temps, note);
+
+						for (int i = 8; i < elements.length; i++) {
+
+							String[] prop      = elements[i].split(",");
+
+							String enonce      = prop[0];
+							String reponse     = prop[1];
+							int numElimination = Integer.parseInt(prop[2]);
+							int nbPtPerdu      = Integer.parseInt(prop[3]);
+
+							if (enonce == "true"){qElim.ajouterProposition(enonce, true, numElimination, nbPtPerdu );}
+							else                 {qElim.ajouterProposition(enonce, false, numElimination, nbPtPerdu);}	
+							
+						}
+
+						qElim.setIntitule(intitule);
+						qElim.setExplication(explication);
+
+						ajouterQuestions(qElim);
+						break;
 
 					case ASSOCIATION:
 
 					default:
 						break;
 				}
-
-                if (question != null) {
-                    ajouterQuestion(question);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Erreur lors de la lecture du fichier CSV : " + cheminFichierCSV);
-        } catch (NumberFormatException e) {
-            System.err.println("Erreur de formatage dans le fichier CSV : " + e.getMessage());
-        }
-    }
+			}
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la lecture du fichier CSV : " + cheminFichierCSV);
+		} catch (NumberFormatException e) {
+			System.err.println("Erreur de formatage dans le fichier CSV : " + e.getMessage());
+		}
+	}
 
 
 	/* Ecriture des fichiers csv et txt qui contiennent la lstQuestions */
@@ -161,7 +193,7 @@ public class BanqueDeQuestions
 			BufferedWriter bw = new BufferedWriter(new FileWriter(cheminFichierCSV, true));
 			BufferedWriter bw2 = new BufferedWriter(new FileWriter(cheminFichierTXT, true));
 
-			bw.write("ID;Ressource;Notion;Type;Intitule;Explication;temps;note;Prop1...propn \n");
+			bw.write("ID;Ressource;Notion;Type;Dificulte;Intitule & Explication;temps;note;Prop1...propn \n");
 			
 
 			for (Question question : lstQuestions) 
@@ -175,9 +207,56 @@ public class BanqueDeQuestions
 				
 				bw.write(question.getTemps                   () + ";");
 				bw.write(question.getNote                    () + ";");
-				/*for (Proposition propositon : question.getPropositions()) {
-					bw.write(proposition.getTexte() + ";");
-				}*/
+				switch (question.getType()) {
+					case QCM:
+						QCM qQCM = (QCM) question;
+						List<PropositionQCM> lstPropQCM = qQCM.getProposition();
+						for (PropositionQCM propositionQCM : lstPropQCM) {
+							bw.write(propositionQCM.getTextProposition() +",");
+							if (propositionQCM.getReponse()) { bw.write("true" + ";");}
+							else { bw.write("false" + ";");}
+						}
+						break;
+						
+					case ELIMINATION:
+						Elimination qElim = (Elimination) question;
+						List<PropositionElimination> lstPropELIM = qElim.getProposition();
+						for (PropositionElimination propositionElim : lstPropELIM)
+						{
+							bw.write(propositionElim.getTextProposition() + ",");
+							if (propositionElim.getReponse())
+							{
+								bw.write("true" + ",");
+							}
+							else
+							{
+								bw.write("false" + ",");
+							}
+							bw.write(propositionElim.getNumElimination() + ",");
+							bw.write(propositionElim.getNbPtPerdu() + ";");
+						}
+						break;
+
+					case ASSOCIATION:
+
+						Association qAsso = (Association) question;
+						/*List<PropositionQCM> lstProp = qAsso.getProposition();
+						for (PropositionQCM propositionQCM : lstProp)
+						{
+							bw.write("(" + propositionQCM.getTextProposition() + ",");
+							if (propositionQCM.getReponse())
+							{
+								bw.write("true" + ");");
+							}
+							else
+							{
+								bw.write("false" + ")");
+							}
+						}*/
+				
+					default:
+						break;
+				}
 				bw.write("\n");
 
 				bw2.write(question.getId         () + " | ");
@@ -241,31 +320,46 @@ public class BanqueDeQuestions
 		Ressource r1 = new Ressource("R3.01");
 		Notion n1 = new Notion("Algorithmique");
 
-		QCM qcm = new QCM(0, "Quel est le plus grand océan ?", "En effet, de par sa superficie, l'océan Pacifique est le plus grand.", Difficulte.FACILE, r1, n1, 30, 5,
-				Arrays.asList("Pacifique", "Atlantique", "Arctique", "Indien"), Arrays.asList("Pacifique"));
+		QCM qcm = new QCM(0,r1,n1, Difficulte.FACILE, 30, 5);
+		qcm.setIntitule("Quel est l'océan le plus grand du monde ?");
+		qcm.setExplication("Le Pacifique de par sa superficie gargantuesque.");
+		qcm.ajouterProposition("Pacifique", true);
+		qcm.ajouterProposition("Atlantique", false);
+		qcm.ajouterProposition("Arctique", false);
+		qcm.ajouterProposition("Indien", false);
+
+
 		banque.ajouterQuestions(qcm);
 
-		Association assoc = new Association(1, "Associez les éléments", "France -> Paris / Allemagne -> Berlin.", Difficulte.MOYEN, r1, n1, 60, 10);
+		/*Association assoc = new Association(1, "Associez les éléments", "France -> Paris / Allemagne -> Berlin.", Difficulte.MOYEN, r1, n1, 60, 10);
 		assoc.ajouterProposition("France");
 		assoc.ajouterReponse("Paris");
 		assoc.ajouterProposition("Allemagne");
 		assoc.ajouterReponse( "Berlin");
-		banque.ajouterQuestions(assoc);
+		banque.ajouterQuestions(assoc);*/
 
 
-		Elimination elim = new Elimination(2, "Quel est le plus grand océan ?",
-		"Toujours l'océan Pacifique.", Difficulte.DIFFICILE, r1, n1, 45, 8,Arrays.asList("Pacifique", "Atlantique", "Indien", "Arctique"), "Pacifique", Arrays.asList(3,2),Arrays.asList(2, 3));
+		Elimination elim = new Elimination(1,r1,n1,Difficulte.DIFFICILE,20,5);
+		elim.setIntitule("De couleur est le cheval blanc d'Henri IV ?");
+		elim.setExplication("C'était écrit dans le question !!");
+
+		elim.ajouterProposition("Noir", false, 1, 2);
+		elim.ajouterProposition("Rouge", false, 2, 5);
+		elim.ajouterProposition("Blanc", true, 0, 0);
+
 		banque.ajouterQuestions(elim);
 
 		banque.sauvegarderQuestions("lstQuestions.csv","lstQuestions.txt");
 		banque.supprimerQuestion(0);
-		banque.supprimerQuestion(1);
 		banque.supprimerQuestion(2);
+
 
 		System.out.println("Les lstQuestions ont été écrites dans le fichier RTF.");
 
-		banque.lireQuestions("lstQuestions.rtf");
+		banque.lireQuestions("lstQuestions.csv");
 		System.out.println("Les lstQuestions ont été lues depuis le fichier RTF.");
+		
+		banque.sauvegarderQuestions("lst2.csv", "lst2.txt");
 		
 	}
 }
