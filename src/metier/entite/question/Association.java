@@ -21,12 +21,7 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-<<<<<<< HEAD
-	public Association(int id, String intitule, String explication, Difficulte difficulte,
-	                   Ressource ressource, Notion notion, int temps, int note)
-=======
 	public Association(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
->>>>>>> 94c7fa203a65d01ba3c32dcdf7aa97965994da65
 	{
 		super(id, ressource, notion, difficulte, temps, note);
 
