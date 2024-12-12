@@ -1,100 +1,92 @@
 package metier.entite.question;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
 public class Elimination extends Question
 {
 	/* Attributs */
-	private List<String>    proposition;
-	private String          reponse;
-	private List<Integer>   ordreElimination;
-	private List<Integer>   nbPtPerdu;
+	private List<PropositionElimination> lstPropositions;
+	private int                          suppression;
 
 	/*--------------*/
-	/* Constructeur */
+	// Constructeur //
 	/*--------------*/
 
-	public Elimination(int id, String intitule, String explication, Difficulte difficulte, Ressource ressource, Notion notion, 
-	                   int temps,int note ,List<String> proposition, String reponse, List<Integer> ordreElimination, List<Integer> nbPtPerdu)
+	public Elimination(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
 	{
 		super(id, ressource, notion, difficulte, temps, note);
-
+		this.lstPropositions = new ArrayList<>();
+		this.suppression     = 1;
 	}
 
+	/*--------------*/
+	//    GETTER    //
+	/*--------------*/
 
-	/*----------*/
-	/* Getteurs */
-	/*----------*/
-
-	public List<String>  getProposition     () { return this.proposition;      }
-	public String        getReponse         () { return this.reponse;          }
-	public List<Integer> getOrdreElimination() { return this.ordreElimination; }
-	public List<Integer> getNbPtPerdu       () { return this.nbPtPerdu;        }
-
+	public List<PropositionElimination>  getProposition() { return this.lstPropositions; }
 	@Override
-	public TypeQuestion getType() { return TypeQuestion.ELIMINATION; }
-
-	/*----------*/
-	/* Setteurs */
-	/*----------*/
-
-	public void setReponse(String reponse) { this.reponse = reponse; }
-	public void setOrdreElimination(List<Integer> ordreElimination)
+	public TypeQuestion getType() 
 	{
-		this.ordreElimination = ordreElimination;
-	}
-	public void setNbPtPerdu(List<Integer> nbPtPerdu)
-	{
-		this.nbPtPerdu = nbPtPerdu;
+		return TypeQuestion.ELIMINATION;
 	}
 
 
 	/* Ajouter une proposition */
-	public boolean ajouterProposition(String newProposition)
+	public boolean ajouterProposition(String nouvelleProposition, boolean reponse, int numElimination, double nbPtPerdu)
 	{
-		for(String proposition : this.proposition)
+		for(PropositionElimination proposition : this.lstPropositions)
 		{
-			if (proposition == newProposition) { return false; } // Si la proposition existe déjà -> renvoie faux
+			if( proposition.getTextProposition() == nouvelleProposition ) { return false; }
 		}
-
-		this.proposition.add(newProposition); // Ajoute la proposition
+		PropositionElimination prop = new PropositionElimination(nouvelleProposition, reponse, numElimination, nbPtPerdu);
+		this.lstPropositions.add(prop);
 		return true;
 	}
-
-	/* Modifie une propoition */
-	public boolean modifierProposition(int id, String proposition)
-	{
-		if ( id > this.proposition.size() || id < 0 )     { return false; } // Si l'id est en dehors de la liste                                                -> renvoie faux
-		if (this.proposition.isEmpty())                   { return false; } // Si la liste est vide                                                             -> renvoie faux
-		if (this.proposition.get(id).equals(proposition)) { return false; } // Si la proposition modifié est égale à la même chose que la nouvelle proposition  -> renvoie faux
-
-		this.proposition.set(id, proposition); // Modifie la proposition
-		return true;
-	}
-
 
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(int id)
 	{
-		if(id>this.proposition.size() || id<0)  { return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if(this.proposition.isEmpty())          { return false; } // Si la liste est vide              -> renvoie faux
+		if(id < 0 || id >= this.lstPropositions.size())  { return false; }
+		if(this.lstPropositions.isEmpty())               { return false; }
 
-		this.proposition.remove(id); // Supprime la proposition
+		this.lstPropositions.remove(id);
 		return true;
 	}
 
-
-	/* toString */
-	public String toString()
+	// Eliminer la premiére proposition qui vient
+	public double eliminerProposition()
 	{
-		return  "Question Elimination :\n" +
-		        "Propositions          : " + this.proposition      + "\n" +
-		        "Réponse               : " + this.reponse          + "\n" +
-		        "Ordre d'élimination   : " + this.ordreElimination + "\n" +
-		        "Nombre de point perdu : " + this.nbPtPerdu        + "\n" ;
+		double nbPtPerdu = 0;
+		int cpt = 0;
+		for(PropositionElimination prop : lstPropositions)
+		{
+			if(prop.getNumElimination() == this.suppression)
+			{
+				nbPtPerdu = prop.getNbPtPerdu();
+				supprimerProposition(cpt);
+				this.suppression++;
+				cpt++;
+				return nbPtPerdu;
+			}
+		}
+
+		return nbPtPerdu;
 	}
 
+	public String toString()
+    {
+        String result = "";
+        for(PropositionElimination prop : this.lstPropositions)
+        {
+            result +=	"TextProposition         : " + prop.getTextProposition() + "\n" +
+						"Réponse                 : " + prop.getReponse()         + "\n" +
+						"Numéro d'élimination    : " + prop.getNumElimination()  + "\n" +
+						"Nombre de points perdus : " + prop.getNbPtPerdu()       + "\n\n";
+        }
+
+        return result;
+    }
 }
