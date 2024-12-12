@@ -1,5 +1,6 @@
 package metier.entite.question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Notion;
@@ -11,79 +12,89 @@ import metier.entite.Ressource;
  */
 public class QCM extends Question
 {
+	/*-----------*/
 	/* Attributs */
-	private List<String> proposition;
-	private List<String> reponse;
+	/*-----------*/
+	private List<String> lstPropositions;
+	private List<String> lstReponses;
 
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-
-	public QCM(	int id, String intitule, String explication, Difficulte difficulte,
-	            Ressource ressource, Notion notion, int temps, int note,
-	            List<String> proposition, List<String> reponse)
+	public QCM(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
 	{
-		super(id, intitule, explication, difficulte, ressource, notion, temps, note);
-		this.proposition = proposition;
-		this.reponse     = reponse;
+		super(id, ressource, notion, difficulte, temps, note);
+		this.lstPropositions = new ArrayList<String>();
+		this.lstReponses     = new ArrayList<String>();
+
 	}
 
-	/*----------*/
-	/* Getteurs */
-	/*----------*/
+	/*---------*/
+	/* Getters */
+	/*---------*/
+	public List<String> getReponses () { return this.lstReponses; }
 
-	public List<String> getProposition () { return this.proposition;  }
-	public List<String> getReponse     () { return this.reponse;      }
+	@Override
+	public TypeQuestion getType() { return TypeQuestion.QCM; }
 
-	public TypeQuestion getTypeQuestion()
-	{
-		return TypeQuestion.QCM;
-	}
 
-	/*----------*/
-	/* Setteurs */
-	/*----------*/
-
-	public void setReponse(List<String> reponse)	{ this.reponse = reponse; }
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 
 	/* Ajouter une proposition */
-	public boolean ajouterProposition(String newProposition)
+	public boolean ajouterProposition(String prop)
 	{
-		for(String proposition : this.proposition)
-		{
-			if (proposition == newProposition) { return false; } // Si la proposition éxiste déjà -> renvoie faux
-		}
+		if(!this.lstPropositions.contains(prop)) return false; // Si la proposition éxiste déjà -> renvoie faux
 
-		this.proposition.add(newProposition); // Ajoute la proposition
+		this.lstPropositions.add(prop); // Ajoute la proposition
 		return true;
 	}
 
 	/* Modifier une proposition */
-	public boolean modifierProposition(int id, String proposition)
+	public boolean modifierProposition(int i, String prop)
 	{
-		if ( id > this.proposition.size() || id < 0 )        { return false; } // Si l'id est en dehors de la liste                                               -> renvoie faux
-		if ( this.proposition.isEmpty() )                    { return false; } // Si la liste est vide                                                            -> renvoie faux
-		if ( !this.proposition.get(id).equals(proposition) ) { return false; } // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
+		if(i > this.lstPropositions.size() || i < 0)  { return false; } // Si l'indice est en dehors de la liste                                           -> renvoie faux
+		if(this.lstPropositions.isEmpty())            { return false; } // Si la liste est vide                                                            -> renvoie faux
+		if(!this.lstPropositions.get(i).equals(prop)) { return false; } // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
 
-		this.proposition.set(id, proposition);                                 // Modifie la proposition
+		this.lstPropositions.set(i, prop);                              // Modifie la proposition
 		return true;
 	}
 
 	/* Supprimer une proposition */
-	public boolean supprimerProposition(int id)
+	public boolean supprimerProposition(int i)
 	{
-		if ( id > this.proposition.size() || id < 0) { return false; } // Si l'id est en dehors de la liste -> renvoie faux
-		if ( this.proposition.isEmpty() )            { return false; } // Si la liste est vide              -> renvoie faux
+		if(i > this.lstPropositions.size() || i < 0) { return false; } // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.lstPropositions.isEmpty())           { return false; } // Si la liste est vide                  -> renvoie faux
 
-		this.proposition.remove(id); // Supprime la proposition
+		this.lstPropositions.remove(i); // Supprime la proposition
 		return true;
 	}
 
-	/* toString */
+	/* Ajouter une réponse correcte */
+	public boolean ajouterReponse(String reponse)
+	{
+		if(!this.lstReponses.contains(reponse)) return false; // Si la reponse est déjà dans la liste -> renvoie faux
+
+		this.lstReponses.add(reponse); // Ajoute la reponse
+		return true;
+	}
+
+	/* Supprimer  une réponse correcte */
+	public boolean supprimerReponse(String reponse)
+	{
+		if(this.lstReponses.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
+
+		this.lstReponses.remove(reponse); // Supprime la reponse
+		return true;
+	}
+
+	/*----------*/
+	/* ToString */
+	/*----------*/
 	public String toString()
 	{
-		return	"Question QCM :\n" +
-				"Propositions : "  + this.proposition + "\n" +
-				"Réponse      : "  + this.reponse     + "\n"   ;
+		return "Question QCM :\n" + "Propositions : "  + this.lstPropositions + "\n" + "Réponses : "  + this.lstReponses + "\n";
 	}
 }

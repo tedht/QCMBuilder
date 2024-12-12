@@ -232,7 +232,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.btnAjouter.setText("Créer une Nouvelle Ressource");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
+		for(int i = 8 - this.lstPanelCartes.size(); i > 0; i--)
 		{
 			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);
@@ -264,7 +264,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.btnAjouter.setText("Créer une Nouvelle Notion");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
+		for(int i = 8 - this.lstPanelCartes.size(); i > 0; i--)
 		{
 			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);
@@ -299,7 +299,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.btnAjouter.setText("Créer une Nouvelle Question");
 		this.panelContenu.add(this.panelBtnAjouter);
 
-		for(int i = 9 - this.lstPanelCartes.size(); i > 0; i--)
+		for(int i = 8 - this.lstPanelCartes.size(); i > 0; i--)
 		{
 			PanelCarte panelCarte = new PanelCarteQuestion(null, null, "", "");
 			panelCarte.setVisible(false);

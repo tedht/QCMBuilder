@@ -18,7 +18,6 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Association;
 import metier.entite.question.Difficulte;
-import metier.entite.question.Elimination;
 import metier.entite.question.QCM;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -108,7 +107,7 @@ public class BanqueDeQuestions
 
                 // Créer l'objet Question en fonction du type
                 Question question = null;
-                switch (question.getTypeQuestion()) {
+                switch (question.getType()) {
 					case QCM:
 				
 					case ELIMINATION:
@@ -170,7 +169,7 @@ public class BanqueDeQuestions
 				bw.write(question.getId                      () + ";");
 				bw.write(question.getRessource   ().getNom   () + ";");
 				bw.write(question.getNotion      ().getNom   () + ";");
-				bw.write(question.getTypeQuestion().getValeur() + ";");
+				bw.write(question.getType().getValeur() + ";");
 				bw.write(question.getDifficulte  ().getValeur() + ";");
 				bw.write(cheminFichierTXT                       + ";");
 				
