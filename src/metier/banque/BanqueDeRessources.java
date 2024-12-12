@@ -20,18 +20,24 @@ import metier.entite.Ressource;
  */
 public class BanqueDeRessources
 {
+	/*-----------*/
 	/* Attributs */
+	/*-----------*/
 	private List<Ressource> lstRessources;
 
-
+	/*--------------*/
 	/* Constructeur */
-	public BanqueDeRessources(/*Controleur ctrl*/)
+	/*--------------*/
+	public BanqueDeRessources()
 	{
-		// this.ctrl = ctrl;
 		this.lstRessources = new ArrayList<Ressource>();
+
+		this.lireRessources("data/ressources.csv");
 	}
 
+	/*---------*/
 	/* Getters */
+	/*---------*/
 	public List<Ressource> getRessources()
 	{
 		return this.lstRessources;
@@ -59,31 +65,35 @@ public class BanqueDeRessources
 		return null;
 	}
 
-	/* Lecture du fichier CSV qui contient les lstRessources */
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
+	/* Lecture du fichier CSV qui contient les ressources */
 	public void lireRessources(String nomFichier)
 	{
-		Scanner sc;
+		Scanner scEnreg, scDonnee;
 
 		String enreg;
-
 		Ressource ressource;
-		String[] donnees;
-
 
 		try
 		{
-			sc = new Scanner( new FileInputStream(nomFichier), "UTF8");
+			scEnreg = new Scanner( new FileInputStream(nomFichier), "UTF8");
 
-			while (sc.hasNextLine())
+			scEnreg.nextLine();
+
+			while (scEnreg.hasNextLine())
 			{
-				enreg = sc.nextLine();
+				enreg = scEnreg.nextLine();
 
-				donnees = enreg.split("\t");
+				scDonnee = new Scanner(enreg);
+				scDonnee.useDelimiter("\t");
 
-				ressource = new Ressource(donnees[0]);
-				for (int cpt = 1 ; cpt < donnees.length ; cpt++)
+				ressource = new Ressource(scDonnee.next());
+
+				while(scDonnee.hasNext())
 				{
-					ressource.ajouterNotion(new Notion(donnees[cpt]));
+					ressource.ajouterNotion(new Notion(scDonnee.next()));
 				}
 				
 				this.lstRessources.add(ressource);
@@ -95,31 +105,23 @@ public class BanqueDeRessources
 		}
 	}
 
-	/* Ecriture du fichier CSV qui contient les lstRessources */
+	/* Ecriture du fichier CSV qui contient les ressources */
 	public void sauvegarderRessources(String nomFichier)
 	{
-		List<Notion> notions;
-		Ressource res;
 		PrintWriter pw;
-
 
 		try
 		{
-			pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream(nomFichier), "UTF8" ) );
+			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "UTF8" ));
 
-			for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
+			pw.println("ressource\tnotion 1\tnotion 2\tnotion N");
+
+			for (Ressource ressource : this.lstRessources)
 			{
-				res = this.lstRessources.get(cpt);
-				notions = res.getNotions();
-
-				pw.print(res.getNom() + "\t");
-				if (res.getCheminFichier() != null) {
-					pw.print("Image associée : " + res.getCheminFichier());
-				}
-				for (Notion notion : notions)
+				pw.print(ressource.getNom() + "\t");
+				for(Notion notion : ressource.getNotions())
 				{
 					pw.print(notion.getNom() + "\t");
-					
 				}
 
 				pw.print("\n");
@@ -136,7 +138,6 @@ public class BanqueDeRessources
 			e.printStackTrace();
 		}
 	}
-
 
 	public boolean ajouterRessource(Ressource ressource)
 	{
@@ -170,6 +171,9 @@ public class BanqueDeRessources
 		return false;
 	}
 
+	/*----------*/
+	/* ToString */
+	/*----------*/
 	public String toString()
 	{
 		String sRet = "";
@@ -190,7 +194,7 @@ public class BanqueDeRessources
 	}
 
 
-
+	/*
 	public static void main(String[] args)
 	{
 		BanqueDeRessources bqr, bqr2;
@@ -215,5 +219,5 @@ public class BanqueDeRessources
 		bqr2.lireRessources("testLire.csv");
 		System.out.println(bqr2);
 	}
-
+	*/
 }

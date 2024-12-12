@@ -5,10 +5,16 @@ import java.util.List;
 
 public class Ressource 
 {
+	/*-----------*/
+	/* Attributs */
+	/*-----------*/
 	private String nom;
 	private String cheminFichier;
 	private List<Notion> lstNotions;
 
+	/*--------------*/
+	/* Constructeur */
+	/*--------------*/
 	public Ressource(String nom, String cheminFichier)
 	{
 		if (!nom.equals(null))
@@ -27,9 +33,9 @@ public class Ressource
 		this(nom,null);
 	}
 
-	/*==============*/
-	/*    GETTER    */
-	/*==============*/
+	/*---------*/
+	/* Getters */
+	/*---------*/
 
 	public String getNom()
 	{
@@ -46,9 +52,9 @@ public class Ressource
 		return this.lstNotions;
 	}
 
-	/*==============*/
-	/*    SETTER    */
-	/*==============*/
+	/*---------*/
+	/* Setters */
+	/*---------*/
 
 	public boolean setNom(String nom) 
 	{
@@ -73,11 +79,9 @@ public class Ressource
 		// Le nouveau cheminFichier ne peux pas être null au nom actuel
 	}
 
-
-	/*==============*/
-	/*   MÉTHODES   */
-	/*==============*/
-
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 	public boolean ajouterNotion(Notion notion) 
 	{
 		if (notion != null) 

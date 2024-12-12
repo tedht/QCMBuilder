@@ -2,8 +2,14 @@ package metier.entite;
 
 public class Notion 
 {
+	/*-----------*/
+	/* Attributs */
+	/*-----------*/
 	private String nom;
 	
+	/*--------------*/
+	/* Constructeur */
+	/*--------------*/
 	public Notion(String nom)
 	{
 		if(nom != null)
@@ -12,19 +18,17 @@ public class Notion
 		}
 	}
 
-	/*==============*/
-	/*    GETTER    */
-	/*==============*/
-
+	/*---------*/
+	/* Getters */
+	/*---------*/
 	public String getNom()
 	{
 		return this.nom;
 	}
 
-	/*==============*/
-	/*    SETTER    */
-	/*==============*/
-
+	/*---------*/
+	/* Setters */
+	/*---------*/
 	public boolean setNom(String nom) 
 	{
 		if(nom != null && !nom.equals(this.nom))

@@ -28,8 +28,8 @@ public class QCMBuilder
 
 		this.historique = new Stack<String>();
 
-		this.banqueQuestion  = new BanqueDeQuestions();
 		this.banqueRessource = new BanqueDeRessources(); 
+		this.banqueQuestion  = new BanqueDeQuestions(this);
 	}
 
 	public List<Ressource> getRessources() 
