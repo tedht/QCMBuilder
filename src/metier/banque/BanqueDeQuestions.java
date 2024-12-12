@@ -12,12 +12,12 @@ import java.io.PrintWriter;
 import metier.QCMBuilder;
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.question.Association;
 import metier.entite.question.Difficulte;
-import metier.entite.question.Elimination;
-import metier.entite.question.QCM;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
+import metier.entite.question.association.Association;
+import metier.entite.question.elimination.Elimination;
+import metier.entite.question.qcm.QCM;
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
@@ -37,7 +37,6 @@ public class BanqueDeQuestions
 		this.lstQuestions = new ArrayList<Question>();
 
 		this.lireQuestions("data/questions.csv");
-		System.out.println(this.lstQuestions.getFirst());
 	}
 
 	public List<Question> getQuestions()

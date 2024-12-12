@@ -15,7 +15,6 @@ public class Controleur
 	public Controleur()
 	{
 		this.metier = new QCMBuilder();
-		
 		new IHM(this);
 	}
 

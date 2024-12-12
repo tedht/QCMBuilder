@@ -8,8 +8,8 @@ import metier.banque.BanqueDeRessources;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
-import metier.entite.question.QCM;
 import metier.entite.question.Question;
+import metier.entite.question.qcm.QCM;
 
 public class QCMBuilder 
 {

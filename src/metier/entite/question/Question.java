@@ -1,5 +1,8 @@
 package metier.entite.question;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -21,6 +24,8 @@ public abstract class Question
 	private String       intitule;
 	private String       explication;
 
+	protected List<Proposition> lstPropositions;
+
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
@@ -35,6 +40,8 @@ public abstract class Question
 
 		this.intitule    = "";
 		this.explication = "";
+
+		this.lstPropositions = new ArrayList<Proposition>();
 	}
 
 	/*---------*/
@@ -50,12 +57,16 @@ public abstract class Question
 	public String       getIntitule   () { return this.intitule;    }
 	public String       getExplication() { return this.explication; }
 
+	public List<Proposition> getPropositions() { return this.lstPropositions; }
+	
+	public Proposition getProposition(int i) { return this.lstPropositions.get(i); }
+
 	public abstract TypeQuestion getType ();
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
-	public boolean setRessource (Ressource ressource)
+	public boolean setRessource(Ressource ressource)
 	{
 		if (ressource == null) return false;
 
@@ -63,7 +74,7 @@ public abstract class Question
 		return true;
 	}
 
-	public boolean setNotion (Notion notion)
+	public boolean setNotion(Notion notion)
 	{
 		if (notion == null) return false;
 
@@ -71,12 +82,12 @@ public abstract class Question
 		return true;
 	}
 
-	public void setDifficulte (Difficulte difficulte)
+	public void setDifficulte(Difficulte difficulte)
 	{
 		this.difficulte = difficulte;
 	}
 
-	public boolean setTemps (int temps)
+	public boolean setTemps(int temps)
 	{
 		if (temps < 0) return false;
 
@@ -84,7 +95,7 @@ public abstract class Question
 		return true;
 	}
 
-	public boolean setNote (int note)
+	public boolean setNote(int note)
 	{
 		if (note < 0) return false;
 
@@ -92,22 +103,44 @@ public abstract class Question
 		return true;
 	}
 
-	public boolean setIntitule (String intitule)
+	public boolean setIntitule(String intitule)
 	{
-		if (intitule.equals("")) return false;
+		if ("".equals(this.intitule)) return false;
 
 		this.intitule = intitule;
 		return true;
 	}
 
-	public void setExplication (String explication)
+	public boolean setExplication(String explication)
 	{
+		if ("".equals(this.explication)) return false;
+
 		this.explication = explication;
+		return true;
 	}
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
+	public boolean setProposition(int i, Proposition prop)
+	{
+		if(i < 0 || i < this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
+		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                                                            -> renvoie faux
+		if(!this.lstPropositions.get(i).equals(prop)) return false; // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
+
+		this.lstPropositions.set(i, prop);                          // Modifie la proposition
+		return true;
+	}
+
+	/* Supprimer une proposition */
+	public boolean supprimerProposition(int i)
+	{
+		if(0 < i || i < this.lstPropositions.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.lstPropositions.isEmpty())           return false; // Si la liste est vide                  -> renvoie faux
+
+		this.lstPropositions.remove(i); // Supprime la proposition
+		return true;
+	}
 
 	/*----------*/
 	/* toString */
