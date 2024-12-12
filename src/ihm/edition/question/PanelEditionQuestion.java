@@ -119,10 +119,6 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		// Notion
 		this.ddlstNotion = new JComboBox<String>();
 		this.ddlstNotion.setPreferredSize(new Dimension(200, 25));
-		for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
-		{
-			this.ddlstNotion.addItem(notion.getNom());
-		}
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);
 
@@ -292,6 +288,12 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		{
 			if(e.getSource() == this.ddlstRessource)
 			{
+				this.ddlstNotion.removeAllItems();
+				for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
+				{
+					this.ddlstNotion.addItem(notion.getNom());
+				}
+				this.ddlstNotion.setSelectedIndex(-1);
 				this.ddlstNotion.setEnabled(true);
 			}
 	

@@ -111,7 +111,8 @@ public class BanqueDeQuestions
 				
 				switch (typeQuestion) 
 				{
-					case QCM:
+					case QCM ->
+					{
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
 						ind = 0;
 						/*
@@ -126,16 +127,19 @@ public class BanqueDeQuestions
 							ind++;
 						}
 						*/
-					break;
-					case ASSOCIATION:
+					}
+					case ASSOCIATION ->
+					{
 						question = new Association(id, ressource, notion, difficulte, temps, note);
-					break;
-					case ELIMINATION:
+					}
+					case ELIMINATION ->
+					{
 						question = new Elimination(id, ressource, notion, difficulte, temps, note);
-					break;
-					default: 
+					}
+					default ->
+					{ 
 						question = new QCM(id, ressource, notion, difficulte, temps, note);
-					break;
+					}
 				}
 
 				question.setIntitule(intitule);
