@@ -37,7 +37,6 @@ public class BanqueDeQuestions
 		this.lstQuestions = new ArrayList<Question>();
 
 		this.lireQuestions("data/questions.csv");
-		System.out.println(this.lstQuestions.getFirst());
 	}
 
 	public List<Question> getQuestions()
