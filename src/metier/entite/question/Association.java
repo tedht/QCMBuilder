@@ -38,7 +38,6 @@ public class Association extends Question
 	public List<String  > getPropositionsDroite() { return this.lstPropositionsDroite; }
 	public List<String[]> getLiaisons          () { return this.lstLiaisons;           }
 
-	@Override
 	public TypeQuestion getType() 
 	{
 		return TypeQuestion.ASSOCIATION;
@@ -65,13 +64,14 @@ public class Association extends Question
 	}
 
 	/* Ajoute la liaison entre la propositionGauche et propositionDroite */
-	public boolean ajouterLiaison(String propositionGauche, String propositionDroite)
+	private boolean ajouterLiaison(String propositionGauche, String propositionDroite)
 	{
-		if (propositionGauche == null || propositionDroite == null) return false;
+		if (propositionGauche == null    || propositionDroite == null)    return false;
 		if (propositionGauche.equals("") || propositionDroite.equals("")) return false;
 
 		for (String[] liaison : this.lstLiaisons)
-			if (liaison[0] == propositionGauche && liaison[1] == propositionDroite)
+			if (liaison[0] == propositionGauche &&
+			    liaison[1] == propositionDroite    )
 				return false; // Liaison déja existante
 
 		this.lstLiaisons.add(new String[] {propositionGauche, propositionDroite});
@@ -80,52 +80,51 @@ public class Association extends Question
 
 
 	/* Modifier */
-	/*public boolean modifierProposition(String propositionGaucheActuelle, String nouvellePropositionGauche)
+	public boolean modifierProposition(String propositionGaucheActuelle, String nouvellePropositionGauche,
+	                                   String propositionDroiteActuelle, String nouvellePropositionDroite)
 	{
-		if (this.lstPropositionsGauche.isEmpty() && // Si les listes sont vides -> renvoie faux
-		    this.lstPropositionsDroite.isEmpty())
+		if (this.lstPropositionsGauche.isEmpty() &&   // Si les listes sont vides -> renvoie faux
+		    this.lstPropositionsDroite.isEmpty()    ) return false;
 
-		if (propositionGaucheActuelle == null) return false;
-		if (propositionGaucheActuelle.equals("")) return false;
 
-		if (nouvellePropositionGauche == null) return false;
-		if (nouvellePropositionGauche.equals("")) return false;
-
-		for(int cpt = 0; cpt < this.lstPropositionsGauche.size(); cpt++)
+		if ( propositionGaucheActuelle != null    &&  nouvellePropositionGauche != null &&
+		    !propositionGaucheActuelle.equals("") && !nouvellePropositionGauche.equals("")) // Vérification des paramètres pour la gauche
 		{
-			if(this.lstPropositionsGauche.get(cpt).equals(propositionGaucheActuelle))
+			for(int cpt = 0; cpt < this.lstPropositionsGauche.size(); cpt++)
 			{
-				this.lstPropositionsGauche.set(cpt, nouvellePropositionGauche);
+				if(this.lstPropositionsGauche.get(cpt).equals(propositionGaucheActuelle))
+				{
+					this.lstPropositionsGauche.set(cpt, nouvellePropositionGauche);
+				}
 			}
+
+			for (String[] liaison : this.lstLiaisons)
+				if (liaison[0] == propositionDroiteActuelle)
+					liaison[0] =  nouvellePropositionDroite;
+
+			/*this.modifierLiaison('G', propositionGaucheActuelle, nouvellePropositionGauche,
+			                                propositionDroiteActuelle, nouvellePropositionDroite);*/  // Modification de la liaison à gauche
 		}
 
-		for (String[] liaison : this.lstLiaisons)
-			if (liaison[0] == propositionGaucheActuelle)
-				liaison[0] = nouvellePropositionGauche;
+		if ( propositionDroiteActuelle != null    &&  nouvellePropositionDroite != null &&
+			!propositionDroiteActuelle.equals("") && !nouvellePropositionDroite.equals("")) // Vérification des paramètres pour la droite
+		{
+			for(int cpt = 0; cpt < this.lstPropositionsDroite.size(); cpt++)
+			{
+				if(this.lstPropositionsDroite.get(cpt).equals(propositionDroiteActuelle))
+				{
+					this.lstPropositionsDroite.set(cpt, nouvellePropositionDroite);
+				}
+			}
+
+			for (String[] liaison : this.lstLiaisons)
+				if (liaison[1] == propositionDroiteActuelle)
+					liaison[1] =  nouvellePropositionDroite;
+
+			/*this.modifierLiaison('D', propositionGaucheActuelle, nouvellePropositionGauche,
+											propositionDroiteActuelle, nouvellePropositionDroite);*/ // Modification de la liaison à droite
+		}
 		
-		return true;
-	}*/
-
-	public boolean modifierLiaison(char modif, String proposition, String propositionDroite, String nouvelleProposition, String nouvellepropositionDroite)
-	{
-		this.supprimerLiaison(proposition, propositionDroite);
-
-		if (modif == 'P')
-		{
-			this.ajouterLiaison(nouvelleProposition, propositionDroite);
-		}
-		else
-		{
-			if (modif == 'R')
-			{
-				this.ajouterLiaison(proposition, nouvellepropositionDroite);
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 		return true;
 	}
 
@@ -134,19 +133,33 @@ public class Association extends Question
 	public boolean supprimerProposition(String proposition)
 	{
 		if (this.lstPropositionsGauche.isEmpty() && // Si les listes sont vides -> renvoie faux
-		    this.lstPropositionsDroite.isEmpty())
+		    this.lstPropositionsDroite.isEmpty()) return false;
 		
 		this.lstPropositionsGauche.remove(proposition);
-		this.lstPropositionsDroite.remove(proposition);
+		this.lstPropositionsDroite.remove(proposition); // Retire la proposition des listes de propositions
 
 		for (int cpt = 0 ; cpt < this.lstLiaisons.size() ; cpt++)
+		{
+			if (this.lstLiaisons.get(cpt)[0] == proposition)
+			{
+				this.lstPropositionsDroite.remove(this.lstLiaisons.get(cpt)[1]);
+			}
+			else
+			{
+				if (this.lstLiaisons.get(cpt)[1] == proposition)
+				{
+					this.lstPropositionsDroite.remove(this.lstLiaisons.get(cpt)[0]);
+				}
+			}
+
 			if (this.lstLiaisons.get(cpt)[0] == proposition || this.lstLiaisons.get(cpt)[1] == proposition)
 				this.lstLiaisons.remove(cpt);
+		}
 
 		return true;
 	}
 
-	public boolean supprimerLiaison(String propositionGauche, String propositionDroite)
+	private boolean supprimerLiaison(String propositionGauche, String propositionDroite)
 	{
 		if (this.lstLiaisons.isEmpty()) return false;
 
@@ -164,8 +177,8 @@ public class Association extends Question
 		String sRet;
 
 
-		if (this.lstPropositionsGauche.isEmpty()) { return "Il n'y a pas de propositions gauche"; }
-		if (this.lstPropositionsDroite.isEmpty()) { return "Il n'y a pas de propositions droite";    }
+		if (this.lstPropositionsGauche.isEmpty()) return "Il n'y a pas de propositions gauche";
+		if (this.lstPropositionsDroite.isEmpty()) return "Il n'y a pas de propositions droite";
 
 		sRet = "";
 		for (String proposition : this.lstPropositionsGauche)
@@ -185,32 +198,25 @@ public class Association extends Question
 		return sRet;
 	}
 
-	/*
 	public static void main(String[] args)
 	{
 		Association asso, asso2;
 
 
-		asso = new Association(0, null, null, null, null, null, 0, 0);
-		asso.ajouterPropositionGauche("PropG1");
-		asso.ajouterPropositionDroite("PropD1");
-		asso.ajouterLiaison("PropG1", "PropD1");
+		asso = new Association(0, null, null, null, 0, 0);
+		asso.ajouterProposition("PropG1", "PropD1");
 		System.out.println(asso);
 
-		asso.modifierPropositionDroite("PropD1", "PropD1Bis");
-		asso.ajouterPropositionGauche("PropG2");
-		asso.ajouterLiaison("PropG2", "PropD1Bis");
+		asso.modifierProposition(null, null, "PropD1", "PropD1Bis");
+		asso.ajouterProposition("PropG2", "PropD2");
 		System.out.println(asso);
 
-		asso.supprimerPropositionGauche("PropG1");
-		asso.supprimerpropositionDroite("PropD1Bis");
-		asso.supprimerpropositionDroite("PropD3"); // Ne le fait pas car PropD3 n'existe pas
+		asso.supprimerProposition("PropG1");
+		asso.supprimerProposition("PropD3"); // Ne le fait pas car PropD3 n'existe pas
 		System.out.println(asso);
 
-		asso2 = new Association(1, "Relier les mots français à leurs traductions anglaises", "with veut dire avec donc withOUT veut dire sans", Difficulte.FACILE, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), 0, 1);
-		asso2.ajouterPropositionGauche("Without");
-		asso2.ajouterPropositionDroite("Sans");
-		asso2.ajouterLiaison("Without", "Sans");
+		asso2 = new Association(1, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), Difficulte.FACILE, 0, 1);
+		asso2.ajouterProposition("Without", "Sans");
 		System.out.println(asso2);
-	} */
+	}
 }
