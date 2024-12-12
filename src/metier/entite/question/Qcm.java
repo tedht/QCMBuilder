@@ -73,20 +73,20 @@ public class QCM extends Question
 	}
 
 	/* Ajouter une réponse correcte */
-	public boolean ajouterIndReponse(String reponse)
+	public boolean ajouterReponse(String reponse)
 	{
-		if(!this.lstReponses.contains(reponse)) return false; // Si l'indice est déjà dans la liste -> renvoie faux
+		if(!this.lstReponses.contains(reponse)) return false; // Si la reponse est déjà dans la liste -> renvoie faux
 
-		this.lstReponses.add(reponse); // Ajoute l'indice
+		this.lstReponses.add(reponse); // Ajoute la reponse
 		return true;
 	}
 
 	/* Supprimer  une réponse correcte */
-	public boolean supprimerProposition(String reponse)
+	public boolean supprimerReponse(String reponse)
 	{
 		if(this.lstReponses.isEmpty()) { return false; } // Si la liste est vide -> renvoie faux
 
-		this.lstReponses.remove(reponse); // Supprime l'indice
+		this.lstReponses.remove(reponse); // Supprime la reponse
 		return true;
 	}
 

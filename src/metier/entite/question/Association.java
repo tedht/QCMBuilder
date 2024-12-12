@@ -1,13 +1,10 @@
- package metier.entite.question.association;
+ package metier.entite.question;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.question.Difficulte;
-import metier.entite.question.Question;
-import metier.entite.question.TypeQuestion;
 
 /** Classe Association
  * @author Equipe 03
