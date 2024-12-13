@@ -99,3 +99,6 @@ Vous pouvez également lancer l'application avec un double clic sur le fichier r
   - Félix LE GARS
 - LICENSE
   - Thibault MANGEANT
+- Javadoc
+  - Kylian LUCAS-THUILLIER
+  - Félix LE GARS
