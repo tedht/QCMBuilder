@@ -124,7 +124,7 @@ public abstract class Question
 	
 	protected boolean setProposition(int i, Proposition prop)
 	{
-		if(i < 0 || i < this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
+		if(i < 0 || i >= this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
 		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                                                            -> renvoie faux
 		if(!this.lstPropositions.get(i).equals(prop)) return false; // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
 
