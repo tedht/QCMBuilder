@@ -8,6 +8,7 @@ import javax.swing.border.*;
 
 import controleur.Controleur;
 import ihm.IHM;
+import ihm.edition.question.proposition.PanelPropQCM;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -25,7 +26,8 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 
 	private JPanel[]          tabPanelInfo;
 	private JPanel            panelAction;
-	private JPanel            panelInfoProposition, panelInfoAjout;
+	
+	private JPanel            panelInfoProp, panelInfoAjout;
 
 	private JTextField        txtPoints, txtTemps;
 	private JTextArea         txtQuestion;
@@ -35,6 +37,8 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 	private JRadioButton[]    tabRbNiveau;
 	private ButtonGroup       btgNiveau;
 	
+	private JScrollPane		 scrollPanelInfoProp;
+
 	/**
 	 * Constructeur de la classe PanelEditionQuestion utilisé lorsqu'on veut créer une question.
 	 *
@@ -65,10 +69,11 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		for(int i = 0; i < this.tabPanelInfo.length; i++)
 		{
 			this.tabPanelInfo[i] = new JPanel();
-			this.tabPanelInfo[i].setBorder(new EmptyBorder(10,10,10,10));
 		}
 
 		this.tabPanelInfo[0].setLayout(new GridBagLayout());
+		this.tabPanelInfo[0].setBorder(new EmptyBorder(10,10,10,10));
+
 		this.tabPanelInfo[1].setLayout(new BorderLayout());
 
 		panelInfoPoints       = new JPanel(new BorderLayout());
@@ -78,16 +83,16 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		panelInfoNiveau       = new JPanel(new BorderLayout());
 		panelInfoTypeQuestion = new JPanel(new BorderLayout());
 
-		panelInfoQuestion     = new JPanel(new BorderLayout());
-		panelInfoQuestion.setBorder(new EmptyBorder(0, 0, 10, 0));
+		panelInfoQuestion = new JPanel(new BorderLayout());
+		panelInfoQuestion.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		this.panelInfoProposition = new JPanel(new GridLayout(0, 1, 5, 5));
-		this.panelInfoAjout       = new JPanel(new BorderLayout());
+		this.panelInfoProp  = new JPanel(new GridLayout(0, 1, 5, 5));
+		this.panelInfoAjout = new JPanel(new BorderLayout());
 
-		panelPoints       = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelTemps        = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelNiveau       = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelAjout        = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelPoints = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelTemps  = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelNiveau = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelAjout  = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		// Action
 		this.panelAction = new JPanel();
@@ -98,7 +103,7 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		this.txtTemps  = new JTextField(5);
 
 		this.txtQuestion = new JTextArea(); 
-		this.txtQuestion.setRows(5);
+		this.txtQuestion.setRows(3);
 		this.txtQuestion.setLineWrap(true);     
 		this.txtQuestion.setWrapStyleWord(true);
 		this.txtQuestion.setBorder(new LineBorder(Color.GRAY));
@@ -154,13 +159,20 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 			rb.setEnabled(false);
 		}
 
+		this.scrollPanelInfoProp = new JScrollPane(this.panelInfoProp);
+        this.scrollPanelInfoProp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		this.scrollPanelInfoProp.getVerticalScrollBar().setUnitIncrement(16);
+		this.scrollPanelInfoProp.getVerticalScrollBar().setBlockIncrement(32);
+		this.scrollPanelInfoProp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.scrollPanelInfoProp.setBorder(new EmptyBorder(0,0,0,0));
+
 		/*-------------------------------*/
 		/* Positionnement des composants */
 		/*-------------------------------*/
 		
-		/* ****** */
+		/*--------*/
 		/* Page 1 */
-		/* ****** */
+		/*--------*/
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 10, 5);
@@ -215,30 +227,27 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		panelInfoTypeQuestion.add(new JLabel("Type de Question :"), BorderLayout.NORTH);
 		panelInfoTypeQuestion.add(this.ddlstTypeQuestion, BorderLayout.CENTER);
 
-		/* ****** */
+		/*--------*/
 		/* Page 2 */
-		/* ****** */
+		/*--------*/
 
 		this.tabPanelInfo[1].add(panelInfoQuestion, BorderLayout.NORTH);
 		panelInfoQuestion   .add(new JLabel("Question :"), BorderLayout.NORTH);
 		panelInfoQuestion   .add(this.txtQuestion, BorderLayout.CENTER);
 
+		this.tabPanelInfo[1].add(this.scrollPanelInfoProp, BorderLayout.CENTER);
+		this.panelInfoProp  .add(this.panelInfoAjout);
+		this.panelInfoAjout .add(panelAjout);
+		panelAjout          .add(this.btnAjouterProposition);
+		panelAjout          .add(this.btnAjouterExplication);
+		panelAjout          .add(new JPanel(), BorderLayout.WEST);
+		panelAjout          .add(new JPanel(), BorderLayout.EAST);
 
-		this.tabPanelInfo[1]     .add(this.panelInfoProposition, BorderLayout.CENTER);
-		this.panelInfoProposition.add(this.panelInfoAjout);
-		this.panelInfoAjout      .add(panelAjout);
-		panelAjout               .add(this.btnAjouterProposition);
-		panelAjout               .add(this.btnAjouterExplication);
-		panelAjout               .add(new JPanel(), BorderLayout.WEST);
-		panelAjout               .add(new JPanel(), BorderLayout.EAST);
-
-		/* ************ */
+		/*--------------*/
 		/* Panel Action */
-		/* ************ */
+		/*--------------*/
 
 		this.add(this.panelAction, BorderLayout.SOUTH);
-
-		this.pagePrecedente();
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -256,6 +265,9 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		this.ddlstRessource   .addActionListener(this);
 		this.ddlstNotion      .addActionListener(this);
 		this.ddlstTypeQuestion.addActionListener(this);
+
+		/* Affiche la 1ère page */
+		this.pagePrecedente();
 	}
 
 	@Override
@@ -329,23 +341,11 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		return true;
 	}
 
-	private void pageSuivante()
-	{
-		// Panel Info
-		this.remove(this.tabPanelInfo[0]);
-		this.add(this.tabPanelInfo[1], BorderLayout.CENTER);
-
-		// Panel Action
-		this.panelAction.removeAll();
-		this.panelAction.add(this.btnPrecedent);
-		this.panelAction.add(this.btnValider);
-
-		this.revalidate();
-		this.repaint();
-	}
-
 	private void pagePrecedente()
 	{
+		if(SwingUtilities.getWindowAncestor(this) != null)
+			SwingUtilities.getWindowAncestor(this).setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
+		
 		// Panel Info
 		this.remove(this.tabPanelInfo[1]);
 		this.add(this.tabPanelInfo[0], BorderLayout.CENTER);
@@ -359,15 +359,34 @@ public class PanelEditionQuestion extends JPanel implements ActionListener, Item
 		this.repaint();
 	}
 
+	private void pageSuivante()
+	{	
+		if(SwingUtilities.getWindowAncestor(this) != null)
+		SwingUtilities.getWindowAncestor(this).setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_2);
+
+		// Panel Info
+		this.remove(this.tabPanelInfo[0]);
+		this.add(this.tabPanelInfo[1], BorderLayout.CENTER);
+
+		// Panel Action
+		this.panelAction.removeAll();
+		this.panelAction.add(this.btnPrecedent);
+		this.panelAction.add(this.btnValider);
+
+		this.revalidate();
+		this.repaint();
+	}
+
 	private void ajouterProposition()
 	{
-		this.panelInfoProposition.remove(this.panelInfoAjout);
+		this.panelInfoProp.remove(this.panelInfoAjout);
 
-		PanelProposition panelProposition = new PanelProposition(this.panelInfoProposition);
-		this.panelInfoProposition.add(panelProposition);
-		this.panelInfoProposition.add(this.panelInfoAjout);
+		PanelPropQCM panelProposition = new PanelPropQCM(this.panelInfoProp);
+		this.panelInfoProp.add(panelProposition);
+		this.panelInfoProp.add(this.panelInfoAjout);
 
-		revalidate();
+		this.revalidate();
+		this.repaint();
 	}
 
 	/*

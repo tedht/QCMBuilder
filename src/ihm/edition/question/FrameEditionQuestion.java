@@ -31,7 +31,7 @@ public class FrameEditionQuestion extends JFrame
 		this.panelEditionQuestion = new PanelEditionQuestion(ctrl, ihm);
 		this.add(this.panelEditionQuestion);
 
-		this.pack();
+		this.setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
 	}
 	
 }

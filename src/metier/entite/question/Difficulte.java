@@ -66,12 +66,13 @@ public enum Difficulte
      */
 	public String toString()
 	{
-		return switch(this.valeur) 
+		return switch(this) 
 		{
-			case 0  -> "TF";
-			case 1  -> "F";
-			case 2  -> "M";
-			case 3  -> "D";
+			case    TRES_FACILE -> "TF";
+			case    FACILE      -> "F";
+			case    MOYEN       -> "M";
+			case    DIFFICILE   -> "D";
+			
 			default -> "";
 		};
 	}

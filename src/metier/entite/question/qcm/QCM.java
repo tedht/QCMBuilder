@@ -13,7 +13,7 @@ import metier.entite.question.TypeQuestion;
 public class QCM extends Question
 {
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 	public QCM(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
 	{

@@ -9,8 +9,12 @@ import ihm.edition.ressource.FrameEditionRessource;
 
 public class IHM 
 {
-	public static final int LARGEUR_QCM_BUILDER  = 800;
-	public static final int HAUTGEUR_QCM_BUILDER = 800;
+	public static final int LARGEUR_QCM_BUILDER = 800;
+	public static final int HAUTEUR_QCM_BUILDER = 800;
+
+	public static final int LARGEUR_EDIT_QUESTION        = 700;
+	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
+	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 500;
 	
 	private Controleur ctrl;
 

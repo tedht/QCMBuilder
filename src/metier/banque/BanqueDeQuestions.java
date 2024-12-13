@@ -28,20 +28,21 @@ public class BanqueDeQuestions
 	/* Attributs */
 	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
-
-
+ 
 	/* Constructeur */
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
-		this.qcmBuilder   = qcmBuilder;
-		this.lstQuestions = new ArrayList<Question>();
+		this.qcmBuilder       = qcmBuilder;
+		this.lstQuestions     = new ArrayList<Question>();
 
 		this.lireQuestions("data/questions.csv");
+		System.out.println(this.lstQuestions.getFirst().getIntitule());
 	}
 
+	/* Getters */
 	public List<Question> getQuestions()
 	{
-		return lstQuestions;
+		return this.lstQuestions;
 	}
 
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
@@ -58,14 +59,12 @@ public class BanqueDeQuestions
 		return lstQuestions;
 	}
 
-	public boolean ajouterQuestions(Question question)
+	public Question getQuestion(int id)
 	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		return true;
+		return this.lstQuestions.get(id);
 	}
-
+	
+	/* Autres méthodes */
 	/* Lecture du fichier CSV qui contient les questions */
 	public void lireQuestions(String nomFichier)
 	{
@@ -143,6 +142,7 @@ public class BanqueDeQuestions
 
 				question.setIntitule(intitule);
 				question.setExplication(explication);
+				
 				this.lstQuestions.add(question);
 
 				scDonnee.close();
@@ -193,6 +193,13 @@ public class BanqueDeQuestions
 		}
 	}
 
+	public boolean ajouterQuestions(Question question)
+	{
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		return true;
+	}
 
 	public boolean modifierQuestion(int id, String critere, Object modif)
 	{
@@ -218,18 +225,12 @@ public class BanqueDeQuestions
 
 	public boolean supprimerQuestion(int id)
 	{
-		Question question;
-
-
-		question = null;
-		for (Question q : this.lstQuestions)
-			if (q.getId() == id)
-				question = q;
-
-		if (question == null) return false; // N'a pas trouvé la question
-
-		this.lstQuestions.remove(id);
-		return true;		
+		if(this.lstQuestions.get(id) != null)
+		{
+			this.lstQuestions.remove(id);
+			return true;
+		}
+		return false;
 	}
 }
 

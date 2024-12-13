@@ -65,11 +65,12 @@ public enum TypeQuestion
      */
 	public String toString()
 	{
-		return switch(this.valeur) 
+		return switch(this) 
 		{
-			case 0  -> "QCM";
-			case 1  -> "Association";
-			case 2  -> "Elimination";
+			case    QCM         -> "QCM";
+			case    ASSOCIATION -> "Association";
+			case 	ELIMINATION -> "Elimination";
+			
 			default -> "";
 		};
 	}

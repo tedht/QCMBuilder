@@ -253,7 +253,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
 		/* Contenu */
-
 		for(Notion notion : this.ctrl.getNotions(ressource))
 		{
 			PanelEntite panelCarte = new PanelNotion(this.ctrl, this.ihm, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
@@ -286,7 +285,6 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
 		/* Contenu */
-		 
 		for(Question question : this.ctrl.getQuestions(ressource, notion))
 		{
 			PanelEntite panelCarte = new PanelQuestion(this.ctrl, this.ihm, question.getIntitule(), 

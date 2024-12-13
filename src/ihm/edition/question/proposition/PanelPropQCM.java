@@ -1,4 +1,4 @@
-package ihm.edition.question;
+package ihm.edition.question.proposition;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-public class PanelProposition extends JPanel implements ActionListener
+public class PanelPropQCM extends JPanel implements ActionListener
 {
 	private JPanel    panelParent;
 
@@ -15,12 +15,13 @@ public class PanelProposition extends JPanel implements ActionListener
 	private JButton   btnSupprimer;
 	private JCheckBox cbReponseCorrecte;
 
-	public PanelProposition(JPanel panelParent)
+	public PanelPropQCM(JPanel panelParent)
 	{
 		JPanel panelBtnSupprimer;
 
 		this.panelParent = panelParent;
 
+		this.setPreferredSize(new Dimension(this.panelParent.getWidth(), 60));
 		this.setLayout(new BorderLayout(5,5));
 
 		/*-------------------------*/
