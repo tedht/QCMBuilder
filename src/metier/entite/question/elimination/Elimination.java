@@ -12,7 +12,7 @@ public class Elimination extends Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Elimination(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
+	public Elimination(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		super(id, ressource, notion, difficulte, temps, note);
 	}
