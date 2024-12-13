@@ -63,6 +63,8 @@ public abstract class Question
 	
 	protected Proposition getProposition(int i) { return this.lstPropositions.get(i); }
 
+	public int getPropositionId(Proposition prop) { return this.lstPropositions.indexOf(prop); }
+
 	/*---------*/
 	/* Setters */
 	/*---------*/

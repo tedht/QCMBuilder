@@ -43,26 +43,30 @@ public class Association extends Question
 		return super.ajouterProposition(prop);
 	}
 
-	/*
 	public static void main(String[] args)
 	{
 		Association asso, asso2;
+		PropositionAssociation prop1, prop2, prop3, propAnglais;
 
 
 		asso = new Association(0, null, null, null, 0, 0);
-		asso.ajouterProposition("PropG1", "PropD1");
+		prop1 = new PropositionAssociation("PropG1", "PropD1");
+		asso.ajouterProposition(prop1);
 		System.out.println(asso);
 
-		asso.modifierProposition(null, null, "PropD1", "PropD1Bis");
-		asso.ajouterProposition("PropG2", "PropD2");
+		prop1.setTextDroite("PropD1Bis");
+		prop2 = new PropositionAssociation("ProgG2", "PropD2");
+		asso.ajouterProposition(prop2);
 		System.out.println(asso);
 
-		asso.supprimerProposition("PropG1");
-		asso.supprimerProposition("PropD3"); // Ne le fait pas car PropD3 n'existe pas
+		prop3 = new PropositionAssociation("PropG3", "PropD3");
+		asso.supprimerProposition(asso.getPropositionId(prop1));
+		asso.supprimerProposition(asso.getPropositionId(prop3)); // Ne le fait pas car PropD3 n'existe pas
 		System.out.println(asso);
 
 		asso2 = new Association(1, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), Difficulte.FACILE, 0, 1);
-		asso2.ajouterProposition("Without", "Sans");
+		propAnglais = new PropositionAssociation("Without", "Sans");
+		asso2.ajouterProposition(propAnglais);
 		System.out.println(asso2);
-	}*/
+	}
 }
