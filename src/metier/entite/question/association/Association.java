@@ -17,7 +17,7 @@ public class Association extends Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Association(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
+	public Association(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		super(id, ressource, notion, difficulte, temps, note);
 	}
@@ -65,7 +65,7 @@ public class Association extends Question
 		PropositionAssociation prop1, prop2, prop3, propAnglais;
 
 
-		asso = new Association(0, null, null, null, 0, 0);
+		asso = new Association(0, null, null, null, 0, 0.0);
 		prop1 = new PropositionAssociation("PropG1", "PropD1");
 		asso.ajouterProposition(prop1);
 		System.out.println(asso);
@@ -80,7 +80,7 @@ public class Association extends Question
 		asso.supprimerProposition(asso.getPropositionId(prop3)); // Ne le fait pas car PropD3 n'existe pas
 		System.out.println(asso);
 
-		asso2 = new Association(1, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), Difficulte.FACILE, 0, 1);
+		asso2 = new Association(1, new Ressource("R3.12 Anglais"), new Notion("Vocabulaire"), Difficulte.FACILE, 0, 1.0);
 		propAnglais = new PropositionAssociation("Without", "Sans");
 		asso2.ajouterProposition(propAnglais);
 		System.out.println(asso2);
