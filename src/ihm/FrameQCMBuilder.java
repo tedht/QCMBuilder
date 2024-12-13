@@ -45,7 +45,7 @@ public class FrameQCMBuilder extends JFrame
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         int x = (screenSize.width  - this.getWidth ()) / 2;
-        int y = (screenSize.height - this.getHeight()) / 2;
+        int y = (screenSize.height - this.getHeight()) / 2 - 25;
         this.setLocation(x, y);
 
 		this.setVisible(true);

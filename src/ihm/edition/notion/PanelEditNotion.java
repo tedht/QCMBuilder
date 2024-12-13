@@ -2,7 +2,7 @@ package ihm.edition.notion;
 
 import controleur.Controleur;
 import ihm.IHM;
-import ihm.edition.PanelEditionEntite;
+import ihm.edition.PanelEditEntite;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une notion
@@ -11,14 +11,14 @@ import ihm.edition.PanelEditionEntite;
  * @date 2024/12/09
  * @version 1.0
  */
-public class PanelEditionNotion extends PanelEditionEntite
+public class PanelEditNotion extends PanelEditEntite
 {
 	/**
-	 * Constructeur de la classe PanelEditionRessource.
+	 * Constructeur de la classe PanelEditRessource.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionNotion(Controleur ctrl, IHM ihm)
+	public PanelEditNotion(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
 	}

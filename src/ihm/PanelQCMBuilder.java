@@ -166,7 +166,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		}
 		if(e.getSource() == this.btnGenererQuestionnaire)
 		{
-
+			
 		}
 		if(e.getSource() == this.btnAjouter)
 		{

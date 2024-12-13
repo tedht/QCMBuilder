@@ -19,7 +19,7 @@ import ihm.IHM;
  * @date 2024/12/06
  * @version 1.0
  */
-public abstract class PanelEditionEntite extends JPanel implements ActionListener
+public abstract class PanelEditEntite extends JPanel implements ActionListener
 {
 	protected Controleur ctrl;
 	protected IHM        ihm;
@@ -30,11 +30,11 @@ public abstract class PanelEditionEntite extends JPanel implements ActionListene
 	protected JTextField    txtNom;
 
 	/**
-	 * Constructeur de la classe PanelEditionEntite.
+	 * Constructeur de la classe PanelEditEntite.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionEntite(Controleur ctrl, IHM ihm)
+	public PanelEditEntite(Controleur ctrl, IHM ihm)
 	{
 		this.ctrl = ctrl;
 		this.ihm  = ihm;

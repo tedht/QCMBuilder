@@ -67,9 +67,9 @@ public enum TypeQuestion
 	{
 		return switch(this) 
 		{
-			case    QCM         -> "QCM";
-			case    ASSOCIATION -> "Association";
-			case 	ELIMINATION -> "Elimination";
+			case QCM         -> "QCM";
+			case ASSOCIATION -> "Association";
+			case ELIMINATION -> "Elimination";
 			
 			default -> "";
 		};

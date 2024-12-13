@@ -3,9 +3,9 @@ package ihm;
 import java.awt.event.*;
 
 import controleur.Controleur;
-import ihm.edition.notion.FrameEditionNotion;
-import ihm.edition.question.FrameEditionQuestion;
-import ihm.edition.ressource.FrameEditionRessource;
+import ihm.edition.notion.FrameEditNotion;
+import ihm.edition.question.FrameEditQuestion;
+import ihm.edition.ressource.FrameEditRessource;
 
 public class IHM 
 {
@@ -14,15 +14,15 @@ public class IHM
 
 	public static final int LARGEUR_EDIT_QUESTION        = 700;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
-	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 500;
+	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 	
 	private Controleur ctrl;
 
 	private FrameQCMBuilder       frameQCMBuilder;
 
-	private FrameEditionRessource frameEditionRessource;
-	private FrameEditionNotion    frameEditionNotion;
-	private FrameEditionQuestion  frameEditionQuestion;
+	private FrameEditRessource frameEditRessource;
+	private FrameEditNotion    frameEditNotion;
+	private FrameEditQuestion  frameEditQuestion;
 	
 	public IHM(Controleur ctrl)
 	{
@@ -33,95 +33,95 @@ public class IHM
 
 	public void creerRessource() 
 	{
-		if(this.frameEditionRessource == null)
+		if(this.frameEditRessource == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de ressource
-			this.frameEditionRessource = new FrameEditionRessource(this.ctrl, this);
+			this.frameEditRessource = new FrameEditRessource(this.ctrl, this);
 
-			// Positionne frameEditionRessource au centre de la fenêtre principale
-			this.frameEditionRessource.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditionRessource.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditionRessource.getHeight() / 2
+			// Positionne frameEditRessource au centre de la fenêtre principale
+			this.frameEditRessource.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditRessource.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditRessource.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
-			this.frameEditionRessource.setVisible(true);
+			this.frameEditRessource.setVisible(true);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionRessource.addWindowListener(new WindowAdapter() {
+			this.frameEditRessource.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) 
 				{
-                    IHM.this.frameEditionRessource = null;
+                    IHM.this.frameEditRessource = null;
                 }
             });
 		}
 		else
 		{
-			// Si la frameEditionRessource existe déjà, elle est mise en avant
-			this.frameEditionRessource.toFront();
+			// Si la frameEditRessource existe déjà, elle est mise en avant
+			this.frameEditRessource.toFront();
 		}
 	}
 
 	public void creerNotion() 
 	{
-		if(this.frameEditionNotion == null)
+		if(this.frameEditNotion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de notion
-			this.frameEditionNotion = new FrameEditionNotion(this.ctrl, this);
+			this.frameEditNotion = new FrameEditNotion(this.ctrl, this);
 
-			// Positionne frameEditionNotion au centre de la fenêtre principale
-			this.frameEditionNotion.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditionNotion.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditionNotion.getHeight() / 2
+			// Positionne frameEditNotion au centre de la fenêtre principale
+			this.frameEditNotion.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditNotion.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditNotion.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
-			this.frameEditionNotion.setVisible(true);
+			this.frameEditNotion.setVisible(true);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionNotion.addWindowListener(new WindowAdapter() {
+			this.frameEditNotion.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    IHM.this.frameEditionNotion = null;
+                    IHM.this.frameEditNotion = null;
                 }
             });
 		}
 		else
 		{
-			// Si la frameEditionNotion existe déjà, elle est mise en avant
-			this.frameEditionNotion.toFront();
+			// Si la frameEditNotion existe déjà, elle est mise en avant
+			this.frameEditNotion.toFront();
 		}
 	}
 
 	public void creerQuestion() 
 	{
-		if(this.frameEditionQuestion == null)
+		if(this.frameEditQuestion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de question
-			this.frameEditionQuestion = new FrameEditionQuestion(this.ctrl, this);
+			this.frameEditQuestion = new FrameEditQuestion(this.ctrl, this);
 
-			// Positionne frameEditionQuestion au centre de la fenêtre principale
-			this.frameEditionQuestion.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditionQuestion.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameEditionQuestion.getHeight() / 2
+			// Positionne frameEditQuestion au centre de la fenêtre principale
+			this.frameEditQuestion.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditQuestion.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameEditQuestion.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
-			this.frameEditionQuestion.setVisible(true);
+			this.frameEditQuestion.setVisible(true);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameEditionQuestion.addWindowListener(new WindowAdapter() {
+			this.frameEditQuestion.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    IHM.this.frameEditionQuestion = null;
+                    IHM.this.frameEditQuestion = null;
                 }
             });
 		}
 		else
 		{
-			// Si la frameEditionQuestion existe déjà, elle est mise en avant
-			this.frameEditionQuestion.toFront();
+			// Si la frameEditQuestion existe déjà, elle est mise en avant
+			this.frameEditQuestion.toFront();
 		}
 	}
 

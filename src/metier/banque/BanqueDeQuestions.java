@@ -111,7 +111,7 @@ public class BanqueDeQuestions
 				{
 					case QCM ->
 					{
-						question = new QCM(id, ressource, notion, difficulte, temps, note);
+						question = new QCM(id, ressource, notion, difficulte, temps, note, false);
 						/*
 						ind = 0;
 						while(scDonnee.hasNext())
@@ -136,7 +136,7 @@ public class BanqueDeQuestions
 					}
 					default ->
 					{ 
-						question = new QCM(id, ressource, notion, difficulte, temps, note);
+						question = new QCM(id, ressource, notion, difficulte, temps, note, false);
 					}
 				}
 

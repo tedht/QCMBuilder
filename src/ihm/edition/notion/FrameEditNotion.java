@@ -13,23 +13,23 @@ import ihm.IHM;
  * @date 2024/12/09
  * @version 1.0
  */
-public class FrameEditionNotion extends JFrame
+public class FrameEditNotion extends JFrame
 {
-	private PanelEditionNotion panelEditionNotion;
+	private PanelEditNotion panelEditNotion;
 
 	/**
-	 * Constructeur de la classe PanelEditionRessource utilisé lorsqu'on veut créer une notion.
+	 * Constructeur de la classe PanelEditRessource utilisé lorsqu'on veut créer une notion.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public FrameEditionNotion(Controleur ctrl, IHM ihm)
+	public FrameEditNotion(Controleur ctrl, IHM ihm)
 	{
 		this.setTitle("Créer une Notion");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditionNotion = new PanelEditionNotion(ctrl, ihm);
-		this.add(this.panelEditionNotion);
+		this.panelEditNotion = new PanelEditNotion(ctrl, ihm);
+		this.add(this.panelEditNotion);
 
 		this.pack();
 	}

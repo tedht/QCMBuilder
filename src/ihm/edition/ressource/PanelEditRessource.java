@@ -2,7 +2,7 @@ package ihm.edition.ressource;
 
 import controleur.Controleur;
 import ihm.IHM;
-import ihm.edition.PanelEditionEntite;
+import ihm.edition.PanelEditEntite;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une ressource.
@@ -12,14 +12,14 @@ import ihm.edition.PanelEditionEntite;
  * @date 2024/12/06
  * @version 1.0
  */
-public class PanelEditionRessource extends PanelEditionEntite
+public class PanelEditRessource extends PanelEditEntite
 {
 	/**
-	 * Constructeur de la classe PanelEditionRessource.
+	 * Constructeur de la classe PanelEditRessource.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditionRessource(Controleur ctrl, IHM ihm)
+	public PanelEditRessource(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
 	}

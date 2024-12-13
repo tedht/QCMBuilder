@@ -68,11 +68,11 @@ public enum Difficulte
 	{
 		return switch(this) 
 		{
-			case    TRES_FACILE -> "TF";
-			case    FACILE      -> "F";
-			case    MOYEN       -> "M";
-			case    DIFFICILE   -> "D";
-			
+			case TRES_FACILE -> "TF";
+			case FACILE      -> "F";
+			case MOYEN       -> "M";
+			case DIFFICILE   -> "D";
+
 			default -> "";
 		};
 	}
