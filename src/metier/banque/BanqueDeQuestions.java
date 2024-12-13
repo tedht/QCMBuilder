@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -12,12 +14,12 @@ import java.io.PrintWriter;
 import metier.QCMBuilder;
 import metier.entite.Notion;
 import metier.entite.Ressource;
-import metier.entite.question.Difficulte;
-import metier.entite.question.Question;
-import metier.entite.question.TypeQuestion;
-import metier.entite.question.association.Association;
-import metier.entite.question.elimination.Elimination;
-import metier.entite.question.qcm.QCM;
+
+import metier.entite.question.*;
+import metier.entite.question.association.*;
+import metier.entite.question.qcm.*;
+import metier.entite.question.elimination.*;
+
 
 /** Classe BanqueDeQuestions
  * @author Equipe 03
@@ -28,21 +30,20 @@ public class BanqueDeQuestions
 	/* Attributs */
 	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
- 
+
+
 	/* Constructeur */
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
-		this.qcmBuilder       = qcmBuilder;
-		this.lstQuestions     = new ArrayList<Question>();
+		this.qcmBuilder   = qcmBuilder;
+		this.lstQuestions = new ArrayList<Question>();
 
 		this.lireQuestions("data/questions.csv");
-		System.out.println(this.lstQuestions.getFirst().getIntitule());
 	}
 
-	/* Getters */
 	public List<Question> getQuestions()
 	{
-		return this.lstQuestions;
+		return lstQuestions;
 	}
 
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
@@ -59,12 +60,14 @@ public class BanqueDeQuestions
 		return lstQuestions;
 	}
 
-	public Question getQuestion(int id)
+	public boolean ajouterQuestions(Question question)
 	{
-		return this.lstQuestions.get(id);
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		return true;
 	}
-	
-	/* Autres méthodes */
+
 	/* Lecture du fichier CSV qui contient les questions */
 	public void lireQuestions(String nomFichier)
 	{
@@ -142,7 +145,6 @@ public class BanqueDeQuestions
 
 				question.setIntitule(intitule);
 				question.setExplication(explication);
-				
 				this.lstQuestions.add(question);
 
 				scDonnee.close();
@@ -157,35 +159,97 @@ public class BanqueDeQuestions
 	}
 
 	/* Ecriture du fichier CSV qui contient les questions */
-	public void sauvegarderQuestions(String nomFichier)
+	public void sauvegarderQuestions(String nomFichierCSV,String nomFichierTXT)
 	{
 		PrintWriter pw;
+		PrintWriter pw2;
+		QCM         qQCM;
+		Elimination qElim;
+		Association qAsso;
 
 		try
 		{
-			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "UTF8" ));
+			pw  = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8" ));
+			pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8" ));
 
 			pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tintitulé\texplication\tproposition 1\tproposition 2\tproposition N");
 
 			for (Question question : this.lstQuestions)
 			{   
-				pw.print(question.getRessource  ().getNom   () + "\t");
-				pw.print(question.getNotion     ().getNom   () + "\t");
-				pw.print(question.getDifficulte ().getValeur() + "\t");
-				pw.print(question.getType       ().getValeur() + "\t");
-				pw.print(question.getTemps      ()             + "\t");
-				pw.print(question.getNote       ()             + "\t");
-				pw.print(question.getIntitule   ()             + "\t");
-				pw.print(question.getExplication()             + "\t");
+				pw .print(question.getId          ()             + "\t");
+				pw2.print(question.getId          ()             + "\t");
+				pw .print(question.getRessource   ().getNom   () + "\t");
+				pw .print(question.getNotion      ().getNom   () + "\t");
+				pw .print(question.getDifficulte  ().getValeur() + "\t");
+				pw .print(question.getType        ().getValeur() + "\t");
+				pw .print(question.getTemps       ()             + "\t");
+				pw .print(question.getNote        ()             + "\t");
+				pw2.print(question.getIntitule    ()             + "\t");
+				pw2.print(question.getExplication ()             + "\t");
+
+				switch (question.getType())
+				{
+					case QCM -> 
+					{
+						PropositionQCM propQCM;
+						qQCM = (QCM) question;
+						pw.print(qQCM.isUnique());
+						List<Proposition> lstProp = qQCM.getPropositions();
+						for (Proposition prop : lstProp)
+						{
+							 propQCM = (PropositionQCM) prop;
+
+							if (propQCM.estReponse()) pw.print("V:");
+
+							pw.print("F:");
+							pw.print(propQCM.getText() + "\t" );
+							
+
+						}
+
+
+					}
+
+					case ELIMINATION -> 
+					{
+						PropositionElimination propElim;
+
+						qElim =  (Elimination) question;
+						List<Proposition> lstProp = qElim.getPropositions();
+						for (Proposition prop : lstProp)
+						{
+							propElim = (PropositionElimination) prop;
+							pw.print(propElim.getText       () + " " );
+							pw.print(propElim.estReponse    () + " " );
+							pw.print(propElim.getOrdreElim  () + " " );
+							pw.print(propElim.getNbPtsPerdus() + "\t");
+						}
+
+					}
+
+					case ASSOCIATION -> 
+					{
+						PropositionAssociation propAsso;
+						qAsso = (Association) question;
+						List<Proposition> lstProp = qAsso.getPropositions();
+						for (Proposition prop : lstProp) 
+						{
+							propAsso = (PropositionAssociation) prop;
+							pw.print(propAsso.getTextGauche() + " " );
+							pw.print(propAsso.getTextDroite() + "\t");	
+						}
+					}
+				}
 
 				pw.print("\n");
 			}
 
-			pw.close();
+			pw. close();
+			pw2.close();
 		}
 		catch (FileNotFoundException fnfe)
 		{
-			System.out.println("Le fichier " + nomFichier + "n'a pas été trouvé : " + fnfe.getMessage());
+			System.out.println("Le fichier n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
 		{
@@ -193,13 +257,6 @@ public class BanqueDeQuestions
 		}
 	}
 
-	public boolean ajouterQuestions(Question question)
-	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		return true;
-	}
 
 	public boolean modifierQuestion(int id, String critere, Object modif)
 	{
@@ -225,12 +282,22 @@ public class BanqueDeQuestions
 
 	public boolean supprimerQuestion(int id)
 	{
-		if(this.lstQuestions.get(id) != null)
-		{
-			this.lstQuestions.remove(id);
-			return true;
-		}
-		return false;
+		Question question;
+
+
+		question = null;
+		for (Question q : this.lstQuestions)
+			if (q.getId() == id)
+				question = q;
+
+		if (question == null) return false; // N'a pas trouvé la question
+
+		this.lstQuestions.remove(id);
+		return true;		
+	}
+
+	public static void main(String[] args) {
+		
 	}
 }
 
