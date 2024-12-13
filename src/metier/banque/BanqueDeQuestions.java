@@ -32,7 +32,11 @@ public class BanqueDeQuestions
 	private List<Question> lstQuestions;
 
 
-	/* Constructeur */
+	/**
+	 * Constructeur de la classe BanqueDeQuestions
+	 * 
+	 * @param qcmBuilder le constructeur de QCM
+	 */
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
 		this.qcmBuilder   = qcmBuilder;
@@ -41,11 +45,22 @@ public class BanqueDeQuestions
 		//this.lireQuestions("data/questions.csv", "data/questions.txt");
 	}
 
+	/** 
+	 * Retourne la liste des questions
+	 * 
+	 * @return List<Question> la liste des questions
+	 */
 	public List<Question> getQuestions()
 	{
 		return lstQuestions;
 	}
 
+	/**
+	 * Retourne les questions associées à une ressource
+	 * 
+	 * @param ressource la ressource associée aux questions
+	 * @return List<Question> la liste des questions associées à la ressource
+	 */
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
 		List<Question> lstQuestions = new ArrayList<Question>();
@@ -60,6 +75,12 @@ public class BanqueDeQuestions
 		return lstQuestions;
 	}
 
+	/**
+	 * Ajoute une question à la banque de questions
+	 * 
+	 * @param question la question à ajouter
+	 * @return boolean
+	 */
 	public boolean ajouterQuestions(Question question)
 	{
 		if (question == null) return false;
@@ -68,7 +89,12 @@ public class BanqueDeQuestions
 		return true;
 	}
 
-	/* Lecture du fichier CSV qui contient les questions */
+	/**
+	* Lecture du fichier CSV qui contient les questions
+	*
+	* @param nomFichierCSV le chemin du fichier CSV
+	* @param nomFichierTXT le chemin du fichier TXT
+	*/
 	public void lireQuestions(String nomFichierCSV, String nomFichierTXT)
 	{
 		Scanner scEnreg, scDonnees, scTexte;
@@ -166,7 +192,12 @@ public class BanqueDeQuestions
 			System.out.println("Le fichier n'a pas été trouvé : " + fnfe.getMessage());
 		}
 	}
-	/* Ecriture du fichier CSV qui contient les questions */
+	/**
+	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
+	 * 
+	 * @param nomFichierCSV le chemin du fichier CSV
+	 * @param nomFichierTXT le chemin du fichier TXT
+	 */
 	public void sauvegarderQuestions(String nomFichierCSV,String nomFichierTXT)
 	{
 		PrintWriter pw;
@@ -266,7 +297,14 @@ public class BanqueDeQuestions
 		}
 	}
 
-
+	/**
+	 * Modifie une question
+	 * 
+	 * @param question
+	 * @param critere
+	 * @param modif
+	 * @return
+	 */
 	public boolean modifierQuestion(Question question, String critere, Object modif)
 	{
 		if (question == null) return false; // Si la question est null     -> renvoie faux
@@ -284,6 +322,12 @@ public class BanqueDeQuestions
 		return true;
 	}
 
+	/**
+	 * Supprime une question
+	 * 
+	 * @param question
+	 * @return boolean
+	 */
 	public boolean supprimerQuestion(Question question)
 	{
 		if (question == null) return false; // N'a pas trouvé la question
