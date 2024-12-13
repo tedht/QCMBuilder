@@ -12,19 +12,24 @@ import metier.entite.question.TypeQuestion;
  */
 public class QCM extends Question
 {
+
+	boolean unique;
+
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public QCM(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
+	public QCM(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note,boolean unique)
 	{
 		super(id, ressource, notion, difficulte, temps, note);
+		this.unique = unique;
 	}
 
 	/*---------*/
 	/* Getters */
 	/*---------*/
 	@Override
-	public TypeQuestion getType() { return TypeQuestion.QCM; }
+	public TypeQuestion getType () { return TypeQuestion.QCM; }
+	public boolean      isUnique() { return this.unique     ; }
 
 	/*---------*/
 	/* Setters */
