@@ -27,7 +27,18 @@ Cette application se compose de deux parties : une partie professeur et une part
 ## Fonctionnalités
 
 - **Architecture MVC :** Cette application utilise une structure Modèle-Vue-Contrôleur (MVC).
-- **Autres :** ...
+
+- **Types de questions :** 
+
+	- **Question à réponses multiples :** L'étudiant choisit une ou plusieurs réponses parmis une liste de propositions.
+
+	- **Question à réponse unique :** L'étudiant choisir une unique réponse parmis plusieurs réponses.
+
+	- **Association :** L'étudiant doit relier chaque proposition avec une unique réponse. Chaque proposition a une réponse associée.
+
+	- **Elimination :** Cette question est semblable à la question à réponse unique. Cependant, elle offre la possibilitée d'enlever des propositions afin d'offrir un choix plus restreint à l'étudiant sous contrainte de se voir retirer une partie des points.
+
+- **Pièces jointes :** Le professeur peut rajouter une pièce jointe accompagnant la question (un document, du code...). 
 
 ## Prérequis
 - Java 17 ou version supérieure.
@@ -85,5 +96,6 @@ Vous pouvez également lancer l'application avec un double clic sur le fichier r
   - Kylian LUCAS-THUILLIER
 - README
   - Thibault MANGEANT
+  - Félix LE GARS
 - LICENSE
   - Thibault MANGEANT

@@ -15,12 +15,11 @@ public abstract class Question
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
-	private int          id;
 	private Ressource    ressource;
 	private Notion       notion;
 	private Difficulte   difficulte;
 	private int          temps;
-	private int          note;
+	private double       note;
 	private String       intitule;
 	private String       explication;
 
@@ -29,9 +28,8 @@ public abstract class Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Question(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
+	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
-		this.id          = id;
 		this.ressource   = ressource;
 		this.notion      = notion;
 		this.difficulte  = difficulte;
@@ -47,12 +45,11 @@ public abstract class Question
 	/*---------*/
 	/* Getters */
 	/*---------*/
-	public int          getId         () { return this.id;          }
 	public Ressource    getRessource  () { return this.ressource;   }
 	public Notion       getNotion     () { return this.notion;      }
 	public Difficulte   getDifficulte () { return this.difficulte;  }
 	public int          getTemps      () { return this.temps;       }
-	public int          getNote       () { return this.note;        }
+	public double       getNote       () { return this.note;        }
 
 	public String       getIntitule   () { return this.intitule;    }
 	public String       getExplication() { return this.explication; }
@@ -107,7 +104,7 @@ public abstract class Question
 
 	public boolean setIntitule(String intitule)
 	{
-		if ("".equals(this.intitule)) return false;
+		if ("".equals(intitule)) return false;
 
 		this.intitule = intitule;
 		return true;
@@ -115,7 +112,7 @@ public abstract class Question
 
 	public boolean setExplication(String explication)
 	{
-		if ("".equals(this.explication)) return false;
+		if ("".equals(explication)) return false;
 
 		this.explication = explication;
 		return true;
@@ -163,7 +160,7 @@ public abstract class Question
 
 
 		if (this.ressource == null || this.notion == null) return "";
-		sRet =  "Question " + this.id + " :\n" +
+		sRet =  "Question :\n" +
 		        "\t   intitulé : " + this.intitule              + "\n" +
 		        "\texplication : " + this.explication           + "\n" +
 		        "\t difficulte : " + this.difficulte            + "\n";
