@@ -13,7 +13,7 @@ import metier.entite.question.TypeQuestion;
 public class QCM extends Question
 {
 
-	boolean unique;
+	private boolean unique;
 
 	/*--------------*/
 	/* Constructeur */
