@@ -8,8 +8,7 @@ import java.util.List;
  * Classe Ressource
  * 
  * @author  Equipe03
- * @date    2024/12/13
- * @version 1.0
+ * @version 1.0 du 09/12/2024
  */
 public class Ressource 
 {
@@ -19,6 +18,7 @@ public class Ressource
 	/*-----------*/
 	// Attributs //
 	/*-----------*/
+
 	private String       nom;
 	private String       cheminFichier;
 	private List<Notion> lstNotions;
@@ -106,7 +106,10 @@ public class Ressource
 	{
 		for(Notion notion : this.lstNotions)
 		{
-			if (notion.getNom().equals(nomNotion)) { return notion; }
+			if (notion.getNom().equals(nomNotion))
+			{
+				return notion;
+			}
 		}
 
 		return null;
@@ -115,7 +118,7 @@ public class Ressource
 
 
 	/*---------*/
-	/* Setters */
+	// Setters //
 	/*---------*/
 
 	/**
@@ -129,6 +132,7 @@ public class Ressource
 		if (!nom.equals(null) && !nom.equals(this.nom))
 		{
 			this.nom = nom;
+
 			return true;
 		}
 
@@ -147,6 +151,7 @@ public class Ressource
 		if (!cheminFichier.equals(null) && !cheminFichier.equals(this.cheminFichier))
 		{
 			this.cheminFichier = cheminFichier;
+
 			return true;
 		}
 
@@ -157,11 +162,11 @@ public class Ressource
 
 
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 
 	/**
-	 * Ajout d'une notion à la liste des notions associée à Ressource.
+	 * Ajout d'une notion à la liste des notions associées à Ressource.
 	 * 
 	 * @param  notion la notion (non null).
 	 * @return        true si la notion à été ajoutée, false sinon.
@@ -199,7 +204,7 @@ public class Ressource
 	}
 
 	/**
-	 * Modifier le nom d'une notion de la liste des notions associée à Ressource.
+	 * Modifier le nom d'une notion de la liste des notions associées à Ressource.
 	 * 
 	 * @param notion     la notion à modifier.
 	 * @param nouveauNom le nouveau nom (non null).
@@ -220,7 +225,7 @@ public class Ressource
 	}
 
 	/**
-	 * Supression d'une notion de la liste des notions associée à Ressource.
+	 * Supression d'une notion de la liste des notions associées à Ressource.
 	 * 
 	 * @param notion la notion à supprimer.
 	 * @return       true si la notion à été suprimmée, false sinon.

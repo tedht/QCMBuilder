@@ -11,20 +11,40 @@ import java.util.List;
 import metier.entite.question.Question;
 
 
-/** Classe Questionnaire
+/** 
+ * Classe Questionnaire
+ * 
  * @author Equipe 03
  * @version 1.0 du 09/12/2024
  */
 public class Questionnaire
 {
-	/* Attributs */
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private Ressource      ressource;
 	private List<Notion>   notions;
 	private boolean        chronometre;
 	private List<Question> questions;
 
-	/* Constructeur */
-	public Questionnaire(Ressource ressource, List<Notion> notions , boolean chronometre) 
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
+
+	/**
+	 * Constructeur de la classe Questionnaire.
+	 * 
+	 * @param ressource   la ressource associée au Questionnaire.
+	 * @param notions     la liste des notions associées au Questionnaire.
+	 * @param chronometre chronometre indiquant si le questionnaire est chronométré ou non.
+	 */
+	public Questionnaire(Ressource ressource, List<Notion> notions, boolean chronometre) 
 	{
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
@@ -32,50 +52,151 @@ public class Questionnaire
 		this.questions   = new ArrayList<Question>();
 	}
 
-	/* Getters */
-	public Ressource      getRessource () { return ressource;  }
-	public List<Notion>   getNotions   () { return notions;    }
-	public boolean        isChronometre() { return chronometre;}
-	public List<Question> getQuestions () { return questions;  }
 
-	/* Setters */
+
+	/*---------*/
+	// Getters //
+	/*---------*/
+
+	/**
+	 * Retourne la ressource associée au Questionnaire.
+	 * 
+	 * @return la ressource.
+	 */
+	public Ressource getRessource()
+	{
+		return ressource;
+	}
+
+	/**
+	 * Retourne la liste des notions associée au Questionnaire.
+	 * 
+	 * @return la liste des notions.
+	 */
+	public List<Notion> getNotions()
+	{
+		return notions;
+	}
+
+	/**
+	 * Retourne l'état du chronométre associée au Questionnaire.
+	 * 
+	 * @return true si le chronométre est activé, false sinon.
+	 */
+	public boolean isChronometre()
+	{
+		return chronometre;
+	}
+
+	/**
+	 * Retourne la liste des questions associée au Questionnaire.
+	 * 
+	 * @return la liste des question.
+	 */
+	public List<Question> getQuestions()
+	{
+		return questions;
+	}
+
+
+
+	/*---------*/
+	// Setters //
+	/*---------*/
+
+	/**
+	 * Modifie la ressource associée au Questionnaire.
+	 * 
+	 * @param  ressource la ressource.
+	 * @return           true si la ressource a été modifée, false sinon.
+	 */
 	public boolean setRessource  (Ressource ressource) 
 	{
-		if (ressource == null) return false;
+		if (ressource == null)
+		{
+			return false;
+		}
 
 		this.ressource = ressource;
+
 		return true;
 	}
 
-	public boolean setNotions (List<Notion> notions) 
+	/**
+	 * Modifie la liste des notions associée au Questionnaire. 
+	 * 
+	 * @param  notions la liste des notions.
+	 * @return         true si la liste des notions a été modifiée, false sinon.
+	 */
+	public boolean setNotions(List<Notion> notions) 
 	{
-		if (notions == null) return false;
+		if (notions == null)
+		{
+			return false;
+		}
 
 		this.notions = notions;
+
 		return true;
 	}
 
+	/**
+	 * Modifie l'état du chronométre.
+	 * True si le chronométre était à false, false sinon.
+	 */
 	public void setChronometre() 
 	{
 		this.chronometre = !this.chronometre;
 	}
 
-	public boolean setQuestions  (List<Question> questions  ) 
+	/**
+	 * Modifie la liste des questions associée au Questionnaire.
+	 * 
+	 * @param  questions la liste des questions.
+	 * @return           true si la liste des questions a été mofifiée, false sinon.
+	 */
+	public boolean setQuestions(List<Question> questions) 
 	{
-		if (questions == null) return false;
+		if (questions == null)
+		{
+			return false;
+		}
 
 		this.questions = questions;
+
 		return true;
 	}
 
+
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
+
+	/**
+	 * Ajout d'une notion à la liste des notions associées au Questionnaire.
+	 * 
+	 * @param  notion la notion.
+	 * @return        true si la notion à été ajoutée, false sinon.
+	 */
 	public boolean ajouterNotion(Notion autre)
 	{
-		if (notions.contains(autre)) return false;
+		if (notions.contains(autre))
+		{
+			return false;
+		}
 
 		this.notions.add(autre);
+
 		return true;
 	}
 
+	/**
+	 * Suppress
+	 * 
+	 * @param autre
+	 * @return
+	 */
 	public boolean supprimerNotion(Notion autre)
 	{
 		if (!notions.contains(autre)) return false;
@@ -84,6 +205,12 @@ public class Questionnaire
 		return true;
 	}
 
+	/**
+	 * Supression d'une notion de la liste des notions associées au Questionnaire.
+	 * 
+	 * @param notion la notion à supprimer.
+	 * @return       true si la notion à été suprimmée, false sinon.
+	 */
 	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
 	{
 		for (int i = 0; i < nbrQuestions; i++) {
@@ -93,7 +220,15 @@ public class Questionnaire
 		return true;
 	}
 
-
+	/**
+	 * Génère un fichier HTML contenant une structure de base pour un questionnaire.
+	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
+	 *
+	 * @param  filePath                 Le chemin du dossier où le fichier HTML sera créé (non null).
+	 * @return                          Une chaîne de caractères représentant le contenu HTML généré.
+	 * @throws IllegalArgumentException Si le chemin fourni est null.
+	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
+	 */
 	public String generer(String filePath) 
 	{
 		String head, body, htmlContent;
