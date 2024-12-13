@@ -107,7 +107,7 @@ public abstract class Question
 
 	public boolean setIntitule(String intitule)
 	{
-		if ("".equals(this.intitule)) return false;
+		if ("".equals(intitule)) return false;
 
 		this.intitule = intitule;
 		return true;
@@ -115,7 +115,7 @@ public abstract class Question
 
 	public boolean setExplication(String explication)
 	{
-		if ("".equals(this.explication)) return false;
+		if ("".equals(explication)) return false;
 
 		this.explication = explication;
 		return true;
