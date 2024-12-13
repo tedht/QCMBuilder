@@ -32,10 +32,7 @@ public class QCM extends Question
 	/* Ajouter une proposition */
 	public boolean ajouterProposition(PropositionQCM prop)
 	{
-		if(this.lstPropositions.contains(prop)) return false; // Si la proposition éxiste déjà -> renvoie faux
-
-		this.lstPropositions.add(prop); // Ajoute la proposition
-		return true;
+		return super.ajouterProposition(prop);
 	}
 
 	/*----------*/

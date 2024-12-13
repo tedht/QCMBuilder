@@ -119,16 +119,26 @@ public abstract class Question
 		return true;
 	}
 
-	/*-----------------*/
-	/* Autres méthodes */
-	/*-----------------*/
+	
 	public boolean setProposition(int i, Proposition prop)
 	{
 		if(i < 0 || i < this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
 		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                                                            -> renvoie faux
 		if(!this.lstPropositions.get(i).equals(prop)) return false; // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
 
-		this.lstPropositions.set(i, prop);                          // Modifie la proposition
+		this.lstPropositions.set(i, prop);                          // Set la proposition
+		return true;
+	}
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
+	/* Ajouter une proposition */
+	protected boolean ajouterProposition(Proposition prop)
+	{
+		if(this.lstPropositions.contains(prop)) return false; // Si la proposition éxiste déjà -> renvoie faux
+
+		this.lstPropositions.add(prop); // Ajoute la proposition
 		return true;
 	}
 
