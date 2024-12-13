@@ -20,7 +20,7 @@ public abstract class Question
 	private Notion       notion;
 	private Difficulte   difficulte;
 	private int          temps;
-	private int          note;
+	private double       note;
 	private String       intitule;
 	private String       explication;
 
@@ -29,7 +29,7 @@ public abstract class Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Question(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, int note)
+	public Question(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		this.id          = id;
 		this.ressource   = ressource;
@@ -52,7 +52,7 @@ public abstract class Question
 	public Notion       getNotion     () { return this.notion;      }
 	public Difficulte   getDifficulte () { return this.difficulte;  }
 	public int          getTemps      () { return this.temps;       }
-	public int          getNote       () { return this.note;        }
+	public double       getNote       () { return this.note;        }
 
 	public String       getIntitule   () { return this.intitule;    }
 	public String       getExplication() { return this.explication; }
