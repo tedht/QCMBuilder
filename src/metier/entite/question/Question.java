@@ -147,8 +147,8 @@ public abstract class Question
 	/* Supprimer une proposition */
 	public boolean supprimerProposition(int i)
 	{
-		if(0 < i || i < this.lstPropositions.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
-		if(this.lstPropositions.isEmpty())           return false; // Si la liste est vide                  -> renvoie faux
+		if(i < 0 || i >= this.lstPropositions.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
 
 		this.lstPropositions.remove(i); // Supprime la proposition
 		return true;
@@ -159,14 +159,24 @@ public abstract class Question
 	/*----------*/
 	public String toString()
 	{
-		return "Question " + this.id + " :\n" +
-		       "\t   intitulé : " + this.intitule              + "\n" +
-		       "\texplication : " + this.explication           + "\n" +
-		       "\t difficulte : " + this.difficulte            + "\n" +
-		       "\t  ressource : " + this.ressource.getNom()    + "\n" +
-		       "\t     notion : " + this.notion   .getNom()    + "\n" +
-		       "\t      temps : " + this.temps + " seconde(s)" + "\n" +
-		       "\t       note : " + this.note                  + "\n"   ;
+		String sRet;
+
+
+		if (this.ressource == null || this.notion == null) return "";
+		sRet =  "Question " + this.id + " :\n" +
+		        "\t   intitulé : " + this.intitule              + "\n" +
+		        "\texplication : " + this.explication           + "\n" +
+		        "\t difficulte : " + this.difficulte            + "\n";
+
+		if (this.ressource == null) sRet += "\t  ressource : Ne possède pas de ressource\n";
+		else                        sRet += "\t  ressource : " + this.ressource.getNom() + "\n";
+		if (this.notion == null)    sRet += "\t     notion : Ne possède pas de notion\n";
+		else                        sRet += "\t     notion : " + this.notion   .getNom()    + "\n";
+		
+		sRet += "\t      temps : " + this.temps + " seconde(s)" + "\n" +
+		        "\t       note : " + this.note                  + "\n"   ;
+
+		return sRet;
 	}
 
 	/*------*/

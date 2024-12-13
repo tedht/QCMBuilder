@@ -19,5 +19,10 @@ public class PropositionAssociation implements Proposition
 	public void setTextGauche(String textGauche) { this.textGauche = textGauche; }
 	public void setTextDroite(String textDroite) { this.textDroite = textDroite; }
 
+	public String toString()
+	{
+		return this.textGauche + " --- " + this.textDroite;
+	}
+
 	
 }

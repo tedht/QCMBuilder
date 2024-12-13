@@ -6,6 +6,7 @@ import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
+import metier.entite.question.Proposition;
 
 /** Classe Association
  * @author Equipe 03
@@ -41,6 +42,21 @@ public class Association extends Question
 	public boolean ajouterProposition(PropositionAssociation prop)
 	{
 		return super.ajouterProposition(prop);
+	}
+
+	/* toString */
+	public String toString()
+	{
+		String sRet;
+
+
+		if (this.lstPropositions.isEmpty()) { return "Il n'y a pas de propositions"; }
+
+		sRet = "";
+		for (Proposition proposition : this.lstPropositions)
+			 sRet += proposition + "\n";
+
+		return sRet;
 	}
 
 	public static void main(String[] args)
