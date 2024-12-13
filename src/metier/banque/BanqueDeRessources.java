@@ -25,9 +25,9 @@ public class BanqueDeRessources
 	/*-----------*/
 	private List<Ressource> lstRessources;
 
-	/*--------------*/
-	/* Constructeur */
-	/*--------------*/
+	/**
+	 * Constructeur de la classe BanqueDeRessources.
+	 */
 	public BanqueDeRessources()
 	{
 		this.lstRessources = new ArrayList<Ressource>();
@@ -38,11 +38,23 @@ public class BanqueDeRessources
 	/*---------*/
 	/* Getters */
 	/*---------*/
+
+	/**
+	 * Retourne la liste des ressources de la banque de ressources.
+	 * 
+	 * @return la liste des ressources.
+	 */
 	public List<Ressource> getRessources()
 	{
 		return this.lstRessources;
 	}
 
+	/**
+	 * Retourne les notions d'une ressource.
+	 * 
+	 * @param ressource
+	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
+	 */
 	public List<Notion> getNotions(Ressource ressource) 
 	{
 		for(Ressource rsrc : this.lstRessources)
@@ -55,6 +67,12 @@ public class BanqueDeRessources
 		return null;
 	}
 
+	/**
+	 * Retourne une ressource de la banque de ressources.
+	 * 
+	 * @param nomRessource le nom de la ressource à retourner.
+	 * @return la ressource correspondante, ou null si elle n'existe pas.
+	 */
 	public Ressource getRessource(String nomRessource)
 	{
 		for (Ressource ressource : this.lstRessources)
@@ -68,7 +86,14 @@ public class BanqueDeRessources
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
-	/* Lecture du fichier CSV qui contient les ressources */
+
+
+	/** 
+	 * Lit les ressources d'un fichier CSV.
+	 * 
+	 * @param nomFichier le nom du fichier à lire.
+	 * @see Scanner
+	*/
 	public void lireRessources(String nomFichier)
 	{
 		Scanner scEnreg, scDonnee;
@@ -105,7 +130,12 @@ public class BanqueDeRessources
 		}
 	}
 
-	/* Ecriture du fichier CSV qui contient les ressources */
+	/**
+	 * Sauvegarde les ressources dans un fichier CSV.
+	 * 
+	 * @param nomFichier le nom du fichier dans lequel sauvegarder les ressources.
+	 * @see PrintWriter 
+	 */
 	public void sauvegarderRessources(String nomFichier)
 	{
 		PrintWriter pw;
@@ -139,6 +169,12 @@ public class BanqueDeRessources
 		}
 	}
 
+	/**
+	 * Ajoute une ressource à la banque de ressources.
+	 * 
+	 * @param ressource
+	 * @return true si la ressource a été ajoutée, false sinon.
+	 */
 	public boolean ajouterRessource(Ressource ressource)
 	{
 		if (ressource == null) return false;
@@ -147,6 +183,13 @@ public class BanqueDeRessources
 		return true;
 	}
 
+	/**
+	 * Modifie le nom d'une ressource.
+	 * 
+	 * @param ressource
+	 * @param nouveauNom
+	 * @return true si le nom de la ressource a été modifié, false sinon.
+	 */
 	public boolean modifierRessource(Ressource ressource, String nouveauNom)
 	{
 		if (this.lstRessources.contains(ressource) &&
@@ -160,6 +203,12 @@ public class BanqueDeRessources
 		return false;
 	}
 
+	/**
+	 * Supprime une ressource de la banque de ressources.
+	 * 
+	 * @param ressource
+	 * @return true si la ressource a été supprimée, false sinon.
+	 */
 	public boolean supprimerRessource(Ressource ressource)
 	{
 		if (this.lstRessources.contains(ressource))
