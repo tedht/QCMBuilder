@@ -5,8 +5,7 @@ package metier.entite.question;
  * Cette énumération inclut des méthodes utilitaires pour manipuler et convertir les types de questions.
  * 
  * @author Equipe 03
- * @date 2024/12/12
- * @version 1.0
+ * @version 1.0 2024/12/12
  */
 public enum TypeQuestion 
 {
@@ -14,7 +13,19 @@ public enum TypeQuestion
 	ASSOCIATION(1),
 	ELIMINATION(2);
 
+
+
+    /*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private final int valeur;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
      * Constructeur privé de l'énumération.
@@ -26,6 +37,12 @@ public enum TypeQuestion
 		this.valeur = valeur;
 	}
 
+
+
+	/*---------*/
+	// Getters //
+	/*---------*/
+
 	/**
      * Obtient la valeur entière associée à ce type de question.
      * 
@@ -35,6 +52,12 @@ public enum TypeQuestion
     { 
         return this.valeur; 
     }
+
+
+    
+    /*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
 
 	/**
      * Convertit une valeur entière en un type de question.

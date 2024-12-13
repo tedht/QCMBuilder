@@ -192,10 +192,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Suppress
+	 * Supression d'une notion de la liste des notions associées au Questionnaire.
 	 * 
-	 * @param autre
-	 * @return
+	 * @param  notion la notion à supprimer.
+	 * @return        true si la notion à été suprimmée, false sinon.
 	 */
 	public boolean supprimerNotion(Notion autre)
 	{
@@ -206,10 +206,12 @@ public class Questionnaire
 	}
 
 	/**
-	 * Supression d'une notion de la liste des notions associées au Questionnaire.
+	 * Ajout de questions à la liste des questions associées au Questionnaire.
 	 * 
-	 * @param notion la notion à supprimer.
-	 * @return       true si la notion à été suprimmée, false sinon.
+	 * @param  notion	    la notion.
+	 * @param  difficulte   la difficultée.
+	 * @param  nbrQuestions le nombre de questions.
+	 * @return              true ........, false sinon.
 	 */
 	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
 	{
@@ -286,6 +288,11 @@ public class Questionnaire
 		return htmlContent;
 	}
 
+	/**
+     * Retourne une représentation en chaîne de caractères du Questionnaire.
+     * 
+     * @return une représentation en chaîne de caractères du Questionnaire.
+     */
 	public String toString()
 	{
 		return "Questionnaire :\n" +
