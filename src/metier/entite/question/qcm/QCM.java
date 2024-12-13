@@ -18,9 +18,9 @@ public class QCM extends Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public QCM(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
+	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
 	{
-		super(id, ressource, notion, difficulte, temps, note);
+		super(ressource, notion, difficulte, temps, note);
 		this.unique = unique;
 	}
 

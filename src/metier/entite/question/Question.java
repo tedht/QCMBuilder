@@ -15,7 +15,6 @@ public abstract class Question
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
-	private int          id;
 	private Ressource    ressource;
 	private Notion       notion;
 	private Difficulte   difficulte;
@@ -29,9 +28,8 @@ public abstract class Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Question(int id, Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
-		this.id          = id;
 		this.ressource   = ressource;
 		this.notion      = notion;
 		this.difficulte  = difficulte;
@@ -47,7 +45,6 @@ public abstract class Question
 	/*---------*/
 	/* Getters */
 	/*---------*/
-	public int          getId         () { return this.id;          }
 	public Ressource    getRessource  () { return this.ressource;   }
 	public Notion       getNotion     () { return this.notion;      }
 	public Difficulte   getDifficulte () { return this.difficulte;  }
@@ -163,7 +160,7 @@ public abstract class Question
 
 
 		if (this.ressource == null || this.notion == null) return "";
-		sRet =  "Question " + this.id + " :\n" +
+		sRet =  "Question :\n" +
 		        "\t   intitulé : " + this.intitule              + "\n" +
 		        "\texplication : " + this.explication           + "\n" +
 		        "\t difficulte : " + this.difficulte            + "\n";
