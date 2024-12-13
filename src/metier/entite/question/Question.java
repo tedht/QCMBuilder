@@ -57,11 +57,11 @@ public abstract class Question
 	public String       getIntitule   () { return this.intitule;    }
 	public String       getExplication() { return this.explication; }
 
+	public abstract TypeQuestion getType ();
+
 	public List<Proposition> getPropositions() { return this.lstPropositions; }
 	
-	public Proposition getProposition(int i) { return this.lstPropositions.get(i); }
-
-	public abstract TypeQuestion getType ();
+	protected Proposition getProposition(int i) { return this.lstPropositions.get(i); }
 
 	/*---------*/
 	/* Setters */
@@ -120,7 +120,7 @@ public abstract class Question
 	}
 
 	
-	public boolean setProposition(int i, Proposition prop)
+	protected boolean setProposition(int i, Proposition prop)
 	{
 		if(i < 0 || i < this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
 		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                                                            -> renvoie faux

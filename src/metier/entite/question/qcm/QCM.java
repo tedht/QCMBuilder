@@ -26,6 +26,14 @@ public class QCM extends Question
 	@Override
 	public TypeQuestion getType() { return TypeQuestion.QCM; }
 
+	/*---------*/
+	/* Setters */
+	/*---------*/
+	public boolean setProposition(int i, PropositionQCM prop)
+	{
+		return super.setProposition(i, prop);
+	}
+
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

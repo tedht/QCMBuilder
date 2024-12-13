@@ -1,4 +1,4 @@
-package ihm.carte;
+package ihm.entite;
 
 import java.awt.event.MouseEvent;
 
@@ -12,14 +12,14 @@ import ihm.IHM;
  * @date 2024/12/10
  * @version 1.0
  */
-public class PanelCarteRessource extends PanelCarte
+public class PanelRessource extends PanelEntite
 {
 	/**
-	 * Constructeur de la classe PanelCarteRessource.
+	 * Constructeur de la classe PanelRessource.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelCarteRessource(Controleur ctrl, IHM ihm, String titre, String sousTitre)
+	public PanelRessource(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
 		super(ctrl, ihm, titre, sousTitre);
 		
@@ -32,10 +32,10 @@ public class PanelCarteRessource extends PanelCarte
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
-			PanelCarteRessource.this.ctrl.setRessourceActive(
-				PanelCarteRessource.this.ctrl.getRessource(PanelCarteRessource.this.lblTitre.getText())
+			PanelRessource.this.ctrl.setRessourceActive(
+				PanelRessource.this.ctrl.getRessource(PanelRessource.this.lblTitre.getText())
 			);
-			PanelCarteRessource.this.ihm.reinitAffichage();
+			PanelRessource.this.ihm.reinitAffichage();
 		}
 	}
 }

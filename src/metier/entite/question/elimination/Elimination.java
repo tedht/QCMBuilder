@@ -3,6 +3,7 @@ package metier.entite.question.elimination;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
+import metier.entite.question.Proposition;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 
@@ -22,6 +23,14 @@ public class Elimination extends Question
 	/*---------*/
 	@Override
 	public TypeQuestion getType() { return TypeQuestion.ELIMINATION; }
+
+	/*---------*/
+	/* Setters */
+	/*---------*/
+	public boolean setProposition(int i, PropositionElimination prop)
+	{
+		return super.setProposition(i, prop);
+	}
 
 	/*-----------------*/
 	/* Autres méthodes */

@@ -9,6 +9,9 @@ import ihm.edition.ressource.FrameEditionRessource;
 
 public class IHM 
 {
+	public static final int LARGEUR_QCM_BUILDER  = 800;
+	public static final int HAUTGEUR_QCM_BUILDER = 800;
+	
 	private Controleur ctrl;
 
 	private FrameQCMBuilder       frameQCMBuilder;

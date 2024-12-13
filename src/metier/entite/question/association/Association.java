@@ -21,10 +21,18 @@ public class Association extends Question
 		super(id, ressource, notion, difficulte, temps, note);
 	}
 
-	/*----------*/
-	/* Getteurs */
-	/*----------*/
+	/*---------*/
+	/* Getters */
+	/*---------*/
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
+
+	/*---------*/
+	/* Setters */
+	/*---------*/
+	public boolean setProposition(int i, PropositionAssociation prop)
+	{
+		return super.setProposition(i, prop);
+	}
 
 	/*-----------------*/
 	/* Autres méthodes */

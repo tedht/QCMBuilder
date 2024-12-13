@@ -39,7 +39,7 @@ public class FrameQCMBuilder extends JFrame
         this.add(this.panelQCMBuilder);
 
         // Définition des dimensions.
-        this.setSize(new Dimension(800, 800));
+        this.setSize(new Dimension(IHM.LARGEUR_QCM_BUILDER, IHM.HAUTGEUR_QCM_BUILDER));
 
 		// Positionnement de la fenêtre au centre de l'écran.
         Toolkit toolkit = Toolkit.getDefaultToolkit();

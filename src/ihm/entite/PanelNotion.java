@@ -1,4 +1,4 @@
-package ihm.carte;
+package ihm.entite;
 
 import java.awt.event.MouseEvent;
 
@@ -12,18 +12,20 @@ import ihm.IHM;
  * @date 2024/12/10
  * @version 1.0
  */
-public class PanelCarteNotion extends PanelCarte
+public class PanelNotion extends PanelEntite
 {	
 	/**
-	 * Constructeur de la classe PanelCarteNotion.
+	 * Constructeur de la classe PanelNotion.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelCarteNotion(Controleur ctrl, IHM ihm, String titre, String sousTitre)
+	public PanelNotion(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
 		super(ctrl, ihm, titre, sousTitre);
 
-		// Activation des composants
+		/*---------------------------*/
+		/* Activation des composants */
+		/*---------------------------*/
 		this.addMouseListener(new GereSourisNotion());
 	}
 
@@ -32,10 +34,10 @@ public class PanelCarteNotion extends PanelCarte
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
-			PanelCarteNotion.this.ctrl.setNotionActive(
-				PanelCarteNotion.this.ctrl.getRessourceActive().getNotion(PanelCarteNotion.this.lblTitre.getText())
+			PanelNotion.this.ctrl.setNotionActive(
+				PanelNotion.this.ctrl.getRessourceActive().getNotion(PanelNotion.this.lblTitre.getText())
 			);
-			PanelCarteNotion.this.ihm.reinitAffichage();
+			PanelNotion.this.ihm.reinitAffichage();
 		}
 	}
 }
