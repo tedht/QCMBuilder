@@ -12,7 +12,6 @@ import ihm.entite.PanelEntite;
 import ihm.entite.PanelNotion;
 import ihm.entite.PanelQuestion;
 import ihm.entite.PanelRessource;
-import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Question;
 
@@ -253,9 +252,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.lblSousTitre.setText(this.ctrl.getNbNotions(ressource) + " notion(s)");
 
 		/* Contenu */
-		for(Notion notion : this.ctrl.getNotions(ressource))
+		for(String notion : this.ctrl.getNotions(ressource))
 		{
-			PanelEntite panelCarte = new PanelNotion(this.ctrl, this.ihm, notion.getNom(), this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
+			PanelEntite panelCarte = new PanelNotion(this.ctrl, this.ihm, notion, this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 			this.lstPanelEntites.add(panelCarte);
 			this.panelContenu.add(panelCarte);
 		}
@@ -275,13 +274,13 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	private void afficherQuestions() 
 	{
 		Ressource ressource = this.ctrl.getRessourceActive();
-		Notion    notion    = this.ctrl.getNotionActive();
+		String    notion    = this.ctrl.getNotionActive();
 		
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
-		this.lblFilAriane.setText("Ressources >> " + ressource.getNom() + " >> " + notion.getNom());
-		this.lblTitre    .setText(notion.getNom());
+		this.lblFilAriane.setText("Ressources >> " + ressource.getNom() + " >> " + notion);
+		this.lblTitre    .setText(notion);
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 
 		/* Contenu */

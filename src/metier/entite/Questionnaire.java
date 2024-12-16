@@ -27,7 +27,7 @@ public class Questionnaire
 	/*-----------*/
 
 	private Ressource      ressource;
-	private List<Notion>   notions;
+	private List<String>   notions;
 	private boolean        chronometre;
 	private List<Question> questions;
 
@@ -44,7 +44,7 @@ public class Questionnaire
 	 * @param notions     la liste des notions associées au Questionnaire.
 	 * @param chronometre chronometre indiquant si le questionnaire est chronométré ou non.
 	 */
-	public Questionnaire(Ressource ressource, List<Notion> notions, boolean chronometre) 
+	public Questionnaire(Ressource ressource, List<String> notions, boolean chronometre) 
 	{
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
@@ -73,7 +73,7 @@ public class Questionnaire
 	 * 
 	 * @return la liste des notions.
 	 */
-	public List<Notion> getNotions()
+	public List<String> getNotions()
 	{
 		return notions;
 	}
@@ -128,7 +128,7 @@ public class Questionnaire
 	 * @param  notions la liste des notions.
 	 * @return         true si la liste des notions a été modifiée, false sinon.
 	 */
-	public boolean setNotions(List<Notion> notions) 
+	public boolean setNotions(List<String> notions) 
 	{
 		if (notions == null)
 		{
@@ -179,7 +179,7 @@ public class Questionnaire
 	 * @param  notion la notion.
 	 * @return        true si la notion à été ajoutée, false sinon.
 	 */
-	public boolean ajouterNotion(Notion autre)
+	public boolean ajouterNotion(String autre)
 	{
 		if (notions.contains(autre))
 		{
@@ -197,7 +197,7 @@ public class Questionnaire
 	 * @param  notion la notion à supprimer.
 	 * @return        true si la notion à été suprimmée, false sinon.
 	 */
-	public boolean supprimerNotion(Notion autre)
+	public boolean supprimerNotion(String autre)
 	{
 		if (!notions.contains(autre)) return false;
 
@@ -213,7 +213,7 @@ public class Questionnaire
 	 * @param  nbrQuestions le nombre de questions.
 	 * @return              true ........, false sinon.
 	 */
-	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
+	public boolean ajouterQuestions(String notion, String difficulte, int nbrQuestions)
 	{
 		for (int i = 0; i < nbrQuestions; i++) {
 			//trop de trucs avec fichier rtf
@@ -304,17 +304,17 @@ public class Questionnaire
 
 	public static void main(String[] args) 
 	{
-		Ressource r1;
-		Notion    n1, n2;
-		List<Notion> l1;
+		Ressource     r1;
+		String        n1, n2;
+		List<String>  l1;
 		Questionnaire q1;
 
 		r1 = new Ressource("R3.01");
 
-		n1 = new Notion("Algorithmique");
-		n2 = new Notion("Programmation");
+		n1 = "Algorithmique";
+		n2 = "Programmation";
 
-		l1 = new ArrayList<Notion>();
+		l1 = new ArrayList<String>();
 		l1.add(n1);
 
 		q1 = new Questionnaire(r1, l1, false);

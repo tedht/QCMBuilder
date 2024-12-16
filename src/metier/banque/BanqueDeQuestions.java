@@ -12,7 +12,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import metier.QCMBuilder;
-import metier.entite.Notion;
 import metier.entite.Ressource;
 
 import metier.entite.question.*;
@@ -61,7 +60,7 @@ public class BanqueDeQuestions
 	 * @param ressource la ressource associée aux questions
 	 * @return List<Question> la liste des questions associées à la ressource
 	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	public List<Question> getQuestions(Ressource ressource, String notion) 
 	{
 		List<Question> lstQuestions;
 
@@ -102,7 +101,7 @@ public class BanqueDeQuestions
 		Scanner scEnreg, scDonnees, scTexte;
 
 		Ressource    ressource;
-		Notion       notion;
+		String       notion;
 		Difficulte   difficulte;
 		TypeQuestion typeQuestion;
 		int          temps;
@@ -228,7 +227,7 @@ public class BanqueDeQuestions
 			for (Question question : this.lstQuestions)
 			{   
 				pw .print(question.getRessource   ().getNom   () + "\t");
-				pw .print(question.getNotion      ().getNom   () + "\t");
+				pw .print(question.getNotion      ()             + "\t");
 				pw .print(question.getDifficulte  ().getValeur() + "\t");
 				pw .print(question.getType        ().getValeur() + "\t");
 				pw .print(question.getTemps       ()             + "\t");
@@ -327,7 +326,7 @@ public class BanqueDeQuestions
 		{
 			case "difficulte" -> question.setDifficulte((Difficulte)modif);
 			case "ressource"  -> question.setRessource ((Ressource) modif);
-			case "notion"     -> question.setNotion    ((Notion)    modif);
+			case "notion"     -> question.setNotion    ((String)    modif);
 			case "temps"      -> question.setTemps     ((int)       modif);
 			case "note"       -> question.setNote      ((int)       modif);
 		}
@@ -363,9 +362,9 @@ public class BanqueDeQuestions
 		String cheminCSV;
 		String cheminTXT;
 
-		Notion n1;
-		Notion n2;
-		Notion n3;
+		String n1;
+		String n2;
+		String n3;
 
 		QCM q1;
 		Elimination q2;
@@ -380,9 +379,9 @@ public class BanqueDeQuestions
 		r1 = new Ressource("Ressource 1");
 		r2 = new Ressource("Ressource 2");
 
-		n1 = new Notion("Notion 1");
-		n2 = new Notion("Notion 2");
-		n3 = new Notion("Notion 3");
+		n1 = "Notion 1";
+		n2 = "Notion 2";
+		n3 = "Notion 3";
 
 		r1.ajouterNotion(n1);
 		r1.ajouterNotion(n2);

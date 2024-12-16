@@ -1,6 +1,5 @@
 package metier.entite.question.qcm;
 
-import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
@@ -18,7 +17,7 @@ public class QCM extends Question
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
+	public QCM(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, boolean unique)
 	{
 		super(ressource, notion, difficulte, temps, note);
 		this.unique = unique;

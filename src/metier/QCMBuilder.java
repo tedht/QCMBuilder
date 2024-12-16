@@ -6,7 +6,7 @@ import java.util.Stack;
 
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
-import metier.entite.Notion;
+
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
@@ -18,7 +18,7 @@ public class QCMBuilder
 	private BanqueDeRessources banqueRessources;
 
 	private Ressource ressourceActive;
-	private Notion    notionActive;
+	private String    notionActive;
 
 	private Stack<String> historique;
 	
@@ -38,12 +38,12 @@ public class QCMBuilder
 		return this.banqueRessources.getRessources();
 	}
 
-	public List<Notion> getNotions(Ressource ressource) 
+	public List<String> getNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNotions(ressource);
 	}
 
-	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	public List<Question> getQuestions(Ressource ressource, String notion) 
 	{
 		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
@@ -54,7 +54,7 @@ public class QCMBuilder
 		this.historique.add("R");
 	}
 
-	public void setNotionActive(Notion notion) 
+	public void setNotionActive(String notion) 
 	{
 		this.notionActive = notion;
 		this.historique.add("N"+this.ressourceActive.getNom());
@@ -83,7 +83,7 @@ public class QCMBuilder
 		return this.ressourceActive;
 	}
 
-	public Notion getNotionActive() 
+	public String getNotionActive() 
 	{
 		return this.notionActive;
 	}
@@ -103,7 +103,7 @@ public class QCMBuilder
 	{
 		if(this.ressourceActive != null)
 		{
-			this.ressourceActive.ajouterNotion(new Notion(nomNotion));
+			this.ressourceActive.ajouterNotion(nomNotion);
 			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 		}
 	}
@@ -123,17 +123,40 @@ public class QCMBuilder
 
 		for (Ressource ressource : this.banqueRessources.getRessources())
 		{
-			dossier = new File("ressources/" + ressource.getNom() + "/" + ressource.getNotion());
+			dossier = new File("ressources/" + ressource.getNom());
 
-			// Si pas de question, ignore simplement la boucle
-			for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
+			// Si pas de notion, ignore simplement la boucle
+			for (String notion : ressource.getNotions())
 			{
-				if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
+				dossier = new File("ressources/" + ressource.getNom() + "/" + notion);
+
+				// Si pas de question, ignore simplement la boucle
+				for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
 				{
-					dossier = new File("ressources/" + ressource.getNom() + "/" + ressource.getNotion() + "/question " + cpt + "/complément");
+					if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
+					{
+						dossier = new File("ressources/" + ressource.getNom() + "/" + notion + "/question " + cpt + "/complément");
+					}
+
+					// Vérifier si le dossier existe déjà, sinon le créer -- Question
+					if (!dossier.exists())
+					{
+						if (dossier.mkdirs())
+						{
+							System.out.println("Le dossier a été créé avec succès.");
+						}
+						else
+						{
+							System.out.println("La création du dossier a échoué.");
+						}
+					}
+					else
+					{
+						System.out.println("Le dossier existe déjà.");
+					}
 				}
 
-				// Vérifier si le dossier existe déjà, sinon le créer
+				// Vérifier si le dossier existe déjà, sinon le créer --  Notion
 				if (!dossier.exists())
 				{
 					if (dossier.mkdirs())
@@ -151,7 +174,7 @@ public class QCMBuilder
 				}
 			}
 
-			// Vérifier si le dossier existe déjà, sinon le créer
+			// Vérifier si le dossier existe déjà, sinon le créer -- Ressource
 			if (!dossier.exists())
 			{
 				if (dossier.mkdirs())
@@ -181,4 +204,4 @@ public class QCMBuilder
 
 		qcmBuilder.creerArborescence();
 	}
-}
+} 

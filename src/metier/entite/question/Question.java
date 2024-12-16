@@ -3,7 +3,6 @@ package metier.entite.question;
 import java.util.List;
 import java.util.ArrayList;
 
-import metier.entite.Notion;
 import metier.entite.Ressource;
 
 /** Classe Question
@@ -16,7 +15,7 @@ public abstract class Question
 	/* Attributs */
 	/*-----------*/
 	private Ressource    ressource;
-	private Notion       notion;
+	private String       notion;
 	private Difficulte   difficulte;
 	private int          temps;
 	private double       note;
@@ -38,7 +37,7 @@ public abstract class Question
 	 * @param temps le temps de réponse à la question (en secondes).
 	 * @param note la note de la question.
 	 */
-	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
 	{
 		this.ressource   = ressource;
 		this.notion      = notion;
@@ -68,7 +67,7 @@ public abstract class Question
 	 * 
 	 * @return la notion associée à la question.
 	 */
-	public Notion       getNotion     () { return this.notion;      }
+	public String       getNotion     () { return this.notion;      }
 
 	/**
 	 * Retourne la difficulté de la question.
@@ -159,7 +158,7 @@ public abstract class Question
 	 * @param notion la nouvelle notion.
 	 * @return true si la notion à été modifiée, false sinon.
 	 */
-	public boolean setNotion(Notion notion)
+	public boolean setNotion(String notion)
 	{
 		if (notion == null) return false;
 
@@ -304,7 +303,7 @@ public abstract class Question
 		if (this.ressource == null) sRet += "\t  ressource : Ne possède pas de ressource\n";
 		else                        sRet += "\t  ressource : " + this.ressource.getNom() + "\n";
 		if (this.notion == null)    sRet += "\t     notion : Ne possède pas de notion\n";
-		else                        sRet += "\t     notion : " + this.notion   .getNom()    + "\n";
+		else                        sRet += "\t     notion : " + this.notion    + "\n";
 		
 		sRet += "\t      temps : " + this.temps + " seconde(s)" + "\n" +
 		        "\t       note : " + this.note                  + "\n"   ;

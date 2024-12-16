@@ -1,6 +1,5 @@
 package metier.entite.question.elimination;
 
-import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
@@ -30,7 +29,7 @@ public class Elimination extends Question
 	 * @param temps      le temps associé.
 	 * @param note       la note associée.
 	 */
-	public Elimination(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Elimination(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
 	{
 		super(ressource, notion, difficulte, temps, note);
 	}
