@@ -107,4 +107,10 @@ public class Controleur
 	{
 		return this.metier.creerElimination(detailsQuestion);
 	}
+
+	public void genererEvaluation() 
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'genererEvaluation'");
+	}
 }

@@ -38,7 +38,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	private JTextField        txtPoints, txtTemps;
 	private JComboBox<String> ddlstRessource, ddlstNotion, ddlstTypeQuestion;
 
-	private JRadioButton[]    tabRbNiveau;
+	private JRadioButton[]    tabRbDifficulte;
 	private ButtonGroup       btgDifficulte;
 	private ButtonGroup       btgQCM;
 
@@ -71,12 +71,6 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.tabPanelInfo = new JPanel[2];
 		this.setLayout(new BorderLayout());
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets  = new Insets(0, 5, 10, 5);
-		gbc.anchor  = GridBagConstraints.WEST;
-	    gbc.fill    = GridBagConstraints.HORIZONTAL;
-	    gbc.weightx = 1.0;
-
 		this.lstPanelProp = new ArrayList<PanelProp>();
 
 		/**************/
@@ -107,7 +101,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		/* Listes déroulantes */
 		// Ressource
 		this.ddlstRessource = new JComboBox<String>();
-		this.ddlstRessource.setPreferredSize(new Dimension(200, 25));
+		this.ddlstRessource.setPrototypeDisplayValue("R1.01 Initiation au développement");
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
 			this.ddlstRessource.addItem(ressource.getNom());
@@ -116,7 +110,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 
 		// Notion
 		this.ddlstNotion = new JComboBox<String>();
-		this.ddlstNotion.setPreferredSize(new Dimension(200, 25));
+		this.ddlstRessource.setPrototypeDisplayValue("R1.01 Initiation au développement");
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);
 
@@ -130,14 +124,14 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.ddlstTypeQuestion.setSelectedIndex(-1);
 
 		/* Boutons Radio */
-		tabRbNiveau = new JRadioButton[4];
-		tabRbNiveau[0] = new JRadioButton("TF");
-		tabRbNiveau[1] = new JRadioButton("F");
-		tabRbNiveau[2] = new JRadioButton("M");
-		tabRbNiveau[3] = new JRadioButton("D");
+		tabRbDifficulte = new JRadioButton[4];
+		tabRbDifficulte[0] = new JRadioButton("TF");
+		tabRbDifficulte[1] = new JRadioButton("F");
+		tabRbDifficulte[2] = new JRadioButton("M");
+		tabRbDifficulte[3] = new JRadioButton("D");
 
 		btgDifficulte = new ButtonGroup();
-		for(JRadioButton rb : tabRbNiveau)
+		for(JRadioButton rb : tabRbDifficulte)
 		{
 			btgDifficulte.add(rb);
 			rb.setEnabled(false);
@@ -146,6 +140,12 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		/*-------------------------------*/
 		/* Positionnement des composants */
 		/*-------------------------------*/
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets  = new Insets(0, 5, 10, 5);
+		gbc.anchor  = GridBagConstraints.WEST;
+	    gbc.fill    = GridBagConstraints.HORIZONTAL;
+	    gbc.weightx = 1.0;
 
 		/* Ligne 0 */
 		// Points
@@ -183,7 +183,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.tabPanelInfo[0].add(panelInfoNiveau, gbc);
 		panelInfoNiveau     .add(new JLabel("Nombre de Niveau :"), BorderLayout.NORTH);
 		panelInfoNiveau     .add(panelNiveau, BorderLayout.CENTER);
-		for(JRadioButton rb : tabRbNiveau)
+		for(JRadioButton rb : tabRbDifficulte)
 			panelNiveau.add(rb);
 
 		/* Ligne 2 */
@@ -197,7 +197,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		/*---------------------------*/
 		/* Activation des composants */
 		/*---------------------------*/
-		for(JRadioButton rb : tabRbNiveau)
+		for(JRadioButton rb : tabRbDifficulte)
 			rb.addActionListener(this);
 
 		this.ddlstRessource   .addActionListener(this);
@@ -287,7 +287,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.btnAnnuler     = new JButton("Annuler");
 		this.btnEnregistrer = new JButton("Enregistrer");   
 		this.btnPrecedent   = new JButton("Précédent");
-		this.btnSuivant     = new JButton("Suivant");       this.btnSuivant    .setEnabled(false);
+		this.btnSuivant     = new JButton("Suivant");       this.btnSuivant.setEnabled(false);
   
 		/*-------------------------------*/
 		/* Positionnement des composants */
@@ -343,7 +343,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	
 			if(e.getSource() == this.ddlstNotion && this.ddlstNotion.isEnabled())
 			{
-				for(JRadioButton rb : tabRbNiveau)
+				for(JRadioButton rb : tabRbDifficulte)
 					rb.setEnabled(true);
 			}
 
@@ -368,11 +368,10 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		detailsQuestion += (String)this.ddlstRessource .getSelectedItem() + '\t';
 		detailsQuestion += (String)this.ddlstNotion    .getSelectedItem() + '\t';
 		
-		for(int i = 0; i < this.tabRbNiveau.length; i++)
-			if(tabRbNiveau[i].isSelected()) 
+		for(int i = 0; i < this.tabRbDifficulte.length; i++)
+			if(tabRbDifficulte[i].isSelected()) 
 				detailsQuestion += i + "\t";
 		
-		detailsQuestion += this.ddlstTypeQuestion.getSelectedIndex() + "\t";
 		detailsQuestion += this.txtTemps         .getText         () + '\t';
 		detailsQuestion += this.txtPoints        .getText         () + '\t';
 		detailsQuestion += this.txtQuestion      .getText         () + '\t';

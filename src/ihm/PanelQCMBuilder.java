@@ -35,7 +35,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	private JPanel panelContenu;
 	private JPanel panelBtnAjouter;
 
-	private JButton btnRetour, btnGenererQuestionnaire, btnAjouter;
+	private JButton btnRetour, btnNouvelleEvaluation, btnAjouter;
 	private JLabel  lblTitre, lblSousTitre, lblFilAriane;
 
 	private JScrollPane scrollPanelContenu;
@@ -73,9 +73,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.scrollPanelContenu.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		/* Boutons */
-		this.btnRetour               = new JButton("Retour");
-		this.btnGenererQuestionnaire = new JButton("Générer un Questionnaire");
-		this.btnAjouter              = new JButton(" ");
+		this.btnRetour             = new JButton("Retour");
+		this.btnNouvelleEvaluation = new JButton("Nouvelle Évaluation");
+		this.btnAjouter            = new JButton(" ");
 
 		/* Labels */
 		this.lblFilAriane = new JLabel(" ");
@@ -116,7 +116,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.0;
-        this.panelEntete.add(this.btnGenererQuestionnaire, gbc);
+        this.panelEntete.add(this.btnNouvelleEvaluation, gbc);
 
 		gbc.gridwidth = 3;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -151,9 +151,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/*---------------------------*/
 		/* Activation des composants */
 		/*---------------------------*/
-		this.btnRetour.addActionListener(this); 
-		this.btnAjouter.addActionListener(this); 
-		this.btnGenererQuestionnaire.addActionListener(this); 
+		this.btnRetour            .addActionListener(this); 
+		this.btnAjouter           .addActionListener(this); 
+		this.btnNouvelleEvaluation.addActionListener(this); 
 	}
 
 	@Override
@@ -164,9 +164,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 			this.ctrl.popHistorique();
 			this.ihm.reinitAffichage();
 		}
-		if(e.getSource() == this.btnGenererQuestionnaire)
+		if(e.getSource() == this.btnNouvelleEvaluation)
 		{
-			
+			this.ihm.nouvelleEvaluation();
 		}
 		if(e.getSource() == this.btnAjouter)
 		{

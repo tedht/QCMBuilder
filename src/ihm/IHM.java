@@ -6,6 +6,7 @@ import controleur.Controleur;
 import ihm.edition.notion.FrameEditNotion;
 import ihm.edition.question.FrameEditQuestion;
 import ihm.edition.ressource.FrameEditRessource;
+import ihm.questionnaire.FrameCreerEvaluation;
 
 public class IHM 
 {
@@ -15,20 +16,31 @@ public class IHM
 	public static final int LARGEUR_EDIT_QUESTION        = 700;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
+
+	public static final int LARGEUR_CREER_QUESTIONNAIRE        = 700;
+	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
+	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 400;
 	
 	private Controleur ctrl;
 
-	private FrameQCMBuilder       frameQCMBuilder;
+	private FrameQCMBuilder      frameQCMBuilder;
 
-	private FrameEditRessource frameEditRessource;
-	private FrameEditNotion    frameEditNotion;
-	private FrameEditQuestion  frameEditQuestion;
+	private FrameEditRessource   frameEditRessource;
+	private FrameEditNotion      frameEditNotion;
+	private FrameEditQuestion    frameEditQuestion;
+
+	private FrameCreerEvaluation frameCreerEvaluation;
 	
 	public IHM(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
 		this.frameQCMBuilder = new FrameQCMBuilder(ctrl, this);
+	}
+
+	public void reinitAffichage() 
+	{
+		this.frameQCMBuilder.reinitAffichage();
 	}
 
 	public void creerRessource() 
@@ -125,8 +137,34 @@ public class IHM
 		}
 	}
 
-	public void reinitAffichage() 
+	public void nouvelleEvaluation() 
 	{
-		this.frameQCMBuilder.reinitAffichage();
+		if(this.frameCreerEvaluation == null)
+		{
+			// Crée une nouvelle fenêtre de création de'évaluation
+			this.frameCreerEvaluation = new FrameCreerEvaluation(this.ctrl, this);
+
+			// Positionne frameCreerEvaluation au centre de la fenêtre principale
+			this.frameCreerEvaluation.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameCreerEvaluation.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameCreerEvaluation.getHeight() / 2
+			);
+
+			// Rend la fenêtre visible
+			this.frameCreerEvaluation.setVisible(true);
+
+			// Ajoute un WindowListener pour fermer la fenêtre correctement
+			this.frameCreerEvaluation.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    IHM.this.frameCreerEvaluation = null;
+                }
+            });
+		}
+		else
+		{
+			// Si la frameCreerEvaluation existe déjà, elle est mise en avant
+			this.frameCreerEvaluation.toFront();
+		}
 	}
 }
