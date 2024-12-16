@@ -372,10 +372,10 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 			if(tabRbDifficulte[i].isSelected()) 
 				detailsQuestion += i + "\t";
 		
-		detailsQuestion += this.txtTemps         .getText         () + '\t';
-		detailsQuestion += this.txtPoints        .getText         () + '\t';
-		detailsQuestion += this.txtQuestion      .getText         () + '\t';
-		detailsQuestion += this.txtExpli         .getText         () + '\t';
+		detailsQuestion += this.txtTemps   .getText         () + '\t';
+		detailsQuestion += this.txtPoints  .getText         () + '\t';
+		detailsQuestion += this.txtQuestion.getText         () + '\t';
+		detailsQuestion += this.txtExpli   .getText         () + '\t';
 
 		// On vérifie DANS LE METIER que les valeurs saisies sont valides
 		List<String> lstErreurs = new ArrayList<String>();
