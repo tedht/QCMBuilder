@@ -311,13 +311,12 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	{
 		if(e.getSource() == this.btnAnnuler)
 		{
-			SwingUtilities.getWindowAncestor(this).dispose();
+			this.frame.dispose();
 		}
 
 		if(e.getSource() == this.btnEnregistrer)
 		{
-			if(this.enregistrer()) 
-				SwingUtilities.getWindowAncestor(this).dispose();
+			this.enregistrer();
 		}
 
 		if(e.getSource() == this.btnSuivant)     { this.pageSuivante        (); }
@@ -362,7 +361,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	
 	}
 
-	private boolean enregistrer()
+	private void enregistrer()
 	{
 		String detailsQuestion = "";
 
@@ -376,17 +375,11 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		detailsQuestion += this.ddlstTypeQuestion.getSelectedIndex() + "\t";
 		detailsQuestion += this.txtTemps         .getText         () + '\t';
 		detailsQuestion += this.txtPoints        .getText         () + '\t';
+		detailsQuestion += this.txtQuestion      .getText         () + '\t';
+		detailsQuestion += this.txtExpli         .getText         () + '\t';
 
-		// On vérifie DANS LE METIER que les valeurs saisies sont valides...
+		// On vérifie DANS LE METIER que les valeurs saisies sont valides
 		List<String> lstErreurs = new ArrayList<String>();
-
-		/*
-		pw .print(nomFichierTXT                          + "\t");
-		pw2.print(question.getIntitule    ()             + "\t");
-		pw2.print(question.getExplication ()             + "\t");
-		*/
-
-
 
 		switch (this.ddlstTypeQuestion.getSelectedIndex()) 
 		{
@@ -420,28 +413,27 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 				JOptionPane.INFORMATION_MESSAGE
 			);
 
-			return true;
+			this.frame.dispose();
 		}
-		
-
-		String message = "La question n'a pas été enregistrée pour les raisons suivantes :\n";
-		for(String msgErr : lstErreurs)
-			message += " • " + msgErr + '\n';
-
-		JOptionPane.showMessageDialog(
-			this.frame,
-			message,
-			"Échec de l'Enregistrement",
-			JOptionPane.ERROR_MESSAGE
-		);
-		
-		return false;
+		else
+		{
+			String message = "La question n'a pas été enregistrée pour les raisons suivantes :\n";
+			for(String msgErr : lstErreurs)
+				message += " • " + msgErr + '\n';
+	
+			JOptionPane.showMessageDialog(
+				this.frame,
+				message,
+				"Échec de l'Enregistrement",
+				JOptionPane.ERROR_MESSAGE
+			);
+		}
 	}
 
 	public void pagePrecedente()
 	{
-		if(SwingUtilities.getWindowAncestor(this) != null)
-			SwingUtilities.getWindowAncestor(this).setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
+		if(this.frame != null)
+			this.frame.setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
 		
 		// Panel Info
 		this.remove(this.tabPanelInfo[1]);
@@ -458,8 +450,8 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 
 	public void pageSuivante()
 	{	
-		if(SwingUtilities.getWindowAncestor(this) != null)
-			SwingUtilities.getWindowAncestor(this).setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_2);
+		if(this.frame != null)
+			this.frame.setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_2);
 
 		// Panel Info
 		this.remove(this.tabPanelInfo[0]);
