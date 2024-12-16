@@ -26,7 +26,7 @@ import metier.entite.question.elimination.*;
  */
 public class BanqueDeQuestions 
 {
-	/* Attributs */
+	/* Attributs */;
 	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
 
@@ -169,14 +169,21 @@ public class BanqueDeQuestions
 				case ELIMINATION ->
 				{
 					question = new Elimination(ressource, notion, difficulte, temps, note);
+					
 					while (scDonnees.hasNext())
 					{
-						String  texte       =                    scDonnees.next       ();
-						boolean reponse     =                    scDonnees.nextBoolean();
-						int     ordreElim   =                    scDonnees.nextInt    ();
-						double  nbPtsPerdus = Double.parseDouble(scDonnees.next       ());
+						Scanner scElim = new Scanner(scDonnees.next());
+						scElim.useDelimiter(":");
+
+						boolean reponse     =                    scElim.next().equals("V");
+						int     ordreElim   =                    scElim.nextInt    ();
+						double  nbPtsPerdus = Double.parseDouble(scElim.next       ());
+						scElim.useDelimiter("\t");
+						String  texte       =                    scElim.next       ();
 						((Elimination) question)
 								.ajouterProposition(new PropositionElimination(texte, reponse, ordreElim, nbPtsPerdus));
+
+						scElim.close();
 					}
 					
 				}
@@ -209,7 +216,7 @@ public class BanqueDeQuestions
 	 * @param nomFichierCSV le chemin du fichier CSV
 	 * @param nomFichierTXT le chemin du fichier TXT
 	 */
-	public void sauvegarderQuestions(String nomFichierCSV,String nomFichierTXT)
+	public void sauvegarderQuestions()
 	{
 		PrintWriter pw;
 		PrintWriter pw2;
@@ -219,13 +226,24 @@ public class BanqueDeQuestions
 
 		try
 		{
-			pw  = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8" ));
-			pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8" ));
-
-			pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
+			
 
 			for (Question question : this.lstQuestions)
 			{   
+				String nomFichierCSV = "ressources/" + question.getRessource().getNom() + "/"
+				                                     + question.getNotion() 
+													 +"/question.csv";
+				String nomFichierTXT = "ressources/" + question.getRessource().getNom() + "/" 
+				                                     + question.getNotion() 
+													 +"/question.txt";
+				System.out.println(nomFichierCSV);
+				System.out.println(nomFichierTXT);
+
+				pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
+				pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8"));
+
+				pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
+
 				pw .print(question.getRessource   ().getNom   () + "\t");
 				pw .print(question.getNotion      ()             + "\t");
 				pw .print(question.getDifficulte  ().getValeur() + "\t");
@@ -269,10 +287,13 @@ public class BanqueDeQuestions
 						for (Proposition prop : lstProp)
 						{
 							propElim = (PropositionElimination) prop;
-							pw.print(propElim.getText       () + "\t" );
-							pw.print(propElim.estReponse    () + "\t" );
-							pw.print(propElim.getOrdreElim  () + "\t" );
-							pw.print(propElim.getNbPtsPerdus() + "\t");
+
+							if (propElim.estReponse()) pw.print("V:");
+
+							else pw.print("F:");
+							pw.print(propElim.getOrdreElim  () + ":" );
+							pw.print(propElim.getNbPtsPerdus() + ":");
+							pw.print(propElim.getText		() + "\t");
 						}
 
 					}
@@ -293,10 +314,12 @@ public class BanqueDeQuestions
 
 				pw. print("\n");
 				pw2.print("\n");
+
+				pw.close();
+				pw2.close();
 			}
 
-			pw. close();
-			pw2.close();
+			
 		}
 		catch (FileNotFoundException fnfe)
 		{
@@ -399,7 +422,7 @@ public class BanqueDeQuestions
 		q2 = new Elimination(r2, n3, Difficulte.MOYEN, 20, 15);
 		q2.setIntitule("De quelle couleur est le cheval blanc d'Henri IV ?");
 		q2.setExplication("La réponse est évidente, mais il est intéressant de poser la question.");
-		q2.ajouterProposition(new PropositionElimination("Noir", false, 1, 2.0));
+		q2.ajouterProposition(new PropositionElimination("Noir:d:d:d", false, 1, 2.0));
 		q2.ajouterProposition(new PropositionElimination("Gris", false, 2, 1.0));
 		q2.ajouterProposition(new PropositionElimination("Blanc", true, 0, 0.0));
 
@@ -427,9 +450,7 @@ public class BanqueDeQuestions
 		}
 
 		// Sauvegarde des questions dans des fichiers
-		cheminCSV = "data/questions.csv";
-		cheminTXT = "data/questions.txt";
-		banque.sauvegarderQuestions(cheminCSV, cheminTXT);
+		banque.sauvegarderQuestions();
 		System.out.println("=== Questions sauvegardées dans les fichiers CSV et TXT ===");
 
 		for (Question question : banque.getQuestions())
@@ -449,7 +470,7 @@ public class BanqueDeQuestions
 		}
 
 		// Lecture des questions sauvegardées
-		banque.lireQuestions(cheminCSV, cheminTXT);
+		//banque.lireQuestions(cheminCSV, cheminTXT);
 		System.out.println("=== Questions après lecture des fichiers ===");
 		for (Question question : banque.getQuestions())
 		{
