@@ -1,6 +1,6 @@
 package metier;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Stack;
 
@@ -116,27 +116,69 @@ public class QCMBuilder
 		this.banqueQuestions.sauvegarderQuestions("data/questions.csv","data/questions.txt");
 	}
 
-	public List<String> creerQCM(String detailsQuestion, boolean unique) 
+	public void creerArborescence()
 	{
-		List<String> lstErreurs = new ArrayList<String>();
+		File dossier;
 
 
-		return lstErreurs;
+		for (Ressource ressource : this.banqueRessources.getRessources())
+		{
+			dossier = new File("ressources/" + ressource.getNom());
+
+			// Si pas de question, ignore simplement la boucle
+			for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
+			{
+				if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
+				{
+					dossier = new File("ressources/" + ressource.getNom() + "/question " + cpt + "/complément");
+				}
+
+				// Vérifier si le dossier existe déjà, sinon le créer
+				if (!dossier.exists())
+				{
+					if (dossier.mkdirs())
+					{
+						System.out.println("Le dossier a été créé avec succès.");
+					}
+					else
+					{
+						System.out.println("La création du dossier a échoué.");
+					}
+				}
+				else
+				{
+					System.out.println("Le dossier existe déjà.");
+				}
+			}
+
+			// Vérifier si le dossier existe déjà, sinon le créer
+			if (!dossier.exists())
+			{
+				if (dossier.mkdirs())
+				{
+					System.out.println("Le dossier a été créé avec succès.");
+				}
+				else
+				{
+					System.out.println("La création du dossier a échoué.");
+				}
+			}
+			else
+			{
+				System.out.println("Le dossier existe déjà.");
+			}
+		}
+
 	}
 
-	public List<String> creerAssociation(String detailsQuestion) 
+
+	public static void main(String[] args)
 	{
-		List<String> lstErreurs = new ArrayList<String>();
+		QCMBuilder qcmBuilder;
 
 
-		return lstErreurs;
-	}
+		qcmBuilder = new QCMBuilder();
 
-	public List<String> creerElimination(String detailsQuestion) 
-	{
-		List<String> lstErreurs = new ArrayList<String>();
-
-
-		return lstErreurs;
+		qcmBuilder.creerArborescence();
 	}
 }
