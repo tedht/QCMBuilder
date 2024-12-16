@@ -174,11 +174,14 @@ public class BanqueDeQuestions
 						((Elimination) question)
 								.ajouterProposition(new PropositionElimination(texte, reponse, ordreElim, nbPtsPerdus));
 					}
+					
 				}
-				default -> throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
+				default -> {
+					scDonnees.close();
+					throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
 				}
-				default -> throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
-				}
+			}
+
 
 				question.setIntitule   (intitule);
 				question.setExplication(explication);
