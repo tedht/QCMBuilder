@@ -1,12 +1,11 @@
 package metier;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
-
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
@@ -103,7 +102,7 @@ public class QCMBuilder
 	{
 		if(this.ressourceActive != null)
 		{
-			this.ressourceActive.ajouterNotion(nomNotion);
+			this.ressourceActive.ajouterNotion(new String(nomNotion));
 			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 		}
 	}
@@ -116,92 +115,27 @@ public class QCMBuilder
 		this.banqueQuestions.sauvegarderQuestions("data/questions.csv","data/questions.txt");
 	}
 
-	public void creerArborescence()
+	public List<String> creerQCM(String detailsQuestion, boolean unique) 
 	{
-		File dossier;
+		List<String> lstErreurs = new ArrayList<String>();
 
 
-		for (Ressource ressource : this.banqueRessources.getRessources())
-		{
-			dossier = new File("ressources/" + ressource.getNom());
-
-			// Si pas de notion, ignore simplement la boucle
-			for (String notion : ressource.getNotions())
-			{
-				dossier = new File("ressources/" + ressource.getNom() + "/" + notion);
-
-				// Si pas de question, ignore simplement la boucle
-				for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
-				{
-					if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
-					{
-						dossier = new File("ressources/" + ressource.getNom() + "/" + notion + "/question " + cpt + "/complément");
-					}
-
-					// Vérifier si le dossier existe déjà, sinon le créer -- Question
-					if (!dossier.exists())
-					{
-						if (dossier.mkdirs())
-						{
-							System.out.println("Le dossier a été créé avec succès.");
-						}
-						else
-						{
-							System.out.println("La création du dossier a échoué.");
-						}
-					}
-					else
-					{
-						System.out.println("Le dossier existe déjà.");
-					}
-				}
-
-				// Vérifier si le dossier existe déjà, sinon le créer --  Notion
-				if (!dossier.exists())
-				{
-					if (dossier.mkdirs())
-					{
-						System.out.println("Le dossier a été créé avec succès.");
-					}
-					else
-					{
-						System.out.println("La création du dossier a échoué.");
-					}
-				}
-				else
-				{
-					System.out.println("Le dossier existe déjà.");
-				}
-			}
-
-			// Vérifier si le dossier existe déjà, sinon le créer -- Ressource
-			if (!dossier.exists())
-			{
-				if (dossier.mkdirs())
-				{
-					System.out.println("Le dossier a été créé avec succès.");
-				}
-				else
-				{
-					System.out.println("La création du dossier a échoué.");
-				}
-			}
-			else
-			{
-				System.out.println("Le dossier existe déjà.");
-			}
-		}
-
+		return lstErreurs;
 	}
 
-
-	public static void main(String[] args)
+	public List<String> creerAssociation(String detailsQuestion) 
 	{
-		QCMBuilder qcmBuilder;
+		List<String> lstErreurs = new ArrayList<String>();
 
 
-		qcmBuilder = new QCMBuilder();
-
-		qcmBuilder.creerArborescence();
+		return lstErreurs;
 	}
-} 
+
+	public List<String> creerElimination(String detailsQuestion) 
+	{
+		List<String> lstErreurs = new ArrayList<String>();
+
+
+		return lstErreurs;
+	}
+}
