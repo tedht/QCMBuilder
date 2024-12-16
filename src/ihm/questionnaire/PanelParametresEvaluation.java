@@ -56,6 +56,7 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 
 		// Ressources
 		this.ddlstRessource = new JComboBox<String>();
+		this.ddlstRessource.setPrototypeDisplayValue("R1.01 Initiation au développement");
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
 			this.ddlstRessource.addItem(ressource.getNom());

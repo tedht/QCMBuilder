@@ -18,7 +18,6 @@ import ihm.edition.question.proposition.PanelPropQRM;
 import ihm.edition.question.proposition.PanelPropQCM;
 
 import metier.entite.Ressource;
-import metier.entite.question.Proposition;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une question
