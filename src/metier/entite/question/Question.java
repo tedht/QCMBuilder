@@ -21,6 +21,7 @@ public abstract class Question
 	private double       note;
 	private String       intitule;
 	private String       explication;
+	private String       pieceJointe;
 
 	protected List<Proposition> lstPropositions;
 
@@ -36,19 +37,35 @@ public abstract class Question
 	 * @param difficulte la difficulté de la question(TF,F,M,D).
 	 * @param temps le temps de réponse à la question (en secondes).
 	 * @param note la note de la question.
+	 * @param pieceJointe le chemin de la pièce jointe associée à la question.
 	 */
-	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
+	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note,String pieceJointe)
 	{
 		this.ressource   = ressource;
 		this.notion      = notion;
 		this.difficulte  = difficulte;
 		this.temps       = temps;
 		this.note        = note;
+		this.pieceJointe = pieceJointe;
 
 		this.intitule    = "";
 		this.explication = "";
 
 		this.lstPropositions = new ArrayList<Proposition>();
+	}
+
+	/**
+	 * Constructeur de la classe Question sans pièce jointe.
+	 * 
+	 * @param ressource la ressource associée à la question.
+	 * @param notion la notion associée à la question.
+	 * @param difficulte la difficulté de la question(TF,F,M,D).
+	 * @param temps le temps de réponse à la question (en secondes). 
+	 * @param note la note de la question.
+	 */
+	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
+	{
+		this(ressource, notion, difficulte, temps, note, "");
 	}
 
 	/*---------*/
@@ -96,6 +113,13 @@ public abstract class Question
 	 * @return l'intitulé de la question.
 	 */
 	public String       getIntitule   () { return this.intitule;    }
+
+	/**
+	 * Retourne le chemin de la pièce jointe associée à la question.
+	 * 
+	 * @return le chemin de la pièce jointe associée à la question.
+	 */
+	public String       getPieceJointe() { return this.pieceJointe; }
 
 	/**
 	 * Retourne l'explication de la question.
@@ -219,6 +243,20 @@ public abstract class Question
 		if ("".equals(intitule)) return false;
 
 		this.intitule = intitule;
+		return true;
+	}
+
+	/**
+	 * Modifie le chemin de la pièce jointe associée à la question.
+	 * 
+	 * @param pieceJointe le nouveau chemin de la pièce jointe.
+	 * @return true si le chemin de la pièce jointe à été modifié, false sinon.
+	 */
+	public boolean setPieceJointe(String pieceJointe)
+	{
+		if ("".equals(pieceJointe)) return false;
+
+		this.pieceJointe = pieceJointe;
 		return true;
 	}
 

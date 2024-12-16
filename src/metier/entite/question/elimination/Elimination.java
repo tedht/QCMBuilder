@@ -28,6 +28,21 @@ public class Elimination extends Question
 	 * @param difficulte la difficultée associée.
 	 * @param temps      le temps associé.
 	 * @param note       la note associée.
+	 * @param pieceJointe le chemin de la pièce jointe.
+	 */
+	public Elimination(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, String pieceJointe)
+	{
+		super(ressource, notion, difficulte, temps, note, pieceJointe);
+	}
+
+	/**
+	 * Constructeur d'une question Elimination sans pièce jointe.
+	 * 
+	 * @param ressource  la ressource associée
+	 * @param notion     la notion associée.
+	 * @param difficulte la difficultée associée.
+	 * @param temps      le temps associé.
+	 * @param note       la note associée.
 	 */
 	public Elimination(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
 	{
