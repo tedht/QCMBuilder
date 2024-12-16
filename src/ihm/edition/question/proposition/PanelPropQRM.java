@@ -63,7 +63,7 @@ public class PanelPropQRM extends PanelProp
 	}
 
 	public String  getText   () { return this.txtProposition.getText   (); }
-	public boolean getReponse() { return this.cbReponse     .isSelected(); }
+	public boolean estReponse() { return this.cbReponse     .isSelected(); }
 
 	@Override
 	public void actionPerformed(ActionEvent e) 

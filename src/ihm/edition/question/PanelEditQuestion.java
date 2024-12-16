@@ -18,6 +18,7 @@ import ihm.edition.question.proposition.PanelPropQRM;
 import ihm.edition.question.proposition.PanelPropQCM;
 
 import metier.entite.Ressource;
+import metier.entite.question.Proposition;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une question
@@ -364,6 +365,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	private void enregistrer()
 	{
 		String detailsQuestion = "";
+		String sProp           = "";
 
 		detailsQuestion += (String)this.ddlstRessource .getSelectedItem() + '\t';
 		detailsQuestion += (String)this.ddlstNotion    .getSelectedItem() + '\t';
@@ -372,30 +374,64 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 			if(tabRbDifficulte[i].isSelected()) 
 				detailsQuestion += i + "\t";
 		
-		detailsQuestion += this.txtTemps   .getText         () + '\t';
-		detailsQuestion += this.txtPoints  .getText         () + '\t';
-		detailsQuestion += this.txtQuestion.getText         () + '\t';
-		detailsQuestion += this.txtExpli   .getText         () + '\t';
+		detailsQuestion += this.txtTemps   .getText() + '\t';
+		detailsQuestion += this.txtPoints  .getText() + '\t';
+		detailsQuestion += this.txtQuestion.getText() + '\t';
+		detailsQuestion += this.txtExpli   .getText() + '\t';
 
 		// On vérifie DANS LE METIER que les valeurs saisies sont valides
 		List<String> lstErreurs = new ArrayList<String>();
+
 
 		switch (this.ddlstTypeQuestion.getSelectedIndex()) 
 		{
 			case 0  -> // Question à Choix Multiple à Réponse Unique
 			{
+				for(PanelProp panelProp : this.lstPanelProp)
+				{
+					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
+					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
+					sProp += panelPropQCM.getText() + '\t';
+					detailsQuestion += sProp;
+				}
 				lstErreurs = this.ctrl.creerQCM(detailsQuestion, true);
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
+				for(PanelProp panelProp : this.lstPanelProp)
+				{
+					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
+					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
+					sProp += panelPropQCM.getText() + '\t';
+					detailsQuestion += sProp;
+				}
 				lstErreurs = this.ctrl.creerQCM(detailsQuestion, false);
 			} 
 			case 2  -> // Question à Association d'Eléments
 			{
+				for(PanelProp panelProp : this.lstPanelProp)
+				{
+					PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
+					sProp =  panelPropAssoc.getTextGauche() + '\t';
+					sProp += panelPropAssoc.getTextDroite() + '\t';
+					detailsQuestion += sProp;
+				}
 				lstErreurs = this.ctrl.creerAssociation(detailsQuestion);
 			} 
 			case 3  -> // Question avec Elimination de Propositions de Réponses
 			{
+				for(PanelProp panelProp : this.lstPanelProp)
+				{
+					PanelPropElim panelPropElim = (PanelPropElim) panelProp;
+					sProp = panelPropElim.estReponse() ? "V:" : "F:";
+					if(!panelPropElim.estReponse()) 
+					{
+						sProp += panelPropElim.getOrdreElim    () + ":";
+						sProp += panelPropElim.getPointsEnMoins() + ":";
+					}
+					detailsQuestion += sProp;
+					sProp = panelPropElim.getText() + '\t';
+				}
 				lstErreurs = this.ctrl.creerElimination(detailsQuestion);
 			} 
 			default -> {}

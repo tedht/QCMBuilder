@@ -86,7 +86,7 @@ public class PanelPropElim extends PanelProp
 	}
 
 	public String  getText         () { return this.txtProposition  .getText   (); }
-	public boolean getReponse      () { return this.cbResponse      .isSelected(); }
+	public boolean estReponse      () { return this.cbResponse      .isSelected(); }
 	public String  getOrdreElim    () { return this.txtOrdreElim    .getText   (); }
 	public String  getPointsEnMoins() { return this.txtPointsEnMoins.getText   (); }
 
@@ -109,19 +109,6 @@ public class PanelPropElim extends PanelProp
 				this.txtPointsEnMoins.setText("");
 			}
 		}
-		/*
-		if(e.getSource() == this.txtOrdreElim || e.getSource() == this.txtPointsEnMoins)
-		{
-			if("".equals(this.txtOrdreElim.getText()) && "".equals(this.txtPointsEnMoins.getText())) 
-			{
-				this.cbResponse.setEnabled(true);
-			}
-			else
-			{
-				this.cbResponse.setSelected(false);
-				this.cbResponse.setEnabled(false);
-			}
-		}*/
 	}
 
 	private class GereText implements DocumentListener 
