@@ -51,7 +51,7 @@ public class Association extends Question
 	/**
 	 * Retourne le type de la question
 	 * 
-	 * @return le type de la question
+	 * @return le type de question ELIMINATION
 	 */
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
 

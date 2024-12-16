@@ -60,7 +60,7 @@ public class QCM extends Question
 	/**
 	 * Retourne le type de la question
 	 * 
-	 * @return le type de la question
+	 * @return le type de question QCM
 	 */
 	@Override
 	public TypeQuestion getType () { return TypeQuestion.QCM; }
