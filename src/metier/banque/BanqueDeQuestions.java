@@ -63,8 +63,10 @@ public class BanqueDeQuestions
 	 */
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
-		List<Question> lstQuestions = new ArrayList<Question>();
+		List<Question> lstQuestions;
 
+
+		lstQuestions = new ArrayList<Question>();
 		for(Question question : this.lstQuestions)
 		{
 			if(question.getRessource() == ressource && question.getNotion() == notion)
@@ -140,7 +142,8 @@ public class BanqueDeQuestions
 
 				switch (typeQuestion)
 				{
-				case QCM -> {
+				case QCM ->
+				{
 					unique = scDonnees.nextBoolean();
 
 					question = new QCM(ressource, notion, difficulte, temps, note, unique);
@@ -154,7 +157,8 @@ public class BanqueDeQuestions
 						((QCM) question).ajouterProposition(new PropositionQCM(texteProposition, estReponse));
 					}
 				}
-				case ASSOCIATION -> {
+				case ASSOCIATION ->
+				{
 					question = new Association(ressource, notion, difficulte, temps, note);
 					while (scDonnees.hasNext())
 					{
@@ -163,7 +167,8 @@ public class BanqueDeQuestions
 						((Association) question).ajouterProposition(new PropositionAssociation(gauche, droite));
 					}
 				}
-				case ELIMINATION -> {
+				case ELIMINATION ->
+				{
 					question = new Elimination(ressource, notion, difficulte, temps, note);
 					while (scDonnees.hasNext())
 					{
@@ -176,7 +181,8 @@ public class BanqueDeQuestions
 					}
 					
 				}
-				default -> {
+				default ->
+				{
 					scDonnees.close();
 					throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
 				}
@@ -192,7 +198,8 @@ public class BanqueDeQuestions
 
 			}
 			scEnreg.close();
-		} catch (FileNotFoundException fnfe)
+		}
+		catch (FileNotFoundException fnfe)
 		{
 			System.out.println("Le fichier n'a pas été trouvé : " + fnfe.getMessage());
 		}
@@ -331,7 +338,7 @@ public class BanqueDeQuestions
 	 * Supprime une question
 	 * 
 	 * @param question
-	 * @return boolean
+	 * @return boolean si oui ou non la suppression de la question a été effectué
 	 */
 	public boolean supprimerQuestion(Question question)
 	{
@@ -350,20 +357,39 @@ public class BanqueDeQuestions
 
 	public static void main(String[] args)
 	{
-		// Initialisation des ressources et notions
-		Ressource r1 = new Ressource("Ressource 1");
-		Ressource r2 = new Ressource("Ressource 2");
+		Ressource r1;
+		Ressource r2;
 
-		Notion n1 = new Notion("Notion 1");
-		Notion n2 = new Notion("Notion 2");
-		Notion n3 = new Notion("Notion 3");
+		String cheminCSV;
+		String cheminTXT;
+
+		Notion n1;
+		Notion n2;
+		Notion n3;
+
+		QCM q1;
+		Elimination q2;
+		Association q3;
+
+		BanqueDeQuestions banque;
+
+
+
+
+		// Initialisation des ressources et notions
+		r1 = new Ressource("Ressource 1");
+		r2 = new Ressource("Ressource 2");
+
+		n1 = new Notion("Notion 1");
+		n2 = new Notion("Notion 2");
+		n3 = new Notion("Notion 3");
 
 		r1.ajouterNotion(n1);
 		r1.ajouterNotion(n2);
 		r2.ajouterNotion(n3);
 
 		// Création de questions de type QCM
-		QCM q1 = new QCM(r1, n1, Difficulte.FACILE, 10, 10, true);
+		q1 = new QCM(r1, n1, Difficulte.FACILE, 10, 10, true);
 		q1.setIntitule("Quelle est la capitale de la France ?");
 		q1.setExplication("La capitale de la France est Paris.");
 		q1.ajouterProposition(new PropositionQCM("Paris", true));
@@ -371,7 +397,7 @@ public class BanqueDeQuestions
 		q1.ajouterProposition(new PropositionQCM("Berlin", false));
 
 		// Création de questions de type Élimination
-		Elimination q2 = new Elimination(r2, n3, Difficulte.MOYEN, 20, 15);
+		q2 = new Elimination(r2, n3, Difficulte.MOYEN, 20, 15);
 		q2.setIntitule("De quelle couleur est le cheval blanc d'Henri IV ?");
 		q2.setExplication("La réponse est évidente, mais il est intéressant de poser la question.");
 		q2.ajouterProposition(new PropositionElimination("Noir", false, 1, 2.0));
@@ -379,7 +405,7 @@ public class BanqueDeQuestions
 		q2.ajouterProposition(new PropositionElimination("Blanc", true, 0, 0.0));
 
 		// Création de questions de type Association
-		Association q3 = new Association(r1, n2, Difficulte.DIFFICILE, 30, 20);
+		q3 = new Association(r1, n2, Difficulte.DIFFICILE, 30, 20);
 		q3.setIntitule("Associez les pays à leurs capitales.");
 		q3.setExplication("Exercice sur les capitales européennes.");
 		q3.ajouterProposition(new PropositionAssociation("France", "Paris"));
@@ -387,7 +413,7 @@ public class BanqueDeQuestions
 		q3.ajouterProposition(new PropositionAssociation("Espagne", "Madrid"));
 
 		// Initialisation de la banque de questions
-		BanqueDeQuestions banque = new BanqueDeQuestions(new QCMBuilder());
+		banque = new BanqueDeQuestions(new QCMBuilder());
 
 		// Ajout des questions
 		banque.ajouterQuestions(q1);
@@ -402,8 +428,8 @@ public class BanqueDeQuestions
 		}
 
 		// Sauvegarde des questions dans des fichiers
-		String cheminCSV = "data/questions.csv";
-		String cheminTXT = "data/questions.txt";
+		cheminCSV = "data/questions.csv";
+		cheminTXT = "data/questions.txt";
 		banque.sauvegarderQuestions(cheminCSV, cheminTXT);
 		System.out.println("=== Questions sauvegardées dans les fichiers CSV et TXT ===");
 
