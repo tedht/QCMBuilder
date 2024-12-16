@@ -25,11 +25,25 @@ public class Association extends Question
 	/*---------*/
 	/* Getters */
 	/*---------*/
+
+	/**
+	 * Retourne le type de la question
+	 * 
+	 * @return le type de la question
+	 */
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
+
+	/**
+	 * Setter de proposition
+	 * 
+	 * @param i indice de la proposition à modifier
+	 * @param prop la proposition qui va modifier l'ancienne
+	 * @return true si la modification a été effectuée, false sinon
+	 */
 	public boolean setProposition(int i, PropositionAssociation prop)
 	{
 		return super.setProposition(i, prop);
@@ -38,7 +52,12 @@ public class Association extends Question
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
-	/* Ajouter une proposition */
+	/** 
+	 * Ajouter une proposition
+	 * 
+	 * @param prop la proposition à ajouter
+	 * @return true si la proposition a été ajoutée, false sinon
+	 */
 	public boolean ajouterProposition(PropositionAssociation prop)
 	{
 		return super.ajouterProposition(prop);
