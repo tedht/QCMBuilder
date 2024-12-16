@@ -3,7 +3,6 @@ package controleur;
 import java.util.List;
 
 import ihm.IHM;
-import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Question;
 import metier.QCMBuilder;
@@ -28,12 +27,12 @@ public class Controleur
 		return this.metier.getRessources();
 	}
 
-	public List<Notion> getNotions(Ressource ressource)
+	public List<String> getNotions(Ressource ressource)
 	{
 		return this.metier.getNotions(ressource);
 	}
 
-	public List<Question> getQuestions(Ressource ressource, Notion notion)
+	public List<Question> getQuestions(Ressource ressource, String notion)
 	{
 		return this.metier.getQuestions(ressource, notion);
 	}
@@ -43,7 +42,7 @@ public class Controleur
 		this.metier.setRessourceActive(ressource);
 	}
 
-	public void setNotionActive(Notion notion) 
+	public void setNotionActive(String notion) 
 	{
 		this.metier.setNotionActive(notion);
 	}
@@ -53,7 +52,7 @@ public class Controleur
 		return this.getNotions(ressource).size();
 	}
 
-	public int getNbQuestions(Ressource ressource, Notion notion) 
+	public int getNbQuestions(Ressource ressource, String notion) 
 	{
 		return this.getQuestions(ressource, notion).size();
 	}
@@ -63,7 +62,7 @@ public class Controleur
 		return this.metier.getRessourceActive();
 	}
 
-	public Notion getNotionActive()
+	public String getNotionActive()
 	{
 		return this.metier.getNotionActive();
 	}

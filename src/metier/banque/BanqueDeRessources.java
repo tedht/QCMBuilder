@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import metier.entite.Notion;
 import metier.entite.Ressource;
 
 /** Classe BanqueDeRessources
@@ -55,7 +54,7 @@ public class BanqueDeRessources
 	 * @param ressource
 	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
 	 */
-	public List<Notion> getNotions(Ressource ressource) 
+	public List<String> getNotions(Ressource ressource) 
 	{
 		for(Ressource rsrc : this.lstRessources)
 		{
@@ -96,9 +95,9 @@ public class BanqueDeRessources
 	*/
 	public void lireRessources(String nomFichier)
 	{
-		Scanner scEnreg, scDonnee;
+		Scanner   scEnreg, scDonnee;
 
-		String enreg;
+		String    enreg;
 		Ressource ressource;
 
 		try
@@ -118,7 +117,7 @@ public class BanqueDeRessources
 
 				while(scDonnee.hasNext())
 				{
-					ressource.ajouterNotion(new Notion(scDonnee.next()));
+					ressource.ajouterNotion(scDonnee.next());
 				}
 				
 				this.lstRessources.add(ressource);
@@ -149,9 +148,9 @@ public class BanqueDeRessources
 			for (Ressource ressource : this.lstRessources)
 			{
 				pw.print(ressource.getNom() + "\t");
-				for(Notion notion : ressource.getNotions())
+				for(String notion : ressource.getNotions())
 				{
-					pw.print(notion.getNom() + "\t");
+					pw.print(notion + "\t");
 				}
 
 				pw.print("\n");
@@ -231,9 +230,9 @@ public class BanqueDeRessources
 		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
 			sRet += this.lstRessources.get(cpt).getNom() + "\n" + "Notions : ";
-			for (Notion notion : this.lstRessources.get(cpt).getNotions())
+			for (String notion : this.lstRessources.get(cpt).getNotions())
 			{
-				sRet += notion.getNom() + ", ";
+				sRet += notion + ", ";
 			}
 			sRet += "\n\n";
 		}
