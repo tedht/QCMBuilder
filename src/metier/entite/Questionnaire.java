@@ -309,7 +309,7 @@ public class Questionnaire
 		List<String>  l1;
 		Questionnaire q1;
 
-		r1 = new Ressource("R3.01");
+		r1 = new Ressource("R1.01","Init_Dev");
 
 		n1 = "Algorithmique";
 		n2 = "Programmation";

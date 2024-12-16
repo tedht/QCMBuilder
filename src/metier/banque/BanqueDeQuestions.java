@@ -98,7 +98,7 @@ public class BanqueDeQuestions
 	*/
 	public void lireQuestions(String nomFichierCSV, String nomFichierTXT)
 	{
-		Scanner scEnreg, scDonnees, scTexte;
+		Scanner scEnreg, scDonnees, scTexte, scElim;
 
 		Ressource    ressource;
 		String       notion;
@@ -172,7 +172,7 @@ public class BanqueDeQuestions
 					
 					while (scDonnees.hasNext())
 					{
-						Scanner scElim = new Scanner(scDonnees.next());
+						scElim = new Scanner(scDonnees.next());
 						scElim.useDelimiter(":");
 
 						boolean reponse     =                    scElim.next().equals("V");
@@ -244,6 +244,7 @@ public class BanqueDeQuestions
 
 				pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
 
+				pw.print (question.getRessource   ().getCode  () + "\t");
 				pw .print(question.getRessource   ().getNom   () + "\t");
 				pw .print(question.getNotion      ()             + "\t");
 				pw .print(question.getDifficulte  ().getValeur() + "\t");
@@ -382,9 +383,6 @@ public class BanqueDeQuestions
 		Ressource r1;
 		Ressource r2;
 
-		String cheminCSV;
-		String cheminTXT;
-
 		String n1;
 		String n2;
 		String n3;
@@ -399,8 +397,8 @@ public class BanqueDeQuestions
 
 
 		// Initialisation des ressources et notions
-		r1 = new Ressource("Ressource 1");
-		r2 = new Ressource("Ressource 2");
+		r1 = new Ressource("R1","Ressource 1");
+		r2 = new Ressource("R2","Ressource 2");
 
 		n1 = "Notion 1";
 		n2 = "Notion 2";

@@ -22,6 +22,7 @@ public class Ressource
 	private String       nom;
 	private String       cheminFichier;
 	private List<String> lstNotions;
+	private String       code;
 
 
 
@@ -34,12 +35,14 @@ public class Ressource
 	 * 
 	 * @param  nom                       Le nom de la Ressource (non null).
 	 * @param  cheminFichier             Le chemin du fichier associer à la ressource.
+	 * @param  code                      Le code de la ressource.
 	 * @throws IlleagalArgumentException Si le nom est null.
 	 */
-	public Ressource(String nom, String cheminFichier)
+	public Ressource(String code,String nom, String cheminFichier)
 	{
 		if (!nom.equals(null))
 		{
+			this.code          = code;
 			this.nom           = nom;
 			this.lstNotions    = new ArrayList<String>();
 			this.cheminFichier = cheminFichier;
@@ -55,9 +58,9 @@ public class Ressource
 	 * 
 	 * @param nom Le nom de la Ressource (non null).
 	 */
-	public Ressource(String nom)
+	public Ressource(String code,String nom)
 	{
-		this(nom,null);
+		this(code,nom, null);
 	}
 
 
@@ -74,6 +77,16 @@ public class Ressource
 	public String getNom()
 	{
 		return this.nom;
+	}
+
+	/**
+	 * Retourne le code de la Ressource.
+	 * 
+	 * @return code de la Ressource.
+	 */
+	public String getCode()
+	{
+		return this.code;
 	}
 
 	/**
@@ -138,6 +151,25 @@ public class Ressource
 
 		return false;
 		// Le nouveau Nom ne peut pas être null ou égal au nom actuel
+	}
+
+	/**
+	 * Modifie le code associée à Ressource.
+	 * 
+	 * @param  code le nouveau code à associée à Ressource (non null).
+	 * @return     true si le code à été modifié, false sinon.
+	 */
+	public boolean setCode(String code)
+	{
+		if (!code.equals(null) && !code.equals(this.code))
+		{
+			this.code = code;
+
+			return true;
+		}
+
+		return false;
+		// Le nouveau code ne peut pas être null ou égal au code actuel
 	}
 
 	/**
