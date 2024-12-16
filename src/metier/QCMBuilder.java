@@ -123,14 +123,14 @@ public class QCMBuilder
 
 		for (Ressource ressource : this.banqueRessources.getRessources())
 		{
-			dossier = new File("ressources/" + ressource.getNom());
+			dossier = new File("ressources/" + ressource.getNom() + "/" + ressource.getNotion());
 
 			// Si pas de question, ignore simplement la boucle
 			for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
 			{
 				if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
 				{
-					dossier = new File("ressources/" + ressource.getNom() + "/question " + cpt + "/complément");
+					dossier = new File("ressources/" + ressource.getNom() + "/" + ressource.getNotion() + "/question " + cpt + "/complément");
 				}
 
 				// Vérifier si le dossier existe déjà, sinon le créer
