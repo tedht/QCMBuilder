@@ -92,4 +92,19 @@ public class Controleur
 	{
 		return this.metier.getRessource(nomRessource);
 	}
+
+	public List<String> creerQCM(String detailsQuestion, boolean unique) 
+	{
+		return this.metier.creerQCM(detailsQuestion, unique);
+	}
+
+	public List<String> creerAssociation(String detailsQuestion) 
+	{
+		return this.metier.creerAssociation(detailsQuestion);
+	}
+
+	public List<String> creerElimination(String detailsQuestion) 
+	{
+		return this.metier.creerElimination(detailsQuestion);
+	}
 }

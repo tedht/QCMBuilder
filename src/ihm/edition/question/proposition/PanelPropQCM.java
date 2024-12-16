@@ -17,9 +17,11 @@ import ihm.edition.question.PanelEditQuestion;
  */
 public class PanelPropQCM extends PanelProp
 {
-	private JTextArea txtProposition;
-	private JButton   btnSupprimer;
-	private JCheckBox cbReponse;
+	private ButtonGroup btgQCM;
+
+	private JTextArea    txtProposition;
+	private JButton      btnSupprimer;
+	private JRadioButton rbReponse;
 
 	public PanelPropQCM(PanelEditQuestion panelEditQuestion)
 	{
@@ -44,7 +46,7 @@ public class PanelPropQCM extends PanelProp
 
 		this.btnSupprimer = new JButton("Suppr");
 
-		this.cbReponse = new JCheckBox();
+		this.rbReponse = new JRadioButton();
 
 		/*-------------------------------*/
 		/* Positionnement des composants */
@@ -54,7 +56,9 @@ public class PanelPropQCM extends PanelProp
 		this.add(panelBtnSupprimer, BorderLayout.WEST);
 		panelBtnSupprimer.add(this.btnSupprimer);
 
-		this.add(this.cbReponse, BorderLayout.EAST);
+		this.add(this.rbReponse, BorderLayout.EAST);
+
+		this.panelEditQuestion.ajouterRbResponse(this.rbReponse);
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -63,13 +67,14 @@ public class PanelPropQCM extends PanelProp
 	}
 
 	public String  getText   () { return this.txtProposition.getText   (); }
-	public boolean getReponse() { return this.cbReponse     .isSelected(); }
+	public boolean getReponse() { return this.rbReponse     .isSelected(); }
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getSource() == this.btnSupprimer)
 		{
+			this.btgQCM.remove(this.rbReponse);
 			this.panelEditQuestion.supprimerProposition(this);
 		}
 	}

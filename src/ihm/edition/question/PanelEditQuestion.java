@@ -14,8 +14,8 @@ import ihm.IHM;
 import ihm.edition.question.proposition.PanelProp;
 import ihm.edition.question.proposition.PanelPropAssoc;
 import ihm.edition.question.proposition.PanelPropElim;
-import ihm.edition.question.proposition.PanelPropQCM;
 import ihm.edition.question.proposition.PanelPropQRM;
+import ihm.edition.question.proposition.PanelPropQCM;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -29,7 +29,7 @@ import metier.entite.Ressource;
 public class PanelEditQuestion extends JPanel implements ActionListener
 {
 	private Controleur        ctrl;
-	private IHM               ihm;
+	private FrameEditQuestion frame;
 
 	private JPanel[]          tabPanelInfo;
 	private JPanel            panelAction;
@@ -39,8 +39,8 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	private JComboBox<String> ddlstRessource, ddlstNotion, ddlstTypeQuestion;
 
 	private JRadioButton[]    tabRbNiveau;
-	private ButtonGroup       btgNiveau;
-	private ButtonGroup       btgQRM;
+	private ButtonGroup       btgDifficulte;
+	private ButtonGroup       btgQCM;
 
 	/* Page 2 */
 	private JPanel            panelInfoScroll, panelInfoQuestion, panelInfoExpli, panelInfoAjout;
@@ -58,15 +58,15 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditQuestion(Controleur ctrl, IHM ihm)
+	public PanelEditQuestion(Controleur ctrl, FrameEditQuestion frame)
 	{
 		JPanel panelInfoPoints, panelInfoTemps, panelInfoRessource, 
                panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion;
  
  		JPanel panelPoints, panelTemps, panelNiveau, panelAjout;
 		
-		this.ctrl = ctrl;
-		this.ihm  = ihm;
+		this.ctrl   = ctrl;
+		this.frame  = frame;
 
 		this.tabPanelInfo = new JPanel[2];
 		this.setLayout(new BorderLayout());
@@ -136,10 +136,10 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		tabRbNiveau[2] = new JRadioButton("M");
 		tabRbNiveau[3] = new JRadioButton("D");
 
-		btgNiveau = new ButtonGroup();
+		btgDifficulte = new ButtonGroup();
 		for(JRadioButton rb : tabRbNiveau)
 		{
-			btgNiveau.add(rb);
+			btgDifficulte.add(rb);
 			rb.setEnabled(false);
 		}
 
@@ -251,7 +251,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.scrollPanelInfo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.scrollPanelInfo.setBorder(new EmptyBorder(0,0,0,0));
 
-		this.btgQRM = new ButtonGroup();
+		this.btgQCM = new ButtonGroup();
 
 		/*-------------------------------*/
 		/* Positionnement des composants */
@@ -285,7 +285,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 		this.panelAction.setBackground(new Color(200, 200, 250));
 
 		this.btnAnnuler     = new JButton("Annuler");
-		this.btnEnregistrer = new JButton("Enregistrer");   this.btnEnregistrer.setEnabled(false);
+		this.btnEnregistrer = new JButton("Enregistrer");   
 		this.btnPrecedent   = new JButton("Précédent");
 		this.btnSuivant     = new JButton("Suivant");       this.btnSuivant    .setEnabled(false);
   
@@ -364,32 +364,78 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 
 	private boolean enregistrer()
 	{
-		// On vérifie DANS LE METIER que les valeurs saisies sont valides...
-		List<String> erreurs;
+		String detailsQuestion = "";
 
-		switch (this.ddlstTypeQuestion.getSelectedIndex()) {
+		detailsQuestion += (String)this.ddlstRessource .getSelectedItem() + '\t';
+		detailsQuestion += (String)this.ddlstNotion    .getSelectedItem() + '\t';
+		
+		for(int i = 0; i < this.tabRbNiveau.length; i++)
+			if(tabRbNiveau[i].isSelected()) 
+				detailsQuestion += i + "\t";
+		
+		detailsQuestion += this.ddlstTypeQuestion.getSelectedIndex() + "\t";
+		detailsQuestion += this.txtTemps         .getText         () + '\t';
+		detailsQuestion += this.txtPoints        .getText         () + '\t';
+
+		// On vérifie DANS LE METIER que les valeurs saisies sont valides...
+		List<String> lstErreurs = new ArrayList<String>();
+
+		/*
+		pw .print(nomFichierTXT                          + "\t");
+		pw2.print(question.getIntitule    ()             + "\t");
+		pw2.print(question.getExplication ()             + "\t");
+		*/
+
+
+
+		switch (this.ddlstTypeQuestion.getSelectedIndex()) 
+		{
 			case 0  -> // Question à Choix Multiple à Réponse Unique
 			{
-				//this.ctrl.creerQCM();
+				lstErreurs = this.ctrl.creerQCM(detailsQuestion, true);
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
-				//this.ctrl.creerQCM();
+				lstErreurs = this.ctrl.creerQCM(detailsQuestion, false);
 			} 
 			case 2  -> // Question à Association d'Eléments
 			{
-				//this.ctrl.creerAssociation();
+				lstErreurs = this.ctrl.creerAssociation(detailsQuestion);
 			} 
 			case 3  -> // Question avec Elimination de Propositions de Réponses
 			{
-				//this.ctrl.creerElimination();
+				lstErreurs = this.ctrl.creerElimination(detailsQuestion);
 			} 
-			default -> { erreurs = new ArrayList<String>(); }
+			default -> {}
 		}
 		
-		this.ctrl.creerQuestion();
-		this.ihm.reinitAffichage();
-		return true;
+		//lstErreurs.add("raison 1");
+		//lstErreurs.add("raison 2");
+		if(lstErreurs.size() == 0)
+		{
+			JOptionPane.showMessageDialog(
+				this.frame,
+				"La question a été enregistrée avec succès !",
+				"Enregistrement Réussi",
+				JOptionPane.INFORMATION_MESSAGE
+			);
+
+			return true;
+		}
+		
+
+		String message = "La question n'a pas été enregistrée pour les raisons suivantes :\n";
+		for(String msgErr : lstErreurs)
+			message += " • " + msgErr + '\n';
+
+		JOptionPane.showMessageDialog(
+			this.frame,
+			message,
+			"Échec de l'Enregistrement",
+			JOptionPane.ERROR_MESSAGE
+		);
+		
+		return false;
 	}
 
 	public void pagePrecedente()
@@ -442,7 +488,7 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
-				panelProp = new PanelPropQRM(this, this.btgQRM);
+				panelProp = new PanelPropQRM(this);
 			} 
 			case 2  -> // Question à Association d'Eléments
 			{
@@ -505,5 +551,10 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 
 		this.revalidate();
 		this.repaint();
+	}
+
+	public void ajouterRbResponse(JRadioButton rbReponse)
+	{
+		this.btgQCM.add(rbReponse);
 	}
 }

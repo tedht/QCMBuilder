@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -113,5 +114,29 @@ public class QCMBuilder
 		qcm.setIntitule("A quoi sert le chiffrement ?");
 		this.banqueQuestions.ajouterQuestions(qcm);
 		this.banqueQuestions.sauvegarderQuestions("data/questions.csv","data/questions.txt");
+	}
+
+	public List<String> creerQCM(String detailsQuestion, boolean unique) 
+	{
+		List<String> lstErreurs = new ArrayList<String>();
+
+
+		return lstErreurs;
+	}
+
+	public List<String> creerAssociation(String detailsQuestion) 
+	{
+		List<String> lstErreurs = new ArrayList<String>();
+
+
+		return lstErreurs;
+	}
+
+	public List<String> creerElimination(String detailsQuestion) 
+	{
+		List<String> lstErreurs = new ArrayList<String>();
+
+
+		return lstErreurs;
 	}
 }

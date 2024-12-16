@@ -15,6 +15,7 @@ import ihm.IHM;
  */
 public class FrameEditQuestion extends JFrame
 {
+	private IHM               ihm;
 	private PanelEditQuestion panelEditQuestion;
 	
 	/**
@@ -24,14 +25,21 @@ public class FrameEditQuestion extends JFrame
 	 */
 	public FrameEditQuestion(Controleur ctrl, IHM ihm) 
 	{
+		this.ihm = ihm;
+		
 		this.setTitle("Créer une Question");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditQuestion = new PanelEditQuestion(ctrl, ihm);
+		this.panelEditQuestion = new PanelEditQuestion(ctrl, this);
 		this.add(this.panelEditQuestion);
 
 		this.setSize(IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
+	}
+
+	public void reinitAffichage() 
+	{
+		this.ihm.reinitAffichage();
 	}
 	
 }

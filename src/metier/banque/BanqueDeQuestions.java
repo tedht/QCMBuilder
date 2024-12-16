@@ -177,8 +177,6 @@ public class BanqueDeQuestions
 				}
 				default -> throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
 				}
-				default -> throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
-				}
 
 				question.setIntitule   (intitule);
 				question.setExplication(explication);
