@@ -13,16 +13,16 @@
 		- [Sous Windows](#sous-windows)
 	- [Exemple d’utilisation](#exemple-dutilisation)
 	- [Auteurs](#auteurs)
-	- [Roles de l'équipe](#roles-de-léquipe)
+	- [Rôles de l'équipe](#rôles-de-léquipe)
 
 
 ## Description
 
 Cette application se compose de deux parties : une partie professeur et une partie étudiant.
 
-- **Partie professeur :** permet aux enseignants de générer des questionnaires à partir des lstQuestions qu'ils ont créées, en tenant compte de critères spécifiques.
+- **Partie professeur :** Permet aux enseignants de générer des questionnaires à partir des questions qu'ils ont créées, en tenant compte de critères spécifiques.
 
-- **Partie étudiant :** donne aux élèves accès aux questionnaires via l'intranet pédagogique utilisé par les enseignants, leur permettant de s'autoévaluer.
+- **Partie étudiant :** Donne aux élèves accès aux questionnaires via l'intranet pédagogique utilisé par les enseignants, leur permettant de s'autoévaluer.
 
 ## Fonctionnalités
 
@@ -30,15 +30,15 @@ Cette application se compose de deux parties : une partie professeur et une part
 
 - **Types de questions :** 
 
-	- **Question à réponses multiples :** L'étudiant choisit une ou plusieurs réponses parmis une liste de propositions.
+	- **Question à réponses multiples :** L'étudiant choisit une ou plusieurs réponses parmi une liste de propositions.
 
-	- **Question à réponse unique :** L'étudiant choisir une unique réponse parmis plusieurs réponses.
+	- **Question à réponse unique :** L'étudiant choisit une unique réponse parmi plusieurs réponses.
 
 	- **Association :** L'étudiant doit relier chaque proposition avec une unique réponse. Chaque proposition a une réponse associée.
 
-	- **Elimination :** Cette question est semblable à la question à réponse unique. Cependant, elle offre la possibilitée d'enlever des propositions afin d'offrir un choix plus restreint à l'étudiant sous contrainte de se voir retirer une partie des points.
+	- **Elimination :** Cette question est semblable à la question à réponse unique. Cependant, elle offre la possibilité d'enlever des propositions afin d'offrir un choix plus restreint à l'étudiant sous contrainte de se voir retirer une partie des points.
 
-- **Pièces jointes :** Le professeur peut rajouter une pièce jointe accompagnant la question (un document, du code...). 
+- **Pièces jointes :** Le professeur peut rajouter une pièce jointe accompagnant la question (un document, du code...).
 
 ## Prérequis
 - Java 17 ou version supérieure.
@@ -71,7 +71,7 @@ Vous pouvez également lancer l'application avec un double clic sur le fichier r
 
 - **Employeur :** PromInfo (Collectif de professeurs de l'IUT du Havre)
 
-## Roles de l'équipe
+## Rôles de l'équipe
 **Partie professeur**
 - Développement backend
   - Lucas LANGLOIS
