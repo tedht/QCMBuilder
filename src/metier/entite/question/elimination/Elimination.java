@@ -21,6 +21,15 @@ public class Elimination extends Question
 	// Constructeur //
 	/*--------------*/
 
+	/**
+	 * Constructeur d'une question Elimination.
+	 * 
+	 * @param ressource  la ressource associée
+	 * @param notion     la notion associée.
+	 * @param difficulte la difficultée associée.
+	 * @param temps      le temps associé.
+	 * @param note       la note associée.
+	 */
 	public Elimination(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		super(ressource, notion, difficulte, temps, note);
