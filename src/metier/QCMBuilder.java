@@ -92,9 +92,9 @@ public class QCMBuilder
 		return this.banqueRessources.getRessource(nomRessource);
 	}
 
-	public void creerRessource(String nomRessource) 
+	public void creerRessource(String code, String nomRessource) 
 	{
-		this.banqueRessources.ajouterRessource(new Ressource(nomRessource));
+		this.banqueRessources.ajouterRessource(new Ressource(code, nomRessource));
 		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 	}
 

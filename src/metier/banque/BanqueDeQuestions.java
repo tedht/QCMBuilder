@@ -124,7 +124,7 @@ public class BanqueDeQuestions
 				scDonnees.useDelimiter("\t");
 
 				//ressource        = this.qcmBuilder.getRessource(scEnreg.next());
-				ressource        = new Ressource       (scDonnees.next());
+				ressource        = new Ressource       (scDonnees.next(),scDonnees.next());
 				notion           = ressource.getNotion (scDonnees.next());
 				difficulte       = Difficulte.  fromInt(scDonnees.nextInt());
 				typeQuestion     = TypeQuestion.fromInt(scDonnees.nextInt());
@@ -239,12 +239,12 @@ public class BanqueDeQuestions
 				System.out.println(nomFichierCSV);
 				System.out.println(nomFichierTXT);
 
-				pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
+				pw  = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
 				pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8"));
 
 				pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
 
-				pw.print (question.getRessource   ().getCode  () + "\t");
+				pw .print(question.getRessource   ().getCode  () + "\t");
 				pw .print(question.getRessource   ().getNom   () + "\t");
 				pw .print(question.getNotion      ()             + "\t");
 				pw .print(question.getDifficulte  ().getValeur() + "\t");

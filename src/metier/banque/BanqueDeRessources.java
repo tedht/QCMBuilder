@@ -113,12 +113,7 @@ public class BanqueDeRessources
 				scDonnee = new Scanner(enreg);
 				scDonnee.useDelimiter("\t");
 
-				ressource = new Ressource(scDonnee.next());
-
-				while(scDonnee.hasNext())
-				{
-					ressource.ajouterNotion(scDonnee.next());
-				}
+				ressource = new Ressource(scDonnee.next(),scDonnee.next());
 				
 				this.lstRessources.add(ressource);
 			}
