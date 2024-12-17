@@ -18,20 +18,6 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	/** 
-	 * Constructeur d'une question Association.
-	 * 
-	 * @param ressource  la ressource associée
-	 * @param notion     la notion associée.
-	 * @param difficulte la difficultée associée.
-	 * @param temps      le temps associé.
-	 * @param note       la note associée.
-	 */
-	public Association(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, String pieceJointe)
-	{
-		super(ressource, notion, difficulte, temps, note, pieceJointe);
-	}
-
 	/**
 	 * Constructeur d'une question Association sans pièce jointe.
 	 * 
