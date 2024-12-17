@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import metier.banque.BanqueDeNotion;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
 
@@ -24,6 +25,7 @@ public class QCMBuilder
 	private Questionnaire questionnaire;
 
 	private Ressource ressourceActive;
+
 	private Notion    notionActive;
 
 	private Stack<String> historique;
@@ -34,6 +36,7 @@ public class QCMBuilder
 		this.notionActive    = null;
 
 		this.historique = new Stack<String>();
+
 
 		this.banqueRessources = new BanqueDeRessources(); 
 		this.banqueQuestions  = new BanqueDeQuestions(this);

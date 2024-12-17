@@ -11,20 +11,21 @@ import metier.QCMBuilder;
 import metier.entite.Notion;
 
 /**
- * Classe BanqueDeNotion
+ * Classe BanqueDeNotions
  * 
  * @author Equipe 03
  * 
  * @version 1.0 du 09/12/2024
- */	
-public class BanqueDeNotion {
+ */
 
-	private QCMBuilder qcmBuilder;
+public class BanqueDeNotions {
+
+
 	private List<Notion> lstNotions;
 	
-	public BanqueDeNotion(QCMBuilder qcmBuilder)
+	public BanqueDeNotions()
 	{
-		this.qcmBuilder = qcmBuilder;
+
 		this.lstNotions = new ArrayList<Notion>();
 	}
 
@@ -148,11 +149,14 @@ public class BanqueDeNotion {
 			{
 				scDonnees = new Scanner(scLigne.nextLine());
 				scDonnees.useDelimiter("\t");
-				id = scDonnees.nextInt();
-				nom = scDonnees.next();
-				codeRessource = scDonnees.next();
-				notion = new Notion(nom, id, codeRessource);
-				this.lstNotions.add(notion);
+
+				id            = scDonnees.nextInt();
+				nom           = scDonnees.next   ();
+				codeRessource = scDonnees.next   ();
+
+				notion        = new Notion(nom, id, codeRessource);
+
+				ajouterNotion(notion);
 			}
 		}
 		catch(Exception e)
@@ -167,7 +171,7 @@ public class BanqueDeNotion {
 		Notion n2 = new Notion("n2", 2, "code2");
 		Notion n3 = new Notion("n3", 3, "code3");
 		
-		BanqueDeNotion bdn = new BanqueDeNotion(new QCMBuilder());
+		BanqueDeNotions bdn = new BanqueDeNotions();
 
 		bdn.ajouterNotion(n1);
 		bdn.ajouterNotion(n2);
@@ -185,6 +189,11 @@ public class BanqueDeNotion {
 		bdn.supprimerNotion(1);
 		bdn.supprimerNotion(2);
 		bdn.supprimerNotion(3);
+		for (Notion notion : bdn.getNotions())
+		{
+			System.out.println(notion);
+
+		}
 
 		bdn.lireNotions();
 
