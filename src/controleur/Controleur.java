@@ -237,10 +237,9 @@ public class Controleur
 	/**
 	 * Génére une évaluation.
 	 */
-	public void genererEvaluation() 
+	public void genererEvaluation(String cheminFichier) 
 	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'genererEvaluation'");
+		this.metier.genererEvaluation(cheminFichier);
 	}
 
 
