@@ -101,6 +101,9 @@ public class BanqueDeRessources
 		String    enreg;
 		Ressource ressource;
 
+		String codeRessource;
+		String nomRessource;
+
 		try
 		{
 			scEnreg = new Scanner( new FileInputStream(nomFichier), "UTF8");
@@ -114,7 +117,16 @@ public class BanqueDeRessources
 				scDonnee = new Scanner(enreg);
 				scDonnee.useDelimiter("\t");
 
-				ressource = new Ressource(scDonnee.next(),scDonnee.next());
+				codeRessource = scDonnee.next();
+				nomRessource  = scDonnee.next();
+
+				System.out.println(nomRessource);
+				ressource = new Ressource(codeRessource, nomRessource);
+
+				for (int cpt = 0 ; scDonnee.hasNext() ; cpt++)
+				{
+					ressource.ajouterNotion(new Notion(scDonnee.next(), cpt, codeRessource));
+				}
 				
 				this.lstRessources.add(ressource);
 			}
@@ -139,11 +151,12 @@ public class BanqueDeRessources
 		{
 			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "UTF8" ));
 
-			pw.println("ressource\tnotion 1\tnotion 2\tnotion N");
+			pw.println("code\tressource\tnotion 1\tnotion 2\tnotion N");
 
 			for (Ressource ressource : this.lstRessources)
 			{
-				pw.print(ressource.getNom() + "\t");
+				pw.print(ressource.getCode() + "\t");
+				pw.print(ressource.getNom () + "\t");
 				for(Notion notion : ressource.getNotions())
 				{
 					pw.print(notion + "\t");
