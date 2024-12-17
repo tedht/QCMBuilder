@@ -1,35 +1,48 @@
 package metier.entite.question;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.Optional;
+
 public class PieceJointe
 {
 	private static int NUM_PIECE_JOINTE;
 
-	private String cheminFichier;
 	private String nomPieceJointe;
 	private String extension;
+	private File   fichier;
 
 
 	/**
 	 * Constructeur de la classe PieceJointe.
 	 * 
-	 * @param nomPieceJointe le nom de la pièce jointe.
-	 * @param extension      l'extension de la pièce jointe.
+	 * @param cheminFichier le chemin du fichier.
 	 */
-	public PieceJointe(String cheminFichier)
+	public PieceJointe(String cheminFichierOriginal, String cheminFichier)
 	{
-		this.cheminFichier  = cheminFichier;
 		this.nomPieceJointe = "fic" + String.format("%05d", ++NUM_PIECE_JOINTE);
-		this.extension      = this.cheminFichier.substring(this.cheminFichier.lastIndexOf('.') + 1);
+		this.extension      = cheminFichierOriginal.substring(cheminFichierOriginal.lastIndexOf('.') + 1);
+		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
+
+		try
+		{
+			Files.copy(Paths.get(cheminFichierOriginal), this.fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
+		}
 	}
 
 	/**
-	 * Retourne le chemin du fichier.
+	 * Retourne le fichier.
 	 * 
-	 * @return le chemin du fichier.
+	 * @return le fichier.
 	 */
-	public String getCheminFichier()
+	public File getFichier()
 	{
-		return this.cheminFichier;
+		return this.fichier;
 	}
 
 	/**
@@ -59,11 +72,11 @@ public class PieceJointe
 	 * @param cheminFichier le chemin du fichier.
 	 * @return              true si le chemin du fichier est modifié, false sinon.
 	 */
-	public boolean setCheminFichier(String cheminFichier)
+	public boolean setFichier(String cheminFichier)
 	{
 		if (cheminFichier == null) return false;
 
-		this.cheminFichier = cheminFichier;
+		this.fichier = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
 		return true;
 	}
 
@@ -95,6 +108,30 @@ public class PieceJointe
 		return true;
 	}
 
+	/*public static int getNumPieceJointe()
+	{
+		Path startPath = Paths.get("data/");  // Répertoire à partir duquel commencer le parcours
+		
+		int max = 0;
+		int nb;
+		try {
+			// Utilisation de Files.walk() pour parcourir l'arborescence de manière récursive
+			Files.walk(startPath)
+				.forEach(path -> {
+					// Afficher chaque chemin de fichier ou répertoire rencontré
+					
+					nb = Integer.parseInt(path.toString().substring(3,8));
+					System.out.println(path);
+
+					if (max < nb) max = nb;
+				});
+		} catch (IOException e) {
+			System.err.println("Erreur lors du parcours de l'arborescence : " + e.getMessage());
+		}
+
+		return 1;
+	}*/
+
 
 	/**
 	 * Retourne sous forme de texte l'objet PieceJointe.
@@ -103,7 +140,7 @@ public class PieceJointe
 	 */
 	public String toString()
 	{
-		return this.nomPieceJointe + "." + this.extension + " : " + this.cheminFichier;
+		return this.nomPieceJointe + "." + this.extension + " : " + this.fichier.getPath();
 	}
 
 
@@ -114,20 +151,17 @@ public class PieceJointe
 	 */
 	public static void main(String[] args)
 	{
-		PieceJointe pj1, pj2, pj3, pj;
+		PieceJointe pj1, pj2, pj3;
 
-		for (int cpt = 0 ; cpt < 1000 ; cpt++)
-		{
-			pj = new PieceJointe("data/test.png");
-			System.out.println(pj);
-		}
 
-		pj1 = new PieceJointe("data/test1.txt");
-		pj2 = new PieceJointe("data/test2.csv");
-		pj3 = new PieceJointe("data/test3.pdf");
+		pj1 = new PieceJointe("data/test1.txt", "data/");
+		pj2 = new PieceJointe("data/test2.csv", "data/");
+		pj3 = new PieceJointe("data/test3.pdf", "data/");
 
 		System.out.println(pj1);
 		System.out.println(pj2);
 		System.out.println(pj3);
+
+		// System.out.println(PieceJointe.getNumPieceJointe());
 	}
 }

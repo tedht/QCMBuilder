@@ -380,6 +380,18 @@ public class BanqueDeQuestions
 		return true;
 	}
 
+	/**
+	 * Créer une pièce jointe
+	 */
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		for (Question q : this.lstQuestions)
+		{
+			if (q == question)
+				question.ajouterPieceJointe(new PieceJointe(cheminFichier));
+		}
+	}
+
 	public static void main(String[] args)
 	{
 		Ressource r1;

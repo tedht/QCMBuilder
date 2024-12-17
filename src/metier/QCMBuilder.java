@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import metier.banque.BanqueDeNotion;
+import metier.banque.BanqueDeNotions;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
 
@@ -126,6 +126,11 @@ public class QCMBuilder
 		qcm.setIntitule("A quoi sert le chiffrement ?");
 		this.banqueQuestions.ajouterQuestions(qcm);
 		this.banqueQuestions.sauvegarderQuestions();
+	}
+
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
 	}
 
 	public List<String> creerQCM(String detailsQuestion, boolean unique) 

@@ -185,7 +185,7 @@ public class Controleur
 	}
 
 	/**
-	 * Creer une Question.
+	 * Creer une Question dans la partie metier.
 	 */
 	public void creerQuestion() 
 	{
@@ -193,7 +193,15 @@ public class Controleur
 	}
 
 	/**
-	 * 
+	 * Creer une pièce jointe dans la partie metier.
+	 */
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.metier.creerPieceJointe(cheminFichier, question);
+	}
+
+	/**
+	 * Vide l'historique
 	 */
 	public void popHistorique() 
 	{
