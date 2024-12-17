@@ -28,7 +28,7 @@ import metier.entite.question.elimination.*;
  */
 public class BanqueDeQuestions 
 {
-	/* Attributs */;
+	/* Attributs */
 	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
 
