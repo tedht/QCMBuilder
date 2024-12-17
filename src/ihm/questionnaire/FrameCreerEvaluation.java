@@ -1,17 +1,16 @@
 package ihm.questionnaire;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
 import ihm.IHM;
 
 /**
- * Classe représentant la fenêtre de créeation d'une évaluation
+ * Classe représentant la fenêtre de création d'une évaluation
  * 
  * @author Ted Herambert
- * @date 2024/12/10
+ * @date 2024/12/16
  * @version 1.0
  */
 public class FrameCreerEvaluation extends JFrame
@@ -19,8 +18,8 @@ public class FrameCreerEvaluation extends JFrame
 	private Controleur ctrl;
 	private IHM        ihm;
 
-	private JPanel[]   tabPanel;
-	private int        page;
+	private PanelParametresEvaluation panelParametresEvaluation;
+	private PanelAjoutEvaluation      panelAjoutEvaluation;
 
 	public FrameCreerEvaluation(Controleur ctrl, IHM ihm)
 	{
@@ -31,15 +30,10 @@ public class FrameCreerEvaluation extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.tabPanel = new JPanel[2];
-		this.page     = 0;
+		this.panelParametresEvaluation = new PanelParametresEvaluation(ctrl, this);
+		this.panelAjoutEvaluation      = new PanelAjoutEvaluation     (ctrl, this);
 
-		this.tabPanel[0] = new PanelParametresEvaluation(ctrl, this);
-		this.tabPanel[1] = new PanelAjoutEvaluation     (ctrl, this);
-
-		this.setSize(IHM.LARGEUR_CREER_QUESTIONNAIRE, IHM.HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1);
-
-		this.add(this.tabPanel[page]);
+		this.pagePrecedente();
 	}
 
 	public void reinitAffichage() 
@@ -54,28 +48,29 @@ public class FrameCreerEvaluation extends JFrame
 
 	public void pagePrecedente()
 	{
-		if(this.page > 0);
-		{
-			this.remove(this.tabPanel[this.page]); 
-			this.page--;
-			this.setSize(IHM.LARGEUR_CREER_QUESTIONNAIRE, IHM.HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1);
-			this.add   (this.tabPanel[this.page]);
-
-		}
+		this.remove    (this.panelAjoutEvaluation); 
+		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_1);
+		this.add       (this.panelParametresEvaluation);
+		this.revalidate();
+		this.repaint   ();
 	}
 	public void pageSuivante()
 	{
-		if(this.page < this.tabPanel.length-1);
-		{
-			this.remove(this.tabPanel[this.page]);
-			this.page++;
-			this.setSize(IHM.LARGEUR_CREER_QUESTIONNAIRE, IHM.HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2);
-			this.add   (this.tabPanel[this.page]);
-		}
+		this.remove    (this.panelParametresEvaluation); 
+		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_2);
+		this.add       (this.panelAjoutEvaluation);
+		this.revalidate();
+		this.repaint   ();
 	}
 
 	public void genererEvaluation()
 	{
 		this.ctrl.genererEvaluation();
+	}
+
+	
+	public void majTabNotions() 
+	{
+		this.panelAjoutEvaluation.majTabNotions(this.panelParametresEvaluation.getRessource());
 	}
 }

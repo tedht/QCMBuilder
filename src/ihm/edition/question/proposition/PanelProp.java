@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-import ihm.edition.question.PanelEditQuestion;
+import ihm.edition.question.PanelAjoutQuestion;
+
 
 /**
  * 
@@ -16,11 +17,11 @@ import ihm.edition.question.PanelEditQuestion;
  */
 public abstract class PanelProp extends JPanel implements ActionListener
 {
-	protected PanelEditQuestion panelEditQuestion;
+	protected PanelAjoutQuestion panelAjoutQuestion;
 
-	public PanelProp(PanelEditQuestion panelEditQuestion)
+	public PanelProp(PanelAjoutQuestion panelAjoutQuestion)
 	{
-		this.panelEditQuestion = panelEditQuestion;
+		this.panelAjoutQuestion = panelAjoutQuestion;
 
 		this.setLayout(new BorderLayout(5,5));
 	}

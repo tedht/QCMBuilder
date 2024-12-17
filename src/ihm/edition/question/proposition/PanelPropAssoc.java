@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import ihm.edition.question.PanelEditQuestion;
+import ihm.edition.question.PanelAjoutQuestion;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class PanelPropAssoc extends PanelProp
 	private JTextArea[] tabTxtProposition;
 	private JButton  [] tabBtnSupprimer;
 	
-	public PanelPropAssoc(PanelEditQuestion panelEditQuestion)
+	public PanelPropAssoc(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
 
@@ -83,7 +83,7 @@ public class PanelPropAssoc extends PanelProp
 	{
 		if(e.getSource() == this.tabBtnSupprimer[0] || e.getSource() == this.tabBtnSupprimer[1])
 		{
-			this.panelEditQuestion.supprimerProposition(this);
+			this.panelAjoutQuestion.supprimerProposition(this);
 		}
 	}
 	

@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import ihm.edition.question.PanelEditQuestion;
+import ihm.edition.question.PanelAjoutQuestion;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class PanelPropElim extends PanelProp
 	private JCheckBox  cbResponse;
 	private JTextField txtOrdreElim, txtPointsEnMoins;
 
-	public PanelPropElim(PanelEditQuestion panelEditQuestion)
+	public PanelPropElim(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
 
@@ -95,7 +95,7 @@ public class PanelPropElim extends PanelProp
 	{
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.panelEditQuestion.supprimerProposition(this);
+			this.panelAjoutQuestion.supprimerProposition(this);
 		}
 		if(e.getSource() == this.cbResponse)
 		{

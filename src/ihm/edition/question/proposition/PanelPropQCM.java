@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import ihm.edition.question.PanelEditQuestion;
+import ihm.edition.question.PanelAjoutQuestion;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class PanelPropQCM extends PanelProp
 	private JButton      btnSupprimer;
 	private JRadioButton rbReponse;
 
-	public PanelPropQCM(PanelEditQuestion panelEditQuestion)
+	public PanelPropQCM(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
 
@@ -58,7 +58,7 @@ public class PanelPropQCM extends PanelProp
 
 		this.add(this.rbReponse, BorderLayout.EAST);
 
-		this.panelEditQuestion.ajouterRbResponse(this.rbReponse);
+		this.panelAjoutQuestion.ajouterRbResponse(this.rbReponse);
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -75,7 +75,7 @@ public class PanelPropQCM extends PanelProp
 		if(e.getSource() == this.btnSupprimer)
 		{
 			this.btgQCM.remove(this.rbReponse);
-			this.panelEditQuestion.supprimerProposition(this);
+			this.panelAjoutQuestion.supprimerProposition(this);
 		}
 	}
 	

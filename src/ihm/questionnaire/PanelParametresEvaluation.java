@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,9 +20,16 @@ import javax.swing.JRadioButton;
 import controleur.Controleur;
 import metier.entite.Ressource;
 
-public class PanelParametresEvaluation extends JPanel implements ActionListener
+/**
+ * Classe représentant la fenêtre de création d'une évaluation
+ * 
+ * @author Ted Herambert
+ * @date 2024/12/16
+ * @version 1.0
+ */
+public class PanelParametresEvaluation extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur                ctrl;
+	private Controleur           ctrl;
 	private FrameCreerEvaluation frame;
 
 	private JPanel            panelInfo, panelAction;
@@ -56,12 +65,13 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 
 		// Ressources
 		this.ddlstRessource = new JComboBox<String>();
-		this.ddlstRessource.setPrototypeDisplayValue("R1.01 Initiation au développement");
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
 			this.ddlstRessource.addItem(ressource.getNom());
 		}
 		this.ddlstRessource.setSelectedIndex(-1);
+		this.ddlstRessource.setFocusable(false);
+		this.ddlstRessource.setPrototypeDisplayValue(String.format("%70s"," "));
 
 		// Chronomètre
 		tabRbChronometre    = new JRadioButton[2];
@@ -92,7 +102,7 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 10, 5);
 		gbc.anchor  = GridBagConstraints.WEST;
-	    gbc.fill    = GridBagConstraints.HORIZONTAL;
+	    gbc.fill    = GridBagConstraints.NONE;
 	    gbc.weightx = 1.0;
 
 		/* Ligne 0 */
@@ -105,7 +115,7 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 		// Chonomètre
 		gbc.gridy = 0; gbc.gridx = 1; // (0,1)
 		this.panelInfo      .add(panelInfoChronometre, gbc);
-		panelInfoChronometre.add(new JLabel("Nombre de Niveau :"), BorderLayout.NORTH);
+		panelInfoChronometre.add(new JLabel("Chronomètre :"), BorderLayout.NORTH);
 		panelInfoChronometre.add(panelChronometre, BorderLayout.CENTER);
 		for(JRadioButton rb : tabRbChronometre)
 			panelChronometre.add(rb);
@@ -120,7 +130,11 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 		/*---------------------------*/
 
 		/* INFO */
-		this.ddlstRessource.addActionListener(this);
+		this.ddlstRessource.addItemListener(this);
+		for(JRadioButton rb : this.tabRbChronometre)
+		{
+			rb.addItemListener(this);
+		}
 
 		/* ACTION */
 		this.btnAnnuler.addActionListener(this);
@@ -131,17 +145,6 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getSource() == this.ddlstRessource)
-		{
-			for(JRadioButton rb : this.tabRbChronometre)
-				rb.setEnabled(true);
-		}
-
-		if(e.getSource() == this.tabRbChronometre[0] || e.getSource() ==  this.tabRbChronometre[1])
-		{
-			this.btnSuivant.setEnabled(true);
-		}
-
 		if(e.getSource() == this.btnAnnuler)
 		{
 			if(this.frame != null)
@@ -155,7 +158,30 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener
 		}
 	}
 
-	public String  getRessource   () { return (String)this.ddlstRessource.getSelectedItem(); }
-	public boolean estChronometree() { return this.tabRbChronometre[0].isSelected();         }
-	
+	@Override
+	public void itemStateChanged(ItemEvent e) 
+	{
+		if(e.getSource() == this.ddlstRessource);
+		{
+			for(JRadioButton rb : this.tabRbChronometre)
+				rb.setEnabled(true);
+
+			this.frame.majTabNotions();
+		}
+
+		if(e.getSource() == this.tabRbChronometre[0] || e.getSource() ==  this.tabRbChronometre[1])
+		{
+			this.btnSuivant.setEnabled(true);
+		}
+	}
+
+	public Ressource getRessource() 
+	{
+		return this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem());
+	}
+
+	public boolean estChronometree() 
+	{ 
+		return this.tabRbChronometre[0].isSelected();         
+	}
 }

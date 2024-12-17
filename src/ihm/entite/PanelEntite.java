@@ -35,6 +35,7 @@ public abstract class PanelEntite extends JPanel
 	{
 		this.ctrl = ctrl;
 		this.ihm  = ihm;
+
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
@@ -42,9 +43,11 @@ public abstract class PanelEntite extends JPanel
 		/* Création des composants */
 		/*-------------------------*/
 
+		if(titre.length() >= 50) titre = titre.substring(0, 50) + "...";
 		this.lblTitre = new JLabel(titre);
 		this.lblTitre.setFont(new Font("Arial", Font.BOLD, 20));
 
+		if(sousTitre.length() >= 50) sousTitre = sousTitre.substring(0, 50) + "...";
 		this.lblSousTitre = new JLabel(sousTitre);
 		this.lblSousTitre.setFont(new Font("Arial", Font.BOLD, 12));
 
@@ -56,7 +59,6 @@ public abstract class PanelEntite extends JPanel
 		this.btnSupprimer = new JButton("S");
 
 		this.panelAction = new JPanel();
-
 
 		/*-------------------------------*/
 		/* positionnement des composants */

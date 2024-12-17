@@ -17,9 +17,9 @@ public class IHM
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 
-	public static final int LARGEUR_CREER_QUESTIONNAIRE        = 700;
-	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
-	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 400;
+	public static final int LARGEUR_CREER_EVALUATION        = 500;
+	public static final int HAUTEUR_CREER_EVALUATION_PAGE_1 = 150;
+	public static final int HAUTEUR_CREER_EVALUATION_PAGE_2 = 300;
 	
 	private Controleur ctrl;
 
@@ -94,7 +94,8 @@ public class IHM
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditNotion.addWindowListener(new WindowAdapter() {
                 @Override
-                public void windowClosed(WindowEvent e) {
+                public void windowClosed(WindowEvent e) 
+				{
                     IHM.this.frameEditNotion = null;
                 }
             });
@@ -163,8 +164,33 @@ public class IHM
 		}
 		else
 		{
-			// Si la frameCreerEvaluation existe déjà, elle est mise en avant
 			this.frameCreerEvaluation.toFront();
+		}
+	}
+
+	public static boolean estInt(String valeur)
+	{
+		try 
+		{
+			Integer.parseInt(valeur); 
+			return true;
+		} 
+		catch (NumberFormatException e) 
+		{
+			return false;
+		}
+	}
+
+	public static boolean estDouble(String valeur)
+	{
+		try 
+		{
+			Double.parseDouble(valeur); 
+			return true;
+		} 
+		catch (NumberFormatException e) 
+		{
+			return false;
 		}
 	}
 }

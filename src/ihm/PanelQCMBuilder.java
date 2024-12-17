@@ -56,12 +56,11 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/*-------------------------*/
 		/* Panels */
 		this.panelEntete     = new JPanel(new GridBagLayout());
-		this.panelContenu    = new JPanel();
+		this.panelContenu    = new JPanel(new GridLayout(0, 1, 5, 10));
 		this.panelBtnAjouter = new JPanel(new GridBagLayout());
 
 		this.panelEntete .setBorder(new EmptyBorder(10,20,10,20));
 		this.panelContenu.setBorder(new EmptyBorder(20,20,20,20));
-		this.panelContenu.setLayout(new GridLayout(0, 1, 5, 10));
 
 		this.lstPanelEntites = new ArrayList<PanelEntite>();
 

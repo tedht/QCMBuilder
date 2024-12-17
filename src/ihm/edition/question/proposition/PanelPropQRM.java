@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import ihm.edition.question.PanelEditQuestion;
+import ihm.edition.question.PanelAjoutQuestion;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class PanelPropQRM extends PanelProp
 	private JButton   btnSupprimer;
 	private JCheckBox cbReponse;
 
-	public PanelPropQRM(PanelEditQuestion panelEditQuestion)
+	public PanelPropQRM(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
 
@@ -70,7 +70,7 @@ public class PanelPropQRM extends PanelProp
 	{
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.panelEditQuestion.supprimerProposition(this);
+			this.panelAjoutQuestion.supprimerProposition(this);
 		}
 	}
 	

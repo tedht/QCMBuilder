@@ -1,5 +1,7 @@
 package metier.entite.question;
 
+import java.awt.Color;
+
 /**
  * Enumération représentant les difficultés.
  * Cette énumération inclut des méthodes utilitaires pour manipuler et convertir les difficultés.
@@ -74,6 +76,24 @@ public enum Difficulte
 			case DIFFICILE   -> "D";
 
 			default -> "";
+		};
+	}
+
+	/**
+     * Retourne la couleur associé à la difficulté.
+     * 
+     * @return la couleur associé à la difficulté.
+     */
+	public Color getCouleur()
+	{
+		return switch(this) 
+		{
+			case TRES_FACILE -> new Color(186, 221, 194);
+			case FACILE      -> new Color(181, 188, 211);
+			case MOYEN       -> new Color(202, 107, 119);
+			case DIFFICILE   -> new Color(189, 198, 196);
+
+			default -> Color.WHITE;
 		};
 	}
 
