@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
+
+import metier.entite.question.qcm.*;
 
 /** Classe Question
  * @author Equipe 03
@@ -14,14 +17,14 @@ public abstract class Question
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
-	private Ressource    ressource;
-	private String       notion;
-	private Difficulte   difficulte;
-	private int          temps;
-	private double       note;
-	private String       intitule;
-	private String       explication;
-	private String       pieceJointe;
+	private Ressource         ressource;
+	private Notion            notion;
+	private Difficulte        difficulte;
+	private int               temps;
+	private double            note;
+	private String            intitule;
+	private String            explication;
+	private List<PieceJointe> piecesJointes;
 
 	protected List<Proposition> lstPropositions;
 
@@ -37,35 +40,20 @@ public abstract class Question
 	 * @param difficulte la difficulté de la question(TF,F,M,D).
 	 * @param temps le temps de réponse à la question (en secondes).
 	 * @param note la note de la question.
-	 * @param pieceJointe le chemin de la pièce jointe associée à la question.
 	 */
-	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note,String pieceJointe)
+	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		this.ressource   = ressource;
 		this.notion      = notion;
 		this.difficulte  = difficulte;
 		this.temps       = temps;
 		this.note        = note;
-		this.pieceJointe = pieceJointe;
+		this.piecesJointes = new ArrayList<PieceJointe>();
 
 		this.intitule    = "";
 		this.explication = "";
 
 		this.lstPropositions = new ArrayList<Proposition>();
-	}
-
-	/**
-	 * Constructeur de la classe Question sans pièce jointe.
-	 * 
-	 * @param ressource la ressource associée à la question.
-	 * @param notion la notion associée à la question.
-	 * @param difficulte la difficulté de la question(TF,F,M,D).
-	 * @param temps le temps de réponse à la question (en secondes). 
-	 * @param note la note de la question.
-	 */
-	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
-	{
-		this(ressource, notion, difficulte, temps, note, "");
 	}
 
 	/*---------*/
@@ -84,7 +72,7 @@ public abstract class Question
 	 * 
 	 * @return la notion associée à la question.
 	 */
-	public String       getNotion     () { return this.notion;      }
+	public Notion       getNotion     () { return this.notion;      }
 
 	/**
 	 * Retourne la difficulté de la question.
@@ -119,7 +107,7 @@ public abstract class Question
 	 * 
 	 * @return le chemin de la pièce jointe associée à la question.
 	 */
-	public String       getPieceJointe() { return this.pieceJointe; }
+	public List<PieceJointe> getPiecesJointes() { return this.piecesJointes; }
 
 	/**
 	 * Retourne l'explication de la question.
@@ -182,7 +170,7 @@ public abstract class Question
 	 * @param notion la nouvelle notion.
 	 * @return true si la notion à été modifiée, false sinon.
 	 */
-	public boolean setNotion(String notion)
+	public boolean setNotion(Notion notion)
 	{
 		if (notion == null) return false;
 
@@ -247,20 +235,6 @@ public abstract class Question
 	}
 
 	/**
-	 * Modifie le chemin de la pièce jointe associée à la question.
-	 * 
-	 * @param pieceJointe le nouveau chemin de la pièce jointe.
-	 * @return true si le chemin de la pièce jointe à été modifié, false sinon.
-	 */
-	public boolean setPieceJointe(String pieceJointe)
-	{
-		if ("".equals(pieceJointe)) return false;
-
-		this.pieceJointe = pieceJointe;
-		return true;
-	}
-
-	/**
 	 * Modifie l'explication de la question.
 	 * 
 	 * @param explication la nouvelle explication.
@@ -271,6 +245,36 @@ public abstract class Question
 		if ("".equals(explication)) return false;
 
 		this.explication = explication;
+		return true;
+	}
+
+
+	/**
+	 * Ajoute une piece jointe à la liste des pièces jointes de la question.
+	 * 
+	 * @param pieceJointe la pièce jointe à ajouter.
+	 * @return true si la pièce jointe a été ajoutée, false sinon.
+	 */
+	public boolean ajouterPieceJointe(PieceJointe pieceJointe)
+	{
+		if (pieceJointe == null) return false;
+
+		this.piecesJointes.add(pieceJointe);
+		return true;
+	}
+
+	/**
+	 * Supprime une pièce jointe de la liste des pièces jointes de la question.
+	 * 
+	 * @param i l'index de la pièce jointe à supprimer.
+	 * @return true si la pièce jointe a été supprimée, false sinon.
+	 */
+	public boolean supprimerPieceJointe(int i)
+	{
+		if(i < 0 || i >= this.piecesJointes.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.piecesJointes.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
+
+		this.piecesJointes.remove(i); // Supprime la pièce jointe
 		return true;
 	}
 
@@ -346,28 +350,33 @@ public abstract class Question
 		sRet += "\t      temps : " + this.temps + " seconde(s)" + "\n" +
 		        "\t       note : " + this.note                  + "\n"   ;
 
+		for (int cpt = 0 ; cpt < this.piecesJointes.size() ; cpt++)
+			sRet += this.piecesJointes.get(cpt) + "\n";
+
 		return sRet;
 	}
 
-	/*------*/
-	/* Main */
-	/*------*/
-	/*
+	
+	/**
+	 * Test de la classe Question
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		Question q1, q2, q3;
 
 
-		q1 = new Question(0, "C'est quoi le principe d'encapsulation ?", "c'est de limiter l'accès", Difficulte.TRES_FACILE, new Ressource("Init dev"), new Notion("Encapsulation"),  0, 1);
-		q2 = new Question(1, "A quoi sert une jointure ?", "Lier des tables entre elles",Difficulte.DIFFICILE, new Ressource("Init bd" ), new Notion("Jointure"     ), 30, 2);
-		q3 = new Question(2, "Quels sont les différentes couches du modèle OSI ?", "", Difficulte.MOYEN, new Ressource("Réseaux" ), new Notion("Modele OSI"   ),  0, 3);
+		q1 = new QCM(new Ressource("R1.01", "Init dev"               ), new Notion("Encapsulation", 0, "R1.01"), Difficulte.TRES_FACILE,  0, 2, true);
+		q2 = new QCM(new Ressource("R1.05","Init bd"                 ), new Notion("Jointure"     , 1, "R1.05"), Difficulte.DIFFICILE  , 30, 2, true);
+		q3 = new QCM(new Ressource("R3.06","Architecture des réseaux"), new Notion("Modele OSI"   , 2, "R3.06"), Difficulte.MOYEN      , 50, 2, true);
+
+		q1.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
+		q2.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
+		q3.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
 
 		System.out.println(q1);
 		System.out.println(q2);
 		System.out.println(q3);
-
-		System.out.println(q1.getIntitule());
-		System.out.println(q2.getNote());
-		System.out.println(q3.getTemps());
-	}*/
+	}
 }

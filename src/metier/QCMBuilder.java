@@ -1,12 +1,18 @@
 package metier;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import metier.banque.BanqueDeNotions;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
+
 import metier.entite.Ressource;
+import metier.entite.Notion;
+import metier.entite.Questionnaire;
+
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.qcm.QCM;
@@ -16,8 +22,11 @@ public class QCMBuilder
 	private BanqueDeQuestions  banqueQuestions;
 	private BanqueDeRessources banqueRessources;
 
+	private Questionnaire questionnaire;
+
 	private Ressource ressourceActive;
-	private String    notionActive;
+
+	private Notion    notionActive;
 
 	private Stack<String> historique;
 	
@@ -28,6 +37,7 @@ public class QCMBuilder
 
 		this.historique = new Stack<String>();
 
+
 		this.banqueRessources = new BanqueDeRessources(); 
 		this.banqueQuestions  = new BanqueDeQuestions(this);
 	}
@@ -37,12 +47,12 @@ public class QCMBuilder
 		return this.banqueRessources.getRessources();
 	}
 
-	public List<String> getNotions(Ressource ressource) 
+	public List<Notion> getNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNotions(ressource);
 	}
 
-	public List<Question> getQuestions(Ressource ressource, String notion) 
+	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
 		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
@@ -53,7 +63,7 @@ public class QCMBuilder
 		this.historique.add("R");
 	}
 
-	public void setNotionActive(String notion) 
+	public void setNotionActive(Notion notion) 
 	{
 		this.notionActive = notion;
 		this.historique.add("N"+this.ressourceActive.getNom());
@@ -82,7 +92,7 @@ public class QCMBuilder
 		return this.ressourceActive;
 	}
 
-	public String getNotionActive() 
+	public Notion getNotionActive() 
 	{
 		return this.notionActive;
 	}
@@ -92,9 +102,9 @@ public class QCMBuilder
 		return this.banqueRessources.getRessource(nomRessource);
 	}
 
-	public void creerRessource(String nomRessource) 
+	public void creerRessource(String code, String nomRessource) 
 	{
-		this.banqueRessources.ajouterRessource(new Ressource(nomRessource));
+		this.banqueRessources.ajouterRessource(new Ressource(code, nomRessource));
 		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 	}
 
@@ -102,17 +112,25 @@ public class QCMBuilder
 	{
 		if(this.ressourceActive != null)
 		{
-			this.ressourceActive.ajouterNotion(new String(nomNotion));
+			this.ressourceActive.ajouterNotion(new Notion(nomNotion, this.ressourceActive.getNotions().size(), this.ressourceActive.getCode()));
 			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 		}
 	}
 
 	public void creerQuestion() 
 	{
-		QCM qcm = new QCM(ressourceActive, notionActive, Difficulte.FACILE,  30, 1.0, true);
+		QCM qcm;
+
+
+		qcm = new QCM(this.ressourceActive, this.notionActive, Difficulte.FACILE,  30, 1.0, true);
 		qcm.setIntitule("A quoi sert le chiffrement ?");
 		this.banqueQuestions.ajouterQuestions(qcm);
-		this.banqueQuestions.sauvegarderQuestions("data/questions.csv","data/questions.txt");
+		this.banqueQuestions.sauvegarderQuestions();
+	}
+
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
 	}
 
 	public List<String> creerQCM(String detailsQuestion, boolean unique) 
@@ -137,5 +155,99 @@ public class QCMBuilder
 
 
 		return lstErreurs;
+	}
+
+	public void genererEvaluation(String cheminFichier)
+	{
+		this.questionnaire.genererEvaluation(cheminFichier);
+	}
+
+	public void creerArborescence()
+	{
+		File dossier;
+
+
+		for (Ressource ressource : this.banqueRessources.getRessources())
+		{
+			dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom());
+			System.out.println(ressource.getNom());
+
+
+			// Si pas de notion, ignore simplement la boucle
+			for (Notion notion : ressource.getNotions())
+			{
+				dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom());
+
+				// Si pas de question, ignore simplement la boucle
+				for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
+				{
+					if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
+					{
+						dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom() + "/question " + cpt + "/complément");
+					}
+
+					// Vérifier si le dossier existe déjà, sinon le créer -- Question
+					if (!dossier.exists())
+					{
+						if (dossier.mkdirs())
+						{
+							System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
+						}
+						else
+						{
+							System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
+						}
+					}
+					else
+					{
+						System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
+					}
+				}
+
+				// Vérifier si le dossier existe déjà, sinon le créer --  Notion
+				if (!dossier.exists())
+				{
+					if (dossier.mkdirs())
+					{
+						System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
+					}
+					else
+					{
+						System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
+					}
+				}
+				else
+				{
+					System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
+				}
+			}
+
+			// Vérifier si le dossier existe déjà, sinon le créer -- Ressource
+			if (!dossier.exists())
+			{
+				if (dossier.mkdirs())
+				{
+					System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
+				}
+				else
+				{
+					System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
+				}
+			}
+			else
+			{
+				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
+			}
+		}
+	}
+
+
+	public static void main(String[] args)
+	{
+		QCMBuilder qcmBuilder;
+
+		qcmBuilder = new QCMBuilder();
+
+		qcmBuilder.creerArborescence();
 	}
 }

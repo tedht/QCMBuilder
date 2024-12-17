@@ -21,7 +21,8 @@ public class Ressource
 
 	private String       nom;
 	private String       cheminFichier;
-	private List<String> lstNotions;
+	private List<Notion> lstNotions;
+	private String       code;
 
 
 
@@ -34,14 +35,16 @@ public class Ressource
 	 * 
 	 * @param  nom                       Le nom de la Ressource (non null).
 	 * @param  cheminFichier             Le chemin du fichier associer à la ressource.
+	 * @param  code                      Le code de la ressource.
 	 * @throws IlleagalArgumentException Si le nom est null.
 	 */
-	public Ressource(String nom, String cheminFichier)
+	public Ressource(String code,String nom, String cheminFichier)
 	{
 		if (!nom.equals(null))
 		{
+			this.code          = code;
 			this.nom           = nom;
-			this.lstNotions    = new ArrayList<String>();
+			this.lstNotions    = new ArrayList<Notion>();
 			this.cheminFichier = cheminFichier;
 		} 
 		else 
@@ -55,9 +58,9 @@ public class Ressource
 	 * 
 	 * @param nom Le nom de la Ressource (non null).
 	 */
-	public Ressource(String nom)
+	public Ressource(String code,String nom)
 	{
-		this(nom,null);
+		this(code,nom, null);
 	}
 
 
@@ -77,6 +80,16 @@ public class Ressource
 	}
 
 	/**
+	 * Retourne le code de la Ressource.
+	 * 
+	 * @return code de la Ressource.
+	 */
+	public String getCode()
+	{
+		return this.code;
+	}
+
+	/**
 	 * Retourne le chemin du fichier associée à Ressource.
 	 * 
 	 * @return le chemin du fichier.
@@ -91,7 +104,7 @@ public class Ressource
 	 * 
 	 * @return liste des notions.
 	 */
-	public List<String> getNotions() 
+	public List<Notion> getNotions() 
 	{
 		return this.lstNotions;
 	}
@@ -102,11 +115,11 @@ public class Ressource
 	 * @param  nomNotion le nom de la notion recherchée.
 	 * @return           la notion.
 	 */
-	public String getNotion(String nomNotion) 
+	public Notion getNotion(String nomNotion) 
 	{
-		for(String notion : this.lstNotions)
+		for(Notion notion : this.lstNotions)
 		{
-			if (notion.equals(nomNotion))
+			if (notion.getNom().equals(nomNotion))
 			{
 				return notion;
 			}
@@ -141,6 +154,25 @@ public class Ressource
 	}
 
 	/**
+	 * Modifie le code associée à Ressource.
+	 * 
+	 * @param  code le nouveau code à associée à Ressource (non null).
+	 * @return     true si le code à été modifié, false sinon.
+	 */
+	public boolean setCode(String code)
+	{
+		if (!code.equals(null) && !code.equals(this.code))
+		{
+			this.code = code;
+
+			return true;
+		}
+
+		return false;
+		// Le nouveau code ne peut pas être null ou égal au code actuel
+	}
+
+	/**
 	 * Modifie le chemin du fichier associée à Ressource.
 	 * 
 	 * @param  cheminFichier le nouveau chemin du fichier à associée à Ressource.
@@ -171,7 +203,7 @@ public class Ressource
 	 * @param  notion la notion (non null).
 	 * @return        true si la notion à été ajoutée, false sinon.
 	 */
-	public boolean ajouterNotion(String notion) 
+	public boolean ajouterNotion(Notion notion) 
 	{
 		if( notion != null ) 
 		{
@@ -183,17 +215,17 @@ public class Ressource
 			}
 			else
 			{
-				String nom          = notion;
+				String nom          = notion.getNom();
 				char   lastNameChar = nom.charAt(nom.length() - 1);
 
 				if (Character.isDigit(lastNameChar)) 
 				{
 					int lastNumber = Character.getNumericValue(lastNameChar);
-					notion = (nom.substring(0, nom.length() - 1) + (lastNumber + 1));
+					notion.setNom(nom.substring(0, nom.length() - 1) + (lastNumber + 1));
 				}
 				else
 				{
-					notion = (nom + "1");
+					notion.setNom(nom + "1");
 				}
 
 				return ajouterNotion(notion); 
@@ -210,13 +242,13 @@ public class Ressource
 	 * @param nouveauNom le nouveau nom (non null).
 	 * @return           true si le nom à été modifié, true sinon.
 	 */
-	public boolean modifierNotion(String notion, String nouveauNom) 
+	public boolean modifierNotion(Notion notion, String nouveauNom) 
 	{
 		if (this.lstNotions.contains(notion)  &&
 			!nouveauNom.equals(null) &&
-			!notion.equals(nouveauNom))
+			!notion.getNom().equals(nouveauNom))
 		{
-			notion = nouveauNom;
+			notion.setNom(nouveauNom);
 
 			return true;
 		}
@@ -230,7 +262,7 @@ public class Ressource
 	 * @param notion la notion à supprimer.
 	 * @return       true si la notion à été suprimmée, false sinon.
 	 */
-	public boolean supprimerNotion(String notion) 
+	public boolean supprimerNotion(Notion notion) 
 	{
 		if (this.lstNotions.contains(notion))
 		{

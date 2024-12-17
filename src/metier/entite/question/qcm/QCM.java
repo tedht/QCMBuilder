@@ -1,6 +1,8 @@
 package metier.entite.question.qcm;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
+
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -18,7 +20,7 @@ public class QCM extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	/** 
+	/**
 	 * Constructeur d'une question QCM.
 	 * 
 	 * @param ressource  la ressource associée
@@ -27,25 +29,8 @@ public class QCM extends Question
 	 * @param temps      le temps associé.
 	 * @param note       la note associée.
 	 * @param unique     si la question est unique.
-	 * @param pieceJointe le chemin de la pièce jointe.
 	 */
-	public QCM(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, boolean unique, String pieceJointe)
-	{
-		super(ressource, notion, difficulte, temps, note, pieceJointe);
-		this.unique = unique;
-	}
-
-	/**
-	 * Constructeur d'une question QCM sans pièce jointe.
-	 * 
-	 * @param ressource  la ressource associée
-	 * @param notion     la notion associée.
-	 * @param difficulte la difficultée associée.
-	 * @param temps      le temps associé.
-	 * @param note       la note associée.
-	 * @param unique     si la question est unique.
-	 */
-	public QCM(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, boolean unique)
+	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
 	{
 		super(ressource, notion, difficulte, temps, note);
 		this.unique = unique;
@@ -111,7 +96,7 @@ public class QCM extends Question
 	/*----------*/
 	public String toString()
     {
-        String         result = "";
+        String         result = super.toString();
 		PropositionQCM prop;
         for(int i = 0; i < this.lstPropositions.size(); i++)
         {

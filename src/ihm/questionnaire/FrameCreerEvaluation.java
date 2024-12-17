@@ -65,7 +65,7 @@ public class FrameCreerEvaluation extends JFrame
 
 	public void genererEvaluation()
 	{
-		this.ctrl.genererEvaluation();
+		//this.ctrl.genererEvaluation();
 	}
 
 	

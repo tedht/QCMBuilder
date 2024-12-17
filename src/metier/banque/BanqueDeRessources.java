@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
 
 /** Classe BanqueDeRessources
  * @author Equipe 03
@@ -54,7 +55,7 @@ public class BanqueDeRessources
 	 * @param ressource
 	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
 	 */
-	public List<String> getNotions(Ressource ressource) 
+	public List<Notion> getNotions(Ressource ressource) 
 	{
 		for(Ressource rsrc : this.lstRessources)
 		{
@@ -100,6 +101,9 @@ public class BanqueDeRessources
 		String    enreg;
 		Ressource ressource;
 
+		String codeRessource;
+		String nomRessource;
+
 		try
 		{
 			scEnreg = new Scanner( new FileInputStream(nomFichier), "UTF8");
@@ -113,11 +117,15 @@ public class BanqueDeRessources
 				scDonnee = new Scanner(enreg);
 				scDonnee.useDelimiter("\t");
 
-				ressource = new Ressource(scDonnee.next());
+				codeRessource = scDonnee.next();
+				nomRessource  = scDonnee.next();
 
-				while(scDonnee.hasNext())
+				System.out.println(nomRessource);
+				ressource = new Ressource(codeRessource, nomRessource);
+
+				for (int cpt = 0 ; scDonnee.hasNext() ; cpt++)
 				{
-					ressource.ajouterNotion(scDonnee.next());
+					ressource.ajouterNotion(new Notion(scDonnee.next(), cpt, codeRessource));
 				}
 				
 				this.lstRessources.add(ressource);
@@ -143,14 +151,15 @@ public class BanqueDeRessources
 		{
 			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "UTF8" ));
 
-			pw.println("ressource\tnotion 1\tnotion 2\tnotion N");
+			pw.println("code\tressource\tnotion 1\tnotion 2\tnotion N");
 
 			for (Ressource ressource : this.lstRessources)
 			{
-				pw.print(ressource.getNom() + "\t");
-				for(String notion : ressource.getNotions())
+				pw.print(ressource.getCode() + "\t");
+				pw.print(ressource.getNom () + "\t");
+				for(Notion notion : ressource.getNotions())
 				{
-					pw.print(notion + "\t");
+					pw.print(notion.getNom() + "\t");
 				}
 
 				pw.print("\n");
@@ -230,7 +239,7 @@ public class BanqueDeRessources
 		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
 			sRet += this.lstRessources.get(cpt).getNom() + "\n" + "Notions : ";
-			for (String notion : this.lstRessources.get(cpt).getNotions())
+			for (Notion notion : this.lstRessources.get(cpt).getNotions())
 			{
 				sRet += notion + ", ";
 			}
