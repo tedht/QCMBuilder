@@ -15,14 +15,14 @@ public abstract class Question
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
-	private Ressource    ressource;
-	private Notion       notion;
-	private Difficulte   difficulte;
-	private int          temps;
-	private double       note;
-	private String       intitule;
-	private String       explication;
-	private String       pieceJointe;
+	private Ressource         ressource;
+	private Notion            notion;
+	private Difficulte        difficulte;
+	private int               temps;
+	private double            note;
+	private String            intitule;
+	private String            explication;
+	private List<PieceJointe> piecesJointes;
 
 	protected List<Proposition> lstPropositions;
 
@@ -47,7 +47,7 @@ public abstract class Question
 		this.difficulte  = difficulte;
 		this.temps       = temps;
 		this.note        = note;
-		this.pieceJointe = pieceJointe;
+		this.piecesJointes = new ArrayList<PieceJointe>();
 
 		this.intitule    = "";
 		this.explication = "";
@@ -120,7 +120,7 @@ public abstract class Question
 	 * 
 	 * @return le chemin de la pièce jointe associée à la question.
 	 */
-	public String       getPieceJointe() { return this.pieceJointe; }
+	public List<PieceJointe> getPiecesJointes() { return this.piecesJointes; }
 
 	/**
 	 * Retourne l'explication de la question.
@@ -248,20 +248,6 @@ public abstract class Question
 	}
 
 	/**
-	 * Modifie le chemin de la pièce jointe associée à la question.
-	 * 
-	 * @param pieceJointe le nouveau chemin de la pièce jointe.
-	 * @return true si le chemin de la pièce jointe à été modifié, false sinon.
-	 */
-	public boolean setPieceJointe(String pieceJointe)
-	{
-		if ("".equals(pieceJointe)) return false;
-
-		this.pieceJointe = pieceJointe;
-		return true;
-	}
-
-	/**
 	 * Modifie l'explication de la question.
 	 * 
 	 * @param explication la nouvelle explication.
@@ -272,6 +258,36 @@ public abstract class Question
 		if ("".equals(explication)) return false;
 
 		this.explication = explication;
+		return true;
+	}
+
+
+	/**
+	 * Ajoute une piece jointe à la liste des pièces jointes de la question.
+	 * 
+	 * @param pieceJointe la pièce jointe à ajouter.
+	 * @return true si la pièce jointe a été ajoutée, false sinon.
+	 */
+	public boolean ajouterPieceJointe(PieceJointe pieceJointe)
+	{
+		if (pieceJointe == null) return false;
+
+		this.piecesJointes.add(pieceJointe);
+		return true;
+	}
+
+	/**
+	 * Supprime une pièce jointe de la liste des pièces jointes de la question.
+	 * 
+	 * @param i l'index de la pièce jointe à supprimer.
+	 * @return true si la pièce jointe a été supprimée, false sinon.
+	 */
+	public boolean supprimerPieceJointe(int i)
+	{
+		if(i < 0 || i >= this.piecesJointes.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.piecesJointes.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
+
+		this.piecesJointes.remove(i); // Supprime la pièce jointe
 		return true;
 	}
 
