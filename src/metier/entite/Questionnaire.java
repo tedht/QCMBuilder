@@ -27,7 +27,7 @@ public class Questionnaire
 	/*-----------*/
 
 	private Ressource      ressource;
-	private List<String>   notions;
+	private List<Notion>   notions;
 	private boolean        chronometre;
 	private List<Question> questions;
 
@@ -44,7 +44,7 @@ public class Questionnaire
 	 * @param notions     la liste des notions associées au Questionnaire.
 	 * @param chronometre chronometre indiquant si le questionnaire est chronométré ou non.
 	 */
-	public Questionnaire(Ressource ressource, List<String> notions, boolean chronometre) 
+	public Questionnaire(Ressource ressource, List<Notion> notions, boolean chronometre) 
 	{
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
@@ -65,7 +65,7 @@ public class Questionnaire
 	 */
 	public Ressource getRessource()
 	{
-		return ressource;
+		return this.ressource;
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class Questionnaire
 	 * 
 	 * @return la liste des notions.
 	 */
-	public List<String> getNotions()
+	public List<Notion> getNotions()
 	{
-		return notions;
+		return this.notions;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Questionnaire
 	 */
 	public boolean isChronometre()
 	{
-		return chronometre;
+		return this.chronometre;
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Questionnaire
 	 */
 	public List<Question> getQuestions()
 	{
-		return questions;
+		return this.questions;
 	}
 
 
@@ -128,7 +128,7 @@ public class Questionnaire
 	 * @param  notions la liste des notions.
 	 * @return         true si la liste des notions a été modifiée, false sinon.
 	 */
-	public boolean setNotions(List<String> notions) 
+	public boolean setNotions(List<Notion> notions) 
 	{
 		if (notions == null)
 		{
@@ -179,7 +179,7 @@ public class Questionnaire
 	 * @param  notion la notion.
 	 * @return        true si la notion à été ajoutée, false sinon.
 	 */
-	public boolean ajouterNotion(String autre)
+	public boolean ajouterNotion(Notion autre)
 	{
 		if (notions.contains(autre))
 		{
@@ -197,7 +197,7 @@ public class Questionnaire
 	 * @param  notion la notion à supprimer.
 	 * @return        true si la notion à été suprimmée, false sinon.
 	 */
-	public boolean supprimerNotion(String autre)
+	public boolean supprimerNotion(Notion autre)
 	{
 		if (!notions.contains(autre)) return false;
 
@@ -213,7 +213,7 @@ public class Questionnaire
 	 * @param  nbrQuestions le nombre de questions.
 	 * @return              true ........, false sinon.
 	 */
-	public boolean ajouterQuestions(String notion, String difficulte, int nbrQuestions)
+	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
 	{
 		for (int i = 0; i < nbrQuestions; i++) {
 			//trop de trucs avec fichier rtf
@@ -305,16 +305,16 @@ public class Questionnaire
 	public static void main(String[] args) 
 	{
 		Ressource     r1;
-		String        n1, n2;
-		List<String>  l1;
+		Notion        n1, n2;
+		List<Notion>  l1;
 		Questionnaire q1;
 
 		r1 = new Ressource("R1.01","Init_Dev");
 
-		n1 = "Algorithmique";
-		n2 = "Programmation";
+		n1 = new Notion("Algorithmique");
+		n2 = new Notion("Programmation");
 
-		l1 = new ArrayList<String>();
+		l1 = new ArrayList<Notion>();
 		l1.add(n1);
 
 		q1 = new Questionnaire(r1, l1, false);

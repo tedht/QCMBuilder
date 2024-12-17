@@ -1,6 +1,8 @@
 package metier.entite.question.qcm;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
+
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -29,7 +31,7 @@ public class QCM extends Question
 	 * @param unique     si la question est unique.
 	 * @param pieceJointe le chemin de la pièce jointe.
 	 */
-	public QCM(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, boolean unique, String pieceJointe)
+	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique, String pieceJointe)
 	{
 		super(ressource, notion, difficulte, temps, note, pieceJointe);
 		this.unique = unique;
@@ -45,7 +47,7 @@ public class QCM extends Question
 	 * @param note       la note associée.
 	 * @param unique     si la question est unique.
 	 */
-	public QCM(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, boolean unique)
+	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
 	{
 		super(ressource, notion, difficulte, temps, note);
 		this.unique = unique;

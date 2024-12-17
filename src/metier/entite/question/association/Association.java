@@ -1,6 +1,8 @@
 package metier.entite.question.association;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
+
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -25,7 +27,7 @@ public class Association extends Question
 	 * @param temps      le temps associé.
 	 * @param note       la note associée.
 	 */
-	public Association(Ressource ressource, String notion, Difficulte difficulte, int temps, double note, String pieceJointe)
+	public Association(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, String pieceJointe)
 	{
 		super(ressource, notion, difficulte, temps, note, pieceJointe);
 	}
@@ -39,7 +41,7 @@ public class Association extends Question
 	 * @param temps      le temps associé.
 	 * @param note       la note associée.
 	 */
-	public Association(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
+	public Association(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		super(ressource, notion, difficulte, temps, note);
 	}
@@ -121,7 +123,7 @@ public class Association extends Question
 		asso.supprimerProposition(asso.getPropositionId(prop3)); // Ne le fait pas car PropD3 n'existe pas
 		System.out.println(asso);
 
-		asso2 = new Association(new Ressource("R3.12","Anglais"), "Vocabulaire", Difficulte.FACILE, 0, 1.0);
+		asso2 = new Association(new Ressource("R3.12","Anglais"), new Notion("Vocabulaire"), Difficulte.FACILE, 0, 1.0);
 		propAnglais = new PropositionAssociation("Without", "Sans");
 		asso2.ajouterProposition(propAnglais);
 		System.out.println(asso2);

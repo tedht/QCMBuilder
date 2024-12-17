@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
 
 /** Classe BanqueDeRessources
  * @author Equipe 03
@@ -54,7 +55,7 @@ public class BanqueDeRessources
 	 * @param ressource
 	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
 	 */
-	public List<String> getNotions(Ressource ressource) 
+	public List<Notion> getNotions(Ressource ressource) 
 	{
 		for(Ressource rsrc : this.lstRessources)
 		{
@@ -143,7 +144,7 @@ public class BanqueDeRessources
 			for (Ressource ressource : this.lstRessources)
 			{
 				pw.print(ressource.getNom() + "\t");
-				for(String notion : ressource.getNotions())
+				for(Notion notion : ressource.getNotions())
 				{
 					pw.print(notion + "\t");
 				}
@@ -225,7 +226,7 @@ public class BanqueDeRessources
 		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
 			sRet += this.lstRessources.get(cpt).getNom() + "\n" + "Notions : ";
-			for (String notion : this.lstRessources.get(cpt).getNotions())
+			for (Notion notion : this.lstRessources.get(cpt).getNotions())
 			{
 				sRet += notion + ", ";
 			}

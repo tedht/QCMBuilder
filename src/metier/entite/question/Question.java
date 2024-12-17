@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
 
 /** Classe Question
  * @author Equipe 03
@@ -15,7 +16,7 @@ public abstract class Question
 	/* Attributs */
 	/*-----------*/
 	private Ressource    ressource;
-	private String       notion;
+	private Notion       notion;
 	private Difficulte   difficulte;
 	private int          temps;
 	private double       note;
@@ -39,7 +40,7 @@ public abstract class Question
 	 * @param note la note de la question.
 	 * @param pieceJointe le chemin de la pièce jointe associée à la question.
 	 */
-	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note,String pieceJointe)
+	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note,String pieceJointe)
 	{
 		this.ressource   = ressource;
 		this.notion      = notion;
@@ -63,7 +64,7 @@ public abstract class Question
 	 * @param temps le temps de réponse à la question (en secondes). 
 	 * @param note la note de la question.
 	 */
-	public Question(Ressource ressource, String notion, Difficulte difficulte, int temps, double note)
+	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
 		this(ressource, notion, difficulte, temps, note, "");
 	}
@@ -84,7 +85,7 @@ public abstract class Question
 	 * 
 	 * @return la notion associée à la question.
 	 */
-	public String       getNotion     () { return this.notion;      }
+	public Notion       getNotion     () { return this.notion;      }
 
 	/**
 	 * Retourne la difficulté de la question.
@@ -182,7 +183,7 @@ public abstract class Question
 	 * @param notion la nouvelle notion.
 	 * @return true si la notion à été modifiée, false sinon.
 	 */
-	public boolean setNotion(String notion)
+	public boolean setNotion(Notion notion)
 	{
 		if (notion == null) return false;
 

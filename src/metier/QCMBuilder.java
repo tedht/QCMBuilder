@@ -6,7 +6,10 @@ import java.util.Stack;
 
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
+
 import metier.entite.Ressource;
+import metier.entite.Notion;
+
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.qcm.QCM;
@@ -17,7 +20,7 @@ public class QCMBuilder
 	private BanqueDeRessources banqueRessources;
 
 	private Ressource ressourceActive;
-	private String    notionActive;
+	private Notion    notionActive;
 
 	private Stack<String> historique;
 	
@@ -37,12 +40,12 @@ public class QCMBuilder
 		return this.banqueRessources.getRessources();
 	}
 
-	public List<String> getNotions(Ressource ressource) 
+	public List<Notion> getNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNotions(ressource);
 	}
 
-	public List<Question> getQuestions(Ressource ressource, String notion) 
+	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
 		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
@@ -53,7 +56,7 @@ public class QCMBuilder
 		this.historique.add("R");
 	}
 
-	public void setNotionActive(String notion) 
+	public void setNotionActive(Notion notion) 
 	{
 		this.notionActive = notion;
 		this.historique.add("N"+this.ressourceActive.getNom());
@@ -82,7 +85,7 @@ public class QCMBuilder
 		return this.ressourceActive;
 	}
 
-	public String getNotionActive() 
+	public Notion getNotionActive() 
 	{
 		return this.notionActive;
 	}
@@ -102,14 +105,17 @@ public class QCMBuilder
 	{
 		if(this.ressourceActive != null)
 		{
-			this.ressourceActive.ajouterNotion(new String(nomNotion));
+			this.ressourceActive.ajouterNotion(new Notion(nomNotion));
 			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 		}
 	}
 
 	public void creerQuestion() 
 	{
-		QCM qcm = new QCM(ressourceActive, notionActive, Difficulte.FACILE,  30, 1.0, true);
+		QCM qcm;
+
+
+		qcm = new QCM(this.ressourceActive, this.notionActive, Difficulte.FACILE,  30, 1.0, true);
 		qcm.setIntitule("A quoi sert le chiffrement ?");
 		this.banqueQuestions.ajouterQuestions(qcm);
 		this.banqueQuestions.sauvegarderQuestions();

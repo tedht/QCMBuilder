@@ -12,7 +12,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import metier.QCMBuilder;
+
 import metier.entite.Ressource;
+import metier.entite.Notion;
 
 import metier.entite.question.*;
 import metier.entite.question.association.*;
@@ -60,7 +62,7 @@ public class BanqueDeQuestions
 	 * @param ressource la ressource associée aux questions
 	 * @return List<Question> la liste des questions associées à la ressource
 	 */
-	public List<Question> getQuestions(Ressource ressource, String notion) 
+	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
 		List<Question> lstQuestions;
 
@@ -101,7 +103,7 @@ public class BanqueDeQuestions
 		Scanner scEnreg, scDonnees, scTexte, scElim;
 
 		Ressource    ressource;
-		String       notion;
+		Notion       notion;
 		Difficulte   difficulte;
 		TypeQuestion typeQuestion;
 		int          temps;
@@ -350,7 +352,7 @@ public class BanqueDeQuestions
 		{
 			case "difficulte" -> question.setDifficulte((Difficulte)modif);
 			case "ressource"  -> question.setRessource ((Ressource) modif);
-			case "notion"     -> question.setNotion    ((String)    modif);
+			case "notion"     -> question.setNotion    ((Notion)    modif);
 			case "temps"      -> question.setTemps     ((int)       modif);
 			case "note"       -> question.setNote      ((int)       modif);
 		}
@@ -383,9 +385,9 @@ public class BanqueDeQuestions
 		Ressource r1;
 		Ressource r2;
 
-		String n1;
-		String n2;
-		String n3;
+		Notion n1;
+		Notion n2;
+		Notion n3;
 
 		QCM q1;
 		Elimination q2;
@@ -400,9 +402,9 @@ public class BanqueDeQuestions
 		r1 = new Ressource("R1","Ressource 1");
 		r2 = new Ressource("R2","Ressource 2");
 
-		n1 = "Notion 1";
-		n2 = "Notion 2";
-		n3 = "Notion 3";
+		n1 = new Notion("Notion 1");
+		n2 = new Notion("Notion 2");
+		n3 = new Notion("Notion 3");
 
 		r1.ajouterNotion(n1);
 		r1.ajouterNotion(n2);
