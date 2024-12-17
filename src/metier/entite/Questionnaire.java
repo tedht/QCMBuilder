@@ -311,8 +311,8 @@ public class Questionnaire
 
 		r1 = new Ressource("R1.01","Init_Dev");
 
-		n1 = new Notion("Algorithmique");
-		n2 = new Notion("Programmation");
+		n1 = new Notion("Algorithmique",1,"R1.01");
+		n2 = new Notion("Programmation",2,"R1.01");
 
 		l1 = new ArrayList<Notion>();
 		l1.add(n1);

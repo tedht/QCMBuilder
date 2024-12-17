@@ -402,9 +402,9 @@ public class BanqueDeQuestions
 		r1 = new Ressource("R1","Ressource 1");
 		r2 = new Ressource("R2","Ressource 2");
 
-		n1 = new Notion("Notion 1");
-		n2 = new Notion("Notion 2");
-		n3 = new Notion("Notion 3");
+		n1 = new Notion("Notion 1" , 1, r1.getCode());
+		n2 = new Notion("Notion 2" , 2, r1.getCode());
+		n3 = new Notion("Notion 3" , 3, r2.getCode());
 
 		r1.ajouterNotion(n1);
 		r1.ajouterNotion(n2);

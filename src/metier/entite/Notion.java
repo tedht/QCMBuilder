@@ -6,12 +6,15 @@ public class Notion
 	/* Attributs */
 	/*-----------*/
 	private String nom;
+	private int id;
+	private String codeRessource;
 	
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Notion(String nom)
+	public Notion(String nom, int id, String codeRessource) 
 	{
+		this.nom = nom;
 		if(nom != null)
 		{
 			this.nom = nom;
@@ -21,6 +24,17 @@ public class Notion
 	/*---------*/
 	/* Getters */
 	/*---------*/
+
+	public int getId() 
+	{
+		return this.id;
+	}
+
+	public String getCodeRessource() 
+	{
+		return this.codeRessource;
+	}
+
 	public String getNom()
 	{
 		return this.nom;
@@ -29,6 +43,29 @@ public class Notion
 	/*---------*/
 	/* Setters */
 	/*---------*/
+
+	public boolean setId(int id) 
+	{
+		if(id != this.id)
+		{
+			this.id = id;
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean setCodeRessource(String codeRessource) 
+	{
+		if(codeRessource != null && !codeRessource.equals(this.codeRessource))
+		{
+			this.codeRessource = codeRessource;
+			return true;
+		}
+
+		return false;
+	}
+	
 	public boolean setNom(String nom) 
 	{
 		if(nom != null && !nom.equals(this.nom))

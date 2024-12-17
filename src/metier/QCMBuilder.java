@@ -105,7 +105,7 @@ public class QCMBuilder
 	{
 		if(this.ressourceActive != null)
 		{
-			this.ressourceActive.ajouterNotion(new Notion(nomNotion));
+			this.ressourceActive.ajouterNotion(new Notion(nomNotion, this.ressourceActive.getNotions().size(), this.ressourceActive.getCode()));
 			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 		}
 	}
