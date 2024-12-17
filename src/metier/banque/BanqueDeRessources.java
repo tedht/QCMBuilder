@@ -159,7 +159,7 @@ public class BanqueDeRessources
 				pw.print(ressource.getNom () + "\t");
 				for(Notion notion : ressource.getNotions())
 				{
-					pw.print(notion + "\t");
+					pw.print(notion.getNom() + "\t");
 				}
 
 				pw.print("\n");

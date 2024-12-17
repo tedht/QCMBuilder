@@ -98,7 +98,7 @@ public class BanqueDeQuestions
 	* @param nomFichierCSV le chemin du fichier CSV
 	* @param nomFichierTXT le chemin du fichier TXT
 	*/
-	public void lireQuestions(String nomFichierCSV, String nomFichierTXT)
+	public void lireQuestions(String nomFichierCSV)
 	{
 		Scanner scEnreg, scDonnees, scTexte, scElim;
 
@@ -113,6 +113,8 @@ public class BanqueDeQuestions
 		String       explication;
 		Question     question;
 		boolean      unique;
+		String codeRessource;
+		String nomRessource;
 
 		try
 		{
@@ -126,7 +128,9 @@ public class BanqueDeQuestions
 				scDonnees.useDelimiter("\t");
 
 				//ressource        = this.qcmBuilder.getRessource(scEnreg.next());
-				ressource        = new Ressource       (scDonnees.next(),scDonnees.next());
+				codeRessource	 = scDonnees.next();
+				nomRessource	 = scDonnees.next();
+				ressource        = new Ressource       (codeRessource, nomRessource);
 				notion           = ressource.getNotion (scDonnees.next());
 				difficulte       = Difficulte.  fromInt(scDonnees.nextInt());
 				typeQuestion     = TypeQuestion.fromInt(scDonnees.nextInt());
@@ -218,7 +222,7 @@ public class BanqueDeQuestions
 	 * @param nomFichierCSV le chemin du fichier CSV
 	 * @param nomFichierTXT le chemin du fichier TXT
 	 */
-	public void sauvegarderQuestions()
+	public void sauvegarderQuestions(String nomFichierCSV)
 	{
 		PrintWriter pw;
 		PrintWriter pw2;
@@ -228,34 +232,32 @@ public class BanqueDeQuestions
 
 		try
 		{
-			
+			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
+			pw.println("code\tressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
 
 			for (Question question : this.lstQuestions)
 			{   
-				String nomFichierCSV = "ressources/" + question.getRessource().getNom() + "/"
-				                                     + question.getNotion() 
-													 +"/question.csv";
-				String nomFichierTXT = "ressources/" + question.getRessource().getNom() + "/" 
-				                                     + question.getNotion() 
-													 +"/question.txt";
+				String nomFichierTXT = "ressources/" + question.getRessource().getCode() + " " 
+													 + question.getRessource().getNom () + "/" 
+				                                     + question.getNotion().   getNom () + "/" 
+													 +"question.txt";
 				System.out.println(nomFichierCSV);
 				System.out.println(nomFichierTXT);
 
-				pw  = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
 				pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8"));
 
-				pw.println("ressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
+
 
 				pw .print(question.getRessource   ().getCode  () + "\t");
 				pw .print(question.getRessource   ().getNom   () + "\t");
-				pw .print(question.getNotion      ()             + "\t");
+				pw .print(question.getNotion      ().getNom   () + "\t");
 				pw .print(question.getDifficulte  ().getValeur() + "\t");
 				pw .print(question.getType        ().getValeur() + "\t");
 				pw .print(question.getTemps       ()             + "\t");
 				pw .print(question.getNote        ()             + "\t");
 				pw .print(nomFichierTXT                          + "\t");
-				pw2.print(question.getIntitule    ()             + "\t");
-				pw2.print(question.getExplication ()             + "\t");
+				pw2.print(question.getIntitule    ()             + "\n");
+				pw2.print(question.getExplication ()                   );
 
 				switch (question.getType())
 				{
@@ -315,12 +317,15 @@ public class BanqueDeQuestions
 					}
 				}
 
-				pw. print("\n");
+				pw.print("\n");
 				pw2.print("\n");
 
-				pw.close();
 				pw2.close();
+				
 			}
+
+			pw.close();
+			
 
 			
 		}
@@ -406,6 +411,10 @@ public class BanqueDeQuestions
 		Association q3;
 
 		BanqueDeQuestions banque;
+		BanqueDeRessources banqueRessources;
+		QCMBuilder qcmBuilder;
+
+		banqueRessources = new BanqueDeRessources();
 
 
 
@@ -414,6 +423,9 @@ public class BanqueDeQuestions
 		r1 = new Ressource("R1","Ressource 1");
 		r2 = new Ressource("R2","Ressource 2");
 
+		banqueRessources.ajouterRessource(r1);
+		banqueRessources.ajouterRessource(r2);
+
 		n1 = new Notion("Notion 1" , 1, r1.getCode());
 		n2 = new Notion("Notion 2" , 2, r1.getCode());
 		n3 = new Notion("Notion 3" , 3, r2.getCode());
@@ -421,6 +433,11 @@ public class BanqueDeQuestions
 		r1.ajouterNotion(n1);
 		r1.ajouterNotion(n2);
 		r2.ajouterNotion(n3);
+
+		banqueRessources.sauvegarderRessources("data/ressources.csv");
+
+		qcmBuilder = new QCMBuilder();
+		qcmBuilder.creerArborescence();
 
 		// Création de questions de type QCM
 		q1 = new QCM(r1, n1, Difficulte.FACILE, 10, 10, true);
@@ -446,8 +463,10 @@ public class BanqueDeQuestions
 		q3.ajouterProposition(new PropositionAssociation("Allemagne", "Berlin"));
 		q3.ajouterProposition(new PropositionAssociation("Espagne", "Madrid"));
 
+
 		// Initialisation de la banque de questions
 		banque = new BanqueDeQuestions(new QCMBuilder());
+
 
 		// Ajout des questions
 		banque.ajouterQuestions(q1);
@@ -462,7 +481,7 @@ public class BanqueDeQuestions
 		}
 
 		// Sauvegarde des questions dans des fichiers
-		banque.sauvegarderQuestions();
+		banque.sauvegarderQuestions("data/questions.csv");
 		System.out.println("=== Questions sauvegardées dans les fichiers CSV et TXT ===");
 
 		for (Question question : banque.getQuestions())
@@ -482,7 +501,7 @@ public class BanqueDeQuestions
 		}
 
 		// Lecture des questions sauvegardées
-		//banque.lireQuestions(cheminCSV, cheminTXT);
+		banque.lireQuestions("data/questions.csv");
 		System.out.println("=== Questions après lecture des fichiers ===");
 		for (Question question : banque.getQuestions())
 		{
