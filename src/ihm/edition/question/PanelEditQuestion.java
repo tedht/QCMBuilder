@@ -18,6 +18,7 @@ import ihm.edition.question.proposition.PanelPropQRM;
 import ihm.edition.question.proposition.PanelPropQCM;
 
 import metier.entite.Ressource;
+import metier.entite.Notion;
 
 /**
  * Classe JPanel de la fenêtre d'édition d'une question
@@ -333,9 +334,9 @@ public class PanelEditQuestion extends JPanel implements ActionListener
 			if(e.getSource() == this.ddlstRessource)
 			{
 				this.ddlstNotion.removeAllItems();
-				for(String notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
+				for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
 				{
-					this.ddlstNotion.addItem(notion);
+					this.ddlstNotion.addItem(notion.getNom());
 				}
 				this.ddlstNotion.setSelectedIndex(-1);
 				this.ddlstNotion.setEnabled(true);
