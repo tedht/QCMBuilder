@@ -15,6 +15,8 @@ public class Notion
 	public Notion(String nom, int id, String codeRessource) 
 	{
 		this.nom = nom;
+		this.id = id;
+		this.codeRessource = codeRessource;
 		if(nom != null)
 		{
 			this.nom = nom;
@@ -65,7 +67,7 @@ public class Notion
 
 		return false;
 	}
-	
+
 	public boolean setNom(String nom) 
 	{
 		if(nom != null && !nom.equals(this.nom))
