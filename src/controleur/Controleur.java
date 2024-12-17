@@ -111,9 +111,8 @@ public class Controleur
 		return this.metier.creerElimination(detailsQuestion);
 	}
 
-	public void genererEvaluation() 
+	public void genererEvaluation(String cheminFichier)
 	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'genererEvaluation'");
+		this.metier.genererEvaluation(cheminFichier);
 	}
 }

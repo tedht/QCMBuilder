@@ -231,7 +231,7 @@ public class Questionnaire
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-	public String generer(String filePath) 
+	public String genererEvaluation(String filePath) 
 	{
 		String head, body, htmlContent;
 		File file, parentDir;
@@ -324,6 +324,6 @@ public class Questionnaire
 		q1.ajouterNotion(n2);
 		System.out.println(q1);
 
-		q1.generer("./");
+		q1.genererEvaluation("./");
 	}
 }

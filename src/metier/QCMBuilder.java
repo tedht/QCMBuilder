@@ -9,6 +9,7 @@ import metier.banque.BanqueDeRessources;
 
 import metier.entite.Ressource;
 import metier.entite.Notion;
+import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
@@ -18,6 +19,8 @@ public class QCMBuilder
 {
 	private BanqueDeQuestions  banqueQuestions;
 	private BanqueDeRessources banqueRessources;
+
+	private Questionnaire questionnaire;
 
 	private Ressource ressourceActive;
 	private Notion    notionActive;
@@ -143,5 +146,10 @@ public class QCMBuilder
 
 
 		return lstErreurs;
+	}
+
+	public void genererEvaluation(String cheminFichier)
+	{
+		this.questionnaire.genererEvaluation(cheminFichier);
 	}
 }
