@@ -78,4 +78,12 @@ public class Notion
 
 		return false;
 	}
+
+	/*----------*/
+	/* ToString */
+	/*----------*/
+	public String toString()
+	{
+		return "Notion [nom=" + this.nom + ", id=" + this.id + ", codeRessource=" + this.codeRessource + "]";
+	}
 }

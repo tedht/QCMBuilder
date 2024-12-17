@@ -3,6 +3,7 @@ package metier.banque;
 import metier.entite.Ressource;
 
 import java.util.List;
+import java.util.Scanner;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -131,6 +132,35 @@ public class BanqueDeNotion {
 		}
 	}
 
+	public void lireNotions()
+	{
+		Scanner scLigne,scDonnees;
+		String nom;
+		int id;
+		String codeRessource;
+		Notion notion;
+
+		try
+		{
+			scLigne = new Scanner("data/notions.csv");
+			scLigne.nextLine();
+			while(scLigne.hasNextLine())
+			{
+				scDonnees = new Scanner(scLigne.nextLine());
+				scDonnees.useDelimiter("\t");
+				id = scDonnees.nextInt();
+				nom = scDonnees.next();
+				codeRessource = scDonnees.next();
+				notion = new Notion(nom, id, codeRessource);
+				this.lstNotions.add(notion);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Erreur lors de la lecture des notions");
+		}
+	}
+
 	public static void main(String[] args) {
 		
 		Notion n1 = new Notion("n1", 1, "code1");
@@ -142,7 +172,25 @@ public class BanqueDeNotion {
 		bdn.ajouterNotion(n1);
 		bdn.ajouterNotion(n2);
 		bdn.ajouterNotion(n3);
-		
+
+		for (Notion notion : bdn.getNotions())
+		{
+			System.out.println(notion);
+
+		}
+
+
 		bdn.sauvegarderNotions();
+
+		bdn.supprimerNotion(1);
+		bdn.supprimerNotion(2);
+		bdn.supprimerNotion(3);
+
+		bdn.lireNotions();
+
+		for (Notion notion : bdn.getNotions()) {
+			System.out.println(notion);
+			
+		}
 	}
 }
