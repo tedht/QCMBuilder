@@ -17,8 +17,6 @@ import metier.QCMBuilder;
 public class Controleur
 {
 
-
-
 	/*-----------*/
 	// Attributs //
 	/*-----------*/

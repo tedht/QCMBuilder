@@ -1,7 +1,6 @@
 package metier;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,12 +152,12 @@ public class QCMBuilder
 		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
 		              details.temps(), details.note(), unique);
 
-		this.banqueQuestions.ajouterQuestions(qcm);
-
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
+		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
 		{
-			qcm.ajouterProposition(details.propositions().get(cpt));
-		}*/
+			qcm.ajouterProposition(details.propQCM().get(cpt));
+		}
+
+		this.banqueQuestions.ajouterQuestions(qcm);
 		
 		List<String> lstErreurs = new ArrayList<String>();
 
@@ -176,13 +175,13 @@ public class QCMBuilder
 
 		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
+							   
+		for (int cpt = 0 ; cpt < details.propAssos().size() ; cpt++)
+		{
+			asso.ajouterProposition(details.propAssos().get(cpt));
+		}
 		
 		this.banqueQuestions.ajouterQuestions(asso);
-
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
-		{
-			asso.ajouterProposition(details.propositions().get(cpt));
-		}*/
 
 		List<String> lstErreurs = new ArrayList<String>();
 
@@ -201,13 +200,12 @@ public class QCMBuilder
 		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
 
+		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
+		{
+			elim.ajouterProposition(details.propElim().get(cpt));
+		}
 
 		this.banqueQuestions.ajouterQuestions(elim);
-
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
-		{
-			elim.ajouterProposition(details.propositions().get(cpt));
-		}*/
 		
 		List<String> lstErreurs = new ArrayList<String>();
 
@@ -228,7 +226,6 @@ public class QCMBuilder
 		for (Ressource ressource : this.banqueRessources.getRessources())
 		{
 			dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom());
-			System.out.println(ressource.getNom());
 
 
 			// Si pas de notion, ignore simplement la boucle
@@ -323,19 +320,23 @@ public class QCMBuilder
 		lstPropositionsAssociation = null;
 		lstPropositionsElimination = null;
 		lstPropositionsQCM         = null;
+
 		try
 		{
-			sc = new Scanner(new FileInputStream(detailsQuestion), "UTF8");
+			sc = new Scanner(detailsQuestion);
 		
 			sc.useDelimiter("\t");
 
-			ressource   = this.banqueRessources.getRessource(sc.next());
+			System.out.println(prop = sc.next());
+			ressource   = this.banqueRessources.getRessource(prop);
 			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
 			difficulte  = Difficulte.fromInt(sc.nextInt());
-			temps       = sc.nextInt();
+			temps       = this.enSeconde(sc.next());
 			note        = sc.nextDouble();
 			intitule    = sc.next();
 			explication = sc.next();
+
+			System.out.println(ressource);
 
 			if (type == TypeQuestion.QCM)
 			{
@@ -393,9 +394,21 @@ public class QCMBuilder
 			System.out.println("Erreur lors de la lecture du détails de la question : " + e.getMessage());
 			return null;
 		}
+	}
 
+	private List<String> verifDetailsQuestion(String detailsQuestion)
+	{
 		
+	}
 
+	private int enSeconde(String temps)
+	{
+		int m, s;
+
+		m = Integer.parseInt(temps.substring(0, 2));
+		s = Integer.parseInt(temps.substring(3, 5));
+
+		return m * 60 + s;
 	}
 
 

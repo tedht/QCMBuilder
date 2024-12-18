@@ -34,6 +34,7 @@ public class FrameEditQuestion extends JFrame
 	 */
 	public FrameEditQuestion(Controleur ctrl, IHM ihm) 
 	{
+		this.ctrl = ctrl;
 		this.ihm = ihm;
 		
 		this.setTitle("Créer une Question");
@@ -79,11 +80,13 @@ public class FrameEditQuestion extends JFrame
 
 		detailsQuestion += this.panelParametresQuestion.getRessource  () + '\t';
 		detailsQuestion += this.panelParametresQuestion.getNotion     () + '\t';
-		detailsQuestion += this.panelParametresQuestion.getDifficulte () + '\t';
+		detailsQuestion += this.panelParametresQuestion.getDifficulte () + "\t";
 		detailsQuestion += this.panelParametresQuestion.getTemps      () + '\t';
 		detailsQuestion += this.panelParametresQuestion.getPoints     () + '\t';
 		detailsQuestion += this.panelAjoutQuestion     .getIntitule   () + '\t';
 		detailsQuestion += this.panelAjoutQuestion     .getExplication() + '\t';
+
+		System.out.println(detailsQuestion);
 
 		// On vérifie DANS LE METIER que les valeurs saisies sont valides
 		List<String>    lstErreurs   = new ArrayList<String>();
@@ -110,6 +113,8 @@ public class FrameEditQuestion extends JFrame
 					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
 					sProp += panelPropQCM.getText() + '\t';
 					detailsQuestion += sProp;
+
+					System.out.println(detailsQuestion);
 				}
 				lstErreurs = this.ctrl.creerQCM(detailsQuestion, false);
 			} 

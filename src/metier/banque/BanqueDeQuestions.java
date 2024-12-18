@@ -212,6 +212,7 @@ public class BanqueDeQuestions
 		if (question == null) return false;
 
 		this.lstQuestions.add(question);
+		this.sauvegarderQuestions("data/questions.csv");
 		return true;
 	}
 

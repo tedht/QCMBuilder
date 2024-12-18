@@ -270,8 +270,9 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 	public int getDifficulte() 
 	{
 		for(int i = 0; i < this.tabRbDifficulte.length; i++)
-			if(this.tabRbDifficulte[i].isSelected()) 
+			if(this.tabRbDifficulte[i].isSelected())
 				return i;
+				
 		return -1;
 	}
 
