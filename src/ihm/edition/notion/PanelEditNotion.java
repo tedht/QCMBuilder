@@ -21,6 +21,12 @@ public class PanelEditNotion extends PanelEditEntite
 	public PanelEditNotion(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
+
+		/*-------------------------------*/
+		/* positionnement des composants */
+		/*-------------------------------*/
+
+		this.panelInfo.add(this.panelInfoNom);
 	}
 
 	public String getType()

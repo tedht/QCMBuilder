@@ -2,6 +2,7 @@ package ihm.edition;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,8 +26,10 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 	protected IHM        ihm;
 
 	protected JPanel        panelInfo, panelAction;
+
+	protected JPanel        panelInfoNom;
+
 	protected JButton       btnAnnuler, btnValider;
-	protected JLabel        lblNom;
 	protected JTextField    txtNom;
 
 	/**
@@ -44,17 +47,17 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/
-		// Panel Info
-		this.panelInfo = new JPanel(new BorderLayout());
+		/* INFO */
+		this.panelInfo = new JPanel(new GridLayout(0,1,5,5));
 		this.panelInfo.setBorder(new EmptyBorder(10,10,10,10));
 		
-		// Panel Action
-		this.panelAction = new JPanel();
-		this.panelAction.setBackground(new Color(200, 200, 250));
-
-		this.lblNom = new JLabel("Nom de la " + this.getType() + " : ");
+		this.panelInfoNom = new JPanel(new BorderLayout());
 
 		this.txtNom = new JTextField(30);
+
+		/* ACTION */
+		this.panelAction = new JPanel();
+		this.panelAction.setBackground(new Color(200, 200, 250));
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
@@ -62,13 +65,13 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/
-		// Panel Info
+		/* INFO */
 		this.add(this.panelInfo, BorderLayout.CENTER);
 
-		this.panelInfo.add(this.lblNom, BorderLayout.NORTH);
-		this.panelInfo.add(this.txtNom, BorderLayout.CENTER);
+		this.panelInfoNom.add(new JLabel("Nom de la " + this.getType() + " : "), BorderLayout.NORTH);
+		this.panelInfoNom.add(this.txtNom, BorderLayout.CENTER);
 
-		// Panel Action
+		/* ACTION */
 		this.add(this.panelAction, BorderLayout.SOUTH);
 		this.panelAction.add(this.btnAnnuler);
 		this.panelAction.add(this.btnValider);
