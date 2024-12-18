@@ -77,20 +77,6 @@ public class BanqueDeQuestions
 	}
 
 	/**
-	 * Ajoute une question à la banque de questions
-	 * 
-	 * @param question la question à ajouter
-	 * @return boolean
-	 */
-	public boolean ajouterQuestions(Question question)
-	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		return true;
-	}
-
-	/**
 	* Lecture du fichier CSV qui contient les questions
 	*
 	* @param nomFichierCSV le chemin du fichier CSV
@@ -214,6 +200,21 @@ public class BanqueDeQuestions
 			System.out.println("Le fichier n'a pas été trouvé : " + fnfe.getMessage());
 		}
 	}
+
+	/**
+	 * Ajoute une question à la banque de questions
+	 * 
+	 * @param question la question à ajouter
+	 * @return         true si la question a été ajoutée, false sinon
+	 */
+	public boolean ajouterQuestions(Question question)
+	{
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		return true;
+	}
+
 	/**
 	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
 	 * 

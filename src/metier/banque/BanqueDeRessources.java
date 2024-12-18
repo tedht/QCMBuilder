@@ -101,6 +101,33 @@ public class BanqueDeRessources
 		return null;
 	}
 
+	/**
+	 * Retourne une ressource de la banque de ressources.
+	 * 
+	 * @param nomRessource le nom de la ressource à retourner.
+	 * @return la ressource correspondante, ou null si elle n'existe pas.
+	 */
+	public Notion getNotion(String nomRessource, String nomNotion)
+	{
+		List<Notion> lstNotions;
+
+
+		for (Ressource ressource : this.lstRessources)
+		{
+			if (ressource.getNom().equals(nomRessource))
+			{
+				lstNotions = ressource.getNotions();
+
+				for (Notion notion : lstNotions)
+				{
+					if (notion.getNom().equals(nomNotion))
+						return notion;
+				}
+			}
+		}
+		return null;
+	}
+
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
