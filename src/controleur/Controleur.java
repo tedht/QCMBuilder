@@ -171,7 +171,7 @@ public class Controleur
 	 */
 	public void creerRessource(String nomRessource) 
 	{
-		this.metier.creerRessource(nomRessource);
+		this.metier.creerRessource("mmm", nomRessource);
 	}
 
 	/**

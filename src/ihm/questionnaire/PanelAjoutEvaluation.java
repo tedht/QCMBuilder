@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
+import ihm.questionnaire.tableau.GrilleNotionsEditor;
 import ihm.questionnaire.tableau.GrilleNotionsModel;
 import ihm.questionnaire.tableau.GrilleNotionsRenderer;
 import metier.entite.Ressource;
@@ -48,7 +49,7 @@ public class PanelAjoutEvaluation extends JPanel implements ActionListener
 		this.panelInfo = new JPanel(new BorderLayout());
 		this.panelInfo.setBorder(new EmptyBorder(20,20,20,20));
 
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, null));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, null));
 		this.spGrilleNotions  = new JScrollPane(this.tblGrilleNotions);
 
 		/* ACTION */
@@ -101,7 +102,7 @@ public class PanelAjoutEvaluation extends JPanel implements ActionListener
 	public void majTabNotions(Ressource ressource) 
 	{
 		// Création d'une nouvelle Instance de tblGrilleNotions
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, ressource));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, ressource));
 		
 		// Paramétrage
 		this.tblGrilleNotions.getTableHeader().setReorderingAllowed(false); 
@@ -114,6 +115,11 @@ public class PanelAjoutEvaluation extends JPanel implements ActionListener
 			this.tblGrilleNotions.getColumnModel()
 								 .getColumn(i)
 								 .setCellRenderer(new GrilleNotionsRenderer());
+			
+			if(i > 1)
+			this.tblGrilleNotions.getColumnModel()
+			                     .getColumn(i)
+								 .setCellEditor(new GrilleNotionsEditor());
 		}
 
 		// Suppression de l'effet de sélection
@@ -144,6 +150,11 @@ public class PanelAjoutEvaluation extends JPanel implements ActionListener
 
 		this.panelInfo.revalidate();
 		this.panelInfo.repaint();
+	}
+
+	public void setBtnGenererEnabled(boolean b) 
+	{
+		this.btnGenerer.setEnabled(b);
 	}
 	
 }

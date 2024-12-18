@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
+import ihm.questionnaire.PanelAjoutEvaluation;
+import metier.entite.Notion;
 import metier.entite.Ressource;
 
 /**
@@ -17,26 +19,31 @@ import metier.entite.Ressource;
  */
 public class GrilleNotionsModel extends AbstractTableModel
 {
-	private Controleur ctrl;
+	private Controleur           ctrl;
+	private PanelAjoutEvaluation panel;
 
 	private String[]   tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleNotionsModel (Controleur ctrl, Ressource ressource)
+	private int[]      tabNbQuestionsDiff;
+
+	public GrilleNotionsModel(Controleur ctrl, PanelAjoutEvaluation panel, Ressource ressource)
 	{
-		this.ctrl = ctrl;
+		this.ctrl  = ctrl;
+		this.panel = panel;
 
-		String notion;
+		this.tabNbQuestionsDiff = new int[4];
 
-		List<String> lstNotions = this.ctrl.getNotions(ressource) != null ? this.ctrl.getNotions(ressource) : new ArrayList<String>();
+		String nomNotion;
+		List<Notion> lstNotions = this.ctrl.getNotions(ressource) != null ? this.ctrl.getNotions(ressource) : new ArrayList<Notion>();
 
 		tabDonnees = new Object[lstNotions.size()+2][7];
 
 		for ( int lig = 0; lig < lstNotions.size(); lig++)
 		{
-			notion = lstNotions.get(lig);
+			nomNotion = lstNotions.get(lig).getNom();
 
-			tabDonnees[lig][0] = notion;
+			tabDonnees[lig][0] = nomNotion;
 			tabDonnees[lig][1] = false;
 			tabDonnees[lig][2] = null;
 			tabDonnees[lig][3] = null;
@@ -97,18 +104,37 @@ public class GrilleNotionsModel extends AbstractTableModel
 		{
 			if (value instanceof Integer && 0 <= (Integer)value && (Integer)value <= 999)
 			{
-				this.tabDonnees[lig][col] = value;
+				Integer oldVal = (Integer)this.tabDonnees[lig][col];
+				Integer newVal = (Integer)value;
+
+				this.tabDonnees[lig][col] = newVal;
 				this.fireTableCellUpdated(lig, col);
 
-				this.tabDonnees[this.getRowCount()-1][col] = (Integer)this.tabDonnees[this.getRowCount()-1][col] + (Integer)value;
+				this.tabNbQuestionsDiff[col-2] = this.tabNbQuestionsDiff[col-2] - oldVal + newVal;
+				this.tabDonnees[this.getRowCount()-1][col] = this.tabNbQuestionsDiff[col-2];
 				this.fireTableCellUpdated(this.getRowCount()-1, col);
 
-				int somTotal = Integer.parseInt(((String)this.tabDonnees[this.getRowCount()-1][this.getColumnCount()-1]).substring(4)) 
-				               + ((Integer) value);
-				this.tabDonnees[this.getRowCount()-1][this.getColumnCount()-1] = "Σ = " + somTotal;
+				int nbQuestionsTotales = this.getNbQuestionsTotales();
+
+				this.tabDonnees[this.getRowCount()-1][this.getColumnCount()-1] = "Σ = " + nbQuestionsTotales;
 				this.fireTableCellUpdated(this.getRowCount()-1, this.getColumnCount()-1);
+
+				if(nbQuestionsTotales > 0)
+					this.panel.setBtnGenererEnabled(true);
+				else
+					this.panel.setBtnGenererEnabled(false);
+
+
 			}
 		}
+	}
+
+	public int getNbQuestionsTotales()
+	{
+		return   this.tabNbQuestionsDiff[0] 
+			   + this.tabNbQuestionsDiff[1] 
+			   + this.tabNbQuestionsDiff[2] 
+			   + this.tabNbQuestionsDiff[3];
 	}
 
 

@@ -1,4 +1,10 @@
+- joptionpane pour exporter questionnaire
+- apercu d'une questionnaire générée
+
 - Double clic pour afficher les ressource / notions / questions
+- ajouter une piece jointe à une question
+
+- java doc
 
 couleurs : 
 - vert TF : 186,221,194

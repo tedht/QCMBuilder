@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
+import metier.entite.Notion;
 import metier.entite.Ressource;
 
 /**
@@ -227,9 +228,9 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 		if(e.getSource() == this.ddlstRessource) 
 		{  
 			this.ddlstNotion.removeAllItems();
-			for(String notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
+			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
 			{
-				this.ddlstNotion.addItem(notion);
+				this.ddlstNotion.addItem(notion.getNom());
 			}
 			this.ddlstNotion.setSelectedIndex(-1);
 			this.ddlstNotion.setEnabled(true);

@@ -24,8 +24,6 @@ public class Ressource
 	private List<Notion> lstNotions;
 	private String       code;
 
-
-
 	/*--------------*/
 	// Constructeur //
 	/*--------------*/

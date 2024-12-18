@@ -1,6 +1,7 @@
 package ihm.questionnaire;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
@@ -30,8 +31,8 @@ public class FrameCreerEvaluation extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelParametresEvaluation = new PanelParametresEvaluation(ctrl, this);
-		this.panelAjoutEvaluation      = new PanelAjoutEvaluation     (ctrl, this);
+		this.panelParametresEvaluation = new PanelParametresEvaluation(this.ctrl, this);
+		this.panelAjoutEvaluation      = new PanelAjoutEvaluation     (this.ctrl, this);
 
 		this.pagePrecedente();
 	}
@@ -41,24 +42,21 @@ public class FrameCreerEvaluation extends JFrame
 		this.ihm.reinitAffichage();
 	}
 
-	/*
-	 * Il n'y a que 2 pages, donc on simplifie la gestion de la taille de la fenêtre
-	 * 
-	 */
-
 	public void pagePrecedente()
 	{
 		this.remove    (this.panelAjoutEvaluation); 
-		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_1);
 		this.add       (this.panelParametresEvaluation);
+		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_1);
 		this.revalidate();
 		this.repaint   ();
 	}
+	
 	public void pageSuivante()
 	{
-		this.remove    (this.panelParametresEvaluation); 
-		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_2);
+		this.remove    (this.panelParametresEvaluation);
 		this.add       (this.panelAjoutEvaluation);
+		this.setSize   (IHM.LARGEUR_CREER_EVALUATION, IHM.HAUTEUR_CREER_EVALUATION_PAGE_2);
+		this.repaint   ();
 		this.revalidate();
 		this.repaint   ();
 	}
