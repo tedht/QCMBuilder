@@ -2,6 +2,7 @@ package metier;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,12 +17,14 @@ import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
-
+import metier.entite.question.TypeQuestion;
 import metier.entite.question.association.Association;
 import metier.entite.question.qcm.QCM;
 import metier.entite.question.elimination.Elimination;
 
-import metier.entite.question.Proposition;
+import metier.entite.question.qcm.PropositionQCM;
+import metier.entite.question.association.PropositionAssociation;
+import metier.entite.question.elimination.PropositionElimination;
 
 /** Classe QCMBuilder
  * 
@@ -145,7 +148,7 @@ public class QCMBuilder
 		DetailsQuestion details;
 
 
-		details = this.lireDetailsQuestion(detailsQuestion);
+		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.QCM);
 
 		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
 		              details.temps(), details.note(), unique);
@@ -169,7 +172,7 @@ public class QCMBuilder
 		DetailsQuestion details;
 
 
-		details = this.lireDetailsQuestion(detailsQuestion);
+		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ASSOCIATION);
 
 		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
@@ -193,7 +196,7 @@ public class QCMBuilder
 		DetailsQuestion details;
 
 
-		details = this.lireDetailsQuestion(detailsQuestion);
+		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ELIMINATION);
 
 		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
@@ -296,7 +299,7 @@ public class QCMBuilder
 		}
 	}
 
-	private DetailsQuestion lireDetailsQuestion(String detailsQuestion)
+	private DetailsQuestion lireDetailsQuestion(String detailsQuestion, TypeQuestion type)
 	{
 		Scanner sc;
 
@@ -308,12 +311,20 @@ public class QCMBuilder
 		String        intitule;
 		String        explication;
 
-		List<Proposition> lstPropositions;
+		List<PropositionQCM>         lstPropositionsQCM;
+		List<PropositionAssociation> lstPropositionsAssociation;
+		List<PropositionElimination> lstPropositionsElimination;
+
+		String prop;
+
+		int ordreElim, nbPtPerdu;
 
 
+		lstPropositionsAssociation = null;
+		lstPropositionsElimination = null;
+		lstPropositionsQCM         = null;
 		try
 		{
-			lstPropositions = new ArrayList<Proposition>();
 			sc = new Scanner(new FileInputStream(detailsQuestion), "UTF8");
 		
 			sc.useDelimiter("\t");
@@ -326,15 +337,56 @@ public class QCMBuilder
 			intitule    = sc.next();
 			explication = sc.next();
 
-			/*while(sc.hasNext())
+			if (type == TypeQuestion.QCM)
 			{
+				lstPropositionsQCM = new ArrayList<PropositionQCM>();
 				
-			}*/
+				while (sc.hasNext())
+				{
+					prop = sc.next();
+					lstPropositionsQCM.add(new PropositionQCM(prop.substring(2),
+					prop.substring(0,2).equals("V:")));
+				}
+			}
+				
+			if (type == TypeQuestion.ASSOCIATION)
+			{
+				lstPropositionsAssociation = new ArrayList<PropositionAssociation>();
+				
+				while (sc.hasNext())
+				{
+					lstPropositionsAssociation.add(new PropositionAssociation(sc.next(), sc.next()));
+				}
+			}
+				
+			if (type == TypeQuestion.ELIMINATION)
+			{
+				lstPropositionsElimination = new ArrayList<PropositionElimination>();
+				
+				while (sc.hasNext())
+				{
+					prop = sc.next();
+
+					if(prop.startsWith("F:"))
+					{
+						ordreElim = Integer.parseInt(prop.substring(prop.indexOf(":") + 1, prop.indexOf    (":") + 3));
+						nbPtPerdu = Integer.parseInt(prop.substring(prop.indexOf(":") + 4, prop.indexOf    (":") + 5));
+					}
+					else
+					{
+						ordreElim = 0;
+						nbPtPerdu = 0;
+					}
+
+					lstPropositionsElimination.add(new PropositionElimination(prop.substring(prop.lastIndexOf(":") + 1), prop.startsWith("V:"), ordreElim, nbPtPerdu));
+				}
+			}
 			
 
 			sc.close();
 
-			return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication);
+			return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication, lstPropositionsQCM, lstPropositionsAssociation, lstPropositionsElimination);
+		
 		}
 		catch (Exception e)
 		{
