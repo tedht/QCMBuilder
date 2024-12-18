@@ -3,7 +3,6 @@ package metier.entite.question;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.Optional;
 
 public class PieceJointe
 {
@@ -21,9 +20,12 @@ public class PieceJointe
 	 */
 	public PieceJointe(String cheminFichierOriginal, String cheminFichier)
 	{
-		this.nomPieceJointe = "fic" + String.format("%05d", ++NUM_PIECE_JOINTE);
+		PieceJointe.NUM_PIECE_JOINTE = PieceJointe.getNumPieceJointe();
+
+		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.NUM_PIECE_JOINTE);
 		this.extension      = cheminFichierOriginal.substring(cheminFichierOriginal.lastIndexOf('.') + 1);
-		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
+		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) +
+		                      this.nomPieceJointe + "." + this.extension);
 
 		try
 		{
@@ -108,29 +110,42 @@ public class PieceJointe
 		return true;
 	}
 
-	/*public static int getNumPieceJointe()
+	public static int getNumPieceJointe()
 	{
-		Path startPath = Paths.get("data/");  // Répertoire à partir duquel commencer le parcours
-		
-		int max = 0;
-		int nb;
-		try {
-			// Utilisation de Files.walk() pour parcourir l'arborescence de manière récursive
-			Files.walk(startPath)
-				.forEach(path -> {
-					// Afficher chaque chemin de fichier ou répertoire rencontré
-					
-					nb = Integer.parseInt(path.toString().substring(3,8));
-					System.out.println(path);
+		Path repDep;
+		MaxFileFinder visiteur;
 
-					if (max < nb) max = nb;
-				});
-		} catch (IOException e) {
-			System.err.println("Erreur lors du parcours de l'arborescence : " + e.getMessage());
+
+		// Répertoire de départ pour l'exploration
+		repDep = Paths.get("ressources/");
+
+		// Création d'une instance de notre visiteur personnalisé
+		visiteur = new MaxFileFinder();
+
+		// Parcours de l'arborescence
+		try
+		{
+			Files.walkFileTree(repDep, visiteur);
+		}
+		catch (IOException e)
+		{
+			System.out.println("Erreur lors du walkFileTree : " + e.getMessage());
+		}
+		
+
+		// Affichage du résultat
+		if (visiteur.getMaxFile() != null)
+		{
+			System.out.println("Le fichier avec le plus grand numéro est : " + visiteur.getMaxFile());
+			System.out.println("Son numéro est : " + visiteur.getMaxNb());
+		}
+		else
+		{
+			System.out.println("Aucun fichier correspondant trouvé.");
 		}
 
-		return 1;
-	}*/
+		return visiteur.getMaxNb();
+	}
 
 
 	/**
@@ -154,14 +169,14 @@ public class PieceJointe
 		PieceJointe pj1, pj2, pj3;
 
 
-		pj1 = new PieceJointe("data/test1.txt", "data/");
-		pj2 = new PieceJointe("data/test2.csv", "data/");
-		pj3 = new PieceJointe("data/test3.pdf", "data/");
+		pj1 = new PieceJointe("data/test1.txt", "ressources/R1.01 Initiation au développement/Abstraction/");
+		pj2 = new PieceJointe("data/test2.csv", "ressources/R1.02 Développement interfaces Web/CSS/");
+		pj3 = new PieceJointe("data/test3.pdf", "ressources/R3.06 Architecture des réseaux/Sockets/");
 
 		System.out.println(pj1);
 		System.out.println(pj2);
 		System.out.println(pj3);
 
-		// System.out.println(PieceJointe.getNumPieceJointe());
+		System.out.println(PieceJointe.getNumPieceJointe());
 	}
 }

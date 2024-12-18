@@ -283,4 +283,15 @@ public class Ressource
 	{
 		this.cheminFichier = null;
 	}
+
+
+	/**
+	 * Retourne sous forme textuel l'objet Ressource
+	 * 
+	 * @return l'objet Ressource sous forme textuel (code + nom)
+	 */
+	public String toString()
+	{
+		return this.code + " " + this.nom;
+	}
 }
