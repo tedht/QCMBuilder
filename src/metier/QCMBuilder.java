@@ -1,11 +1,12 @@
 package metier;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
-import metier.banque.BanqueDeNotions;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
 
@@ -15,7 +16,12 @@ import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
+
+import metier.entite.question.association.Association;
 import metier.entite.question.qcm.QCM;
+import metier.entite.question.elimination.Elimination;
+
+import metier.entite.question.Proposition;
 
 /** Classe QCMBuilder
  * 
@@ -127,16 +133,6 @@ public class QCMBuilder
 		}
 	}
 
-	public void creerQuestion() 
-	{
-		QCM qcm;
-
-
-		qcm = new QCM(this.ressourceActive, this.notionActive, Difficulte.FACILE,  30, 1.0, true);
-		qcm.setIntitule("A quoi sert le chiffrement ?");
-		this.banqueQuestions.ajouterQuestions(qcm);
-		this.banqueQuestions.sauvegarderQuestions("data/questions.csv");
-	}
 
 	public void creerPieceJointe(String cheminFichier, Question question)
 	{
@@ -145,6 +141,22 @@ public class QCMBuilder
 
 	public List<String> creerQCM(String detailsQuestion, boolean unique) 
 	{
+		QCM qcm;
+		DetailsQuestion details;
+
+
+		details = this.lireDetailsQuestion(detailsQuestion);
+
+		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
+		              details.temps(), details.note(), unique);
+
+		this.banqueQuestions.ajouterQuestions(qcm);
+
+		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
+		{
+			qcm.ajouterProposition(details.propositions().get(cpt));
+		}*/
+		
 		List<String> lstErreurs = new ArrayList<String>();
 
 
@@ -153,6 +165,22 @@ public class QCMBuilder
 
 	public List<String> creerAssociation(String detailsQuestion) 
 	{
+		Association asso;
+		DetailsQuestion details;
+
+
+		details = this.lireDetailsQuestion(detailsQuestion);
+
+		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
+		                       details.temps(), details.note());
+		
+		this.banqueQuestions.ajouterQuestions(asso);
+
+		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
+		{
+			asso.ajouterProposition(details.propositions().get(cpt));
+		}*/
+
 		List<String> lstErreurs = new ArrayList<String>();
 
 
@@ -161,6 +189,23 @@ public class QCMBuilder
 
 	public List<String> creerElimination(String detailsQuestion) 
 	{
+		Elimination elim;
+		DetailsQuestion details;
+
+
+		details = this.lireDetailsQuestion(detailsQuestion);
+
+		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
+		                       details.temps(), details.note());
+
+
+		this.banqueQuestions.ajouterQuestions(elim);
+
+		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
+		{
+			elim.ajouterProposition(details.propositions().get(cpt));
+		}*/
+		
 		List<String> lstErreurs = new ArrayList<String>();
 
 
@@ -249,6 +294,56 @@ public class QCMBuilder
 				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
 			}
 		}
+	}
+
+	private DetailsQuestion lireDetailsQuestion(String detailsQuestion)
+	{
+		Scanner sc;
+
+		Ressource     ressource;
+		Notion        notion;
+		Difficulte    difficulte;
+		int           temps;
+		double        note;
+		String        intitule;
+		String        explication;
+
+		List<Proposition> lstPropositions;
+
+
+		try
+		{
+			lstPropositions = new ArrayList<Proposition>();
+			sc = new Scanner(new FileInputStream(detailsQuestion), "UTF8");
+		
+			sc.useDelimiter("\t");
+
+			ressource   = this.banqueRessources.getRessource(sc.next());
+			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
+			difficulte  = Difficulte.fromInt(sc.nextInt());
+			temps       = sc.nextInt();
+			note        = sc.nextDouble();
+			intitule    = sc.next();
+			explication = sc.next();
+
+			/*while(sc.hasNext())
+			{
+				
+			}*/
+			
+
+			sc.close();
+
+			return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Erreur lors de la lecture du détails de la question : " + e.getMessage());
+			return null;
+		}
+
+		
+
 	}
 
 

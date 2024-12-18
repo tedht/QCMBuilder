@@ -29,7 +29,6 @@ import metier.entite.question.elimination.*;
 public class BanqueDeQuestions 
 {
 	/* Attributs */
-	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
 
 
@@ -40,7 +39,6 @@ public class BanqueDeQuestions
 	 */
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
-		this.qcmBuilder   = qcmBuilder;
 		this.lstQuestions = new ArrayList<Question>();
 
 		//this.lireQuestions("data/questions.csv", "data/questions.txt");
@@ -76,20 +74,6 @@ public class BanqueDeQuestions
 			}
 		}
 		return lstQuestions;
-	}
-
-	/**
-	 * Ajoute une question à la banque de questions
-	 * 
-	 * @param question la question à ajouter
-	 * @return boolean
-	 */
-	public boolean ajouterQuestions(Question question)
-	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		return true;
 	}
 
 	/**
@@ -216,6 +200,21 @@ public class BanqueDeQuestions
 			System.out.println("Le fichier n'a pas été trouvé : " + fnfe.getMessage());
 		}
 	}
+
+	/**
+	 * Ajoute une question à la banque de questions
+	 * 
+	 * @param question la question à ajouter
+	 * @return         true si la question a été ajoutée, false sinon
+	 */
+	public boolean ajouterQuestions(Question question)
+	{
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		return true;
+	}
+
 	/**
 	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
 	 * 
