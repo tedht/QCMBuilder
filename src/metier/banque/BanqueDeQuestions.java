@@ -29,7 +29,6 @@ import metier.entite.question.elimination.*;
 public class BanqueDeQuestions 
 {
 	/* Attributs */
-	private QCMBuilder     qcmBuilder;
 	private List<Question> lstQuestions;
 
 
@@ -40,7 +39,6 @@ public class BanqueDeQuestions
 	 */
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
-		this.qcmBuilder   = qcmBuilder;
 		this.lstQuestions = new ArrayList<Question>();
 
 		//this.lireQuestions("data/questions.csv", "data/questions.txt");

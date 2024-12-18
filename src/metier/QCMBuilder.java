@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import metier.banque.BanqueDeNotions;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
 

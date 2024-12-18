@@ -1,13 +1,11 @@
 package metier.banque;
 
-import metier.entite.Ressource;
 
 import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import metier.QCMBuilder;
 import metier.entite.Notion;
 
 /** Classe BanqueDeNotions
