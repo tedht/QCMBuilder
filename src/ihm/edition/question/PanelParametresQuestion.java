@@ -25,12 +25,10 @@ import controleur.Controleur;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
-/**
- * Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une question
+/** Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une question
  * 
- * @author Ted Herambert
- * @date 2024/12/17
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PanelParametresQuestion extends JPanel implements ActionListener, ItemListener
 {
