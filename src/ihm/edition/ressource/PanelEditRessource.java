@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 import controleur.Controleur;
 import ihm.IHM;
-import ihm.edition.PanelEditEntite;
+import ihm.shared.PanelEditNom;
 
 
 /** Classe JPanel de la fenêtre d'édition d'une ressource.
@@ -16,7 +16,7 @@ import ihm.edition.PanelEditEntite;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class PanelEditRessource extends PanelEditEntite
+public class PanelEditRessource extends PanelEditNom
 {
 	private JTextField txtCode;
 
@@ -30,13 +30,14 @@ public class PanelEditRessource extends PanelEditEntite
 	public PanelEditRessource(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
-
+		
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/
+		this.lblNom.setText("Nom de la ressource :");
 
 		this.panelInfoCode = new JPanel(new BorderLayout());
-		this.txtCode = new JTextField(30);
+		this.txtCode       = new JTextField(30);
 
 		/*-------------------------------*/
 		/* positionnement des composants */

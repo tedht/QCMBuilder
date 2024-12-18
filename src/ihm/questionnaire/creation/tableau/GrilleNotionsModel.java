@@ -1,4 +1,4 @@
-package ihm.questionnaire.tableau;
+package ihm.questionnaire.creation.tableau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
-import ihm.questionnaire.PanelAjoutEvaluation;
+import ihm.questionnaire.creation.PanelAjoutQuestionnaire;
 import metier.entite.Notion;
 import metier.entite.Ressource;
 
@@ -20,14 +20,14 @@ import metier.entite.Ressource;
 public class GrilleNotionsModel extends AbstractTableModel
 {
 	private Controleur           ctrl;
-	private PanelAjoutEvaluation panel;
+	private PanelAjoutQuestionnaire panel;
 
 	private String[]   tabEntetes;
 	private Object[][] tabDonnees;
 
 	private int[]      tabNbQuestionsDiff;
 
-	public GrilleNotionsModel(Controleur ctrl, PanelAjoutEvaluation panel, Ressource ressource)
+	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, Ressource ressource)
 	{
 		this.ctrl  = ctrl;
 		this.panel = panel;

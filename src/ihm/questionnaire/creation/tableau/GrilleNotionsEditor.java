@@ -1,4 +1,4 @@
-package ihm.questionnaire.tableau;
+package ihm.questionnaire.creation.tableau;
 
 import java.awt.Color;
 import java.awt.Component;

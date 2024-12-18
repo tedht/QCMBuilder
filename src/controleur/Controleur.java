@@ -256,9 +256,9 @@ public class Controleur
 	/**
 	 * Génére une évaluation.
 	 */
-	public void genererEvaluation(String cheminFichier) 
+	public void genererQuestionnaire(String cheminFichier) 
 	{
-		this.metier.genererEvaluation(cheminFichier);
+		this.metier.genererQuestionnaire(cheminFichier);
 	}
 
 

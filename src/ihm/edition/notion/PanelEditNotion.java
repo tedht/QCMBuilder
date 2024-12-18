@@ -2,7 +2,7 @@ package ihm.edition.notion;
 
 import controleur.Controleur;
 import ihm.IHM;
-import ihm.edition.PanelEditEntite;
+import ihm.shared.PanelEditNom;
 
 
 /** Classe JPanel de la fenêtre d'édition d'une notion
@@ -10,7 +10,7 @@ import ihm.edition.PanelEditEntite;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class PanelEditNotion extends PanelEditEntite
+public class PanelEditNotion extends PanelEditNom
 {
 	/**
 	 * Constructeur de la classe PanelEditRessource.
@@ -24,13 +24,9 @@ public class PanelEditNotion extends PanelEditEntite
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/
+		this.lblNom.setText("Nom de la notion :");
 
 		this.panelInfo.add(this.panelInfoNom);
-	}
-
-	public String getType()
-	{
-		return "Notion";
 	}
 
 	public boolean valider()

@@ -35,7 +35,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	private JPanel panelContenu;
 	private JPanel panelBtnAjouter;
 
-	private JButton btnRetour, btnNouvelleEvaluation, btnAjouter;
+	private JButton btnRetour, btnNouvelleQuestionnaire, btnAjouter;
 	private JLabel  lblTitre, lblSousTitre, lblFilAriane;
 
 	private JScrollPane scrollPanelContenu;
@@ -73,7 +73,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		
 		/* Boutons */
 		this.btnRetour             = new JButton("Retour");
-		this.btnNouvelleEvaluation = new JButton("Nouvelle Évaluation");
+		this.btnNouvelleQuestionnaire = new JButton("Nouvelle Évaluation");
 		this.btnAjouter            = new JButton(" ");
 
 		/* Labels */
@@ -115,7 +115,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 0.0;
-        this.panelEntete.add(this.btnNouvelleEvaluation, gbc);
+        this.panelEntete.add(this.btnNouvelleQuestionnaire, gbc);
 
 		gbc.gridwidth = 3;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -152,7 +152,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/*---------------------------*/
 		this.btnRetour            .addActionListener(this); 
 		this.btnAjouter           .addActionListener(this); 
-		this.btnNouvelleEvaluation.addActionListener(this); 
+		this.btnNouvelleQuestionnaire.addActionListener(this); 
 	}
 
 	@Override
@@ -163,9 +163,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 			this.ctrl.popHistorique();
 			this.ihm.reinitAffichage();
 		}
-		if(e.getSource() == this.btnNouvelleEvaluation)
+		if(e.getSource() == this.btnNouvelleQuestionnaire)
 		{
-			this.ihm.nouvelleEvaluation();
+			this.ihm.nouvelleQuestionnaire();
 		}
 		if(e.getSource() == this.btnAjouter)
 		{
@@ -279,7 +279,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/* Entête */
 		this.btnRetour.setEnabled(true);
 
-		this.lblFilAriane.setText("Ressources >> " + ressource.getNom() + " >> " + notion);
+		this.lblFilAriane.setText("Ressources >> " + ressource.getNom() + " >> " + notion.getNom());
 		this.lblTitre    .setText(notion.getNom());
 		this.lblSousTitre.setText(this.ctrl.getNbQuestions(ressource, notion) + " question(s)");
 

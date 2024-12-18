@@ -27,7 +27,7 @@ public class QCMBuilder
 	private BanqueDeQuestions  banqueQuestions;
 	private BanqueDeRessources banqueRessources;
 
-	private Questionnaire questionnaire;
+	private Questionnaire Questionnaire;
 
 	private Ressource ressourceActive;
 
@@ -167,9 +167,9 @@ public class QCMBuilder
 		return lstErreurs;
 	}
 
-	public void genererEvaluation(String cheminFichier)
+	public void genererQuestionnaire(String cheminFichier)
 	{
-		this.questionnaire.genererEvaluation(cheminFichier);
+		this.Questionnaire.genererQuestionnaire(cheminFichier);
 	}
 
 	public void creerArborescence()

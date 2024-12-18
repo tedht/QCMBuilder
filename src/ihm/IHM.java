@@ -6,7 +6,8 @@ import controleur.Controleur;
 import ihm.edition.notion.FrameEditNotion;
 import ihm.edition.question.FrameEditQuestion;
 import ihm.edition.ressource.FrameEditRessource;
-import ihm.questionnaire.FrameCreerEvaluation;
+import ihm.questionnaire.creation.FrameCreerQuestionnaire;
+import ihm.questionnaire.generation.FrameExport;
 
 public class IHM 
 {
@@ -17,9 +18,9 @@ public class IHM
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 
-	public static final int LARGEUR_CREER_EVALUATION        = 500;
-	public static final int HAUTEUR_CREER_EVALUATION_PAGE_1 = 150;
-	public static final int HAUTEUR_CREER_EVALUATION_PAGE_2 = 300;
+	public static final int LARGEUR_CREER_QUESTIONNAIRE        = 500;
+	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
+	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 300;
 	
 	private Controleur ctrl;
 
@@ -29,7 +30,8 @@ public class IHM
 	private FrameEditNotion      frameEditNotion;
 	private FrameEditQuestion    frameEditQuestion;
 
-	private FrameCreerEvaluation frameCreerEvaluation;
+	private FrameCreerQuestionnaire frameCreerQuestionnaire;
+	private FrameExport             frameExport;
 	
 	public IHM(Controleur ctrl)
 	{
@@ -40,7 +42,8 @@ public class IHM
 
 	public void reinitAffichage() 
 	{
-		this.frameQCMBuilder.reinitAffichage();
+		if(this.frameQCMBuilder != null)
+			this.frameQCMBuilder.reinitAffichage();
 	}
 
 	public void creerRessource() 
@@ -138,33 +141,65 @@ public class IHM
 		}
 	}
 
-	public void nouvelleEvaluation() 
+	public void nouvelleQuestionnaire() 
 	{
-		if(this.frameCreerEvaluation == null)
+		if(this.frameCreerQuestionnaire == null)
 		{
 			// Crée une nouvelle fenêtre de création de'évaluation
-			this.frameCreerEvaluation = new FrameCreerEvaluation(this.ctrl, this);
+			this.frameCreerQuestionnaire = new FrameCreerQuestionnaire(this.ctrl, this);
 
-			// Positionne frameCreerEvaluation au centre de la fenêtre principale
-			this.frameCreerEvaluation.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameCreerEvaluation.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameCreerEvaluation.getHeight() / 2
+			// Positionne frameCreerQuestionnaire au centre de la fenêtre principale
+			this.frameCreerQuestionnaire.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameCreerQuestionnaire.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameCreerQuestionnaire.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
-			this.frameCreerEvaluation.setVisible(true);
+			this.frameCreerQuestionnaire.setVisible(true);
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameCreerEvaluation.addWindowListener(new WindowAdapter() {
+			this.frameCreerQuestionnaire.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    IHM.this.frameCreerEvaluation = null;
+                    IHM.this.frameCreerQuestionnaire = null;
                 }
             });
 		}
 		else
 		{
-			this.frameCreerEvaluation.toFront();
+			this.frameCreerQuestionnaire.toFront();
+		}
+	}
+
+	public void finaliserQuestionnaire() 
+	{
+		if(this.frameExport == null)
+		{
+			// Crée une nouvelle frame
+			this.frameExport = new FrameExport(this.ctrl, this);
+
+			// Positionne frameExport au centre de la fenêtre principale
+			this.frameExport.setLocation(
+				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameExport.getWidth () / 2,
+				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameExport.getHeight() / 2
+			);
+
+			// Rend la fenêtre visible
+			this.frameExport.setVisible(true);
+
+			// Ajoute un WindowListener pour fermer la fenêtre correctement
+			this.frameExport.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) 
+				{
+                    IHM.this.frameExport = null;
+                }
+            });
+		}
+		else
+		{
+			// Si frameExport existe déjà, elle est mise en avant
+			this.frameExport.toFront();
 		}
 	}
 

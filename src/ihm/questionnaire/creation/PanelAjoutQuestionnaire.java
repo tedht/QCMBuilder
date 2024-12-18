@@ -1,4 +1,4 @@
-package ihm.questionnaire;
+package ihm.questionnaire.creation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,9 +12,9 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Controleur;
-import ihm.questionnaire.tableau.GrilleNotionsEditor;
-import ihm.questionnaire.tableau.GrilleNotionsModel;
-import ihm.questionnaire.tableau.GrilleNotionsRenderer;
+import ihm.questionnaire.creation.tableau.GrilleNotionsEditor;
+import ihm.questionnaire.creation.tableau.GrilleNotionsModel;
+import ihm.questionnaire.creation.tableau.GrilleNotionsRenderer;
 import metier.entite.Ressource;
 
 /**
@@ -24,17 +24,17 @@ import metier.entite.Ressource;
  * @date 2024/12/16
  * @version 1.0
  */
-public class PanelAjoutEvaluation extends JPanel implements ActionListener
+public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 {
-	private Controleur           ctrl;
-	private FrameCreerEvaluation frame;
+	private Controleur              ctrl;
+	private FrameCreerQuestionnaire frame;
 
 	private JPanel panelInfo, panelAction;
 	private JTable tblGrilleNotions;
 	private JScrollPane spGrilleNotions;
 	private JButton btnPrecedent, btnGenerer;
 
-	public PanelAjoutEvaluation(Controleur ctrl, FrameCreerEvaluation frame) 
+	public PanelAjoutQuestionnaire(Controleur ctrl, FrameCreerQuestionnaire frame) 
 	{
 		this.ctrl  = ctrl;
 		this.frame = frame;
@@ -95,7 +95,7 @@ public class PanelAjoutEvaluation extends JPanel implements ActionListener
 
 		if(e.getSource() == this.btnGenerer)
 		{
-			// generer
+			this.frame.genererQuestionnaire();
 		}
 	}
 

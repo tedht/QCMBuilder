@@ -42,7 +42,7 @@ public class Questionnaire
 	 * 
 	 * @param ressource   la ressource associée au Questionnaire.
 	 * @param notions     la liste des notions associées au Questionnaire.
-	 * @param chronometre chronometre indiquant si le questionnaire est chronométré ou non.
+	 * @param chronometre chronometre indiquant si le Questionnaire est chronométré ou non.
 	 */
 	public Questionnaire(Ressource ressource, List<Notion> notions, boolean chronometre) 
 	{
@@ -223,7 +223,7 @@ public class Questionnaire
 	}
 
 	/**
-	 * Génère un fichier HTML contenant une structure de base pour un questionnaire.
+	 * Génère un fichier HTML contenant une structure de base pour un Questionnaire.
 	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
 	 *
 	 * @param  filePath                 Le chemin du dossier où le fichier HTML sera créé (non null).
@@ -231,7 +231,7 @@ public class Questionnaire
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-	public String genererEvaluation(String filePath) 
+	public String genererQuestionnaire(String filePath) 
 	{
 		String head, body, htmlContent;
 		File file, parentDir;
@@ -266,7 +266,7 @@ public class Questionnaire
 
 		try
 		{
-			file      = new File(filePath, "questionnaire.html");
+			file      = new File(filePath, "Questionnaire.html");
 			parentDir = file.getParentFile();
 
 			if (parentDir != null && !parentDir.exists())
@@ -324,6 +324,6 @@ public class Questionnaire
 		q1.ajouterNotion(n2);
 		System.out.println(q1);
 
-		q1.genererEvaluation("./");
+		q1.genererQuestionnaire("./");
 	}
 }

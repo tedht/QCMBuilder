@@ -1,4 +1,4 @@
-package ihm.questionnaire;
+package ihm.questionnaire.creation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,10 +27,10 @@ import metier.entite.Ressource;
  * @date 2024/12/16
  * @version 1.0
  */
-public class PanelParametresEvaluation extends JPanel implements ActionListener, ItemListener
+public class PanelParametresQuestionnaire extends JPanel implements ActionListener, ItemListener
 {
 	private Controleur           ctrl;
-	private FrameCreerEvaluation frame;
+	private FrameCreerQuestionnaire frame;
 
 	private JPanel            panelInfo, panelAction;
 
@@ -41,7 +41,7 @@ public class PanelParametresEvaluation extends JPanel implements ActionListener,
 
 	private JButton           btnAnnuler, btnSuivant;
 
-	public PanelParametresEvaluation(Controleur ctrl, FrameCreerEvaluation frame) 
+	public PanelParametresQuestionnaire(Controleur ctrl, FrameCreerQuestionnaire frame) 
 	{
 		JPanel panelInfoRessource, panelInfoChronometre;
 		JPanel panelChronometre;

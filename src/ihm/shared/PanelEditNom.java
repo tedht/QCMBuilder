@@ -1,4 +1,4 @@
-package ihm.edition;
+package ihm.shared;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import ihm.IHM;
  * @date 2024/12/06
  * @version 1.0
  */
-public abstract class PanelEditEntite extends JPanel implements ActionListener
+public abstract class PanelEditNom extends JPanel implements ActionListener
 {
 	protected Controleur ctrl;
 	protected IHM        ihm;
@@ -30,6 +30,7 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 	protected JPanel        panelInfoNom;
 
 	protected JButton       btnAnnuler, btnValider;
+	protected JLabel        lblNom;
 	protected JTextField    txtNom;
 
 	/**
@@ -37,7 +38,7 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelEditEntite(Controleur ctrl, IHM ihm)
+	public PanelEditNom(Controleur ctrl, IHM ihm)
 	{
 		this.ctrl = ctrl;
 		this.ihm  = ihm;
@@ -53,6 +54,7 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 		
 		this.panelInfoNom = new JPanel(new BorderLayout());
 
+		this.lblNom = new JLabel("Nom :");
 		this.txtNom = new JTextField(30);
 
 		/* ACTION */
@@ -68,7 +70,7 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 		/* INFO */
 		this.add(this.panelInfo, BorderLayout.CENTER);
 
-		this.panelInfoNom.add(new JLabel("Nom de la " + this.getType() + " : "), BorderLayout.NORTH);
+		this.panelInfoNom.add(this.lblNom, BorderLayout.NORTH);
 		this.panelInfoNom.add(this.txtNom, BorderLayout.CENTER);
 
 		/* ACTION */
@@ -99,6 +101,5 @@ public abstract class PanelEditEntite extends JPanel implements ActionListener
 		}
 	}
 
-	public abstract String  getType();
 	public abstract boolean valider();
 }
