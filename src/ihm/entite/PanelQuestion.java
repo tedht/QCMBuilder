@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import controleur.Controleur;
 import ihm.IHM;
+import metier.entite.Notion;
 
 /**
  * Classe JPanel pour afficher une Notion.
@@ -15,6 +16,7 @@ import ihm.IHM;
  */
 public class PanelQuestion extends PanelEntite
 {
+	private int     id;
 	private boolean detail;
 	
 	/**
@@ -22,7 +24,7 @@ public class PanelQuestion extends PanelEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelQuestion(Controleur ctrl, IHM ihm, String titre, String sousTitre)
+	public PanelQuestion(Controleur ctrl, IHM ihm, String titre, String sousTitre, int id)
 	{
 		super(ctrl, ihm, titre, sousTitre);
 		
@@ -32,6 +34,23 @@ public class PanelQuestion extends PanelEntite
 		/* Activation des composants */
 		/*---------------------------*/
 		this.addMouseListener(new GereSourisQuestion());
+		this.btnModifier.addActionListener(this);
+		this.btnSupprimer.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getSource() == this.btnModifier)
+		{
+			
+		}
+
+		if(e.getSource() == this.btnSupprimer)
+		{
+			//this.ctrl.supprimerQuestion(id);
+			this.ihm.reinitAffichage();
+		}
 	}
 
 	private class GereSourisQuestion extends GereSouris

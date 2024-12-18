@@ -1,4 +1,4 @@
-- joptionpane pour exporter Questionnaire
+- exporter Questionnaire
 - apercu d'une Questionnaire générée
 - afficher une question lorsqu'on clique dessus
 - empecher la création de notion, ressource si string vide

@@ -14,7 +14,7 @@ import ihm.IHM;
  * @date 2024/12/10
  * @version 1.0
  */
-public abstract class PanelEntite extends JPanel
+public abstract class PanelEntite extends JPanel implements ActionListener
 {
 	protected Controleur ctrl;
 	protected IHM        ihm;
@@ -70,6 +70,7 @@ public abstract class PanelEntite extends JPanel
 		this.panelAction.add(this.btnModifier);
 		this.panelAction.add(this.btnSupprimer);
 		this.add(this.panelAction, BorderLayout.EAST);
+
 	}
 
 	protected class GereSouris extends MouseAdapter
