@@ -5,6 +5,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Classe MaxFileFinder
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class MaxFileFinder extends SimpleFileVisitor<Path>
 {
 	private String maxFile;

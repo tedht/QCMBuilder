@@ -7,7 +7,6 @@ import metier.entite.question.Proposition;
 /**
  * Classe PropositionElimination.
  * 
- * 
  * @author Equipe 03
  * @version 1.0 2024/16/12
  */

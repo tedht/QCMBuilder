@@ -68,6 +68,24 @@ public class BanqueDeRessources
 	}
 
 	/**
+	 * Retourne les noms des notions d'une ressource.
+	 * 
+	 * @param ressource
+	 * @return la liste des noms des notions de la ressource, ou null si la ressource n'existe pas.
+	 */
+	public List<String> getNomNotions(Ressource ressource) 
+	{
+		for(Ressource rsrc : this.lstRessources)
+		{
+			if(rsrc == ressource)
+			{
+				return ressource.getNomNotions();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Retourne une ressource de la banque de ressources.
 	 * 
 	 * @param nomRessource le nom de la ressource à retourner.

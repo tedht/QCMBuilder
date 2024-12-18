@@ -17,6 +17,11 @@ import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.qcm.QCM;
 
+/** Classe QCMBuilder
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class QCMBuilder 
 {
 	private BanqueDeQuestions  banqueQuestions;
@@ -50,6 +55,11 @@ public class QCMBuilder
 	public List<Notion> getNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNotions(ressource);
+	}
+
+		public List<String> getNomNotions(Ressource ressource) 
+	{
+		return this.banqueRessources.getNomNotions(ressource);
 	}
 
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 

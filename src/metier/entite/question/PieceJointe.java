@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 
+/** Classe PieceJointe
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class PieceJointe
 {
 	private static int NUM_PIECE_JOINTE;

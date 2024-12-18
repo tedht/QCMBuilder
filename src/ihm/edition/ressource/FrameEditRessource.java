@@ -6,12 +6,11 @@ import javax.swing.WindowConstants;
 import controleur.Controleur;
 import ihm.IHM;
 
-/**
- * Classe représentant la fenêtre d'édition (création ou modification) d'une ressource.
+
+/** Classe représentant la fenêtre d'édition (création ou modification) d'une ressource.
  * 
- * @author Ted Herambert
- * @date 2024/12/09
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class FrameEditRessource extends JFrame
 {

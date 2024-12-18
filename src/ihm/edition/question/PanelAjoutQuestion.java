@@ -29,12 +29,11 @@ import ihm.edition.question.proposition.PanelPropElim;
 import ihm.edition.question.proposition.PanelPropQCM;
 import ihm.edition.question.proposition.PanelPropQRM;
 
-/**
- * Classe JPanel pour saisir les paramètres intitiales d'une question
+
+/** Classe JPanel pour saisir les paramètres intitiales d'une question
  * 
- * @author Ted Herambert
- * @date 2024/12/17
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PanelAjoutQuestion extends JPanel implements ActionListener
 {

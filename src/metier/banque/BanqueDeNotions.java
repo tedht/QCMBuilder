@@ -10,14 +10,11 @@ import java.util.ArrayList;
 import metier.QCMBuilder;
 import metier.entite.Notion;
 
-/**
- * Classe BanqueDeNotions
+/** Classe BanqueDeNotions
  * 
  * @author Equipe 03
- * 
- * @version 1.0 du 09/12/2024
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-
 public class BanqueDeNotions {
 
 

@@ -14,12 +14,11 @@ import ihm.edition.question.proposition.PanelPropAssoc;
 import ihm.edition.question.proposition.PanelPropElim;
 import ihm.edition.question.proposition.PanelPropQCM;
 
-/**
- * Classe représentant la fenêtre d'édition (création ou modification) d'une question
+
+/** Classe représentant la fenêtre d'édition (création ou modification) d'une question
  * 
- * @author Ted Herambert
- * @date 2024/12/10
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class FrameEditQuestion extends JFrame
 {

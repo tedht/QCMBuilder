@@ -8,12 +8,10 @@ import javax.swing.JPanel;
 import ihm.edition.question.PanelAjoutQuestion;
 
 
-/**
+/** 
  * 
- * 
- * @author Ted Herambert
- * @date 2024/12/13
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public abstract class PanelProp extends JPanel implements ActionListener
 {

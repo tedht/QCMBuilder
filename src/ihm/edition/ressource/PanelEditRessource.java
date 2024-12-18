@@ -10,13 +10,11 @@ import controleur.Controleur;
 import ihm.IHM;
 import ihm.edition.PanelEditEntite;
 
-/**
- * Classe JPanel de la fenêtre d'édition d'une ressource.
+
+/** Classe JPanel de la fenêtre d'édition d'une ressource.
  * 
- * 
- * @author Ted Herambert
- * @date 2024/12/06
- * @version 1.0
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PanelEditRessource extends PanelEditEntite
 {

@@ -107,6 +107,18 @@ public class Ressource
 		return this.lstNotions;
 	}
 
+	public List<String> getNomNotions()
+	{
+		List<String> lstNomNotions = new ArrayList<>();
+
+		for(Notion notion : this.lstNotions)
+		{
+			lstNomNotions.add(notion.getNom());
+		}
+
+		return lstNomNotions;
+	}
+
 	/**
 	 * Retourne une notion de la liste des notions associée à Ressource.
 	 * 

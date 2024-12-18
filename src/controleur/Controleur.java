@@ -78,6 +78,17 @@ public class Controleur
 	}
 
 	/**
+	 * Retourne la liste des noms des notions associées à une ressource.
+	 * 
+	 * @param  ressource la ressource.
+	 * @return           la liste des noms.
+	 */
+	public List<String> getNomNotions(Ressource ressource)
+	{
+		return this.metier.getNomNotions(ressource);
+	}
+
+	/**
 	 * Retourne la liste des questions associées à une notion associée à une ressource.
 	 * 
 	 * @param  ressource la ressource.

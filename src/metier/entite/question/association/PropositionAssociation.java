@@ -2,6 +2,11 @@ package metier.entite.question.association;
 
 import metier.entite.question.Proposition;
 
+/** Classe PropositionAssociation
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class PropositionAssociation implements Proposition
 {
 	private String textGauche;
