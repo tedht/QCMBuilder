@@ -371,9 +371,6 @@ public abstract class Question
 		q2 = new QCM(new Ressource("R1.05","Init bd"                 ), new Notion("Jointure"     , 1, "R1.05"), Difficulte.DIFFICILE  , 30, 2, true);
 		q3 = new QCM(new Ressource("R3.06","Architecture des réseaux"), new Notion("Modele OSI"   , 2, "R3.06"), Difficulte.MOYEN      , 50, 2, true);
 
-		q1.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
-		q2.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
-		q3.ajouterPieceJointe( new PieceJointe("./data/test.txt"));
 
 		System.out.println(q1);
 		System.out.println(q2);

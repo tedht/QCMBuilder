@@ -125,7 +125,7 @@ public class QCMBuilder
 		qcm = new QCM(this.ressourceActive, this.notionActive, Difficulte.FACILE,  30, 1.0, true);
 		qcm.setIntitule("A quoi sert le chiffrement ?");
 		this.banqueQuestions.ajouterQuestions(qcm);
-		this.banqueQuestions.sauvegarderQuestions();
+		this.banqueQuestions.sauvegarderQuestions("data/questions.csv");
 	}
 
 	public void creerPieceJointe(String cheminFichier, Question question)

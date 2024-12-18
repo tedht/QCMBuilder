@@ -169,9 +169,9 @@ public class Controleur
 	 * 
 	 * @param nomRessource le nom de la nouvelle ressource.
 	 */
-	public void creerRessource(String nomRessource) 
+	public void creerRessource(String codeRessource, String nomRessource) 
 	{
-		this.metier.creerRessource("mmm", nomRessource);
+		this.metier.creerRessource(codeRessource, nomRessource);
 	}
 
 	/**

@@ -388,12 +388,13 @@ public class BanqueDeQuestions
 	/**
 	 * Créer une pièce jointe
 	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
+	public void creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
-		for (Question q : this.lstQuestions)
+		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt++)
 		{
-			if (q == question)
-				question.ajouterPieceJointe(new PieceJointe(cheminFichier));
+			if (this.lstQuestions.get(cpt) == question)
+				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" + question.getRessource() +
+				                                                                   "/question " + (cpt + 1) + "/complément"));
 		}
 	}
 
