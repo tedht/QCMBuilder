@@ -89,6 +89,6 @@ public class Notion
 	/*----------*/
 	public String toString()
 	{
-		return "Notion [nom=" + this.nom + ", id=" + this.id + ", codeRessource=" + this.codeRessource + "]";
+		return this.nom;
 	}
 }
