@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
@@ -321,6 +322,9 @@ public class QCMBuilder
 		lstPropositionsElimination = null;
 		lstPropositionsQCM         = null;
 
+
+		this.verifDetailsQuestion(detailsQuestion);
+
 		try
 		{
 			sc = new Scanner(detailsQuestion);
@@ -335,8 +339,6 @@ public class QCMBuilder
 			note        = sc.nextDouble();
 			intitule    = sc.next();
 			explication = sc.next();
-
-			System.out.println(ressource);
 
 			if (type == TypeQuestion.QCM)
 			{
@@ -398,7 +400,17 @@ public class QCMBuilder
 
 	private List<String> verifDetailsQuestion(String detailsQuestion)
 	{
-		
+		List<String> lstErreurs;
+
+		String formatTemps;
+
+
+		lstErreurs = new ArrayList<String>();
+
+		formatTemps = "^\\d{2}:\\d{2}$";
+
+		// Vérifie si le temps correspond au format XX:YY
+		return Pattern.matches(formatTemps, "");
 	}
 
 	private int enSeconde(String temps)

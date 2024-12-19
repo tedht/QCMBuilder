@@ -28,7 +28,7 @@ public record DetailsQuestion(Ressource ressource, Notion notion, Difficulte dif
 		if (temps < 0)                     throw new IllegalArgumentException("Le temps ne peut pas être négatif");
 		if (note < 0)                      throw new IllegalArgumentException("La note ne peut pas être négative");
 		if (intitule == null)              throw new IllegalArgumentException("L'intitulé ne peut pas être null");
-		if (intitule.equals(""))  throw new IllegalArgumentException("L'intitulé ne peut pas être vide");
+		if (intitule.equals(""))           throw new IllegalArgumentException("L'intitulé ne peut pas être vide");
 		if (propQCM   == null &&
 		    propAssos == null &&
 			propElim  == null   )          throw new IllegalArgumentException("Il doit y avoir au moins une proposition");
