@@ -438,8 +438,6 @@ public class QCMBuilder
 			sc.useDelimiter("\t");
 
 			ressource   = this.banqueRessources.getRessource(sc.next());
-			prop = sc.next();
-			ressource   = this.banqueRessources.getRessource(prop);
 			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
 			difficulte  = Difficulte.fromInt(sc.nextInt());
 			temps       = this.enSeconde(sc.next());
