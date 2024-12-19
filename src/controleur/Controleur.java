@@ -78,6 +78,18 @@ public class Controleur
 	}
 
 	/**
+	 * Retourne une notion à partir de son nom et de sa ressource.
+	 * 
+	 * @param  nomRessource le nom de la notion.
+	 * @param  ressource    la ressource
+	 * @return              la notion
+	 */
+	public Notion getNotion(String nomNotion, Ressource ressource) 
+	{
+		return this.metier.getNotion(nomNotion, ressource);
+	}
+
+	/**
 	 * Retourne la liste des noms des notions associées à une ressource.
 	 * 
 	 * @param  ressource la ressource.
@@ -253,9 +265,25 @@ public class Controleur
 		this.metier.genererQuestionnaire(cheminFichier);
 	}
 
+	public void supprimerRessource(String code) 
+	{
+
+	}
+	
+	public void supprimerNotion() 
+	{
+
+	}
+
+	public void supprimerQuestion() 
+	{
+
+	}
+
 
 	public static void main(String[] args) 
 	{
 		new Controleur();
 	}
+
 }

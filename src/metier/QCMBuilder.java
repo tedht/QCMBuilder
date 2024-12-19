@@ -407,4 +407,9 @@ public class QCMBuilder
 
 		qcmBuilder.creerArborescence();
 	}
+
+	public Notion getNotion(String nomNotion, Ressource ressource) 
+	{
+		return this.banqueRessources.getNotion(nomNotion, ressource.getNom());
+	}
 }

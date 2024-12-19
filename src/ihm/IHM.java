@@ -2,49 +2,113 @@ package ihm;
 
 import java.awt.event.*;
 
+import javax.swing.JFrame;
+
 import controleur.Controleur;
-import ihm.edition.notion.FrameEditNotion;
-import ihm.edition.question.FrameEditQuestion;
-import ihm.edition.ressource.FrameEditRessource;
-import ihm.questionnaire.creation.FrameCreerQuestionnaire;
-import ihm.questionnaire.generation.FrameExport;
+import ihm.ressource.FrameGestionRessource;
+import ihm.ressource.edit.FrameEditRessource;
+import ihm.notion.FrameGestionNotion;
+import ihm.notion.edit.FrameEditNotion;
+import ihm.question.FrameGestionQuestion;
+import ihm.question.edit.FrameEditQuestion;
+import ihm.questionnaire.FrameGestionQuestionnaire  ;
+import ihm.questionnaire.export.FrameExport;
 
 public class IHM 
 {
-	public static final int LARGEUR_QCM_BUILDER = 800;
-	public static final int HAUTEUR_QCM_BUILDER = 800;
+	public static final int MARGE = 5;
 
-	public static final int LARGEUR_EDIT_QUESTION        = 700;
-	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
-	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
+	public static final int LARGEUR_GESTION = 600;
+	public static final int HAUTEUR_GESTION = 680;
 
 	public static final int LARGEUR_CREER_QUESTIONNAIRE        = 500;
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 300;
+
+	public static final int LARGEUR_EDIT_QUESTION        = 700;
+	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
+	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 	
 	private Controleur ctrl;
 
-	private FrameQCMBuilder      frameQCMBuilder;
+	private FrameQCMBuilder           frameQCMBuilder;
 
-	private FrameEditRessource   frameEditRessource;
-	private FrameEditNotion      frameEditNotion;
-	private FrameEditQuestion    frameEditQuestion;
+	private FrameGestionRessource     frameGestionRessource;
+	private FrameGestionNotion        frameGestionNotion;
+	private FrameEditRessource        frameEditRessource;
+	private FrameEditNotion           frameEditNotion;
 
-	private FrameCreerQuestionnaire frameCreerQuestionnaire;
-	private FrameExport             frameExport;
+	private FrameGestionQuestion      frameGestionQuestion;
+	private FrameEditQuestion         frameEditQuestion;
+
+	private FrameGestionQuestionnaire frameGestionQuestionnaire;
+	private FrameExport               frameExport; 
+	
+	private int defaultX, defaultY;
 	
 	public IHM(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
-		this.frameQCMBuilder = new FrameQCMBuilder(ctrl, this);
+		this.frameQCMBuilder           = new FrameQCMBuilder          (this);
+		this.frameGestionRessource     = new FrameGestionRessource    (this.ctrl, this);
+		this.frameGestionNotion        = new FrameGestionNotion       (this.ctrl, this);
+		this.frameGestionQuestion      = new FrameGestionQuestion     (this.ctrl, this);
+		this.frameGestionQuestionnaire = new FrameGestionQuestionnaire(this.ctrl, this);
+
+		this.frameQCMBuilder.setLocation(IHM.MARGE,IHM.MARGE);
+		this.frameQCMBuilder.setVisible (true);
+
+		this.defaultX = this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () + IHM.MARGE;
+		this.defaultY = this.frameQCMBuilder.getY();
 	}
 
-	public void reinitAffichage() 
+	private void resetVisible()
 	{
-		if(this.frameQCMBuilder != null)
-			this.frameQCMBuilder.reinitAffichage();
+		this.frameGestionRessource    .setVisible(false);
+		this.frameGestionNotion       .setVisible(false);
+		this.frameGestionQuestion     .setVisible(false);
+		this.frameGestionQuestionnaire.setVisible(false);
 	}
+
+	private void afficher(JFrame frame, int posX, int posY)
+	{
+		if(frame == null) return;
+		
+		if(!frame.isVisible())
+		{
+			frame.setLocation(posX, posY);
+			frame.setVisible(true);
+		}
+		else
+		{
+			frame.toFront();
+		}
+	}
+
+	public void afficherRessourceNotion() 
+	{ 
+		this.resetVisible();
+		this.afficher(this.frameGestionRessource, this.defaultX, this.defaultY); 
+		this.afficher(this.frameGestionNotion, 
+		              this.defaultX + IHM.LARGEUR_GESTION + IHM.MARGE, 
+					  this.defaultY); 
+	}
+	public void afficherQuestion() 
+	{ 
+		this.resetVisible();
+		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
+	}
+	public void afficherQuestionnaire () 
+	{ 
+		this.resetVisible();
+		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
+	}
+	public void quitter() { System.exit(0); }
+
+	public void reinitAffichageRessource() { this.frameGestionRessource.reinitAffichage(); }
+	public void reinitAffichageNotion   () { this.frameGestionNotion   .reinitAffichage(); }
+	public void reinitAffichageQuestion () { this.frameGestionQuestion .reinitAffichage(); }
 
 	public void creerRessource() 
 	{
@@ -55,8 +119,8 @@ public class IHM
 
 			// Positionne frameEditRessource au centre de la fenêtre principale
 			this.frameEditRessource.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditRessource.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditRessource.getHeight() / 2
+				this.frameGestionRessource.getX() + this.frameGestionRessource.getWidth () / 2 - this.frameEditRessource.getWidth () / 2,
+				this.frameGestionRessource.getY() + this.frameGestionRessource.getHeight() / 4 - this.frameEditRessource.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -87,8 +151,8 @@ public class IHM
 
 			// Positionne frameEditNotion au centre de la fenêtre principale
 			this.frameEditNotion.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditNotion.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameEditNotion.getHeight() / 2
+				this.frameGestionNotion.getX() + this.frameGestionNotion.getWidth () / 2 - this.frameEditNotion.getWidth () / 2,
+				this.frameGestionNotion.getY() + this.frameGestionNotion.getHeight() / 4 - this.frameEditNotion.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -119,8 +183,8 @@ public class IHM
 
 			// Positionne frameEditQuestion au centre de la fenêtre principale
 			this.frameEditQuestion.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameEditQuestion.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameEditQuestion.getHeight() / 2
+				this.frameGestionQuestion.getX() + this.frameGestionQuestion.getWidth () / 2 - this.frameEditQuestion.getWidth () / 2,
+				this.frameGestionQuestion.getY() + this.frameGestionQuestion.getHeight() / 4 - this.frameEditQuestion.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -141,36 +205,6 @@ public class IHM
 		}
 	}
 
-	public void nouvelleQuestionnaire() 
-	{
-		if(this.frameCreerQuestionnaire == null)
-		{
-			// Crée une nouvelle fenêtre de création de'évaluation
-			this.frameCreerQuestionnaire = new FrameCreerQuestionnaire(this.ctrl, this);
-
-			// Positionne frameCreerQuestionnaire au centre de la fenêtre principale
-			this.frameCreerQuestionnaire.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameCreerQuestionnaire.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 4 - this.frameCreerQuestionnaire.getHeight() / 2
-			);
-
-			// Rend la fenêtre visible
-			this.frameCreerQuestionnaire.setVisible(true);
-
-			// Ajoute un WindowListener pour fermer la fenêtre correctement
-			this.frameCreerQuestionnaire.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    IHM.this.frameCreerQuestionnaire = null;
-                }
-            });
-		}
-		else
-		{
-			this.frameCreerQuestionnaire.toFront();
-		}
-	}
-
 	public void finaliserQuestionnaire() 
 	{
 		if(this.frameExport == null)
@@ -180,8 +214,8 @@ public class IHM
 
 			// Positionne frameExport au centre de la fenêtre principale
 			this.frameExport.setLocation(
-				this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () / 2 - this.frameExport.getWidth () / 2,
-				this.frameQCMBuilder.getY() + this.frameQCMBuilder.getHeight() / 2 - this.frameExport.getHeight() / 2
+				this.frameGestionQuestionnaire.getX() + this.frameGestionQuestionnaire.getWidth () / 2 - this.frameExport.getWidth () / 2,
+				this.frameGestionQuestionnaire.getY() + this.frameGestionQuestionnaire.getHeight() / 4 - this.frameExport.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -203,29 +237,4 @@ public class IHM
 		}
 	}
 
-	public static boolean estInt(String valeur)
-	{
-		try 
-		{
-			Integer.parseInt(valeur); 
-			return true;
-		} 
-		catch (NumberFormatException e) 
-		{
-			return false;
-		}
-	}
-
-	public static boolean estDouble(String valeur)
-	{
-		try 
-		{
-			Double.parseDouble(valeur); 
-			return true;
-		} 
-		catch (NumberFormatException e) 
-		{
-			return false;
-		}
-	}
 }
