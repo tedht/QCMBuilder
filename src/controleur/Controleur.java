@@ -285,8 +285,8 @@ public class Controleur
 	}
 
 	/**
-	 * Supprime une ressource à partie de son code.
-	 * @param codeRessource le code de la ressource
+	 * Supprime une ressource à partir de son code.
+	 * @param code le code de la ressource
 	 * 
 	 */
 	public void supprimerRessource(String code) 
