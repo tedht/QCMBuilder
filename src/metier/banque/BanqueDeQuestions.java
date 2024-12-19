@@ -226,21 +226,6 @@ public class BanqueDeQuestions
 	}
 
 	/**
-	 * Ajoute une question à la banque de questions
-	 * 
-	 * @param question la question à ajouter
-	 * @return         true si la question a été ajoutée, false sinon
-	 */
-	public boolean ajouterQuestions(Question question)
-	{
-		if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		this.sauvegarderQuestions("data/questions.csv");
-		return true;
-	}
-
-	/**
 	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
 	 * 
 	 * @param nomFichierCSV le chemin du fichier CSV
@@ -364,6 +349,21 @@ public class BanqueDeQuestions
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Ajoute une question à la banque de questions
+	 * 
+	 * @param question la question à ajouter
+	 * @return         true si la question a été ajoutée, false sinon
+	 */
+	public boolean ajouterQuestions(Question question)
+	{
+		if (question == null) return false;
+
+		this.lstQuestions.add(question);
+		this.sauvegarderQuestions("data/questions.csv");
+		return true;
 	}
 
 	/**
