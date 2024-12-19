@@ -47,7 +47,7 @@ public class PanelNotion extends PanelEntite
 	{
 		if(e.getSource() == this.btnModifier)
 		{
-			
+			this.ihm.modifierNotion(this.id);
 		}
 
 		if(e.getSource() == this.btnSupprimer)

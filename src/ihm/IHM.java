@@ -97,11 +97,13 @@ public class IHM
 	public void afficherQuestion() 
 	{ 
 		this.resetVisible();
+		this.frameGestionQuestion.maj();
 		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
 	}
 	public void afficherQuestionnaire () 
 	{ 
 		this.resetVisible();
+		this.frameGestionQuestionnaire.maj();
 		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
 	}
 	public void quitter() { System.exit(0); }
@@ -235,6 +237,21 @@ public class IHM
 			// Si frameExport existe déjà, elle est mise en avant
 			this.frameExport.toFront();
 		}
+	}
+
+	public void modifierRessource(String code) 
+	{
+
+	}
+
+	public void modifierNotion(int id) 
+	{
+
+	}
+
+	public void modifierQuestion(int id) 
+	{
+		
 	}
 
 }

@@ -138,20 +138,31 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 			panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
 			                               question.getIntitule(), 
 										   question.getNote() + " point(s), " + question.getTemps() + "s",
-										   ressource.getCode(),
-										   notion.getId());
+										   0);
 			this.panelContenu.add(panelCarte);
 		}
 
 		for(int i = 8 - lstQuestions.size(); i > 0; i--)
 		{
-			panelCarte = new PanelQuestion(null, null, "", "", "", 0);
+			panelCarte = new PanelQuestion(null, null, "", "", 0);
 			panelCarte.setVisible(false);
 			this.panelContenu.add(panelCarte);
 		}
 
 		this.revalidate();
 		this.repaint();
+	}
+
+	public void maj()
+	{
+		this.ddlstRessource.removeAllItems();
+		for(Ressource ressource : this.ctrl.getRessources())
+		{
+			this.ddlstRessource.addItem(ressource);
+		}
+		this.ddlstRessource.setSelectedIndex(-1);
+		this.ddlstRessource.setFocusable(false);
+		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
 	}
 	
 }

@@ -37,4 +37,9 @@ public class FrameGestionQuestion extends JFrame
 		this.panelGestionQuestion.afficher();
 	}
 
+	public void maj()
+	{
+		this.panelGestionQuestion.maj();
+	}
+
 }

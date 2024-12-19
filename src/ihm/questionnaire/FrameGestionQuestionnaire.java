@@ -60,9 +60,9 @@ public class FrameGestionQuestionnaire extends JFrame
 		this.ihm.finaliserQuestionnaire();
 	}
 
-	
-	public void majTabNotions() 
+	public void maj()
 	{
+		this.panelParametresQuestionnaire.majDdlstRessources();
 		this.panelAjoutQuestionnaire.majTabNotions(this.panelParametresQuestionnaire.getRessource());
 	}
 }

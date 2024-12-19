@@ -42,7 +42,7 @@ public class PanelEditNotion extends PanelEditNom
 
 		if(nom.isEmpty()) 
 			lstErreurs.add("Le nom est vide");
-		else if(this.ctrl.getNotion(nom, this.ctrl.getRessourceActive()) != null);
+		else if(this.ctrl.getNotion(nom, this.ctrl.getRessourceActive()) != null)
 			lstErreurs.add("La notion existe déjà");
 
 		if(lstErreurs.size() != 0)
