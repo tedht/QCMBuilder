@@ -241,13 +241,11 @@ public class BanqueDeQuestions
 				String nomFichierTXT = "ressources/" + question.getRessource().getCode() + " " 
 													 + question.getRessource().getNom () + "/" 
 				                                     + question.getNotion().   getNom () + "/" 
-													 +"question.txt";
+													 + "question"+ question.getNumQuestion() +".txt";
 				System.out.println(nomFichierCSV);
 				System.out.println(nomFichierTXT);
 
 				pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8"));
-
-
 
 				pw .print(question.getRessource   ().getCode  () + "\t");
 				pw .print(question.getRessource   ().getNom   () + "\t");

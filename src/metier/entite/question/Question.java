@@ -1,6 +1,11 @@
 package metier.entite.question;
 
 import java.util.List;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import metier.entite.Ressource;
@@ -17,6 +22,10 @@ public abstract class Question
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
+
+	private static       int    compteur; // Compteur partagé entre toutes les instances de Question
+	private static final String COMPTEUR_FILE = "data/compteur.txt";
+
 	private Ressource         ressource;
 	private Notion            notion;
 	private Difficulte        difficulte;
@@ -43,6 +52,8 @@ public abstract class Question
 	 */
 	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
 	{
+		compteur         = Question.nextNumQuestion();
+
 		this.ressource   = ressource;
 		this.notion      = notion;
 		this.difficulte  = difficulte;
@@ -54,6 +65,11 @@ public abstract class Question
 		this.explication = "";
 
 		this.lstPropositions = new ArrayList<Proposition>();
+	}
+
+	static
+	{
+		chargerCompteur(); // Charger la valeur persistante au démarrage
 	}
 
 	/*---------*/
@@ -145,6 +161,14 @@ public abstract class Question
 	 * @return l'indice de la proposition, ou -1 si elle n'existe pas.
 	 */
 	public int getPropositionId(Proposition prop) { return this.lstPropositions.indexOf(prop); }
+
+	/**
+	 * Retourne le numéro unique de la question.
+	 * 
+	 * @return le numéro unique de la question.
+	 */
+	public int getNumQuestion() { return compteur; }
+
 
 	/*---------*/
 	/* Setters */
@@ -326,6 +350,55 @@ public abstract class Question
 
 		this.lstPropositions.remove(i); // Supprime la proposition
 		return true;
+	}
+
+	/**
+	 * Retourne le numéro de la prochaine question.
+	 * 
+	 * @return le numéro de la prochaine question.
+	 */
+	public static int nextNumQuestion()
+	{
+
+		compteur++; // Incrémenter le compteur
+		System.out.println("compteur : " + compteur);
+		sauvegarderCompteur(); // Sauvegarder la nouvelle valeur
+		return compteur;
+	}
+
+	/**
+	 * Charge la valeur du compteur depuis un fichier.
+	 */
+	private static void chargerCompteur()
+	{
+		try (Scanner sc = new Scanner(new FileInputStream(COMPTEUR_FILE)))
+		{
+			if (sc.hasNextInt())
+			{
+				compteur = sc.nextInt(); // Charger la valeur sauvegardée
+			}
+			else
+			{
+				compteur = 0; // Valeur par défaut si le fichier est vide
+			}
+		} catch (FileNotFoundException e)
+		{
+			compteur = 0; // Fichier non trouvé, initialisation par défaut
+		}
+	}
+
+	/**
+	 * Sauvegarde la valeur actuelle du compteur dans un fichier.
+	 */
+	private static void sauvegarderCompteur()
+	{
+		try (PrintWriter pw = new PrintWriter(new FileOutputStream(COMPTEUR_FILE)))
+		{
+			pw.println(compteur);
+		} catch (FileNotFoundException e)
+		{
+			System.err.println("Erreur lors de la sauvegarde du compteur : " + e.getMessage());
+		}
 	}
 
 	/*----------*/
