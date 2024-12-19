@@ -17,7 +17,19 @@ public enum Difficulte
 	MOYEN      (2),
 	DIFFICILE  (3);
 
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private final int valeur;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur privé de l'énumération.
@@ -28,6 +40,12 @@ public enum Difficulte
 	{
 		this.valeur = valeur;
 	}
+
+
+
+	/*---------*/
+	// Getters //
+	/*---------*/
 
 	/**
 	 * Obtient la valeur entière associée à cette difficulté.
@@ -40,10 +58,34 @@ public enum Difficulte
 	}
 
 	/**
+	 * Retourne la couleur associé à la difficulté.
+	 * 
+	 * @return la couleur associé à la difficulté.
+	 */
+	public Color getCouleur()
+	{
+		return switch(this) 
+		{
+			case TRES_FACILE -> new Color(186, 221, 194);
+			case FACILE      -> new Color(181, 188, 211);
+			case MOYEN       -> new Color(202, 107, 119);
+			case DIFFICILE   -> new Color(189, 198, 196);
+
+			default -> Color.WHITE;
+		};
+	}
+
+
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
+
+	/**
 	 * Convertit une valeur entière en une difficulté.
 	 * 
-	 * @param valeur La valeur entière.
-	 * @return La difficulté correspondante.
+	 * @param  valeur                   La valeur entière.
+	 * @return                          La difficulté correspondante.
 	 * @throws IllegalArgumentException Si la valeur fournie ne correspond à aucune difficulté.
 	 */
 	public static Difficulte fromInt(int valeur) 
@@ -77,29 +119,5 @@ public enum Difficulte
 
 			default -> "";
 		};
-	}
-
-	/**
-	 * Retourne la couleur associé à la difficulté.
-	 * 
-	 * @return la couleur associé à la difficulté.
-	 */
-	public Color getCouleur()
-	{
-		return switch(this) 
-		{
-			case TRES_FACILE -> new Color(186, 221, 194);
-			case FACILE      -> new Color(181, 188, 211);
-			case MOYEN       -> new Color(202, 107, 119);
-			case DIFFICILE   -> new Color(189, 198, 196);
-
-			default -> Color.WHITE;
-		};
-	}
-
-	public static void main(String[] args)
-	{
-		Difficulte d = Difficulte.TRES_FACILE;
-		System.out.println(d);
 	}
 }

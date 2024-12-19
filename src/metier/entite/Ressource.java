@@ -8,7 +8,7 @@ import java.util.List;
  * Classe Ressource
  * 
  * @author  Equipe03
- * @version 1.0 du 09/12/2024
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Ressource 
 {
@@ -44,7 +44,7 @@ public class Ressource
 			this.nom           = nom;
 			this.lstNotions    = new ArrayList<Notion>();
 			this.cheminFichier = cheminFichier;
-		} 
+		}
 		else 
 		{
 			throw new IllegalArgumentException("Le nom de la ressource ne peut pas être null");
@@ -167,7 +167,7 @@ public class Ressource
 	 * Modifie le code associée à Ressource.
 	 * 
 	 * @param  code le nouveau code à associée à Ressource (non null).
-	 * @return     true si le code à été modifié, false sinon.
+	 * @return      true si le code à été modifié, false sinon.
 	 */
 	public boolean setCode(String code)
 	{
@@ -269,8 +269,8 @@ public class Ressource
 	/**
 	 * Supression d'une notion de la liste des notions associées à Ressource.
 	 * 
-	 * @param notion la notion à supprimer.
-	 * @return       true si la notion à été suprimmée, false sinon.
+	 * @param  notion la notion à supprimer.
+	 * @return        true si la notion à été suprimmée, false sinon.
 	 */
 	public boolean supprimerNotion(Notion notion) 
 	{
