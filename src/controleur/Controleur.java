@@ -17,8 +17,6 @@ import metier.QCMBuilder;
 public class Controleur
 {
 
-
-
 	/*-----------*/
 	// Attributs //
 	/*-----------*/
@@ -230,9 +228,9 @@ public class Controleur
 	 * @param  unique          true si le qcm est à réponse unique, false si il est à réponse multiples.
 	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
 	 */
-	public List<String> creerQCM(String detailsQuestion, boolean unique) 
+	public void creerQCM(String detailsQuestion, boolean unique) 
 	{
-		return this.metier.creerQCM(detailsQuestion, unique);
+		this.metier.creerQCM(detailsQuestion, unique);
 	}
 
 	/**
@@ -241,9 +239,9 @@ public class Controleur
 	 * @param  detailsQuestion toutes les informations de la questions.
 	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
 	 */
-	public List<String> creerAssociation(String detailsQuestion) 
+	public void creerAssociation(String detailsQuestion) 
 	{
-		return this.metier.creerAssociation(detailsQuestion);
+		this.metier.creerAssociation(detailsQuestion);
 	}
 
 	/**
@@ -252,9 +250,9 @@ public class Controleur
 	 * @param  detailsQuestion toutes les informations de la questions.
 	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
 	 */
-	public List<String> creerElimination(String detailsQuestion) 
+	public void creerElimination(String detailsQuestion) 
 	{
-		return this.metier.creerElimination(detailsQuestion);
+		this.metier.creerElimination(detailsQuestion);
 	}
 
 	/**

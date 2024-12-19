@@ -15,7 +15,7 @@ public enum TypeQuestion
 
 
 
-    /*-----------*/
+	/*-----------*/
 	// Attributs //
 	/*-----------*/
 
@@ -55,15 +55,15 @@ public enum TypeQuestion
 
 
     
-    /*-----------------*/
+	/*-----------------*/
 	// Autres méthodes //
 	/*-----------------*/
 
 	/**
      * Convertit une valeur entière en un type de question.
      * 
-     * @param valeur La valeur entière.
-     * @return Le type de question correspondant.
+     * @param  valeur                   La valeur entière.
+     * @return                          Le type de question correspondant.
      * @throws IllegalArgumentException Si la valeur fournie ne correspond à aucun type.
      */
     public static TypeQuestion fromInt(int valeur) 

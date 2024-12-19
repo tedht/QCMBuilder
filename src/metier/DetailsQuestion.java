@@ -1,7 +1,6 @@
 package metier;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import metier.entite.*;
 
@@ -19,7 +18,7 @@ import metier.entite.question.elimination.PropositionElimination;
  * @version 1.0 du 09/12/2024
  */
 public record DetailsQuestion(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, String intitule, String explication,
-                              List<PropositionQCM> propQCM, List<PropositionAssociation> prAssos, List<PropositionElimination> propElim)
+                              List<PropositionQCM> propQCM, List<PropositionAssociation> propAssos, List<PropositionElimination> propElim)
 {
 
 }

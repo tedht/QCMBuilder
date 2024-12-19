@@ -1,8 +1,6 @@
 package metier;
 
 import java.io.File;
-import java.io.FileInputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -43,51 +41,88 @@ public class QCMBuilder
 	private Notion    notionActive;
 
 	private Stack<String> historique;
+
 	
 	public QCMBuilder()
 	{
+		this.banqueRessources = new BanqueDeRessources(); 
+		this.banqueQuestions  = new BanqueDeQuestions(this);
+
 		this.ressourceActive = null;
 		this.notionActive    = null;
 
 		this.historique = new Stack<String>();
-
-
-		this.banqueRessources = new BanqueDeRessources(); 
-		this.banqueQuestions  = new BanqueDeQuestions(this);
 	}
 
+	/**
+	 * Retourne la liste des ressources
+	 * 
+	 * @return la liste des ressources
+	 */
 	public List<Ressource> getRessources() 
 	{
 		return this.banqueRessources.getRessources();
 	}
 
+	/**
+	 * Retourne la liste des notions
+	 * 
+	 * @param ressource la ressource
+	 * @return la liste des notions
+	 */
 	public List<Notion> getNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNotions(ressource);
 	}
 
-		public List<String> getNomNotions(Ressource ressource) 
+	/**
+	 * Retourne la liste des noms des notions
+	 * 
+	 * @param ressource la ressource
+	 * @return la liste des noms des notions
+	 */
+	public List<String> getNomNotions(Ressource ressource) 
 	{
 		return this.banqueRessources.getNomNotions(ressource);
 	}
 
+	/**
+	 * Retourne la liste des questions
+	 * 
+	 * @param ressource la ressource
+	 * @param notion la notion
+	 * @return la liste des questions
+	 */
 	public List<Question> getQuestions(Ressource ressource, Notion notion) 
 	{
 		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
 
+	/**
+	 * Modifie la ressource active
+	 * 
+	 * @param ressource la ressource active
+	 */
 	public void setRessourceActive(Ressource ressource) 
 	{
 		this.ressourceActive = ressource;
 		this.historique.add("R");
 	}
 
+	/**
+	 * Modifie la notion active
+	 *
+	 * @param notion la notion
+	 */
 	public void setNotionActive(Notion notion) 
 	{
 		this.notionActive = notion;
 		this.historique.add("N"+this.ressourceActive.getNom());
 	}
 
+	/**
+	 * Reset l'historique
+	 */
 	public void popHistorique()
 	{
 		if(!this.historique.empty())
@@ -106,27 +141,54 @@ public class QCMBuilder
 		}
 	}
 
+	/**
+	 * Retourne la ressource active
+	 * 
+	 * @return la ressource active
+	 */
 	public Ressource getRessourceActive() 
 	{
 		return this.ressourceActive;
 	}
 
+	/**
+	 * Retourne la notion active
+	 * 
+	 * @return la notion active
+	 */
 	public Notion getNotionActive() 
 	{
 		return this.notionActive;
 	}
 
+	/**
+	 * Retourne une ressource
+	 * 
+	 * @param nomRessource le nom de la ressource
+	 * @return la ressource
+	 */
 	public Ressource getRessource(String nomRessource) 
 	{
 		return this.banqueRessources.getRessource(nomRessource);
 	}
 
-	public void creerRessource(String code, String nomRessource) 
+	/**
+	 * Crée une ressource
+	 * 
+	 * @param code le code de la ressource
+	 * @param nomRessource le nom de la ressource
+	 */
+	public void creerRessource(String code, String nomRessource)
 	{
 		this.banqueRessources.ajouterRessource(new Ressource(code, nomRessource));
 		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 	}
 
+	/**
+	 * Crée une notion
+	 * 
+	 * @param nomNotion le nom de la notion
+	 */
 	public void creerNotion(String nomNotion) 
 	{
 		if(this.ressourceActive != null)
@@ -137,12 +199,24 @@ public class QCMBuilder
 	}
 
 
+	/**
+	 * Crée une question de type QCM
+	 * 
+	 * @param cheminFichier
+	 * @param question
+	 */
 	public void creerPieceJointe(String cheminFichier, Question question)
 	{
 		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
 	}
 
-	public List<String> creerQCM(String detailsQuestion, boolean unique) 
+	/**
+	 * Crée une question de type QCM
+	 * 
+	 * @param detailsQuestion les détails de la question
+	 * @param unique si la question est à réponse unique
+	 */
+	public void creerQCM(String detailsQuestion, boolean unique) 
 	{
 		QCM qcm;
 		DetailsQuestion details;
@@ -155,18 +229,16 @@ public class QCMBuilder
 
 		this.banqueQuestions.ajouterQuestions(qcm);
 
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
-		{
-			qcm.ajouterProposition(details.propositions().get(cpt));
-		}*/
 		
-		List<String> lstErreurs = new ArrayList<String>();
+		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
+		{
+			qcm.ajouterProposition(details.propQCM().get(cpt));
+		}
 
-
-		return lstErreurs;
+		this.banqueQuestions.ajouterQuestions(qcm);
 	}
 
-	public List<String> creerAssociation(String detailsQuestion) 
+	public void creerAssociation(String detailsQuestion) 
 	{
 		Association asso;
 		DetailsQuestion details;
@@ -176,21 +248,22 @@ public class QCMBuilder
 
 		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
+
+		for (int cpt = 0 ; cpt < details.propAssos().size() ; cpt++)
+		{
+			asso.ajouterProposition(details.propAssos().get(cpt));
+		}
 		
 		this.banqueQuestions.ajouterQuestions(asso);
 
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
-		{
-			asso.ajouterProposition(details.propositions().get(cpt));
-		}*/
-
-		List<String> lstErreurs = new ArrayList<String>();
-
-
-		return lstErreurs;
 	}
 
-	public List<String> creerElimination(String detailsQuestion) 
+	/**
+	 * Crée une question d'élimination
+	 * 
+	 * @param detailsQuestion les détails de la question
+	 */
+	public void creerElimination(String detailsQuestion) 
 	{
 		Elimination elim;
 		DetailsQuestion details;
@@ -201,25 +274,32 @@ public class QCMBuilder
 		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
 
+		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
+		{
+			elim.ajouterProposition(details.propElim().get(cpt));
+		}
 
 		this.banqueQuestions.ajouterQuestions(elim);
 
-		/*for (int cpt = 0 ; cpt < details.propositions().size() ; cpt++)
+		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
 		{
-			elim.ajouterProposition(details.propositions().get(cpt));
-		}*/
-		
-		List<String> lstErreurs = new ArrayList<String>();
-
-
-		return lstErreurs;
+			elim.ajouterProposition(details.propElim().get(cpt));
+		}
 	}
 
+	/**
+	 * Génère un questionnaire
+	 * 
+	 * @param cheminFichier le chemin du fichier
+	 */
 	public void genererQuestionnaire(String cheminFichier)
 	{
 		this.Questionnaire.genererQuestionnaire(cheminFichier);
 	}
 
+	/**
+	 * Crée l'arborescence des ressources
+	 */
 	public void creerArborescence()
 	{
 		File dossier;
@@ -228,7 +308,6 @@ public class QCMBuilder
 		for (Ressource ressource : this.banqueRessources.getRessources())
 		{
 			dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom());
-			System.out.println(ressource.getNom());
 
 
 			// Si pas de notion, ignore simplement la boucle
@@ -299,6 +378,13 @@ public class QCMBuilder
 		}
 	}
 
+	/**
+	 * Lit les détails d'une question
+	 * 
+	 * @param detailsQuestion les détails de la question
+	 * @param type le type de question
+	 * @return les détails de la question
+	 */
 	private DetailsQuestion lireDetailsQuestion(String detailsQuestion, TypeQuestion type)
 	{
 		Scanner sc;
@@ -323,19 +409,24 @@ public class QCMBuilder
 		lstPropositionsAssociation = null;
 		lstPropositionsElimination = null;
 		lstPropositionsQCM         = null;
+
 		try
 		{
-			sc = new Scanner(new FileInputStream(detailsQuestion), "UTF8");
+			sc = new Scanner(detailsQuestion);
 		
 			sc.useDelimiter("\t");
 
 			ressource   = this.banqueRessources.getRessource(sc.next());
+			prop = sc.next();
+			ressource   = this.banqueRessources.getRessource(prop);
 			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
 			difficulte  = Difficulte.fromInt(sc.nextInt());
-			temps       = sc.nextInt();
+			temps       = this.enSeconde(sc.next());
 			note        = sc.nextDouble();
 			intitule    = sc.next();
 			explication = sc.next();
+
+			System.out.println(ressource);
 
 			if (type == TypeQuestion.QCM)
 			{
@@ -393,9 +484,22 @@ public class QCMBuilder
 			System.out.println("Erreur lors de la lecture du détails de la question : " + e.getMessage());
 			return null;
 		}
+	}
 
-		
+	/**
+	 * Convertit un temps en seconde
+	 * 
+	 * @param temps le temps
+	 * @return le temps en seconde
+	 */
+	private int enSeconde(String temps)
+	{
+		int m, s;
 
+		m = Integer.parseInt(temps.substring(0, 2));
+		s = Integer.parseInt(temps.substring(3, 5));
+
+		return m * 60 + s;
 	}
 
 
@@ -406,6 +510,7 @@ public class QCMBuilder
 		qcmBuilder = new QCMBuilder();
 
 		qcmBuilder.creerArborescence();
+
 	}
 
 	public Notion getNotion(String nomNotion, Ressource ressource) 

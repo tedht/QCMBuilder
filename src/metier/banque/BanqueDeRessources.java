@@ -165,7 +165,6 @@ public class BanqueDeRessources
 				codeRessource = scDonnee.next();
 				nomRessource  = scDonnee.next();
 
-				System.out.println(nomRessource);
 				ressource = new Ressource(codeRessource, nomRessource);
 
 				for (int cpt = 0 ; scDonnee.hasNext() ; cpt++)
