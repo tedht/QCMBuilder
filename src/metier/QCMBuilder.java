@@ -544,11 +544,10 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Supprime une question à partir du code de la ressource associée et de l'id de la notion associée.
-	 * @param codeRessource le code de la ressource associée
-	 * @param id            l'id de la notion associée
+	 * Supprime une question à partir de son id.
+	 * @param id l'id de la question
 	 */
-	public void supprimerQuestion(String codeRessource, int idNotion) 
+	public void supprimerQuestion(int id) 
 	{
 		// Supprimer la question
 		//this.banqueQuestions.supprimerQuestion(codeRessource, idNotion);

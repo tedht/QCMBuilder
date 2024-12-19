@@ -1,7 +1,9 @@
 package metier.banque;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.FileInputStream;
 
@@ -30,7 +32,7 @@ public class BanqueDeQuestions
 {
 	/* Attributs */
 	private List<Question> lstQuestions;
-
+	private Queue<Integer> fileIdUtilisable;
 
 	/**
 	 * Constructeur de la classe BanqueDeQuestions
@@ -40,6 +42,8 @@ public class BanqueDeQuestions
 	public BanqueDeQuestions(QCMBuilder qcmBuilder)
 	{
 		this.lstQuestions = new ArrayList<Question>();
+
+		this.fileIdUtilisable = new LinkedList<Integer>();
 
 		//this.lireQuestions("data/questions.csv", "data/questions.txt");
 	}
