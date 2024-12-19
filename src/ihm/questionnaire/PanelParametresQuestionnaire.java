@@ -29,17 +29,17 @@ import metier.entite.Ressource;
  */
 public class PanelParametresQuestionnaire extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur         ctrl;
+	private Controleur                ctrl;
 	private FrameGestionQuestionnaire frame;
 
-	private JPanel             panelInfo, panelAction;
+	private JPanel                    panelInfo, panelAction;
 
-	private JComboBox<String>  ddlstRessource;
+	private JComboBox<Ressource>      ddlstRessource;
 
-	private JRadioButton[]     tabRbChronometre;
-	private ButtonGroup        btgChronometre;
+	private JRadioButton[]            tabRbChronometre;
+	private ButtonGroup               btgChronometre;
 
-	private JButton            btnAnnuler, btnSuivant;
+	private JButton                   btnAnnuler, btnSuivant;
 
 	public PanelParametresQuestionnaire(Controleur ctrl, FrameGestionQuestionnaire frame) 
 	{
@@ -64,14 +64,14 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		panelChronometre     = new JPanel();
 
 		// Ressources
-		this.ddlstRessource = new JComboBox<String>();
+		this.ddlstRessource = new JComboBox<Ressource>();
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			this.ddlstRessource.addItem(ressource.getNom());
+			this.ddlstRessource.addItem(ressource);
 		}
 		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
-		this.ddlstRessource.setPrototypeDisplayValue(String.format("%70s"," "));
+		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("",String.format("%70s"," ")));
 
 		// Chronomètre
 		tabRbChronometre    = new JRadioButton[2];
@@ -177,7 +177,7 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 
 	public Ressource getRessource() 
 	{
-		return this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem());
+		return (Ressource)this.ddlstRessource.getSelectedItem();
 	}
 
 	public boolean estChronometree() 
