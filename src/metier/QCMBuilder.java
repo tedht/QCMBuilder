@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
+import metier.banque.BanqueDeNotions;
 import metier.banque.BanqueDeQuestions;
 import metier.banque.BanqueDeRessources;
 
@@ -33,6 +34,7 @@ public class QCMBuilder
 {
 	private BanqueDeQuestions  banqueQuestions;
 	private BanqueDeRessources banqueRessources;
+	private BanqueDeNotions    banqueNotions;
 
 	private Questionnaire Questionnaire;
 
@@ -47,6 +49,7 @@ public class QCMBuilder
 	{
 		this.banqueRessources = new BanqueDeRessources(); 
 		this.banqueQuestions  = new BanqueDeQuestions(this);
+		this.banqueNotions    = new BanqueDeNotions();
 
 		this.ressourceActive = null;
 		this.notionActive    = null;
@@ -70,9 +73,9 @@ public class QCMBuilder
 	 * @param ressource la ressource
 	 * @return la liste des notions
 	 */
-	public List<Notion> getNotions(Ressource ressource) 
+	public List<Notion> getNotions(String codeRessource) 
 	{
-		return this.banqueRessources.getNotions(ressource);
+		return this.banqueNotions.getNotionsRessource(codeRessource);
 	}
 
 	/**
@@ -81,9 +84,9 @@ public class QCMBuilder
 	 * @param ressource la ressource
 	 * @return la liste des noms des notions
 	 */
-	public List<String> getNomNotions(Ressource ressource) 
+	public List<String> getNomNotions(String codeRessource) 
 	{
-		return this.banqueRessources.getNomNotions(ressource);
+		return this.banqueNotions.getNomNotions(codeRessource);
 	}
 
 	
@@ -216,7 +219,7 @@ public class QCMBuilder
 		if(this.ressourceActive != null)
 		{
 			this.ressourceActive.ajouterNotion(new Notion(nomNotion, this.ressourceActive.getNotions().size(), this.ressourceActive.getCode()));
-			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
+			this.banqueNotions.sauvegarderNotions();
 		}
 	}
 
