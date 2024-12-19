@@ -98,7 +98,7 @@ public class FrameEditQuestion extends JFrame
 					sProp += panelPropQCM.getText() + '\t';
 					detailsQuestion += sProp;
 				}
-				lstErreurs = this.ctrl.creerQCM(detailsQuestion, true);
+				this.ctrl.creerQCM(detailsQuestion, true);
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
@@ -111,7 +111,7 @@ public class FrameEditQuestion extends JFrame
 
 					System.out.println(detailsQuestion);
 				}
-				lstErreurs = this.ctrl.creerQCM(detailsQuestion, false);
+				this.ctrl.creerQCM(detailsQuestion, false);
 			} 
 			case 2  -> // Question à Association d'Eléments
 			{
@@ -122,7 +122,7 @@ public class FrameEditQuestion extends JFrame
 					sProp += panelPropAssoc.getTextDroite() + '\t';
 					detailsQuestion += sProp;
 				}
-				lstErreurs = this.ctrl.creerAssociation(detailsQuestion);
+				this.ctrl.creerAssociation(detailsQuestion);
 			} 
 			case 3  -> // Question avec Elimination de Propositions de Réponses
 			{
@@ -138,7 +138,7 @@ public class FrameEditQuestion extends JFrame
 					detailsQuestion += sProp;
 					sProp = panelPropElim.getText() + '\t';
 				}
-				lstErreurs = this.ctrl.creerElimination(detailsQuestion);
+				this.ctrl.creerElimination(detailsQuestion);
 			} 
 			default -> {}
 		}
