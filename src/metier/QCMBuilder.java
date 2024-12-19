@@ -153,6 +153,9 @@ public class QCMBuilder
 		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
 		              details.temps(), details.note(), unique);
 
+		qcm.setIntitule(details.intitule());
+		qcm.setExplication(details.explication());
+
 		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
 		{
 			qcm.ajouterProposition(details.propQCM().get(cpt));
@@ -176,6 +179,9 @@ public class QCMBuilder
 
 		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
+
+		asso.setIntitule(details.intitule());
+		asso.setExplication(details.explication());
 							   
 		for (int cpt = 0 ; cpt < details.propAssos().size() ; cpt++)
 		{
@@ -200,6 +206,9 @@ public class QCMBuilder
 
 		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
+
+		elim.setIntitule(details.intitule());
+		elim.setExplication(details.explication());
 
 		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
 		{

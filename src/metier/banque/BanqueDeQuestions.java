@@ -232,6 +232,7 @@ public class BanqueDeQuestions
 
 		try
 		{
+			System.out.println("SauvegarderQuestions a été appelé");
 			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
 			pw.println("code\tressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
 
@@ -256,8 +257,12 @@ public class BanqueDeQuestions
 				pw .print(question.getTemps       ()             + "\t");
 				pw .print(question.getNote        ()             + "\t");
 				pw .print(nomFichierTXT                          + "\t");
+				System.out.println(question.getIntitule());
+				System.out.println(question.getExplication());
 				pw2.print(question.getIntitule    ()             + "\n");
-				pw2.print(question.getExplication ()                   );
+
+				if (question.getExplication() == null) pw2.print("");
+				else pw2.print(question.getExplication ());
 
 				switch (question.getType())
 				{
@@ -387,15 +392,23 @@ public class BanqueDeQuestions
 
 	/**
 	 * Créer une pièce jointe
+	 * 
+	 * @param cheminFichierOriginal le chemin du fichier original
+	 * @param question la question à laquelle la pièce jointe est associée
+	 * 
+	 * @return boolean si oui ou non la création de la pièce jointe a été effectué
 	 */
-	public void creerPieceJointe(String cheminFichierOriginal, Question question)
+	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
 		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt++)
 		{
 			if (this.lstQuestions.get(cpt) == question)
 				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" + question.getRessource() +
-				                                                                   "/question " + (cpt + 1) + "/complément"));
+				                                                                    "/" +  question.getNotion().getNom()   +
+																					"/question " + (cpt + 1) + "/complément"));
+				return true;
 		}
+		return false;
 	}
 
 	public static void main(String[] args)
