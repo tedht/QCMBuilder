@@ -102,10 +102,10 @@ public class BanqueDeRessources
 	}
 
 	/**
-	 * Retourne une ressource de la banque de ressources.
+	 * Retourne une Notion de la banque de notions.
 	 * 
-	 * @param nomRessource le nom de la ressource à retourner.
-	 * @return la ressource correspondante, ou null si elle n'existe pas.
+	 * @param nomRessource le nom de la ressource.
+	 * @return la notion correspondante, ou null si elle n'existe pas.
 	 */
 	public Notion getNotion(String nomRessource, String nomNotion)
 	{

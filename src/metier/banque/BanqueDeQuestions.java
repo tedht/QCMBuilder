@@ -259,9 +259,9 @@ public class BanqueDeQuestions
 			for (Question question : this.lstQuestions)
 			{   
 				String nomFichierTXT = "ressources/" + question.getRessource().getCode() + " " 
-													 + question.getRessource().getNom () + "/" 
+				                                     + question.getRessource().getNom () + "/" 
 				                                     + question.getNotion().   getNom () + "/" 
-													 + "question"+ question.getNumQuestion() +".txt";
+				                                     + "question"+ question.getNumQuestion() +".txt";
 				System.out.println(nomFichierCSV);
 				System.out.println(nomFichierTXT);
 
