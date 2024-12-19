@@ -115,35 +115,37 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	{
 		this.panelContenu.removeAll();
 
+		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
+		Notion    notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
+
 		List<Question> lstQuestions;
-		if(this.ddlstRessource.getSelectedItem() == null)
+		if(ressource == null)
 		{
 			lstQuestions = this.ctrl.getQuestions();
 		}
-		else if(this.ddlstNotion.getSelectedItem() == null)
+		else if(notion == null)
 		{
-			lstQuestions = this.ctrl.getQuestions(
-				(Ressource)this.ddlstRessource.getSelectedItem()
-			);
+			lstQuestions = this.ctrl.getQuestions(ressource);
 		}
 		else
 		{
-			lstQuestions = this.ctrl.getQuestions(
-				(Ressource)this.ddlstRessource.getSelectedItem(),
-				(Notion)   this.ddlstNotion   .getSelectedItem()
-			);
+			lstQuestions = this.ctrl.getQuestions(ressource, notion);
 		}
 
 		PanelQuestion panelCarte;
 		for(Question question : lstQuestions)
 		{
-			panelCarte = new PanelQuestion(this.ctrl, this.ihm, question.getIntitule(), question.getNote() + " point(s), " + question.getTemps() + "s", 0);
+			panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
+			                               question.getIntitule(), 
+										   question.getNote() + " point(s), " + question.getTemps() + "s",
+										   ressource.getCode(),
+										   notion.getId());
 			this.panelContenu.add(panelCarte);
 		}
 
 		for(int i = 8 - lstQuestions.size(); i > 0; i--)
 		{
-			panelCarte = new PanelQuestion(null, null, "", "", 0);
+			panelCarte = new PanelQuestion(null, null, "", "", "", 0);
 			panelCarte.setVisible(false);
 			this.panelContenu.add(panelCarte);
 		}

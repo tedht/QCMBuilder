@@ -291,7 +291,7 @@ public class Controleur
 	 */
 	public void supprimerRessource(String code) 
 	{
-
+		this.metier.supprimerRessource(code);
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class Controleur
 	 */
 	public void supprimerNotion(int id) 
 	{
-
+		this.metier.supprimerNotion(id)
 	}
 
 	/**
@@ -308,9 +308,9 @@ public class Controleur
 	 * @param codeRessource le code de la ressource associée
 	 * @param id            l'id de la notion associée
 	 */
-	public void supprimerQuestion() 
+	public void supprimerQuestion(String codeRessource, int idNotion) 
 	{
-
+		this.metier.supprimerQuestion(codeRessource, idNotion);
 	}
 
 

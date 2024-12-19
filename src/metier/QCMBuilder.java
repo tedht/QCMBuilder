@@ -522,7 +522,39 @@ public class QCMBuilder
 
 		return m * 60 + s;
 	}
+	
+		/**
+	 * Supprime une ressource à partir de son code.
+	 * @param code le code de la ressource
+	 * 
+	 */
+	public void supprimerRessource(String code) 
+	{
+		// Supprimer les questions associées à la ressource
+		// Supprimer les notions associées à la ressource
+		// Supprimer la ressource
+	}
+	
+	/**
+	 * Supprime une notion à partir de son id.
+	 * @param id l'id de la notion
+	 */
+	public void supprimerNotion(int id) 
+	{
+		// Supprimer les questions associées à la ressource
+		// Supprimer la notion
+	}
 
+	/**
+	 * Supprime une question à partir du code de la ressource associée et de l'id de la notion associée.
+	 * @param codeRessource le code de la ressource associée
+	 * @param id            l'id de la notion associée
+	 */
+	public void supprimerQuestion(String codeRessource, int idNotion) 
+	{
+		// Supprimer la question
+		//this.banqueQuestions.supprimerQuestion(codeRessource, idNotion);
+	}
 
 	public static void main(String[] args)
 	{

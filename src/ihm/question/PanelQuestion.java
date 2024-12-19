@@ -15,6 +15,8 @@ import ihm.shared.PanelEntite;
  */
 public class PanelQuestion extends PanelEntite
 {
+	private String  codeRessource;
+	private int     idNotion;
 	private boolean detail;
 	
 	/**
@@ -22,9 +24,12 @@ public class PanelQuestion extends PanelEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelQuestion(Controleur ctrl, IHM ihm, String intitule, String info, int id)
+	public PanelQuestion(Controleur ctrl, IHM ihm, String intitule, String info, String codeRessource, int idNotion)
 	{
 		super(ctrl, ihm, intitule, info);
+
+		this.codeRessource = codeRessource;
+		this.idNotion      = idNotion;
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -44,7 +49,7 @@ public class PanelQuestion extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			//this.ctrl.supprimerQuestion(id);
+			this.ctrl.supprimerQuestion(this.codeRessource, this.idNotion);
 			this.ihm.reinitAffichageQuestion();
 		}
 	}

@@ -46,7 +46,7 @@ public class PanelGestionRessource extends PanelGestion
 
 		for(int i = 10 - this.ctrl.getRessources().size(); i > 0; i--)
 		{
-			panelRessource = new PanelRessource(this.ctrl, this.ihm, " ", " ");
+			panelRessource = new PanelRessource(this.ctrl, this.ihm, "", "");
 			panelRessource.setVisible(false);
 			this.panelContenu.add(panelRessource);
 		}

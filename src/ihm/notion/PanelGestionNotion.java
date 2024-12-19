@@ -52,7 +52,7 @@ public class PanelGestionNotion extends PanelGestion
 
 			for(int i = 9; i > 0; i--)
 			{
-				panelCarte = new PanelNotion(null, null, " ");
+				panelCarte = new PanelNotion(null, null, 0, "");
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}
@@ -63,13 +63,13 @@ public class PanelGestionNotion extends PanelGestion
 
 			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, notion.getNom());
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, notion.getId(), notion.getNom());
 				this.panelContenu.add(panelCarte);
 			}
 
 			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceActive()).size(); i > 0; i--)
 			{
-				panelCarte = new PanelNotion(null, null, " ");
+				panelCarte = new PanelNotion(null, null, 0, "");
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}

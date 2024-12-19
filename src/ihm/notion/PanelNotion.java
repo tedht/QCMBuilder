@@ -21,15 +21,18 @@ import ihm.shared.PanelEntite;
  */
 public class PanelNotion extends PanelEntite
 {	
+	private int id;
 
 	/**
 	 * Constructeur de la classe PanelNotion.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelNotion(Controleur ctrl, IHM ihm, String nom)
+	public PanelNotion(Controleur ctrl, IHM ihm, int id, String nom)
 	{
 		super(ctrl, ihm, nom, " ");
+
+		this.id = id;
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -49,7 +52,7 @@ public class PanelNotion extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.ctrl.supprimerNotion();
+			this.ctrl.supprimerNotion(this.id);
 			this.ihm.reinitAffichageNotion();
 		}
 	}
