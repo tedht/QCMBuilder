@@ -202,7 +202,7 @@ public class FrameEditQuestion extends JFrame
 		String sProp           = "";
 
 		detailsQuestion += codeRessource + '\t';
-		detailsQuestion += idNotion      + '\t';
+		detailsQuestion += idNotion      + "\t";
 		detailsQuestion += indDiff       + "\t";
 		detailsQuestion += sTemps        + '\t';
 		detailsQuestion += sPoints       + '\t';
