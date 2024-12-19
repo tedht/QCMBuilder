@@ -11,7 +11,7 @@ import java.nio.file.*;
  */
 public class PieceJointe
 {
-	private static int NUM_PIECE_JOINTE;
+	private static int numPieceJointe;
 
 	private String nomPieceJointe;
 	private String extension;
@@ -25,9 +25,9 @@ public class PieceJointe
 	 */
 	public PieceJointe(String cheminFichierOriginal, String cheminFichier)
 	{
-		PieceJointe.NUM_PIECE_JOINTE = PieceJointe.getNumPieceJointe();
+		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
 
-		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.NUM_PIECE_JOINTE);
+		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.numPieceJointe);
 		this.extension      = cheminFichierOriginal.substring(cheminFichierOriginal.lastIndexOf('.') + 1);
 		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) +
 		                      this.nomPieceJointe + "." + this.extension);
