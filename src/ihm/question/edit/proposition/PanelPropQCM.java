@@ -15,8 +15,6 @@ import ihm.question.edit.PanelAjoutQuestion;
  */
 public class PanelPropQCM extends PanelProp
 {
-	private ButtonGroup btgQCM;
-
 	private JTextArea    txtProposition;
 	private JButton      btnSupprimer;
 	private JRadioButton rbReponse;
@@ -72,7 +70,7 @@ public class PanelPropQCM extends PanelProp
 	{
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.btgQCM.remove(this.rbReponse);
+			this.panelAjoutQuestion.supprimerRbResponse(this.rbReponse);
 			this.panelAjoutQuestion.supprimerProposition(this);
 		}
 	}

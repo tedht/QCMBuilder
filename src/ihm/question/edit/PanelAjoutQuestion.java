@@ -238,15 +238,24 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 	{
 		this.btgQCM.add(rbReponse);
 	}
+	public void supprimerRbResponse(JRadioButton rbReponse) 
+	{
+		this.btgQCM.remove(rbReponse);
+	}
 
 	public String getIntitule() 
 	{
 		return this.txtIntitule.getText();
 	}
 
+	public boolean explicationSelected()
+	{
+		return this.btnAjouterExpli.isSelected();
+	}
+
 	public String getExplication() 
 	{
-		return this.btnAjouterExpli.isSelected() ? this.txtExpli.getText() : "";
+		return this.txtExpli.getText();
 	}
 
 	public List<PanelProp> getPanelProps() 

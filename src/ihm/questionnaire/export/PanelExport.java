@@ -5,11 +5,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel; 
 
 import controleur.Controleur;
 import ihm.IHM;
@@ -26,8 +30,8 @@ public class PanelExport extends PanelEditNom
 {
 	private JPanel     panelInfoChemin;
 
-	private JTextField txtChemin;
-	private JButton    btnNavig;
+	private JLabel  lblChemin;
+	private JButton btnNavig;
 	
 	/**
 	 * Constructeur de la classe PanelEditRessource.
@@ -49,7 +53,7 @@ public class PanelExport extends PanelEditNom
 
 		this.panelInfoChemin = new JPanel(new BorderLayout());
 		panelNavig           = new JPanel();
-		this.txtChemin       = new JTextField(30);
+		this.lblChemin       = new JLabel("");
 		this.btnNavig        = new JButton("N");
 
 		/*-------------------------------*/
@@ -68,9 +72,8 @@ public class PanelExport extends PanelEditNom
 		gbc.gridy = 1;
 		this.panelInfo.add(this.panelInfoChemin, gbc);
 
-		this.panelInfoChemin.add(new JLabel("Chemin :"), BorderLayout.NORTH);
-		this.panelInfoChemin.add(this.txtChemin, BorderLayout.CENTER);
-		this.panelInfoChemin.add(panelNavig, BorderLayout.EAST);
+		this.panelInfoChemin.add(this.lblChemin, BorderLayout.CENTER);
+		this.panelInfoChemin.add(panelNavig, BorderLayout.WEST);
 		panelNavig          .add(this.btnNavig);
 
 		/*---------------------------*/
@@ -79,20 +82,36 @@ public class PanelExport extends PanelEditNom
 		this.btnNavig.addActionListener(this);
 	}
 
-	public String getType()
+	public boolean enregistrer()
 	{
-		return "Notion";
-	}
+		String nomEval = this.txtNom   .getText();
+		String chemin  = this.lblChemin.getText();
 
-	public boolean valider()
-	{
-		if(this.ctrl.getRessourceActive().getNotion(this.txtNom.getText()) == null)
+		List<String> lstErreurs = new ArrayList<String>();
+
+		// Vérification des champs vides
+		if (nomEval.isEmpty())
+			lstErreurs.add("Le nom de l'évaluation est vide.");
+
+		if (chemin.isEmpty()) 
+			lstErreurs.add("Aucun chemin n'a été sélectionné.");
+
+		if(lstErreurs.size() != 0)
 		{
-			this.ctrl.creerNotion(this.txtNom.getText());
-			//this.ihm.reinitAffichage();
-			return true;
+			String message = "L'évaluation n'a pas pu être générée pour les raisons suivantes :\n";
+			for(String msgErr : lstErreurs)
+				message += " • " + msgErr + '\n';
+	
+			JOptionPane.showMessageDialog(
+				this,
+				message,
+				"Échec de l'Enregistrement",
+				JOptionPane.ERROR_MESSAGE
+			);
+			return false;
 		}
-		return false;
+
+		return true;
 	}
 
 	@Override
@@ -102,7 +121,18 @@ public class PanelExport extends PanelEditNom
 
 		if(e.getSource() == this.btnNavig)
 		{
-			// navig
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Choisissez l'emplacement de sauvegarde de votre évaluation.");
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+	
+			int result = fileChooser.showSaveDialog(null);
+	
+			if (result == JFileChooser.APPROVE_OPTION) {
+				File   dir    = fileChooser.getSelectedFile();
+				String chemin = dir.getAbsolutePath(); // Or other file format
+				this.lblChemin.setText(chemin);
+			}
 		}
 	}
 }

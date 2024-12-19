@@ -215,7 +215,7 @@ public class IHM
 			// Positionne frameExport au centre de la fenêtre principale
 			this.frameExport.setLocation(
 				this.frameGestionQuestionnaire.getX() + this.frameGestionQuestionnaire.getWidth () / 2 - this.frameExport.getWidth () / 2,
-				this.frameGestionQuestionnaire.getY() + this.frameGestionQuestionnaire.getHeight() / 4 - this.frameExport.getHeight() / 2
+				this.frameGestionQuestionnaire.getY() + this.frameGestionQuestionnaire.getHeight() / 2 - this.frameExport.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible

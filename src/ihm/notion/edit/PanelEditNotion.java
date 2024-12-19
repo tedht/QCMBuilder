@@ -1,5 +1,10 @@
 package ihm.notion.edit;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import controleur.Controleur;
 import ihm.IHM;
 import ihm.shared.PanelEditNom;
@@ -29,14 +34,34 @@ public class PanelEditNotion extends PanelEditNom
 		this.panelInfo.add(this.panelInfoNom);
 	}
 
-	public boolean valider()
+	public boolean enregistrer()
 	{
-		if(this.ctrl.getRessourceActive().getNotion(this.txtNom.getText()) == null)
+		String nom = this.txtNom.getText();
+
+		List<String> lstErreurs = new ArrayList<String>();
+
+		if(nom.isEmpty()) 
+			lstErreurs.add("Le nom est vide");
+		else if(this.ctrl.getNotion(nom, this.ctrl.getRessourceActive()) != null);
+			lstErreurs.add("La notion existe déjà");
+
+		if(lstErreurs.size() != 0)
 		{
-			this.ctrl.creerNotion(this.txtNom.getText());
-			this.ihm.reinitAffichageNotion();
-			return true;
+			String message = "La notion n'a pas été enregistrée pour les raisons suivantes :\n";
+			for(String msgErr : lstErreurs)
+				message += " • " + msgErr + '\n';
+	
+			JOptionPane.showMessageDialog(
+				this,
+				message,
+				"Échec de l'Enregistrement",
+				JOptionPane.ERROR_MESSAGE
+			);
+			return false;
 		}
-		return false;
+
+		this.ctrl.creerNotion(this.txtNom.getText());
+		this.ihm.reinitAffichageNotion();
+		return true;
 	}
 }

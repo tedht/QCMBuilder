@@ -29,7 +29,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 
 	protected JPanel        panelInfoNom;
 
-	protected JButton       btnAnnuler, btnValider;
+	protected JButton       btnAnnuler, btnEnregistrer;
 	protected JLabel        lblNom;
 	protected JTextField    txtNom;
 
@@ -62,7 +62,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		this.panelAction.setBackground(new Color(200, 200, 250));
 
 		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnEnregistrer = new JButton("Enregistrer");
 
 		/*-------------------------------*/
 		/* positionnement des composants */
@@ -76,13 +76,13 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		/* ACTION */
 		this.add(this.panelAction, BorderLayout.SOUTH);
 		this.panelAction.add(this.btnAnnuler);
-		this.panelAction.add(this.btnValider);
+		this.panelAction.add(this.btnEnregistrer);
 
 		/*---------------------------*/
 		/* Activation des composants */
 		/*---------------------------*/
 		this.btnAnnuler.addActionListener(this);
-		this.btnValider.addActionListener(this);
+		this.btnEnregistrer.addActionListener(this);
 	}
 
 	@Override
@@ -92,14 +92,14 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		{
 			SwingUtilities.getWindowAncestor(this).dispose();
 		}
-		if(e.getSource() == this.btnValider)
+		if(e.getSource() == this.btnEnregistrer)
 		{
-			if(this.valider())
+			if(this.enregistrer())
 			{
 				SwingUtilities.getWindowAncestor(this).dispose();
 			}
 		}
 	}
 
-	public abstract boolean valider();
+	public abstract boolean enregistrer();
 }

@@ -7,3 +7,5 @@
 - ajouter une piece jointe à une question
 
 - java doc
+
+- gérer le cas ou + de questions dans questionnaire que dans base de la même difficulté 

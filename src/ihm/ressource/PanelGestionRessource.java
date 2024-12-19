@@ -33,8 +33,6 @@ public class PanelGestionRessource extends PanelGestion
 	{
 		this.panelContenu.removeAll();
 
-		System.out.println(this.ctrl.getRessourceActive());
-
 		PanelRessource panelRessource;
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
