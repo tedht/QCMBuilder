@@ -398,13 +398,15 @@ public class BanqueDeQuestions
 	 */
 	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
-		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt++)
+		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
 		{
 			if (this.lstQuestions.get(cpt) == question)
+			{
 				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" + question.getRessource() +
 				                                                                    "/" +  question.getNotion().getNom()   +
 																					"/question " + (cpt + 1) + "/complément"));
 				return true;
+			}
 		}
 		return false;
 	}
