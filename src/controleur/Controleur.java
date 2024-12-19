@@ -300,7 +300,7 @@ public class Controleur
 	 */
 	public void supprimerNotion(int id) 
 	{
-		this.metier.supprimerNotion(id)
+		this.metier.supprimerNotion(id);
 	}
 
 	/**
