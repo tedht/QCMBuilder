@@ -4,7 +4,6 @@
 - empecher la création de notion, ressource si string vide
 - afficher la difficulté
 
-- Double clic pour afficher les ressource / notions / questions
 - ajouter une piece jointe à une question
 
 - java doc

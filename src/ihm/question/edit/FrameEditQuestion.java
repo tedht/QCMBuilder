@@ -1,10 +1,8 @@
 package ihm.question.edit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import controleur.Controleur;
@@ -13,6 +11,7 @@ import ihm.question.edit.proposition.PanelProp;
 import ihm.question.edit.proposition.PanelPropAssoc;
 import ihm.question.edit.proposition.PanelPropElim;
 import ihm.question.edit.proposition.PanelPropQCM;
+import ihm.question.edit.proposition.PanelPropQRM;
 
 
 /** Classe représentant la fenêtre d'édition (création ou modification) d'une question
@@ -73,18 +72,16 @@ public class FrameEditQuestion extends JFrame
 		String detailsQuestion = "";
 		String sProp           = "";
 
-		detailsQuestion += this.panelParametresQuestion.getRessource  () + '\t';
-		detailsQuestion += this.panelParametresQuestion.getNotion     () + '\t';
-		detailsQuestion += this.panelParametresQuestion.getDifficulte () + "\t";
-		detailsQuestion += this.panelParametresQuestion.getTemps      () + '\t';
-		detailsQuestion += this.panelParametresQuestion.getPoints     () + '\t';
-		detailsQuestion += this.panelAjoutQuestion     .getIntitule   () + '\t';
-		detailsQuestion += this.panelAjoutQuestion     .getExplication() + '\t';
+		detailsQuestion += this.panelParametresQuestion.getRessource  ().getCode() + '\t';
+		detailsQuestion += this.panelParametresQuestion.getNotion     ().getId  () + '\t';
+		detailsQuestion += this.panelParametresQuestion.getDifficulte ()           + "\t";
+		detailsQuestion += this.panelParametresQuestion.getTemps      ()           + '\t';
+		detailsQuestion += this.panelParametresQuestion.getPoints     ()           + '\t';
+		detailsQuestion += this.panelAjoutQuestion     .getIntitule   ()           + '\t';
+		detailsQuestion += this.panelAjoutQuestion     .getExplication()           + '\t';
 
 		System.out.println(detailsQuestion);
 
-		// On vérifie DANS LE METIER que les valeurs saisies sont valides
-		List<String>    lstErreurs   = new ArrayList<String>();
 		List<PanelProp> lstPanelProp = this.panelAjoutQuestion.getPanelProps();
 
 		switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
@@ -104,7 +101,7 @@ public class FrameEditQuestion extends JFrame
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
-					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
+					PanelPropQRM panelPropQCM = (PanelPropQRM) panelProp;
 					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
 					sProp += panelPropQCM.getText() + '\t';
 					detailsQuestion += sProp;
@@ -143,6 +140,9 @@ public class FrameEditQuestion extends JFrame
 			default -> {}
 		}
 		
+		this.dispose();
+		this.ihm.reinitAffichageQuestion();
+		/*
 		if(lstErreurs.size() == 0)
 		{
 			JOptionPane.showMessageDialog(
@@ -167,7 +167,7 @@ public class FrameEditQuestion extends JFrame
 				"Échec de l'Enregistrement",
 				JOptionPane.ERROR_MESSAGE
 			);
-		}
+		}*/
 	}
 
 	public int getIndexTypeQuestion() 

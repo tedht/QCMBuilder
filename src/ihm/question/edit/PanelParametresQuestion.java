@@ -32,16 +32,18 @@ import metier.entite.Ressource;
  */
 public class PanelParametresQuestion extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur        ctrl;
-	private FrameEditQuestion frame;
+	private Controleur           ctrl;
+	private FrameEditQuestion    frame;
 
-	private JTextField        txtPoints, txtTemps;
-	private JComboBox<String> ddlstRessource, ddlstNotion, ddlstTypeQuestion;
+	private JTextField           txtPoints, txtTemps;
+	private JComboBox<Ressource> ddlstRessource; 
+	private JComboBox<Notion>    ddlstNotion;
+	private JComboBox<String>    ddlstTypeQuestion;
 
-	private JRadioButton[]    tabRbDifficulte;
-	private ButtonGroup       btgDifficulte;
+	private JRadioButton[]       tabRbDifficulte;
+	private ButtonGroup          btgDifficulte;
 
-	private JButton           btnAnnuler, btnSuivant;
+	private JButton              btnAnnuler, btnSuivant;
 
 	public PanelParametresQuestion(Controleur ctrl, FrameEditQuestion frame) 
 	{
@@ -85,21 +87,21 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 
 		/* Listes déroulantes */
 		// Ressource
-		this.ddlstRessource = new JComboBox<String>();
+		this.ddlstRessource = new JComboBox<Ressource>();
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			this.ddlstRessource.addItem(ressource.getNom());
+			this.ddlstRessource.addItem(ressource);
 		}
 		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
-		this.ddlstRessource.setPrototypeDisplayValue(String.format("%70s", " "));
+		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
 
 		// Notion
-		this.ddlstNotion = new JComboBox<String>();
+		this.ddlstNotion = new JComboBox<Notion>();
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);
 		this.ddlstNotion.setFocusable(false);
-		this.ddlstNotion.setPrototypeDisplayValue(String.format("%50s", " "));
+		this.ddlstNotion.setPrototypeDisplayValue(new Notion(String.format("%50s", " "), 0, ""));
 
 		// Type de Question 
 		this.ddlstTypeQuestion = new JComboBox<String>();
@@ -226,9 +228,9 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 		if(e.getSource() == this.ddlstRessource) 
 		{  
 			this.ddlstNotion.removeAllItems();
-			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
+			for(Notion notion : this.ctrl.getNotions((Ressource)this.ddlstRessource.getSelectedItem()))
 			{
-				this.ddlstNotion.addItem(notion.getNom());
+				this.ddlstNotion.addItem(notion);
 			}
 			this.ddlstNotion.setSelectedIndex(-1);
 			this.ddlstNotion.setEnabled(true);
@@ -257,14 +259,14 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 		return this.ddlstTypeQuestion.getSelectedIndex();
 	}
 
-	public String getRessource() 
+	public Ressource getRessource() 
 	{
-		return (String)this.ddlstRessource.getSelectedItem();
+		return (Ressource)this.ddlstRessource.getSelectedItem();
 	}
 
-	public String getNotion() 
+	public Notion getNotion() 
 	{
-		return (String)this.ddlstNotion.getSelectedItem();
+		return (Notion)this.ddlstNotion.getSelectedItem();
 	}
 
 	public int getDifficulte() 
