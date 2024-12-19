@@ -34,38 +34,6 @@ public class BanqueDeNotions {
 		return this.lstNotions;
 	}
 
-	public List<String> getNomNotions(String codeRessource)
-	{
-		List<String> lstNomNotions = new ArrayList<String>();
-		for(Notion notion : this.lstNotions)
-		{
-			if(notion.getCodeRessource().equals(codeRessource))
-			{
-				lstNomNotions.add(notion.getNom());
-			}
-		}
-		return lstNomNotions;
-	}
-
-	/**
-	 * Retourne les notions d'une ressource.
-	 * 
-	 * @param codeRessource le code de la ressource.
-	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
-	 */
-	public List<Notion> getNotionsRessource(String codeRessource)
-	{
-		List<Notion> lstNotionsRessource = new ArrayList<Notion>();
-		for(Notion notion : this.lstNotions)
-		{
-			if(notion.getCodeRessource().equals(codeRessource))
-			{
-				lstNotionsRessource.add(notion);
-			}
-		}
-		return lstNotionsRessource;
-	}
-
 
 	/**
 	 * Retourne la notion de la banque de notions.
@@ -145,13 +113,12 @@ public class BanqueDeNotions {
 		try
 		{
 			pw = new PrintWriter("data/notions.csv");
-			pw.println("CodeRessource"+ "\t" + "ID" + "\t" + "Nom"); ;
+			pw.println("ID"+ "\t" + "Nom" + "\t" + "CodeRessource"); ;
 			for(Notion notion : this.lstNotions)
 			{
-				pw.print  (notion.getCodeRessource() + "\t");
-				pw.print  (notion.getId           () + "\t"); 
-				pw.println(notion.getNom          ());
-				
+				pw.print  (notion.getId    () + "\t"); 
+				pw.print  (notion.getNom   () + "\t");
+				pw.println(notion.getCodeRessource());
 			}
 			pw.close();
 		}
