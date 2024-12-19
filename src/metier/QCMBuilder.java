@@ -409,17 +409,54 @@ public class QCMBuilder
 
 	private List<String> verifDetailsQuestion(String detailsQuestion)
 	{
+		Scanner sc;
 		List<String> lstErreurs;
 
 		String formatTemps;
+		String prop;
+
+		Ressource     ressource;
+		Notion        notion;
+		Difficulte    difficulte;
+		String        temps;
+		double        note;
+		String        intitule;
+		String        explication;
+
+		boolean tempsValide;
 
 
 		lstErreurs = new ArrayList<String>();
 
-		formatTemps = "^\\d{2}:\\d{2}$";
+		try
+		{
+			sc = new Scanner(detailsQuestion);
+		
+			sc.useDelimiter("\t");
+
+			prop = sc.next();
+			ressource   = this.banqueRessources.getRessource(prop);
+			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
+			difficulte  = Difficulte.fromInt(sc.nextInt());
+			temps       = sc.next();
+			note        = sc.nextDouble();
+			intitule    = sc.next();
+			explication = sc.next();
+
+			formatTemps = "^\\d{2}:\\d{2}$";
+			tempsValide = Pattern.matches(formatTemps, temps);
+
+			if (tempsValide) lstErreurs.add("Le format du temps n'est pas valide, veuillez entrer un temps au format min:sec (XX:YY)");
+
+			sc.close();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 
 		// Vérifie si le temps correspond au format XX:YY
-		return Pattern.matches(formatTemps, "");
+		return lstErreurs; 
 	}
 
 	private int enSeconde(String temps)
