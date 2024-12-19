@@ -247,10 +247,7 @@ public class QCMBuilder
 
 		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
 		              details.temps(), details.note(), unique);
-
-		this.banqueQuestions.ajouterQuestions(qcm);
-
-		
+					  
 		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
 		{
 			qcm.ajouterProposition(details.propQCM().get(cpt));
@@ -566,6 +563,6 @@ public class QCMBuilder
 
 	public Notion getNotion(String nomNotion, Ressource ressource) 
 	{
-		return this.banqueRessources.getNotion(nomNotion, ressource.getNom());
+		return this.banqueRessources.getNotion(ressource.getNom(), nomNotion);
 	}
 }
