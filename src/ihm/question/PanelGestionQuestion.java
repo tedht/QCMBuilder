@@ -1,5 +1,7 @@
 package ihm.question;
 
+import java.util.List;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,7 +21,8 @@ import metier.entite.question.Question;
 
 public class PanelGestionQuestion extends PanelGestion implements ItemListener
 {
-	private JComboBox<String>   ddlstRessource, ddlstNotion;
+	private JComboBox<Ressource> ddlstRessource;
+	private JComboBox<Notion>    ddlstNotion;
 
 	public PanelGestionQuestion(Controleur ctrl, IHM ihm)
 	{
@@ -37,23 +40,22 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		panelDdlstRessource = new JPanel(new BorderLayout());
 		panelDdlstNotion    = new JPanel(new BorderLayout());
 
-		this.ddlstRessource = new JComboBox<String>();
+		this.ddlstRessource = new JComboBox<Ressource>();
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			this.ddlstRessource.addItem(ressource.getNom());
+			this.ddlstRessource.addItem(ressource);
 		}
 		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
-		this.ddlstRessource.setPrototypeDisplayValue(String.format("%70s", " "));
+		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
 
-		this.ddlstNotion = new JComboBox<String>();
+		this.ddlstNotion = new JComboBox<Notion>();
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);
 		this.ddlstNotion.setFocusable(false);
-		this.ddlstNotion.setPrototypeDisplayValue(String.format("%70s", " "));
+		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%70s", " ")));
 
 		this.btnAjouter.setText("Nouvelle Question");
-		this.btnAjouter.setEnabled(false);
 
 		/*-------------------------------*/
 		/* positionnement des composants */
@@ -72,6 +74,8 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		/*---------------------------*/
 		this.ddlstRessource.addItemListener(this);
 		this.ddlstNotion   .addItemListener(this);
+
+		this.afficher();
 	}
 
 	@Override
@@ -91,19 +95,18 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		{  
 			this.ddlstNotion.removeAllItems();
 			this.ddlstNotion.setEnabled(false);
-			this.btnAjouter.setEnabled(false);
 
-			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem())))
+			for(Notion notion : this.ctrl.getNotions((Ressource)this.ddlstRessource.getSelectedItem()))
 			{
-				this.ddlstNotion.addItem(notion.getNom());
+				this.ddlstNotion.addItem(notion);
 			}
 			this.ddlstNotion.setSelectedIndex(-1);
 			this.ddlstNotion.setEnabled(true);
+			this.afficher();
 		}
 
 		if(e.getSource() == this.ddlstNotion && this.ddlstNotion.isEnabled())
 		{
-			this.btnAjouter.setEnabled(true);
 			this.afficher();
 		}
 	}
@@ -112,17 +115,33 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	{
 		this.panelContenu.removeAll();
 
-		Ressource ressource = this.ctrl.getRessource((String)this.ddlstRessource.getSelectedItem());
-		Notion    notion    = this.ctrl.getNotion   ((String)this.ddlstNotion   .getSelectedItem(), ressource);
+		List<Question> lstQuestions;
+		if(this.ddlstRessource.getSelectedItem() == null)
+		{
+			lstQuestions = this.ctrl.getQuestions();
+		}
+		else if(this.ddlstNotion.getSelectedItem() == null)
+		{
+			lstQuestions = this.ctrl.getQuestions(
+				(Ressource)this.ddlstRessource.getSelectedItem()
+			);
+		}
+		else
+		{
+			lstQuestions = this.ctrl.getQuestions(
+				(Ressource)this.ddlstRessource.getSelectedItem(),
+				(Notion)   this.ddlstNotion   .getSelectedItem()
+			);
+		}
 
 		PanelQuestion panelCarte;
-		for(Question question : this.ctrl.getQuestions(ressource, notion))
+		for(Question question : lstQuestions)
 		{
 			panelCarte = new PanelQuestion(this.ctrl, this.ihm, question.getIntitule(), question.getNote() + " point(s), " + question.getTemps() + "s", 0);
 			this.panelContenu.add(panelCarte);
 		}
 
-		for(int i = 8 - this.ctrl.getQuestions(ressource, notion).size(); i > 0; i--)
+		for(int i = 8 - lstQuestions.size(); i > 0; i--)
 		{
 			panelCarte = new PanelQuestion(null, null, "", "", 0);
 			panelCarte.setVisible(false);

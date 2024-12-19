@@ -88,14 +88,14 @@ public class BanqueDeRessources
 	/**
 	 * Retourne une ressource de la banque de ressources.
 	 * 
-	 * @param nomRessource le nom de la ressource à retourner.
+	 * @param code le code de la ressource à retourner.
 	 * @return la ressource correspondante, ou null si elle n'existe pas.
 	 */
-	public Ressource getRessource(String nomRessource)
+	public Ressource getRessource(String code)
 	{
 		for (Ressource ressource : this.lstRessources)
 		{
-			if (ressource.getNom().equals(nomRessource))
+			if (ressource.getCode().equals(code))
 				return ressource;
 		}
 		return null;

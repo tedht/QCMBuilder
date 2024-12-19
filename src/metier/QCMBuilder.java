@@ -86,14 +86,36 @@ public class QCMBuilder
 		return this.banqueRessources.getNomNotions(ressource);
 	}
 
+	
 	/**
-	 * Retourne la liste des questions
+	 * Retourne la liste de toutes questions.
 	 * 
-	 * @param ressource la ressource
-	 * @param notion la notion
-	 * @return la liste des questions
+	 * @return           la liste de toutes les questions.
 	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	public List<Question> getQuestions() 
+	{
+		return this.banqueQuestions.getQuestions();
+	}
+	
+	/**
+	 * Retourne la liste des questions associées à une ressource.
+	 * 
+	 * @param  ressource la ressource.
+	 * @return           la liste des questions.
+	 */
+	public List<Question> getQuestions(Ressource ressource) 
+	{
+		return this.banqueQuestions.getQuestions(ressource);
+	}
+
+	/**
+	 * Retourne la liste des questions associées à une notion associée à une ressource.
+	 * 
+	 * @param  ressource la ressource.
+	 * @param  notion    la notion.
+	 * @return           la liste des questions.
+	 */
+	public List<Question> getQuestions(Ressource ressource, Notion notion)
 	{
 		return this.banqueQuestions.getQuestions(ressource, notion);
 	}
@@ -167,9 +189,9 @@ public class QCMBuilder
 	 * @param nomRessource le nom de la ressource
 	 * @return la ressource
 	 */
-	public Ressource getRessource(String nomRessource) 
+	public Ressource getRessource(String code) 
 	{
-		return this.banqueRessources.getRessource(nomRessource);
+		return this.banqueRessources.getRessource(code);
 	}
 
 	/**
@@ -178,9 +200,9 @@ public class QCMBuilder
 	 * @param code le code de la ressource
 	 * @param nomRessource le nom de la ressource
 	 */
-	public void creerRessource(String code, String nomRessource)
+	public void creerRessource(String code, String nom)
 	{
-		this.banqueRessources.ajouterRessource(new Ressource(code, nomRessource));
+		this.banqueRessources.ajouterRessource(new Ressource(code, nom));
 		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
 	}
 

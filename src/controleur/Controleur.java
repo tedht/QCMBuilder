@@ -18,7 +18,7 @@ public class Controleur
 {
 
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 	private QCMBuilder metier;
 	
@@ -40,7 +40,7 @@ public class Controleur
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -54,14 +54,14 @@ public class Controleur
 	}
 
 	/**
-	 * Retourne une ressource à partir de son nom.
+	 * Retourne une ressource à partir de son code.
 	 * 
-	 * @param  nomRessource le nom de la ressource.
-	 * @return              la ressource
+	 * @param  code le code de la ressource.
+	 * @return      la ressource
 	 */
-	public Ressource getRessource(String nomRessource) 
+	public Ressource getRessource(String code) 
 	{
-		return this.metier.getRessource(nomRessource);
+		return this.metier.getRessource(code);
 	}
 
 	/**
@@ -96,6 +96,27 @@ public class Controleur
 	public List<String> getNomNotions(Ressource ressource)
 	{
 		return this.metier.getNomNotions(ressource);
+	}
+
+	/**
+	 * Retourne la liste de toutes questions.
+	 * 
+	 * @return la liste de toutes les questions.
+	 */
+	public List<Question> getQuestions() 
+	{
+		return this.metier.getQuestions();
+	}
+	
+	/**
+	 * Retourne la liste des questions associées à une ressource.
+	 * 
+	 * @param  ressource la ressource.
+	 * @return           la liste des questions.
+	 */
+	public List<Question> getQuestions(Ressource ressource) 
+	{
+		return this.metier.getQuestions(ressource);
 	}
 
 	/**
@@ -156,7 +177,7 @@ public class Controleur
 
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -182,7 +203,7 @@ public class Controleur
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**
@@ -283,5 +304,4 @@ public class Controleur
 	{
 		new Controleur();
 	}
-
 }

@@ -50,7 +50,7 @@ public class PanelGestionNotion extends PanelGestion
 			
 			this.panelContenu.add(this.panelInstruction);
 
-			for(int i = 10; i > 0; i--)
+			for(int i = 9; i > 0; i--)
 			{
 				panelCarte = new PanelNotion(null, null, " ");
 				panelCarte.setVisible(false);

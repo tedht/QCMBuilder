@@ -33,7 +33,7 @@ public class PanelRessource extends PanelEntite
 	{
 		super(ctrl, ihm, code + " " + nom, " ");
 		
-		this.code   = nom;
+		this.code   = code;
 		this.select = this.ctrl.getRessourceActive() == this.ctrl.getRessource(this.code);
 
 		if(this.select)

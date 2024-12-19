@@ -60,10 +60,30 @@ public class BanqueDeQuestions
 	 * @param ressource la ressource associée aux questions
 	 * @return List<Question> la liste des questions associées à la ressource
 	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	public List<Question> getQuestions(Ressource ressource) 
 	{
 		List<Question> lstQuestions;
 
+		lstQuestions = new ArrayList<Question>();
+		for(Question question : this.lstQuestions)
+		{
+			if(question.getRessource() == ressource)
+			{
+				lstQuestions.add(question);
+			}
+		}
+		return lstQuestions;
+	}
+
+	/**
+	 * Retourne les questions associées à une notion associée à une ressource
+	 * 
+	 * @param ressource la ressource associée aux questions
+	 * @return List<Question> la liste des questions associées à la ressource
+	 */
+	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	{
+		List<Question> lstQuestions;
 
 		lstQuestions = new ArrayList<Question>();
 		for(Question question : this.lstQuestions)
