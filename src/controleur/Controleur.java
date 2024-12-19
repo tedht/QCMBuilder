@@ -284,16 +284,30 @@ public class Controleur
 		this.metier.genererQuestionnaire(cheminFichier);
 	}
 
+	/**
+	 * Supprime une ressource à partie de son code.
+	 * @param codeRessource le code de la ressource
+	 * 
+	 */
 	public void supprimerRessource(String code) 
 	{
 
 	}
 	
-	public void supprimerNotion() 
+	/**
+	 * Supprime une notion à partir de son id.
+	 * @param id l'id de la notion
+	 */
+	public void supprimerNotion(int id) 
 	{
 
 	}
 
+	/**
+	 * Supprime une question à partir du code de la ressource associée et de l'id de la notion associée.
+	 * @param codeRessource le code de la ressource associée
+	 * @param id            l'id de la notion associée
+	 */
 	public void supprimerQuestion() 
 	{
 

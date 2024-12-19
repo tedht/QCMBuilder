@@ -243,7 +243,6 @@ public class QCMBuilder
 		QCM qcm;
 		DetailsQuestion details;
 
-
 		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.QCM);
 
 		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
