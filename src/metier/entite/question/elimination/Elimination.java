@@ -1,8 +1,8 @@
 package metier.entite.question.elimination;
 
-import metier.entite.question.Difficulte;
-import metier.entite.question.Question;
-import metier.entite.question.TypeQuestion;
+import  metier.entite.question.Difficulte;
+import  metier.entite.question.Question;
+import  metier.entite.question.TypeQuestion;
 
 /**
  * Classe Elimination héritant de Question
@@ -16,16 +16,28 @@ public class Elimination extends Question
 
 
 	/*--------------*/
-	/* Constructeur */
+	// Constructeur //
 	/*--------------*/
 
+	/**
+	 * Constructeur de la classe Elimination
+	 * 
+	 * @param codeRes    l'identifiant de la ressource.
+	 * @param idNot      l'identifiant de la notion.
+	 * @param idQst      l'identifiant de la question.
+	 * @param note       la note.
+	 * @param temps      le temps associée à la question.
+	 * @param difficulte la difficultée.
+	 */
 	public Elimination(String codeRes, int idNot, int idQst,double note, int temps, Difficulte difficulte)
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
 	/**
@@ -34,15 +46,19 @@ public class Elimination extends Question
 	 * @return le type de question ELIMINATION.
 	 */
 	@Override
-	public TypeQuestion getType()
-	{
-		return TypeQuestion.ELIMINATION;
-	}
+	public TypeQuestion getType() { return TypeQuestion.ELIMINATION; }
 
+	/**
+	 * Retourne une proposition élimination.
+	 * 
+	 * @return  la proposition.
+	 */
 	public PropositionElimination getProposition(int i) { return (PropositionElimination) super.getProposition(i); }
 
+
+
 	/*---------*/
-	/* Setters */
+	// Setters //
 	/*---------*/
 
 	/**
@@ -62,7 +78,7 @@ public class Elimination extends Question
 
 
     /*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 
 	/**
