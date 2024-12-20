@@ -133,6 +133,9 @@ public class BanqueQuestions
 	 */
 	public Question getQuestion(int idQst)
 	{
+		if (idQst < 0 || idQst >= this.lstQuestions.size())
+			return null;
+
 		return this.lstQuestions.get(idQst);
 	}
 
