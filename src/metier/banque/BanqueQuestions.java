@@ -41,7 +41,9 @@ public class BanqueQuestions
 		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		this.cheminFic = "data/questions.csv";
+		String currentDir = System.getProperty("user.dir");
+
+		this.cheminFic = currentDir + "/data/questions.csv";
 
 		this.lireQuestions(this.cheminFic);
 	}
