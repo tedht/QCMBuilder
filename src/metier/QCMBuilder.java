@@ -1,7 +1,6 @@
 package metier;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -352,6 +351,7 @@ public class QCMBuilder
 	/**
 	 * Crée l'arborescence des ressources
 	 */
+	/*
 	public void creerArborescence()
 	{
 		File dossier;
@@ -363,8 +363,8 @@ public class QCMBuilder
 
 
 			// Si pas de notion, ignore simplement la boucle
-			/*
-			for (Notion notion : ressource.getNotions())
+			
+			for (Notion notion : this.getNotions(ressource.getCode()))
 			{
 				dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom());
 
@@ -427,9 +427,9 @@ public class QCMBuilder
 			else
 			{
 				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
-			}*/
+			}
 		}
-	}
+	}*/
 	
 		/**
 	 * Supprime une ressource à partir de son code.

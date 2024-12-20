@@ -95,7 +95,8 @@ public class BanqueRessources
 		{
 			scEnreg = new Scanner( new FileInputStream(cheminFic), "UTF8");
 
-			scEnreg.nextLine();
+			if(scEnreg.hasNextLine())
+				scEnreg.nextLine();
 
 			while (scEnreg.hasNextLine())
 			{

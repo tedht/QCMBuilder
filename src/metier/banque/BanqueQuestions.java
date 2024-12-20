@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
@@ -132,7 +133,9 @@ public class BanqueQuestions
 		try
 		{
 			scEnreg = new Scanner(new FileInputStream(cheminFic), "UTF8");
-			scEnreg.nextLine();
+			
+			if(scEnreg.hasNextLine())
+				scEnreg.nextLine();
 
 			cpt = 0;
 			while (scEnreg.hasNextLine())
@@ -277,7 +280,8 @@ public class BanqueQuestions
 		double note;
 		int    nbProp;
 
-		String cheminDirQst;
+		String cheminDirQst,  cheminDirProp;
+		File   dirQst, dirProp;
 
 		try
 		{			
@@ -299,7 +303,23 @@ public class BanqueQuestions
 
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
-				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirProp = cheminDirQst + "/propositions";
+				dirQst        = new File(cheminDirQst);
+				dirProp       = new File(cheminDirProp);
+				
+				if (!dirQst.exists())
+				{
+					if (dirQst.mkdirs())
+					{
+						System.out.println("Le dossier " + dirQst.getPath() + " a été créé avec succès.");
+						dirProp.mkdir();
+					}
+					else
+					{
+						System.out.println("La création du dossier " + dirQst.getPath() + " a échoué.");
+					}
+				}
 
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
 				pwTxt.println(question.getIntitule());
@@ -317,7 +337,7 @@ public class BanqueQuestions
 
 						for(int i = 0; i < qQCM.getPropositions().size(); i++)
 						{
-							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/prop"+(i+1)+".txt"), "UTF8"));
 							propQCM = qQCM.getProposition(i);
 
 							if (propQCM.estReponse()) 
@@ -334,7 +354,7 @@ public class BanqueQuestions
 
 						for (int i = 0; i < qAsso.getPropositions().size(); i++) 
 						{
-							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propAsso = qAsso.getProposition(i);
 
 							pwTxt.print(propAsso.getTextGauche() + "\t" );
@@ -347,7 +367,7 @@ public class BanqueQuestions
 	
 						for (int i = 0; i < qElim.getPropositions().size(); i++)
 						{
-							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propElim = qElim.getProposition(i);
 
 							if (propElim.estReponse()) 
@@ -391,19 +411,19 @@ public class BanqueQuestions
 	public Association creerAssociation(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
 		int idQst = this.recupererId();
-		Association qcm = new Association(codeRes, idNot, idQst, note, temps, difficulte);
-		this.ajouterQuestion(qcm);
+		Association asso = new Association(codeRes, idNot, idQst, note, temps, difficulte);
+		this.ajouterQuestion(asso);
 		this.sauvegarder();
-		return qcm;
+		return asso;
 	}
 
 	public Elimination creerElimination(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
 		int idQst = this.recupererId();
-		Elimination qcm = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
-		this.ajouterQuestion(qcm);
+		Elimination elim = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
+		this.ajouterQuestion(elim);
 		this.sauvegarder();
-		return qcm;
+		return elim;
 	}
 
 	private int recupererId()

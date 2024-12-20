@@ -125,7 +125,8 @@ public class BanqueNotions
 		{
 			scEnreg = new Scanner( new FileInputStream(cheminFic), "UTF8");
 
-			scEnreg.nextLine();
+			if(scEnreg.hasNextLine())
+				scEnreg.nextLine();
 
 			cpt = 0;
 			while (scEnreg.hasNextLine())
