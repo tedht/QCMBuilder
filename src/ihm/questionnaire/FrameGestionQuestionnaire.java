@@ -60,10 +60,15 @@ public class FrameGestionQuestionnaire extends JFrame
 		this.ihm.finaliserQuestionnaire();
 	}
 
+	public String getCodeRes()
+	{
+		return this.panelParametresQuestionnaire != null ? this.panelParametresQuestionnaire.getCodeRes() : "";
+	}
+
+	
 	public void maj()
 	{
-		this.panelParametresQuestionnaire.majDdlstRessources();
 		if(this.panelParametresQuestionnaire.getRessource() != null)
-			this.panelAjoutQuestionnaire.majTabNotions(this.panelParametresQuestionnaire.getRessource().getCode());
+			this.panelAjoutQuestionnaire.majTabNotions();
 	}
 }

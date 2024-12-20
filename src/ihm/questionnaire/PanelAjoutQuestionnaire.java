@@ -25,7 +25,7 @@ import ihm.questionnaire.tableau.GrilleNotionsRenderer;
  */
 public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 {
-	private Controleur              ctrl;
+	private Controleur                ctrl;
 	private FrameGestionQuestionnaire frame;
 
 	private JPanel panelInfo, panelAction;
@@ -48,7 +48,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		this.panelInfo = new JPanel(new BorderLayout());
 		this.panelInfo.setBorder(new EmptyBorder(20,20,20,20));
 
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, ""));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, frame.getCodeRes()));
 		this.spGrilleNotions  = new JScrollPane(this.tblGrilleNotions);
 
 		/* ACTION */
@@ -98,10 +98,10 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		}
 	}
 
-	public void majTabNotions(String codeRes) 
+	public void majTabNotions() 
 	{
 		// Création d'une nouvelle Instance de tblGrilleNotions
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, codeRes));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, frame.getCodeRes()));
 		
 		// Paramétrage
 		this.tblGrilleNotions.getTableHeader().setReorderingAllowed(false); 

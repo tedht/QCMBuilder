@@ -34,6 +34,8 @@ public class GrilleNotionsModel extends AbstractTableModel
 		this.tabNbQuestionsDiff = new int[4];
 
 		String nomNotion;
+		System.out.println(codeRes);
+		System.out.println(this.ctrl.getNotions(codeRes));
 		List<Notion> lstNotions = this.ctrl.getNotions(codeRes) != null ? this.ctrl.getNotions(codeRes) : new ArrayList<Notion>();
 
 		tabDonnees = new Object[lstNotions.size()+2][7];

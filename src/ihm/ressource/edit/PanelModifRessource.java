@@ -52,7 +52,7 @@ public class PanelModifRessource extends PanelEditRessource
 			return false;
 		}
 
-		this.ctrl.modiferRessource(code, nouveauCode, nouveauNom);
+		this.ctrl.modifierRessource(code, nouveauCode, nouveauNom);
 		this.ihm.reinitAffichageRessource();
 		this.ihm.reinitAffichageNotion();
 		return true;

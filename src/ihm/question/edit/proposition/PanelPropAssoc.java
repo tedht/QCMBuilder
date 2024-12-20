@@ -73,9 +73,21 @@ public class PanelPropAssoc extends PanelProp
 		this.tabBtnSupprimer[1].addActionListener(this);
 	}
 
-	public String getTextGauche () { return this.tabTxtProposition[0].getText(); }
-	public String getTextDroite () { return this.tabTxtProposition[1].getText(); }
+	/*---------*/
+	/* Getters */
+	/*---------*/
+	public String getTextGauche() { return this.tabTxtProposition[0].getText(); }
+	public String getTextDroite() { return this.tabTxtProposition[1].getText(); }
 
+	/*---------*/
+	/* Setters */
+	/*---------*/
+	public void setTextGauche(String text) { this.tabTxtProposition[0].setText(text); }
+	public void setTextDroite(String text) { this.tabTxtProposition[1].setText(text); }
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

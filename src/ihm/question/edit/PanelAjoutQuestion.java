@@ -37,17 +37,17 @@ import ihm.question.edit.proposition.PanelPropQRM;
  */
 public class PanelAjoutQuestion extends JPanel implements ActionListener
 {
-	private FrameEditQuestion frame;
+	protected FrameEditQuestion frame;
 	
-	private JPanel            panelInfoScroll, panelInfoQuestion, panelInfoExpli, panelInfoAjout;
-	private JTextArea         txtIntitule, txtExpli;
-	private List<PanelProp>   lstPanelProp;
-	private JToggleButton     btnAjouterExpli;
-	private JButton           btnAjouterProp;
-	private JScrollPane	      scrollPanelInfo;
-	private ButtonGroup       btgQCM;
+	protected JPanel            panelInfoScroll, panelInfoQuestion, panelInfoExpli, panelInfoAjout;
+	protected JTextArea         txtIntitule, txtExpli;
+	protected List<PanelProp>   lstPanelProp;
+	protected JToggleButton     btnAjouterExpli;
+	protected JButton           btnAjouterProp;
+	protected JScrollPane	      scrollPanelInfo;
+	protected ButtonGroup       btgQCM;
 
-	private JButton           btnPrecedent, btnEnregistrer;
+	protected JButton           btnPrecedent, btnEnregistrer;
 
 	public PanelAjoutQuestion(FrameEditQuestion frame) 
 	{

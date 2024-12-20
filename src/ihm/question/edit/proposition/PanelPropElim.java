@@ -83,11 +83,26 @@ public class PanelPropElim extends PanelProp
 		this.txtPointsEnMoins.getDocument().addDocumentListener(new GereText());
 	}
 
+	/*---------*/
+	/* Getters */
+	/*---------*/
 	public String  getText         () { return this.txtProposition  .getText   (); }
 	public boolean estReponse      () { return this.cbResponse      .isSelected(); }
 	public String  getOrdreElim    () { return this.txtOrdreElim    .getText   (); }
 	public String  getPointsEnMoins() { return this.txtPointsEnMoins.getText   (); }
 
+	/*---------*/
+	/* Setters */
+	/*---------*/
+	public void setText         (String  text)       { this.txtProposition  .setText    (text);       }
+	public void setReponse      (boolean reponse)    { this.cbResponse      .setSelected(reponse);    }
+	public void setOrdreElim    (String  ordreElim)  { this.txtOrdreElim    .setText    (ordreElim);  }
+	public void setPointsEnMoins(String  ptsEnMoins) { this.txtPointsEnMoins.setText    (ptsEnMoins); }
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

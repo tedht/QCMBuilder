@@ -32,18 +32,18 @@ import metier.entite.Ressource;
  */
 public class PanelParametresQuestion extends JPanel implements ActionListener, ItemListener
 {
-	private Controleur           ctrl;
-	private FrameEditQuestion    frame;
+	protected Controleur           ctrl;
+	protected FrameEditQuestion    frame;
 
-	private JTextField           txtPoints, txtTemps;
-	private JComboBox<Ressource> ddlstRessource; 
-	private JComboBox<Notion>    ddlstNotion;
-	private JComboBox<String>    ddlstTypeQuestion;
+	protected JTextField           txtPoints, txtTemps;
+	protected JComboBox<Ressource> ddlstRessource; 
+	protected JComboBox<Notion>    ddlstNotion;
+	protected JComboBox<String>    ddlstTypeQuestion;
 
-	private JRadioButton[]       tabRbDifficulte;
-	private ButtonGroup          btgDifficulte;
+	protected JRadioButton[]       tabRbDifficulte;
+	protected ButtonGroup          btgDifficulte;
 
-	private JButton              btnAnnuler, btnSuivant;
+	protected JButton              btnAnnuler, btnSuivant;
 
 	public PanelParametresQuestion(Controleur ctrl, FrameEditQuestion frame) 
 	{

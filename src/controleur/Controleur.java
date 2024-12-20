@@ -178,7 +178,7 @@ public class Controleur
 	}
 
 
-	public void modiferRessource(String code, String nouveauCode, String nouveauNom) 
+	public void modifierRessource(String code, String nouveauCode, String nouveauNom) 
 	{
 		this.metier.modifierRessource(code, nouveauCode, nouveauNom);
 	}

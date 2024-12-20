@@ -99,13 +99,13 @@ public class IHM
 	public void afficherQuestion() 
 	{ 
 		this.resetVisible();
-		this.frameGestionQuestion.maj();
+		//this.frameGestionQuestion.maj();
 		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
 	}
 	public void afficherQuestionnaire () 
 	{ 
 		this.resetVisible();
-		this.frameGestionQuestionnaire.maj();
+		//this.frameGestionQuestionnaire.maj();
 		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
 	}
 	public void quitter() { System.exit(0); }

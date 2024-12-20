@@ -48,8 +48,19 @@ public class FrameEditQuestion extends JFrame
 		this.pagePrecedente();
 	}
 	
-	public FrameEditQuestion(Controleur ctrl2, IHM ihm2, Integer idQst) {
-		//TODO Auto-generated constructor stub
+	public FrameEditQuestion(Controleur ctrl, IHM ihm, Integer idQst) 
+	{
+		this.ctrl = ctrl;
+		this.ihm  = ihm;
+		
+		this.setTitle("Modifier une Question");
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+
+		this.panelParametresQuestion = new PanelParametresModifQuestion(ctrl, this, idQst);
+		this.panelAjoutQuestion      = new PanelAjoutModifQuestion     (ctrl, this, idQst);
+
+		this.pagePrecedente();
 	}
 
 	public void pagePrecedente()

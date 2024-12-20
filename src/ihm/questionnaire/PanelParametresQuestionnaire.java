@@ -180,6 +180,13 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		return (Ressource)this.ddlstRessource.getSelectedItem();
 	}
 
+	public String getCodeRes()
+	{
+		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
+
+		return ressource != null ? ressource.getCode() : "";
+	}
+
 	public boolean estChronometree() 
 	{ 
 		return this.tabRbChronometre[0].isSelected();         

@@ -60,8 +60,23 @@ public class PanelPropQRM extends PanelProp
 		this.btnSupprimer.addActionListener(this);
 	}
 
+	/*---------*/
+	/* Getters */
+	/*---------*/
+
 	public String  getText   () { return this.txtProposition.getText   (); }
 	public boolean estReponse() { return this.cbReponse     .isSelected(); }
+
+	/*---------*/
+	/* Setters */
+	/*---------*/
+
+	public void setText   (String  text)    { this.txtProposition.setText    (text);    }
+	public void setReponse(boolean reponse) { this.cbReponse     .setSelected(reponse); }
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
