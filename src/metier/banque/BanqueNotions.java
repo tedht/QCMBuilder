@@ -31,7 +31,9 @@ public class BanqueNotions
 		this.lstNotions       = new ArrayList<Notion>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		this.cheminFic = "data/notions.csv";
+		String currentDir = System.getProperty("user.dir");
+
+		this.cheminFic = currentDir + "/QCMBuilder/data/notions.csv";
 
 		this.lireRessources(this.cheminFic);
 	}

@@ -1,16 +1,13 @@
 package metier.banque;
 
-import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Scanner;
 import metier.entite.Ressource;
 
 /** Classe BanqueDeRessources
@@ -30,7 +27,9 @@ public class BanqueRessources
 	{
 		this.lstRessources = new ArrayList<Ressource>();
 
-		this.cheminFic = "data/ressources.csv";
+		String currentDir = System.getProperty("user.dir");
+
+		this.cheminFic = currentDir + "/QCMBuilder/data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
