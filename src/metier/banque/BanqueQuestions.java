@@ -216,13 +216,12 @@ public class BanqueQuestions
 
 						estReponse  = scElim.next().charAt(0) == 'V';
 						ordreElim   = scElim.nextInt();
-						nbPtsPerdus = scElim.nextDouble();
+						nbPtsPerdus = Double.parseDouble(scElim.next());
 
-						scElim.useDelimiter("\t");
-						textProp = scElim.next ();
+						textProp = scElim.next();
 						
 						((Elimination) question)
-								.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
+							.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
 
 						scElim.close();
 					}
@@ -378,6 +377,49 @@ public class BanqueQuestions
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public QCM creerQCM(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
+	{
+		int idQst = this.recupererId();
+		QCM qcm = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
+		this.ajouterQuestion(qcm);
+		this.sauvegarder();
+		return qcm;
+	}
+
+	public Association creerAssociation(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
+	{
+		int idQst = this.recupererId();
+		Association qcm = new Association(codeRes, idNot, idQst, note, temps, difficulte);
+		this.ajouterQuestion(qcm);
+		this.sauvegarder();
+		return qcm;
+	}
+
+	public Elimination creerElimination(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
+	{
+		int idQst = this.recupererId();
+		Elimination qcm = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
+		this.ajouterQuestion(qcm);
+		this.sauvegarder();
+		return qcm;
+	}
+
+	private int recupererId()
+	{
+		if(!this.fileIdUtilisable.isEmpty())
+			return this.fileIdUtilisable.poll();
+
+		return this.lstQuestions.size();
+	}
+
+	private void ajouterQuestion(Question question)
+	{
+		if(question.getIdQst() < this.lstQuestions.size())
+			this.lstQuestions.set(question.getIdQst(), question);
+		else
+			this.lstQuestions.add(question);
 	}
 
 	/**

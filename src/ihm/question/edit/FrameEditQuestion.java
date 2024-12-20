@@ -71,11 +71,14 @@ public class FrameEditQuestion extends JFrame
 
 	public boolean enregistrer() 
 	{
-		String codeRes     = this.panelParametresQuestion.getRessource  ().getCode();
-		int    idNot       = this.panelParametresQuestion.getNotion     ().getIdNot();
-		int    valDiff     = this.panelParametresQuestion.getDifficulte ();         
-		String sTemps      = this.panelParametresQuestion.getTemps      ();          
-		String sPoints     = this.panelParametresQuestion.getPoints     ();  
+		String codeRes     = this.panelParametresQuestion.getRessource        ().getCode();
+		int    idNot       = this.panelParametresQuestion.getNotion           ().getIdNot();
+		int    valDiff     = this.panelParametresQuestion.getDifficulte       (); 
+		      
+		int    indexType   = this.panelParametresQuestion.getIndexTypeQuestion();
+
+		String sTemps      = this.panelParametresQuestion.getTemps            ();          
+		String sPoints     = this.panelParametresQuestion.getPoints           ();  
 
 		String intitule    = this.panelAjoutQuestion     .getIntitule   ();          
 		String explication = this.panelAjoutQuestion     .getExplication();   
@@ -203,7 +206,7 @@ public class FrameEditQuestion extends JFrame
 		String detailsQuestion = "";
 		String detailsProp           = "";
 
-		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+sTemps+"\t"+sPoints;
+		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints;
 
 		switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
 		{
@@ -232,9 +235,8 @@ public class FrameEditQuestion extends JFrame
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
-					detailsProp =  panelPropAssoc.getTextGauche() + '\t';
-					detailsProp += panelPropAssoc.getTextDroite();
-					lstDetailsProp.add(detailsProp);
+					lstDetailsProp.add(panelPropAssoc.getTextGauche());
+					lstDetailsProp.add(panelPropAssoc.getTextDroite());
 				}
 			} 
 			case 3  -> // Question avec Elimination de Propositions de Réponses

@@ -230,89 +230,113 @@ public class QCMBuilder
 	 * @param intitule 
 	 * @param lstDetailsProp 
 	 */
-	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp, boolean unique) 
+	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
-		Scanner scDetails, scDetailsProp;
+		Scanner scDetails, scElim;
 		
 		scDetails = new Scanner(detailsQuestion);
 		scDetails.useDelimiter("\t");
 
-		String     codeRes    = scDetails.next();
-		int        idNot      = scDetails.nextInt();
-		int        valDiff    = scDetails.nextInt();
-		String     sTemps     = scDetails.next();
-		int        note       = scDetails.nextInt();
+		String     codeRes      = scDetails.next();
+		int        idNot        = scDetails.nextInt();
+		int        valDiff      = scDetails.nextInt();
+		int        indexType    = scDetails.nextInt();
+		String     sTemps       = scDetails.next();
+		double     note         = Double.parseDouble(scDetails.next());
 
-		Difficulte difficulte = Difficulte.fromInt(valDiff);
-		int        temps      = Integer.parseInt(sTemps.substring(0, 2)) * 60 
-		                        + Integer.parseInt(sTemps.substring(4, 6));
+		scDetails.close();
 
-		Question question = this.banqueQuestions.creerQuestion(codeRes, idNot, note, temps, difficulte)
+		Difficulte   difficulte = Difficulte.fromInt(valDiff);
+		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
+		int          temps      = this.enSeconde(sTemps);
 
+		Question question;
 
-		
-		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),details.temps(), details.note(), unique);
-					  
-		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
+		boolean  estReponse;
+		int      cptReponse;
+
+		String   textGauche, textDroite;
+
+		int      ordreElim;
+		double   nbPtsPerdus;
+		String   text;
+
+		switch (type) 
 		{
-			qcm.ajouterProposition(details.propQCM().get(cpt));
-		}
+			case QCM ->
+			{
+				question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
 
-		this.banqueQuestions.ajouterQuestions(qcm);
-	}
+				cptReponse = 0;
+				for(String detailsProp : lstDetailsProp)
+				{
+					estReponse = detailsProp.charAt(0) == 'V';
+					if(estReponse) cptReponse++;
+					((QCM)question).ajouterProposition(new PropositionQCM(detailsProp.substring(2), estReponse));
+				}
 
-	public void creerAssociation(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
-	{
-		Association asso;
-		DetailsQuestion details;
+				((QCM)question).setUnique(cptReponse == 1);
 
+				question.setIntitule   (intitule);
+				question.setExplication(explication);
+			}
+			case ASSOCIATION ->
+			{
+				question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
 
-		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ASSOCIATION);
+				for(int i = 0; i < lstDetailsProp.size(); i+=2)
+				{
+					textGauche = lstDetailsProp.get(i);
+					textDroite = lstDetailsProp.get(i);
+					
+					((Association)question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+				}
 
-		/*
-		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
-		                       details.temps(), details.note());
+				question.setIntitule   (intitule);
+				question.setExplication(explication);
+			}
+			case ELIMINATION ->
+			{
+				question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
 
-		for (int cpt = 0 ; cpt < details.propAssos().size() ; cpt++)
-		{
-			asso.ajouterProposition(details.propAssos().get(cpt));
-		}
-		
-		this.banqueQuestions.ajouterQuestions(asso);*/
+				for(String detailsProp : lstDetailsProp)
+				{
+					scElim = new Scanner(detailsProp);
+					scElim.useDelimiter(":");
 
+					estReponse  = scElim.next().charAt(0) == 'V';
+					ordreElim   = scElim.nextInt();
+					nbPtsPerdus = scElim.nextDouble();
+
+					text = scElim.next ();
+					
+					((Elimination) question)
+							.ajouterProposition(new PropositionElimination(text, estReponse, ordreElim, nbPtsPerdus));
+
+					scElim.close();
+				}
+				
+				question.setIntitule   (intitule);
+				question.setExplication(explication);
+			}
+			default -> {}
+		}			  
 	}
 
 	/**
-	 * Crée une question d'élimination
+	 * Convertit un temps en seconde
 	 * 
-	 * @param detailsQuestion les détails de la question
-	 * @param lstDetailsProp 
-	 * @param explication 
-	 * @param intitule 
+	 * @param sTemps le temps
+	 * @return le temps en seconde
 	 */
-	public void creerElimination(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
+	private int enSeconde(String sTemps)
 	{
-		Elimination elim;
-		DetailsQuestion details;
+		int m, s;
 
+		m = Integer.parseInt(sTemps.substring(0, 2));
+		s = Integer.parseInt(sTemps.substring(3, 5));
 
-		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ELIMINATION);
-
-		/*
-		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
-		                       details.temps(), details.note());
-
-		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
-		{
-			elim.ajouterProposition(details.propElim().get(cpt));
-		}
-
-		this.banqueQuestions.ajouterQuestions(elim);
-
-		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
-		{
-			elim.ajouterProposition(details.propElim().get(cpt));
-		}*/
+		return m * 60 + s;
 	}
 
 	/**
@@ -405,128 +429,6 @@ public class QCMBuilder
 				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
 			}*/
 		}
-	}
-
-	/**
-	 * Lit les détails d'une question
-	 * 
-	 * @param detailsQuestion les détails de la question
-	 * @param type le type de question
-	 * @return les détails de la question
-	 */
-	private DetailsQuestion lireDetailsQuestion(String detailsQuestion, TypeQuestion type)
-	{
-		Scanner sc;
-
-		Ressource     ressource;
-		Notion        notion;
-		Difficulte    difficulte;
-		int           temps;
-		double        note;
-		String        intitule;
-		String        explication;
-
-		List<PropositionQCM>         lstPropositionsQCM;
-		List<PropositionAssociation> lstPropositionsAssociation;
-		List<PropositionElimination> lstPropositionsElimination;
-
-		String prop;
-
-		int ordreElim, nbPtPerdu;
-
-
-		lstPropositionsAssociation = null;
-		lstPropositionsElimination = null;
-		lstPropositionsQCM         = null;
-
-		try
-		{
-			sc = new Scanner(detailsQuestion);
-		
-			sc.useDelimiter("\t");
-
-			ressource   = this.banqueRessources.getRessource(sc.next());
-			//notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
-			difficulte  = Difficulte.fromInt(sc.nextInt());
-			temps       = this.enSeconde(sc.next());
-			note        = sc.nextDouble();
-			intitule    = sc.next();
-			explication = sc.next();
-
-			System.out.println(ressource);
-
-			if (type == TypeQuestion.QCM)
-			{
-				lstPropositionsQCM = new ArrayList<PropositionQCM>();
-				
-				while (sc.hasNext())
-				{
-					prop = sc.next();
-					lstPropositionsQCM.add(new PropositionQCM(prop.substring(2),
-					prop.substring(0,2).equals("V:")));
-				}
-			}
-				
-			if (type == TypeQuestion.ASSOCIATION)
-			{
-				lstPropositionsAssociation = new ArrayList<PropositionAssociation>();
-				
-				while (sc.hasNext())
-				{
-					lstPropositionsAssociation.add(new PropositionAssociation(sc.next(), sc.next()));
-				}
-			}
-				
-			if (type == TypeQuestion.ELIMINATION)
-			{
-				lstPropositionsElimination = new ArrayList<PropositionElimination>();
-				
-				while (sc.hasNext())
-				{
-					prop = sc.next();
-
-					if(prop.startsWith("F:"))
-					{
-						ordreElim = Integer.parseInt(prop.substring(prop.indexOf(":") + 1, prop.indexOf    (":") + 3));
-						nbPtPerdu = Integer.parseInt(prop.substring(prop.indexOf(":") + 4, prop.indexOf    (":") + 5));
-					}
-					else
-					{
-						ordreElim = 0;
-						nbPtPerdu = 0;
-					}
-
-					lstPropositionsElimination.add(new PropositionElimination(prop.substring(prop.lastIndexOf(":") + 1), prop.startsWith("V:"), ordreElim, nbPtPerdu));
-				}
-			}
-			
-
-			sc.close();
-
-			//return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication, lstPropositionsQCM, lstPropositionsAssociation, lstPropositionsElimination);
-			return null;
-		}
-		catch (Exception e)
-		{
-			System.out.println("Erreur lors de la lecture du détails de la question : " + e.getMessage());
-			return null;
-		}
-	}
-
-	/**
-	 * Convertit un temps en seconde
-	 * 
-	 * @param temps le temps
-	 * @return le temps en seconde
-	 */
-	private int enSeconde(String temps)
-	{
-		int m, s;
-
-		m = Integer.parseInt(temps.substring(0, 2));
-		s = Integer.parseInt(temps.substring(3, 5));
-
-		return m * 60 + s;
 	}
 	
 		/**
