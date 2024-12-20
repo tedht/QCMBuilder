@@ -5,7 +5,10 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import metier.banque.BanqueQuestions;
+
 import metier.entite.question.Question;
+import metier.entite.question.Difficulte;
 
 
 /** 
@@ -21,11 +24,11 @@ public class Questionnaire
 	// Attributs //
 	/*-----------*/
 
-	private Ressource      ressource;
-	private List<Notion>   notions;
-	private boolean        chronometre;
-	private List<Question> questions;
-
+	private Ressource       ressource;
+	private List<Notion>    notions;
+	private boolean         chronometre;
+	private BanqueQuestions banqueQuestions;
+	private List<Question>  questions;
 
 
 	/*--------------*/
@@ -44,6 +47,7 @@ public class Questionnaire
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
 		this.notions     = notions;
+		this.banqueQuestions = new BanqueQuestions();
 		this.questions   = new ArrayList<Question>();
 	}
 
@@ -206,12 +210,37 @@ public class Questionnaire
 	 * @param  notion	    la notion.
 	 * @param  difficulte   la difficultée.
 	 * @param  nbrQuestions le nombre de questions.
-	 * @return              true ........, false sinon.
+	 * @return              true si l'ajout de question s'est bien passé, false sinon.
 	 */
-	public boolean ajouterQuestions(Notion notion, String difficulte, int nbrQuestions)
+	public boolean ajouterQuestions(Notion notion, Difficulte difficulte, int nbrQuestions)
 	{
-		for (int i = 0; i < nbrQuestions; i++) {
-			//trop de trucs avec fichier rtf
+		Question question;
+
+
+		if (notion == null || difficulte == null || nbrQuestions <= 0)
+		{
+			return false;
+		}
+
+		for (int i = 0; i < nbrQuestions; i++)
+		{
+			question = this.banqueQuestions.getQuestion((int) (Math.random() * this.banqueQuestions.getTaille()));
+
+			if (question.getDifficulte() == difficulte)
+			{
+				if (question.getIdNot() == notion.getIdNot())
+				{
+					this.questions.add(question);
+				}
+				else
+				{
+					i--;
+				}
+			}
+			else
+			{
+				i--;
+			}
 		}
 
 		return true;
@@ -228,11 +257,13 @@ public class Questionnaire
 	 */
 	 public boolean genererQuestionnaire(String cheminDossier)
 	 {
-		String dataChrono, nomRessource;
 		String cheminCompletFichier, repCourant;
 
 		String jsPath ;
 		String cssPath;
+
+		String dataChrono, nomRessource;
+		int nbrQuestions, dureeTotale;
 
 
 		if (cheminDossier == null)
@@ -240,8 +271,13 @@ public class Questionnaire
 			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
 		}
 
-		dataChrono   = chronometre ? "true" : "false";
-		nomRessource = ressource.getCode() + " " + ressource.getNom();
+		dataChrono   = this.chronometre ? "true" : "false";
+		nomRessource = this.ressource.getCode() + " " + this.ressource.getNom();
+		nbrQuestions = this.questions.size();
+
+		dureeTotale = 0;
+		for (Question q : this.questions)
+			dureeTotale += q.getTemps();
 
         // Générer le contenu HTML
         String contenuHTML = String.format("""
@@ -268,8 +304,8 @@ public class Questionnaire
                                 <div class="accueil-content">
                                     <p><strong>Ressource :</strong> %s</p>
                                     <p><strong>Notion(s) : </strong><span id="notions"></span></p>
-                                    <p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
-                                    <p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
+                                    <p><strong>Nombre de questions : </strong><span id="question-nombre">%d</span></p>
+                                    <p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total">%d</span> seconde(s)</p>
                                     <p id="p-score" style="display: none;">
                                         <strong>Score total : </strong> <span id="score-total"></span>
                                     </p>
@@ -290,7 +326,7 @@ public class Questionnaire
                     <script src="main.js" defer></script>
                 </body>
                 </html>
-                """, dataChrono, nomRessource);
+                """, dataChrono, nomRessource, nbrQuestions, dureeTotale);
 
 		// Le nom du fichier HTML
 		cheminCompletFichier = cheminDossier + "/questionnaire.html";
@@ -359,25 +395,36 @@ public class Questionnaire
 	public static void main(String[] args) 
 	{
 		Ressource     r1;
-		Notion        n1, n2;
+		Notion        n1, n2, n3;
 		List<Notion>  l1;
-		Questionnaire q1;
+		Questionnaire quest1;
 
 		r1 = new Ressource("R1.01","Init_Dev");
 
 		n1 = new Notion("Algorithmique",1,"R1.01");
 		n2 = new Notion("Programmation",2,"R1.01");
+		n3 = new Notion("SQL",3,"R1.05");
 
 		l1 = new ArrayList<Notion>();
 		l1.add(n1);
+		l1.add(n2);
 
-		q1 = new Questionnaire(r1, l1, false);
+		quest1 = new Questionnaire(r1, l1, false);
 
-		System.out.println(q1);
+		System.out.println(quest1);
 
-		q1.ajouterNotion(n2);
-		System.out.println(q1);
+		quest1.ajouterNotion(n3);
+		System.out.println(quest1);
 
-		q1.genererQuestionnaire("./test");
+		// q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
+		// q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
+		// q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
+
+
+		quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
+		quest1.ajouterQuestions(n2, Difficulte.MOYEN, 2);
+		quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 2);
+
+		quest1.genererQuestionnaire("./test");
 	}
 }
