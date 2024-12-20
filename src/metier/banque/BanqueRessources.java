@@ -16,9 +16,23 @@ import metier.entite.Ressource;
  */
 public class BanqueRessources
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private List<Ressource> lstRessources;
 
-	private String cheminFic;
+	private String          cheminFic;
+	private String          currentDir;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur de la classe BanqueDeRessources.
@@ -26,18 +40,25 @@ public class BanqueRessources
 	public BanqueRessources()
 	{
 		this.lstRessources = new ArrayList<Ressource>();
+		this.currentDir    = System.getProperty("user.dir");
 
-		String currentDir = System.getProperty("user.dir");
-
-		this.cheminFic = currentDir + "/data/ressources.csv";
+		this.cheminFic     = this.currentDir + "/data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
+
+	/**
+	 * Retourne le chemin du fichier de la banque de ressources.
+	 * 
+	 * @return le chemin du fichier.
+	 */
 	public String getCheminFic()
 	{
 		return this.cheminFic;
@@ -69,10 +90,11 @@ public class BanqueRessources
 		return null;
 	}
 
-	/*-----------------*/
-	/* Autres méthodes */
-	/*-----------------*/
 
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
 
 	/** 
 	 * Lit les ressources d'un fichier CSV.
@@ -118,6 +140,9 @@ public class BanqueRessources
 		}
 	}
 
+	/**
+	 * Sauvegarde les ressources dans un fichier CSV.
+	 */
 	public void sauvegarder()
 	{
 		this.sauvegarder(this.cheminFic);
@@ -157,6 +182,11 @@ public class BanqueRessources
 		}
 	}
 
+	/**
+	 * Ajoute une ressource à la banque de ressources.
+	 * 
+	 * @param ressource la ressource à ajouter.
+	 */
 	public void editRessource(String code, String nom)
 	{
 		this.lstRessources.add(new Ressource(code, nom));
@@ -182,6 +212,11 @@ public class BanqueRessources
 		return false;
 	}
 
+	/**
+	 * Supprime une ressource de la banque de ressources.
+	 * 
+	 * @param ressource la ressource à supprimer.
+	 */
 	public void supprimerRessource(String codeRes)
 	{
 		for(int i = 0; i < this.lstRessources.size(); i++)
@@ -192,10 +227,7 @@ public class BanqueRessources
 		}
 	}
 
-	/*----------*/
-	/* ToString */
-	/*----------*/
-	/*
+/*
 	public String toString()
 	{
 		String sRet = "";

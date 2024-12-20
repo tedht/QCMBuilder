@@ -21,19 +21,35 @@ import metier.entite.Notion;
  */
 public class BanqueNotions 
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private List<Notion>   lstNotions;
 	private Queue<Integer> fileIdUtilisable;
 
 	private String         cheminFic;
+	private String         currentDir;
 	
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
+
+	/**
+	 * Constructeur de la classe BanqueDeNotions.
+	 */
 	public BanqueNotions()
 	{
 		this.lstNotions       = new ArrayList<Notion>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
+		this.currentDir       = System.getProperty("user.dir");
 
-		String currentDir = System.getProperty("user.dir");
-
-		this.cheminFic = currentDir + "/data/notions.csv";
+		this.cheminFic        = currentDir + "/data/notions.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
@@ -42,6 +58,11 @@ public class BanqueNotions
 	/* Getters */
 	/*---------*/
 
+	/**
+	 * Retourne le chemin du fichier de la banque de notions.
+	 * 
+	 * @return le chemin du fichier.
+	 */
 	public String getCheminFic()
 	{
 		return this.cheminFic;
@@ -65,6 +86,12 @@ public class BanqueNotions
 		return lstNotions;
 	}
 
+	/** 
+	 * Retourne la liste des notions de la banque de notions en fonction du code de la ressource.
+	 * 
+	 * @param codeRes le code de la ressource
+	 * @return la liste des notions.
+	 */
 	public List<Notion> getNotions(String codeRes) 
 	{
 		List<Notion> lstNotions = new ArrayList<Notion>();
@@ -101,7 +128,7 @@ public class BanqueNotions
 	}
 
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 
 	/** 
@@ -160,11 +187,19 @@ public class BanqueNotions
 		}
 	}
 
+	/** 
+	 * Sauvegarde les notions dans un fichier CSV.
+	*/
 	public void sauvegarder()
 	{
 		this.sauvegarder(this.cheminFic);
 	}
 
+	/** 
+	 * Sauvegarde les notions dans un fichier CSV.
+	 * 
+	 * @param cheminFic le nom du fichier dans lequel sauvegarder les notions.
+	*/
 	private void sauvegarder(String cheminFic)
 	{
 		PrintWriter pw;
@@ -197,6 +232,11 @@ public class BanqueNotions
 		}
 	}
 	
+	/**
+	 * Modifie une notion à la banque de notions.
+	 * 
+	 * @param notion la notion à modifier.
+	 */
 	public void editNotion(String codeRes, String nom)
 	{
 		int idNot = this.recupererId();
@@ -207,6 +247,11 @@ public class BanqueNotions
 			this.lstNotions.add(new Notion(codeRes, idNot, nom));
 	}
 
+	/**
+	 * Recupère l'id de la dernière notion
+	 * 
+	 * @return la taille de la lstNotions (qui donne donc l'id de la dernière notion).
+	 */
 	private int recupererId()
 	{
 		if(!this.fileIdUtilisable.isEmpty())
@@ -215,12 +260,22 @@ public class BanqueNotions
 		return this.lstNotions.size();
 	}
 
+	/**
+	 * Supprime une notion de la banque de notions.
+	 * 
+	 * @param idNot l'id de la notion à supprimer.
+	 */
 	public void supprimerNotion(int idNot)
 	{
 		this.fileIdUtilisable.offer(idNot);
 		this.lstNotions.set(idNot, null);
 	}
 
+	/**
+	 * Supprime une (ou des) notion de la banque de notions si la ressource donnée en paramètre contient une ou plusieurs notions.
+	 * 
+	 * @param codeRes le code de la ressource de la notion à supprimer.
+	 */
 	public void supprimerNotions(String codeRes)
 	{
 		for(int i = 0; i < this.lstNotions.size(); i++)
