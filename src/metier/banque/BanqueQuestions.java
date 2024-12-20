@@ -43,7 +43,7 @@ public class BanqueQuestions
 
 		String currentDir = System.getProperty("user.dir");
 
-		this.cheminFic = currentDir + "/QCMBuilder/data/questions.csv";
+		this.cheminFic = currentDir + "/data/questions.csv";
 
 		this.lireQuestions(this.cheminFic);
 	}

@@ -33,7 +33,7 @@ public class BanqueNotions
 
 		String currentDir = System.getProperty("user.dir");
 
-		this.cheminFic = currentDir + "/QCMBuilder/data/notions.csv";
+		this.cheminFic = currentDir + "/data/notions.csv";
 
 		this.lireRessources(this.cheminFic);
 	}

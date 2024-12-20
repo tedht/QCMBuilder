@@ -29,7 +29,7 @@ public class BanqueRessources
 
 		String currentDir = System.getProperty("user.dir");
 
-		this.cheminFic = currentDir + "/QCMBuilder/data/ressources.csv";
+		this.cheminFic = currentDir + "/data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
