@@ -67,7 +67,7 @@ public class FrameEditQuestion extends JFrame
 		this.setSize   (IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_2);
 		this.add       (this.panelAjoutQuestion);
 
-		this.panelAjoutQuestion.afficherPropositions();
+		this.panelAjoutQuestion.afficher();
 
 		this.revalidate();
 		this.repaint   ();
@@ -84,8 +84,8 @@ public class FrameEditQuestion extends JFrame
 		String sTemps      = this.panelParametresQuestion.getTemps            ();          
 		String sPoints     = this.panelParametresQuestion.getPoints           ();  
 
-		String intitule    = this.panelAjoutQuestion     .getIntitule   ();          
-		String explication = this.panelAjoutQuestion     .getExplication();   
+		String intitule    = this.panelAjoutQuestion     .getIntitule         ();          
+		String explication = this.panelAjoutQuestion     .getExplication      ();   
 		
 		List<String> lstDetailsProp = new ArrayList<String>();
 		List<String> lstErreurs     = new ArrayList<String>();

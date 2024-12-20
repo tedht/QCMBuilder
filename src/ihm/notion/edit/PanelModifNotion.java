@@ -29,7 +29,7 @@ public class PanelModifNotion extends PanelEditNotion
 
 		if(nouveauNom.isEmpty()) 
 			lstErreurs.add("Le nom est vide");
-		else if(this.ctrl.getNotionParNom(this.ctrl.getRessourceActive().getCode(), nouveauNom) != null)
+		else if(this.ctrl.getNotionParNom(this.ctrl.getRessourceSelectionnee().getCode(), nouveauNom) != null)
 			lstErreurs.add("La notion existe déjà");
 
 		if(lstErreurs.size() != 0)

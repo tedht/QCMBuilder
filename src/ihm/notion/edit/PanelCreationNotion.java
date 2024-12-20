@@ -24,7 +24,7 @@ public class PanelCreationNotion extends PanelEditNotion
 
 		if(nom.isEmpty()) 
 			lstErreurs.add("Le nom est vide");
-		else if(this.ctrl.getNotionParNom(this.ctrl.getRessourceActive().getCode(), nom) != null)
+		else if(this.ctrl.getNotionParNom(this.ctrl.getRessourceSelectionnee().getCode(), nom) != null)
 			lstErreurs.add("La notion existe déjà");
 
 		if(lstErreurs.size() != 0)
@@ -42,8 +42,8 @@ public class PanelCreationNotion extends PanelEditNotion
 			return false;
 		}
 
-		if(this.ctrl.getRessourceActive() != null)
-			this.ctrl.editNotion(this.ctrl.getRessourceActive().getCode(), this.txtNom.getText());
+		if(this.ctrl.getRessourceSelectionnee() != null)
+			this.ctrl.editNotion(this.ctrl.getRessourceSelectionnee().getCode(), this.txtNom.getText());
 		
 		this.ihm.reinitAffichageRessource();	
 		this.ihm.reinitAffichageNotion();

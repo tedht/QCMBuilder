@@ -155,7 +155,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		if(e.getSource() == this.btnEnregistrer)  { this.frame.enregistrer   (); }
 		if(e.getSource() == this.btnPrecedent)    { this.frame.pagePrecedente(); }
 		if(e.getSource() == this.btnAjouterProp)  { this.ajouterProposition  (); }
-		if(e.getSource() == this.btnAjouterExpli) { this.afficherPropositions(); }
+		if(e.getSource() == this.btnAjouterExpli) { this.afficher(); }
 	}
 
 	public void ajouterProposition()
@@ -185,7 +185,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		if(panelProp != null) 
 		{
 			this.lstPanelProp.add(panelProp);
-			this.afficherPropositions();
+			this.afficher();
 		}
 	}
 
@@ -193,10 +193,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 	{
 		this.lstPanelProp.remove(panelProp);
 
-		this.afficherPropositions();
+		this.afficher();
 	}
 
-	public void afficherPropositions()
+	public void afficher()
 	{
 		this.panelInfoScroll.removeAll();
 		

@@ -33,8 +33,7 @@ public class QCMBuilder
 	private BanqueNotions    banqueNotions;
 	private BanqueRessources banqueRessources;
 
-	private Ressource        ressourceActive;
-	private Notion           notionActive;
+	private Ressource        ressourceSelectionnee;
 
 	private Questionnaire    questionnaire;
 
@@ -44,8 +43,7 @@ public class QCMBuilder
 		this.banqueNotions    = new BanqueNotions   ();
 		this.banqueQuestions  = new BanqueQuestions ();
 
-		this.ressourceActive  = null;
-		this.notionActive     = null;
+		this.ressourceSelectionnee  = null;
 
 		this.questionnaire    = null;
 	}
@@ -142,19 +140,9 @@ public class QCMBuilder
 	 * 
 	 * @return la ressource active
 	 */
-	public Ressource getRessourceActive() 
+	public Ressource getRessourceSelectionnee() 
 	{
-		return this.ressourceActive;
-	}
-
-	/**
-	 * Retourne la notion active
-	 * 
-	 * @return la notion active
-	 */
-	public Notion getNotionActive() 
-	{
-		return this.notionActive;
+		return this.ressourceSelectionnee;
 	}
 
 	/*---------*/
@@ -166,19 +154,9 @@ public class QCMBuilder
 	 * 
 	 * @param ressource la ressource active
 	 */
-	public void setRessourceActive(Ressource ressource) 
+	public void setRessourceSelectionnee(Ressource ressource) 
 	{
-		this.ressourceActive = ressource;
-	}
-
-	/**
-	 * Modifie la notion active
-	 *
-	 * @param notion la notion
-	 */
-	public void setNotionActive(Notion notion) 
-	{
-		this.notionActive = notion;
+		this.ressourceSelectionnee = ressource;
 	}
 
 	/*-----------------*/
@@ -360,8 +338,8 @@ public class QCMBuilder
 		this.banqueNotions.sauvegarder();
 		
 		// Supprime la ressource
-		if(this.banqueRessources.getRessource(code) == this.ressourceActive) 
-			this.ressourceActive = null;
+		if(this.banqueRessources.getRessource(code) == this.ressourceSelectionnee) 
+			this.ressourceSelectionnee = null;
 		this.banqueRessources.supprimerRessource(code);
 		this.banqueRessources.sauvegarder();
 	}
@@ -376,8 +354,6 @@ public class QCMBuilder
 
 
 		// Supprime la notion
-		if(this.banqueNotions.getNotion(id) == this.notionActive) 
-			this.notionActive = null;
 		this.banqueNotions.supprimerNotion(id);
 		this.banqueNotions.sauvegarder();
 	}

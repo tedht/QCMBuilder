@@ -39,7 +39,7 @@ public class PanelRessource extends PanelEntite
 		this.frame = frame;
 
 		this.code   = code;
-		this.select = this.ctrl.getRessourceActive() == this.ctrl.getRessource(this.code);
+		this.select = this.ctrl.getRessourceSelectionnee() == this.ctrl.getRessource(this.code);
 
 		if(this.select)
 		{
@@ -118,11 +118,11 @@ public class PanelRessource extends PanelEntite
 			
 			if(PanelRessource.this.select)
 			{
-				PanelRessource.this.ctrl.setRessourceActive(null);	
+				PanelRessource.this.ctrl.setRessourceSelectionnee(null);	
 			}
 			else
 			{
-				PanelRessource.this.ctrl.setRessourceActive(
+				PanelRessource.this.ctrl.setRessourceSelectionnee(
 					PanelRessource.this.ctrl.getRessource(PanelRessource.this.code)
 				);	
 			}

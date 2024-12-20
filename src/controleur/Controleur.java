@@ -120,19 +120,9 @@ public class Controleur
 	 * 
 	 * @return la ressource active.
 	 */
-	public Ressource getRessourceActive()
+	public Ressource getRessourceSelectionnee()
 	{
-		return this.metier.getRessourceActive();
-	}
-
-	/**
-	 * Retourne la notion active.
-	 * 
-	 * @return la notion active.
-	 */
-	public Notion getNotionActive()
-	{
-		return this.metier.getNotionActive();
+		return this.metier.getRessourceSelectionnee();
 	}
 
 	/*---------*/
@@ -144,19 +134,9 @@ public class Controleur
 	 * 
 	 * @param ressource la nouvelle ressource active.
 	 */
-	public void setRessourceActive(Ressource ressource) 
+	public void setRessourceSelectionnee(Ressource ressource) 
 	{
-		this.metier.setRessourceActive(ressource);
-	}
-
-	/**
-	 * Modifie la notion active.
-	 * 
-	 * @param notion la nouvelle notion active.
-	 */
-	public void setNotionActive(Notion notion) 
-	{
-		this.metier.setNotionActive(notion);
+		this.metier.setRessourceSelectionnee(ressource);
 	}
 
 	/*-----------------*/

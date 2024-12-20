@@ -61,7 +61,7 @@ public class PanelGestionNotion extends PanelGestion
 				this.panelContenu.add(panelCarte);
 			}
 		}
-		else if(this.ctrl.getRessourceActive() == null)
+		else if(this.ctrl.getRessourceSelectionnee() == null)
 		{
 			this.btnAjouter.setEnabled(false);
 			
@@ -74,7 +74,7 @@ public class PanelGestionNotion extends PanelGestion
 				this.panelContenu.add(panelCarte);
 			}
 		}
-		else if(this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()).size() == 0)
+		else if(this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size() == 0)
 		{
 			this.btnAjouter.setEnabled(true);
 			
@@ -91,13 +91,13 @@ public class PanelGestionNotion extends PanelGestion
 		{
 			this.btnAjouter.setEnabled(true);
 			
-			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()))
+			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()))
 			{
 				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, notion.getIdNot(), notion.getNom());
 				this.panelContenu.add(panelCarte);
 			}
 
-			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()).size(); i > 0; i--)
+			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size(); i > 0; i--)
 			{
 				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
 				panelCarte.setVisible(false);
