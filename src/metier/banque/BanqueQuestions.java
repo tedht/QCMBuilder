@@ -115,8 +115,8 @@ public class BanqueQuestions
 		double       note;
 		Question     question;
 
-		String       intitule;
-		String       explication;
+		String       intitule    = "";
+		String       explication = "";
 
 		int          nbProp;
 		String       detailsProp;
@@ -156,11 +156,13 @@ public class BanqueQuestions
 				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
-				intitule      = scIntitule.nextLine();
+				if(scIntitule.hasNextLine())
+					intitule = scIntitule.nextLine();
 				scIntitule.close();
 
 				scExplication = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
-				explication   = scExplication.nextLine();
+				if(scExplication.hasNextLine())
+					explication = scExplication.nextLine();
 				scExplication.close();
 
 				while(cpt < idQst)
@@ -178,16 +180,19 @@ public class BanqueQuestions
 					cptReponse = 0;
 					for(int i = 1; i <= nbProp; i++)
 					{
-						scProp      = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						detailsProp = scProp.nextLine();
+						scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+						if(scProp.hasNextLine())
+						{
+							detailsProp = scProp.nextLine();
+
+							estReponse = detailsProp.charAt(0) == 'V';
+							if(estReponse) cptReponse++;
+							
+							textProp = detailsProp.substring(2);
+
+							((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
+						}
 						scProp.close();
-						
-						estReponse = detailsProp.charAt(0) == 'V';
-						if(estReponse) cptReponse++;
-						
-						textProp = detailsProp.substring(2);
-						
-						((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
 					}
 					((QCM) question).setUnique(cptReponse == 1);
 				}
@@ -198,10 +203,14 @@ public class BanqueQuestions
 					for(int i = 1; i <= nbProp; i++)
 					{
 						scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						textGauche = scProp.nextLine();
-						textDroite = scProp.nextLine();
+						if(scProp.hasNextLine())
+						{
+							textGauche = scProp.nextLine();
+							textDroite = scProp.nextLine();
+
+							((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+						}
 						scProp.close();
-						((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
 					}
 				}
 				case ELIMINATION ->
@@ -211,22 +220,25 @@ public class BanqueQuestions
 					for(int i = 1; i <= nbProp; i++)
 					{
 						scProp      = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						detailsProp = scProp.nextLine();
+						if(scProp.hasNextLine())
+						{
+							detailsProp = scProp.nextLine();
+
+							scElim = new Scanner(detailsProp);
+							scElim.useDelimiter(":");
+	
+							estReponse  = scElim.next().charAt(0) == 'V';
+							ordreElim   = scElim.nextInt();
+							nbPtsPerdus = Double.parseDouble(scElim.next());
+	
+							textProp = scElim.next();
+							
+							((Elimination) question)
+								.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
+							
+							scElim.close();
+						}
 						scProp.close();
-						
-						scElim = new Scanner(detailsProp);
-						scElim.useDelimiter(":");
-
-						estReponse  = scElim.next().charAt(0) == 'V';
-						ordreElim   = scElim.nextInt();
-						nbPtsPerdus = Double.parseDouble(scElim.next());
-
-						textProp = scElim.next();
-						
-						((Elimination) question)
-							.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
-
-						scElim.close();
 					}
 				}
 				default ->
@@ -280,7 +292,7 @@ public class BanqueQuestions
 		double note;
 		int    nbProp;
 
-		String cheminDirQst,  cheminDirProp;
+		String cheminDirQst, cheminDirProp;
 		File   dirQst, dirProp;
 
 		try
@@ -339,6 +351,8 @@ public class BanqueQuestions
 						{
 							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/prop"+(i+1)+".txt"), "UTF8"));
 							propQCM = qQCM.getProposition(i);
+							System.out.println(propQCM.estReponse());
+							System.out.println(propQCM.getText());
 
 							if (propQCM.estReponse()) 
 								pwTxt.print("V:");
@@ -346,6 +360,8 @@ public class BanqueQuestions
 								pwTxt.print("F:");
 
 							pwTxt.println(propQCM.getText());	
+
+							pwTxt.close();
 						}
 					}
 					case ASSOCIATION -> 
@@ -358,7 +374,9 @@ public class BanqueQuestions
 							propAsso = qAsso.getProposition(i);
 
 							pwTxt.print(propAsso.getTextGauche() + "\t" );
-							pwTxt.print(propAsso.getTextDroite() + "\n");	
+							pwTxt.println(propAsso.getTextDroite());	
+
+							pwTxt.close();
 						}
 					}
 					case ELIMINATION -> 
@@ -378,6 +396,8 @@ public class BanqueQuestions
 							pwTxt.print(propElim.getOrdreElim  () + ":" );
 							pwTxt.print(propElim.getNbPtsPerdus() + ":");
 							pwTxt.println(propElim.getText());
+
+							pwTxt.close();
 						}
 
 					}
@@ -404,7 +424,6 @@ public class BanqueQuestions
 		int idQst = this.recupererId();
 		QCM qcm = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(qcm);
-		this.sauvegarder();
 		return qcm;
 	}
 
@@ -413,7 +432,6 @@ public class BanqueQuestions
 		int idQst = this.recupererId();
 		Association asso = new Association(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(asso);
-		this.sauvegarder();
 		return asso;
 	}
 
@@ -422,7 +440,6 @@ public class BanqueQuestions
 		int idQst = this.recupererId();
 		Elimination elim = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(elim);
-		this.sauvegarder();
 		return elim;
 	}
 

@@ -1,6 +1,5 @@
 package metier;
 
-import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
@@ -259,7 +258,7 @@ public class QCMBuilder
 		int      ordreElim;
 		double   nbPtsPerdus;
 		String   text;
-
+	
 		switch (type) 
 		{
 			case QCM ->
@@ -319,7 +318,9 @@ public class QCMBuilder
 				question.setExplication(explication);
 			}
 			default -> {}
-		}			  
+		}
+		
+		this.banqueQuestions.sauvegarder();
 	}
 
 	/**
@@ -347,89 +348,6 @@ public class QCMBuilder
 	{
 		this.questionnaire.genererQuestionnaire(cheminFichier);
 	}
-
-	/**
-	 * Crée l'arborescence des ressources
-	 */
-	/*
-	public void creerArborescence()
-	{
-		File dossier;
-
-
-		for (Ressource ressource : this.banqueRessources.getRessources())
-		{
-			dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom());
-
-
-			// Si pas de notion, ignore simplement la boucle
-			
-			for (Notion notion : this.getNotions(ressource.getCode()))
-			{
-				dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom());
-
-				// Si pas de question, ignore simplement la boucle
-				for (int cpt = 1 ; cpt < this.banqueQuestions.getQuestions().size() ; cpt++)
-				{
-					if (this.banqueQuestions.getQuestions().get(cpt).getRessource().equals(ressource))
-					{
-						dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom() + "/question " + cpt + "/complément");
-					}
-
-					// Vérifier si le dossier existe déjà, sinon le créer -- Question
-					if (!dossier.exists())
-					{
-						if (dossier.mkdirs())
-						{
-							System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
-						}
-						else
-						{
-							System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
-						}
-					}
-					else
-					{
-						System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
-					}
-				}
-
-				// Vérifier si le dossier existe déjà, sinon le créer --  Notion
-				if (!dossier.exists())
-				{
-					if (dossier.mkdirs())
-					{
-						System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
-					}
-					else
-					{
-						System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
-					}
-				}
-				else
-				{
-					System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
-				}
-			}
-
-			// Vérifier si le dossier existe déjà, sinon le créer -- Ressource
-			if (!dossier.exists())
-			{
-				if (dossier.mkdirs())
-				{
-					System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
-				}
-				else
-				{
-					System.out.println("La création du dossier " + dossier.getPath() + " a échoué.");
-				}
-			}
-			else
-			{
-				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
-			}
-		}
-	}*/
 	
 		/**
 	 * Supprime une ressource à partir de son code.
@@ -444,7 +362,6 @@ public class QCMBuilder
 		// Supprime les notions associées à la ressource
 		this.banqueNotions.supprimerNotions(code);
 		this.banqueNotions.sauvegarder();
-
 		
 		// Supprime la ressource
 		this.banqueRessources.supprimerRessource(code);
@@ -458,6 +375,8 @@ public class QCMBuilder
 	public void supprimerNotion(int id) 
 	{
 		// Supprime les questions associées à la ressource
+
+
 		// Supprime la notion
 		this.banqueNotions.supprimerNotion(id);
 		this.banqueNotions.sauvegarder();
