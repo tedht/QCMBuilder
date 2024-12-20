@@ -2,8 +2,6 @@ package metier.entite.question.elimination;
 
 import metier.entite.question.Proposition;
 
-
-
 /**
  * Classe PropositionElimination.
  * 
@@ -12,6 +10,13 @@ import metier.entite.question.Proposition;
  */
 public class PropositionElimination implements Proposition
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private String  text;
 	private boolean reponse;
 	private int     ordreElim;
@@ -41,30 +46,23 @@ public class PropositionElimination implements Proposition
 
 
 
-	/*--------------*/
-	//    GETTER    //
-	/*--------------*/
+	/*--------*/
+	// GETTER //
+	/*--------*/
 
 	/**
 	 * Retourne le text associé à la proposition.
 	 * 
 	 * @return le text.
 	 */
-	public String getText ()
-	{
-		return this.text;
-	
-	}
+	public String getText () { return this.text; }
 
 	/**
 	 * Retourne la reponse associée à la proposition.
 	 * 
 	 * @return true si la reponse est vrais, false sinon.
 	 */
-	public boolean estReponse()
-	{
-		return this.reponse;
-	}
+	public boolean estReponse() { return this.reponse; }
 
 	/**
 	 * Retourne le numéro dans l'ordre d'Elimination des propositions.
@@ -72,64 +70,46 @@ public class PropositionElimination implements Proposition
 	 * 
 	 * @return l'ordre d'élimination.
 	 */
-	public int getOrdreElim()
-	{
-		return this.ordreElim;
-	}
+	public int getOrdreElim() { return this.ordreElim; }
 
 	/**
 	 * Retourne le nombre de points perdus lors de l'élimination de la proposition.
 	 * 
 	 * @return le nombre de points perdus.
 	 */
-	public double getNbPtsPerdus()
-	{
-		return this.nbPtsPerdus;
-	}
+	public double getNbPtsPerdus() { return this.nbPtsPerdus; }
 
 
 
-	/*--------------*/
-	//    SETTER    //
-	/*--------------*/
+	/*--------*/
+	// SETTER //
+	/*--------*/
 
 	/**
 	 * Modifie le text associé à la Proposition.
 	 * 
 	 * @param text le nouveau text.
 	 */
-	public void setText(String text)
-	{
-		this.text = text;
-	}
+	public void setText(String text) { this.text = text; }
 
 	/**
 	 * Modifie la réponse associée à la Proposition.
 	 * 
 	 * @param reponse la nouvelle réponse.
 	 */
-	public void setReponse(boolean reponse)
-	{
-		this.reponse = reponse;
-	}
+	public void setReponse(boolean reponse) { this.reponse = reponse; }
 
 	/**
 	 * Modifie l'ordre d'élimination associé à la Proposition.
 	 * 
 	 * @param ordreElim le nouvelle ordre.
 	 */
-	public void setOrdreElim(int ordreElim )
-	{
-		this.ordreElim = ordreElim;
-	}
+	public void setOrdreElim(int ordreElim ) { this.ordreElim = ordreElim; }
 
 	/**
 	 * Modifie le nombre de point perdus associés à la Proposition.
 	 * 
 	 * @param nbPtsPerdus le nouveau nombre de points perdus.
 	 */
-	public void setNbPtsPerdus(double nbPtsPerdus)
-	{
-		this.nbPtsPerdus = nbPtsPerdus;
-	}
+	public void setNbPtsPerdus(double nbPtsPerdus) { this.nbPtsPerdus = nbPtsPerdus; }
 }

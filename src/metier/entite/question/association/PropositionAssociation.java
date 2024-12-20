@@ -1,6 +1,6 @@
 package metier.entite.question.association;
 
-import metier.entite.question.Proposition;
+import  metier.entite.question.Proposition;
 
 /** Classe PropositionAssociation
  * 
@@ -9,21 +9,40 @@ import metier.entite.question.Proposition;
  */
 public class PropositionAssociation implements Proposition
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private String textGauche;
 	private String textDroite;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur de la classe PropositionAssociation.
 	 * 
-	 * @param textGauche le texte de la proposition de gauche
-	 * @param textDroite le texte de la proposition de droite
-	 * @see #question
+	 * @param textGauche le texte de la proposition de gauche.
+	 * @param textDroite le texte de la proposition de droite.
+	 * @see   #question.
 	 */
 	public PropositionAssociation(String textGauche, String textDroite)
 	{
 		this.textGauche = textGauche;
 		this.textDroite = textDroite;
 	}
+
+
+
+	/*---------*/
+	// Getters //
+	/*---------*/
 
 	/**
 	 * Retourne le texte de la proposition de gauche.
@@ -39,6 +58,12 @@ public class PropositionAssociation implements Proposition
 	 */
 	public String getTextDroite() { return textDroite; }
 
+
+
+	/*---------*/
+	// Setters //
+	/*---------*/
+
 	/**
 	 * Modifie le texte de la proposition de gauche.
 	 * 
@@ -53,10 +78,14 @@ public class PropositionAssociation implements Proposition
 	 */
 	public void setTextDroite(String textDroite) { this.textDroite = textDroite; }
 
+
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
+
 	public String toString()
 	{
 		return this.textGauche + " --- " + this.textDroite;
 	}
-
-	
 }

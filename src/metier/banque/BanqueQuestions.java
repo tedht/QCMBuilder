@@ -137,6 +137,17 @@ public class BanqueQuestions
 	}
 
 
+	/**
+	 * Retourne la taille de la liste des questions
+	 * 
+	 * @return la taille de la liste des questions
+	 */
+	public int getTaille()
+	{
+		return this.lstQuestions.size();
+	}
+
+
 
 	/*-----------------*/
 	// Autres méthodes //

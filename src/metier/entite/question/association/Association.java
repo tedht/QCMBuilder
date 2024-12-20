@@ -1,69 +1,98 @@
 package metier.entite.question.association;
 
-import metier.entite.question.Difficulte;
-import metier.entite.question.Question;
-import metier.entite.question.TypeQuestion;
-import metier.entite.question.Proposition;
+import  metier.entite.question.Difficulte;
+import  metier.entite.question.Proposition;
+import  metier.entite.question.Question;
+import  metier.entite.question.TypeQuestion;
 
-/** Classe Association
+/**
+ * Classe Association
+ *
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Association extends Question
 {
+
+
+
 	/*--------------*/
-	/* Constructeur */
+	// Constructeur //
 	/*--------------*/
 
-	public Association(String codeRes, int idNot, int idQst,double note, int temps, Difficulte difficulte)
+	/**
+	 * Constructeur de la classe Association.
+	 * 
+	 * @param codeRes    l'identifiant de la ressource.
+	 * @param idNot      l'identifiant de la notion.
+	 * @param idQst      l'identifiant de la question.
+	 * @param note       la note.
+	 * @param temps      le temps associée à la question.
+	 * @param difficulte la difficultée.
+	 */
+	public Association(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
 	/**
-	 * Retourne le type de la question
+	 * Retourne le type de la question.
 	 * 
-	 * @return le type de question ELIMINATION
+	 * @return  le type de question ELIMINATION.
 	 */
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
 
+	/**
+	 * Retourne une proposition association.
+	 * 
+	 * @return  la proposition.
+	 */
 	public PropositionAssociation getProposition(int i) { return (PropositionAssociation) super.getProposition(i); }
 
+
+
+
 	/*---------*/
-	/* Setters */
+	// Setters //
 	/*---------*/
 
 	/**
-	 * Setter de proposition
+	 * Setter de proposition.
 	 * 
-	 * @param i indice de la proposition à modifier
-	 * @param prop la proposition qui va modifier l'ancienne
-	 * @return true si la modification a été effectuée, false sinon
+	 * @param  i indice de la proposition à modifier.
+	 * @param  prop la proposition qui va modifier l'ancienne.
+	 * @return true si la modification a été effectuée, false sinon.
 	 */
-	public boolean setProposition(int i, PropositionAssociation prop)
-	{
-		return super.setProposition(i, prop);
-	}
+	public boolean setProposition(int i, PropositionAssociation prop) { return super.setProposition(i, prop); }
+
+
 
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
-	/** 
-	 * Ajouter une proposition
+
+	/**
+	 * Ajouter une proposition.
 	 * 
-	 * @param prop la proposition à ajouter
-	 * @return true si la proposition a été ajoutée, false sinon
+	 * @param  prop la proposition à ajouter.
+	 * @return true si la proposition a été ajoutée, false sinon.
 	 */
 	public boolean ajouterProposition(PropositionAssociation prop)
 	{
 		return super.ajouterProposition(prop);
 	}
 
-	/* toString */
+	/**
+     * Retourne une représentation en chaîne de caractères d'une question association.
+     * 
+     * @return une représentation en chaîne de caractères d'une question association.
+     */
 	public String toString()
 	{
 		String sRet;
@@ -77,32 +106,4 @@ public class Association extends Question
 
 		return sRet;
 	}
-
-	/*
-	public static void main(String[] args)
-	{
-		Association asso, asso2;
-		PropositionAssociation prop1, prop2, prop3, propAnglais;
-
-
-		asso = new Association(null, null, null, 0, 0.0);
-		prop1 = new PropositionAssociation("PropG1", "PropD1");
-		asso.ajouterProposition(prop1);
-		System.out.println(asso);
-
-		prop1.setTextDroite("PropD1Bis");
-		prop2 = new PropositionAssociation("ProgG2", "PropD2");
-		asso.ajouterProposition(prop2);
-		System.out.println(asso);
-
-		prop3 = new PropositionAssociation("PropG3", "PropD3");
-		asso.supprimerProposition(asso.getPropositionId(prop1));
-		asso.supprimerProposition(asso.getPropositionId(prop3)); // Ne le fait pas car PropD3 n'existe pas
-		System.out.println(asso);
-
-		asso2 = new Association(new Ressource("R3.12","Anglais"), new Notion("Vocabulaire", 0, "R3.12"), Difficulte.FACILE, 0, 1.0);
-		propAnglais = new PropositionAssociation("Without", "Sans");
-		asso2.ajouterProposition(propAnglais);
-		System.out.println(asso2);
-	}*/
 }

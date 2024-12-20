@@ -11,26 +11,46 @@ import metier.entite.question.TypeQuestion;
 public class QCM extends Question
 {
 
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+	
 	private boolean unique;
 
+
+	
 	/*--------------*/
-	/* Constructeur */
+	// Constructeur //
 	/*--------------*/
 
+	/**
+	 * Constructeur de la classe QCM.
+	 * 
+	 * @param codeRes    l'identifiant de la ressource.
+	 * @param idNot      l'identifiant de la notion.
+	 * @param idQst      l'identifiant de la question.
+	 * @param note       la note.
+	 * @param temps      le temps associée à la question.
+	 * @param difficulte la difficultée.
+	 */
 	public QCM(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 		this.unique = false;
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
 	/**
-	 * Retourne le type de la question
+	 * Retourne le type de la question.
 	 * 
-	 * @return le type de question QCM
+	 * @return le type de question QCM.
 	 */
 	@Override
 	public TypeQuestion getType () { return TypeQuestion.QCM; }
@@ -39,36 +59,44 @@ public class QCM extends Question
 	 * Permet de définir si la question est unique.
 	 * 
 	 * @param unique true si la question est unique, false sinon.
-	 * 
 	 * @return true si la modification a été effectuée, false sinon.
 	 */
 	public boolean estUnique() { return this.unique; }
 
+	/**
+	 * Retourne une proposition de type QCM.
+	 * 
+	 * @return la proposition.
+	 */
 	public PropositionQCM getProposition(int i) { return (PropositionQCM) super.getProposition(i); }
 
-	/*---------*/
-	/* Setters */
-	/*---------*/
 
-	public void setUnique(boolean unique)
-	{
-		this.unique = unique;
-	}
+
+	/*---------*/
+	// Setters //
+	/*---------*/
 
 	/**
-	 * Setter de proposition
+	 * Modifie l'état d'unique.
+	 * true si le QCM est à choix unique, false sinon.
 	 * 
-	 * @param i indice de la proposition à modifier
-	 * @param prop la proposition qui va modifier l'ancienne
-	 * @return true si la modification a été effectuée, false sinon
+	 * @param unique le nouvelle état d'unique.
 	 */
-	public boolean setProposition(int i, PropositionQCM prop)
-	{
-		return super.setProposition(i, prop);
-	}
+	public void setUnique(boolean unique) { this.unique = unique; }
+
+	/**
+	 * Modifie une proposition.
+	 * 
+	 * @param  i    indice de la proposition à modifier.
+	 * @param  prop la proposition qui va modifier l'ancienne.
+	 * @return      true si la modification a été effectuée, false sinon.
+	 */
+	public boolean setProposition(int i, PropositionQCM prop) { return super.setProposition(i, prop); }
+
+
 
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 	
 	/**
@@ -82,9 +110,6 @@ public class QCM extends Question
 		return super.ajouterProposition(prop);
 	}
 
-	/*----------*/
-	/* ToString */
-	/*----------*/
 	public String toString()
     {
         String         result = super.toString();
@@ -98,8 +123,5 @@ public class QCM extends Question
         }
 
         return result;
-    }
-
-
-	
+	}
 }
