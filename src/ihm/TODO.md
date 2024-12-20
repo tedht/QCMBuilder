@@ -9,3 +9,5 @@
 - java doc
 
 - gérer le cas ou + de questions dans questionnaire que dans base de la même difficulté 
+
+- erreurs lorsqu'on supprime le csv et ajoute une entite -> n'apparaît pas

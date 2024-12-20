@@ -13,11 +13,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import metier.QCMBuilder;
-
-import metier.entite.Ressource;
-import metier.entite.Notion;
-
 import metier.entite.question.*;
 import metier.entite.question.association.*;
 import metier.entite.question.qcm.*;
@@ -28,24 +23,32 @@ import metier.entite.question.elimination.*;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class BanqueDeQuestions 
+public class BanqueQuestions 
 {
 	/* Attributs */
 	private List<Question> lstQuestions;
 	private Queue<Integer> fileIdUtilisable;
 
+	private String cheminFic;
+
 	/**
 	 * Constructeur de la classe BanqueDeQuestions
 	 * 
-	 * @param qcmBuilder le constructeur de QCM
 	 */
-	public BanqueDeQuestions(QCMBuilder qcmBuilder)
+	public BanqueQuestions()
 	{
-		this.lstQuestions = new ArrayList<Question>();
-
+		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		//this.lireQuestions("data/questions.csv", "data/questions.txt");
+		this.cheminFic = "data/questions.csv";
+
+		this.lireQuestions(this.cheminFic);
+	}
+
+
+	public String getCheminFic()
+	{
+		return this.cheminFic;
 	}
 
 	/** 
@@ -55,23 +58,29 @@ public class BanqueDeQuestions
 	 */
 	public List<Question> getQuestions()
 	{
+		return this.lstQuestions;
+	}
+
+	public List<Question> getQuestions(String codeRes) 
+	{
+		List<Question> lstQuestions = new ArrayList<Question>();
+
+		for(Question question : this.lstQuestions)
+		{
+			if(question != null && question.getCodeRes().equals(codeRes))
+				lstQuestions.add(question);
+		}
+
 		return lstQuestions;
 	}
 
-	/**
-	 * Retourne les questions associées à une ressource
-	 * 
-	 * @param ressource la ressource associée aux questions
-	 * @return List<Question> la liste des questions associées à la ressource
-	 */
-	public List<Question> getQuestions(Ressource ressource) 
+	public List<Question> getQuestions(String codeRes, int idNot) 
 	{
-		List<Question> lstQuestions;
+		List<Question> lstQuestions = new ArrayList<Question>();
 
-		lstQuestions = new ArrayList<Question>();
 		for(Question question : this.lstQuestions)
 		{
-			if(question.getRessource() == ressource)
+			if(question != null && question.getCodeRes().equals(codeRes) && question.getIdNot() == idNot)
 			{
 				lstQuestions.add(question);
 			}
@@ -79,127 +88,144 @@ public class BanqueDeQuestions
 		return lstQuestions;
 	}
 
-	/**
-	 * Retourne les questions associées à une notion associée à une ressource
-	 * 
-	 * @param ressource la ressource associée aux questions
-	 * @return List<Question> la liste des questions associées à la ressource
-	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion) 
+	public Question getQuestion(int idQst)
 	{
-		List<Question> lstQuestions;
-
-		lstQuestions = new ArrayList<Question>();
-		for(Question question : this.lstQuestions)
-		{
-			if(question.getRessource() == ressource && question.getNotion() == notion)
-			{
-				lstQuestions.add(question);
-			}
-		}
-		return lstQuestions;
+		return this.lstQuestions.get(idQst);
 	}
 
 	/**
 	* Lecture du fichier CSV qui contient les questions
 	*
-	* @param nomFichierCSV le chemin du fichier CSV
-	* @param nomFichierTXT le chemin du fichier TXT
+	* @param cheminFic le chemin du fichier CSV
 	*/
-	public void lireQuestions(String nomFichierCSV)
+	public void lireQuestions(String cheminFic)
 	{
-		Scanner scEnreg, scDonnees, scTexte, scElim;
+		Scanner scEnreg, scDonnees, scIntitule, scExplication, scProp, scElim;
 
-		Ressource    ressource;
-		Notion       notion;
+		String       cheminDirQst;
+		int          cpt;
+
+		String       codeRes;
+		int          idNot;
+		int          idQst;
 		Difficulte   difficulte;
 		TypeQuestion typeQuestion;
 		int          temps;
 		double       note;
-		String       cheminFichierTXT;
+		Question     question;
+
 		String       intitule;
 		String       explication;
-		Question     question;
-		boolean      unique;
-		String codeRessource;
-		String nomRessource;
+
+		int          nbProp;
+		String       detailsProp;
+		String       textProp;
+
+		String       textGauche, textDroite;
+		
+		int          ordreElim;
+		double       nbPtsPerdus;
+
+		boolean      estReponse;
+		int          cptReponse;
 
 		try
 		{
-			scEnreg = new Scanner(new FileInputStream(nomFichierCSV), "UTF8");
+			scEnreg = new Scanner(new FileInputStream(cheminFic), "UTF8");
 			scEnreg.nextLine();
 
+			cpt = 0;
 			while (scEnreg.hasNextLine())
 			{
 				scDonnees = new Scanner(scEnreg.nextLine());
 
 				scDonnees.useDelimiter("\t");
 
-				//ressource        = this.qcmBuilder.getRessource(scEnreg.next());
-				codeRessource	 = scDonnees.next();
-				nomRessource	 = scDonnees.next();
-				ressource        = new Ressource       (codeRessource, nomRessource);
-				notion           = ressource.getNotion (scDonnees.next());
-				difficulte       = Difficulte.  fromInt(scDonnees.nextInt());
-				typeQuestion     = TypeQuestion.fromInt(scDonnees.nextInt());
-				temps            =                      scDonnees.nextInt();
-				note             = Double.parseDouble  (scDonnees.next());
-				cheminFichierTXT =                      scDonnees.next();
+				codeRes	     = scDonnees.next();
+				idNot        = scDonnees.nextInt();
+				idQst        = scDonnees.nextInt();
+				difficulte   = Difficulte.fromInt(scDonnees.nextInt());
+				typeQuestion = TypeQuestion.fromInt(scDonnees.nextInt());
+				temps        = scDonnees.nextInt();
+				note         = Double.parseDouble(scDonnees.next());
+				nbProp       = scDonnees.nextInt();
 
-				// Lire l'intitulé et l'explication à partir du fichier texte
-				scTexte = new Scanner(new FileInputStream(cheminFichierTXT), "UTF8");
+				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
-				intitule    = scTexte.nextLine();
-				explication = scTexte.nextLine();
-				scTexte.close();
+				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
+				intitule      = scIntitule.nextLine();
+				scIntitule.close();
+
+				scExplication = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
+				explication   = scExplication.nextLine();
+				scExplication.close();
+
+				while(cpt < idQst)
+				{
+					this.lstQuestions.add(null);
+					this.fileIdUtilisable.offer(cpt++);
+				}
 
 				switch (typeQuestion)
 				{
 				case QCM ->
 				{
-					unique = scDonnees.nextBoolean();
-
-					question = new QCM(ressource, notion, difficulte, temps, note, unique);
-					while (scDonnees.hasNext())
+					question = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
+					
+					cptReponse = 0;
+					for(int i = 1; i <= nbProp; i++)
 					{
+						scProp      = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+						detailsProp = scProp.nextLine();
+						scProp.close();
 						
-						String proposition = scDonnees.next();
-
-						boolean estReponse      = proposition.startsWith("V:");
-						String texteProposition = proposition.substring(2);
-						((QCM) question).ajouterProposition(new PropositionQCM(texteProposition, estReponse));
+						estReponse = detailsProp.charAt(0) == 'V';
+						if(estReponse) cptReponse++;
+						
+						textProp = detailsProp.substring(2);
+						
+						((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
 					}
+					((QCM) question).setUnique(cptReponse == 1);
 				}
 				case ASSOCIATION ->
 				{
-					question = new Association(ressource, notion, difficulte, temps, note);
-					while (scDonnees.hasNext())
+					question = new Association(codeRes, idNot, idQst, note, temps, difficulte);
+					
+					for(int i = 1; i <= nbProp; i++)
 					{
-						String gauche = scDonnees.next();
-						String droite = scDonnees.next();
-						((Association) question).ajouterProposition(new PropositionAssociation(gauche, droite));
+						scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+						textGauche = scProp.nextLine();
+						textDroite = scProp.nextLine();
+						scProp.close();
+						((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
 					}
 				}
 				case ELIMINATION ->
 				{
-					question = new Elimination(ressource, notion, difficulte, temps, note);
+					question = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
 					
-					while (scDonnees.hasNext())
+					for(int i = 1; i <= nbProp; i++)
 					{
-						scElim = new Scanner(scDonnees.next());
+						scProp      = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+						detailsProp = scProp.nextLine();
+						scProp.close();
+						
+						scElim = new Scanner(detailsProp);
 						scElim.useDelimiter(":");
 
-						boolean reponse     =                    scElim.next().equals("V");
-						int     ordreElim   =                    scElim.nextInt    ();
-						double  nbPtsPerdus = Double.parseDouble(scElim.next       ());
+						estReponse  = scElim.next().charAt(0) == 'V';
+						ordreElim   = scElim.nextInt();
+						nbPtsPerdus = scElim.nextDouble();
+
 						scElim.useDelimiter("\t");
-						String  texte       =                    scElim.next       ();
+						textProp = scElim.next ();
+						
 						((Elimination) question)
-								.ajouterProposition(new PropositionElimination(texte, reponse, ordreElim, nbPtsPerdus));
+								.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
 
 						scElim.close();
 					}
-					
 				}
 				default ->
 				{
@@ -208,13 +234,13 @@ public class BanqueDeQuestions
 				}
 			}
 
+			question.setIntitule   (intitule);
+			question.setExplication(explication);
+			
+			this.lstQuestions.add(question);
+			cpt++;
 
-				question.setIntitule   (intitule);
-				question.setExplication(explication);
-				
-				this.lstQuestions.add(question);
-
-				scDonnees.close();
+			scDonnees.close();
 
 			}
 			scEnreg.close();
@@ -225,120 +251,123 @@ public class BanqueDeQuestions
 		}
 	}
 
+	public void sauvegarder()
+	{
+		this.sauvegarder(this.cheminFic);
+	}
+
 	/**
 	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
 	 * 
-	 * @param nomFichierCSV le chemin du fichier CSV
-	 * @param nomFichierTXT le chemin du fichier TXT
+	 * @param cheminFic le chemin du fichier CSV
 	 */
-	public void sauvegarderQuestions(String nomFichierCSV)
+	private void sauvegarder(String cheminFic)
 	{
-		PrintWriter pw;
-		PrintWriter pw2;
-		QCM         qQCM;
-		Elimination qElim;
-		Association qAsso;
+		PrintWriter pwCsv, pwTxt;
+
+		QCM         qQCM;  PropositionQCM         propQCM;
+		Elimination qElim; PropositionElimination propElim;
+		Association qAsso; PropositionAssociation propAsso;
+
+		String codeRes;
+		int    idNot;
+		int    idQst;
+		int    valDiff;
+		int    valType;
+		int    temps;
+		double note;
+		int    nbProp;
+
+		String cheminDirQst;
 
 		try
-		{
-			System.out.println("SauvegarderQuestions a été appelé");
-			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierCSV), "UTF8"));
-			pw.println("code\tressource\tnotion\tdifficulte\ttype\ttemps\tnote\tcheminfichiertxt\tproposition 1\tproposition 2\tproposition N");
+		{			
+			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8"));
+			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp");
 
 			for (Question question : this.lstQuestions)
 			{   
-				String nomFichierTXT = "ressources/" + question.getRessource().getCode() + " " 
-				                                     + question.getRessource().getNom () + "/" 
-				                                     + question.getNotion().   getNom () + "/" 
-				                                     + "question"+ question.getNumQuestion() +".txt";
-				System.out.println(nomFichierCSV);
-				System.out.println(nomFichierTXT);
+				if(question == null) continue;
+				
+				codeRes = question.getCodeRes     ();
+				idNot   = question.getIdNot       ();
+				idQst   = question.getIdQst       ();
+				valDiff = question.getDifficulte  ().getValeur();
+				valType = question.getType        ().getValeur();
+				temps   = question.getTemps       ();
+				note    = question.getNote        ();
+				nbProp  = question.getPropositions().size();
 
-				pw2 = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichierTXT), "UTF8"));
+				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
-				pw .print(question.getRessource   ().getCode  () + "\t");
-				pw .print(question.getRessource   ().getNom   () + "\t");
-				pw .print(question.getNotion      ().getNom   () + "\t");
-				pw .print(question.getDifficulte  ().getValeur() + "\t");
-				pw .print(question.getType        ().getValeur() + "\t");
-				pw .print(question.getTemps       ()             + "\t");
-				pw .print(question.getNote        ()             + "\t");
-				pw .print(nomFichierTXT                          + "\t");
-				System.out.println(question.getIntitule());
-				System.out.println(question.getExplication());
-				pw2.print(question.getIntitule    ()             + "\n");
+				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
-				if (question.getExplication() == null) pw2.print("");
-				else pw2.print(question.getExplication ());
+				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
+				pwTxt.println(question.getIntitule());
+				pwTxt.close();
+
+				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/explication.txt"), "UTF8"));
+				pwTxt.println(question.getExplication());
+				pwTxt.close();
 
 				switch (question.getType())
 				{
 					case QCM -> 
 					{
-						PropositionQCM propQCM;
 						qQCM = (QCM) question;
-						pw.print(qQCM.isUnique() + "\t");
-						List<Proposition> lstProp = qQCM.getPropositions();
-						for (Proposition prop : lstProp)
+
+						for(int i = 0; i < qQCM.getPropositions().size(); i++)
 						{
-							 propQCM = (PropositionQCM) prop;
+							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							propQCM = qQCM.getProposition(i);
 
-							if (propQCM.estReponse()) pw.print("V:");
+							if (propQCM.estReponse()) 
+								pwTxt.print("V:");
+							else
+								pwTxt.print("F:");
 
-							else pw.print("F:");
-
-							pw.print(propQCM.getText() + "\t" );
-							
-
+							pwTxt.println(propQCM.getText());	
 						}
-
-
 					}
-
-					case ELIMINATION -> 
-					{
-						PropositionElimination propElim;
-
-						qElim =  (Elimination) question;
-						List<Proposition> lstProp = qElim.getPropositions();
-						for (Proposition prop : lstProp)
-						{
-							propElim = (PropositionElimination) prop;
-
-							if (propElim.estReponse()) pw.print("V:");
-
-							else pw.print("F:");
-							pw.print(propElim.getOrdreElim  () + ":" );
-							pw.print(propElim.getNbPtsPerdus() + ":");
-							pw.print(propElim.getText		() + "\t");
-						}
-
-					}
-
 					case ASSOCIATION -> 
 					{
-						PropositionAssociation propAsso;
 						qAsso = (Association) question;
-						List<Proposition> lstProp = qAsso.getPropositions();
-						for (Proposition prop : lstProp) 
+
+						for (int i = 0; i < qAsso.getPropositions().size(); i++) 
 						{
-							propAsso = (PropositionAssociation) prop;
-							pw.print(propAsso.getTextGauche() + "\t" );
-							pw.print(propAsso.getTextDroite() + "\t");	
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							propAsso = qAsso.getProposition(i);
+
+							pwTxt.print(propAsso.getTextGauche() + "\t" );
+							pwTxt.print(propAsso.getTextDroite() + "\n");	
 						}
+					}
+					case ELIMINATION -> 
+					{
+						qElim =  (Elimination) question;
+	
+						for (int i = 0; i < qElim.getPropositions().size(); i++)
+						{
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							propElim = qElim.getProposition(i);
+
+							if (propElim.estReponse()) 
+								pwTxt.print("V:");
+							else 
+								pwTxt.print("F:");
+
+							pwTxt.print(propElim.getOrdreElim  () + ":" );
+							pwTxt.print(propElim.getNbPtsPerdus() + ":");
+							pwTxt.println(propElim.getText());
+						}
+
 					}
 				}
 
-				pw.print("\n");
-				pw2.print("\n");
-
-				pw2.close();
+				pwTxt.close();
 				
 			}
-
-			pw.close();
-			
-
+			pwCsv.close();
 			
 		}
 		catch (FileNotFoundException fnfe)
@@ -359,11 +388,12 @@ public class BanqueDeQuestions
 	 */
 	public boolean ajouterQuestions(Question question)
 	{
-		if (question == null) return false;
+		/*if (question == null) return false;
 
 		this.lstQuestions.add(question);
 		this.sauvegarderQuestions("data/questions.csv");
-		return true;
+		return true;*/
+		return false;
 	}
 
 	/**
@@ -376,7 +406,7 @@ public class BanqueDeQuestions
 	 */
 	public boolean modifierQuestion(Question question, String critere, Object modif)
 	{
-		if (question == null) return false; // Si la question est null     -> renvoie faux
+		/*if (question == null) return false; // Si la question est null     -> renvoie faux
 		if (critere  == null) return false; // Si le critère est null      -> renvoie faux
 		if (modif    == null) return false; // Si la modification est null -> renvoie faux
 
@@ -388,7 +418,8 @@ public class BanqueDeQuestions
 			case "temps"      -> question.setTemps     ((int)       modif);
 			case "note"       -> question.setNote      ((int)       modif);
 		}
-		return true;
+		return true;*/
+		return false;
 	}
 
 	/**
@@ -399,6 +430,7 @@ public class BanqueDeQuestions
 	 */
 	public boolean supprimerQuestion(Question question)
 	{
+		/*
 		if (question == null) return false; // N'a pas trouvé la question
 
 		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt++)
@@ -409,7 +441,8 @@ public class BanqueDeQuestions
 			}
 		}
 
-		return true;
+		return true;*/
+		return false;
 	}
 
 	/**
@@ -422,7 +455,7 @@ public class BanqueDeQuestions
 	 */
 	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
-		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
+		/*for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
 		{
 			if (this.lstQuestions.get(cpt) == question)
 			{
@@ -432,9 +465,11 @@ public class BanqueDeQuestions
 				return true;
 			}
 		}
+		return false;*/
 		return false;
 	}
 
+	/*
 	public static void main(String[] args)
 	{
 		Ressource r1;
@@ -448,11 +483,11 @@ public class BanqueDeQuestions
 		Elimination q2;
 		Association q3;
 
-		BanqueDeQuestions banque;
-		BanqueDeRessources banqueRessources;
+		BanqueQuestions banque;
+		BanqueRessources banqueRessources;
 		QCMBuilder qcmBuilder;
 
-		banqueRessources = new BanqueDeRessources();
+		banqueRessources = new BanqueRessources();
 
 
 
@@ -503,7 +538,7 @@ public class BanqueDeQuestions
 
 
 		// Initialisation de la banque de questions
-		banque = new BanqueDeQuestions(new QCMBuilder());
+		banque = new BanqueQuestions(new QCMBuilder());
 
 
 		// Ajout des questions
@@ -545,5 +580,5 @@ public class BanqueDeQuestions
 		{
 			System.out.println(question);
 		}
-	}
+	}*/
 }

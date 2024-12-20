@@ -25,7 +25,7 @@ public class FrameGestionNotion  extends JFrame
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelGestionNotion = new PanelGestionNotion(this.ctrl, this.ihm);
+        this.panelGestionNotion = new PanelGestionNotion(this.ctrl, this.ihm, this);
         this.add(this.panelGestionNotion);
 
         // Définition des dimensions.

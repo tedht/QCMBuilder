@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 
 import controleur.Controleur;
 import ihm.IHM;
@@ -21,6 +22,8 @@ import ihm.shared.PanelEntite;
  */
 public class PanelNotion extends PanelEntite
 {	
+	private FrameGestionNotion frame;
+	
 	private int id;
 
 	/**
@@ -28,9 +31,11 @@ public class PanelNotion extends PanelEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelNotion(Controleur ctrl, IHM ihm, int id, String nom)
+	public PanelNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame, int id, String nom)
 	{
 		super(ctrl, ihm, nom, " ");
+
+		this.frame = frame;
 
 		this.id = id;
 
@@ -52,8 +57,18 @@ public class PanelNotion extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.ctrl.supprimerNotion(this.id);
-			this.ihm.reinitAffichageNotion();
+			int choix = JOptionPane.showConfirmDialog(
+                this.frame,
+                "Voulez-vous vraiment supprimer la notion \"" + this.lblTitre.getText() + "\" ?",
+                "Confirmation de suppression",
+                JOptionPane.YES_NO_OPTION
+			);
+
+			if (choix == JOptionPane.YES_OPTION) 
+			{
+				this.ctrl.supprimerNotion(this.id);
+				this.ihm.reinitAffichageNotion();
+			}
 		}
 	}
 

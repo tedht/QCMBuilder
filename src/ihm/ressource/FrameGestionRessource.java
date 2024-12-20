@@ -25,7 +25,7 @@ public class FrameGestionRessource  extends JFrame
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.
-        this.panelGestionRessource = new PanelGestionRessource(this.ctrl, this.ihm);
+        this.panelGestionRessource = new PanelGestionRessource(this.ctrl, this.ihm, this);
         this.add(this.panelGestionRessource);
 
         // Définition des dimensions.

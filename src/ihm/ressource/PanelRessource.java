@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import controleur.Controleur;
@@ -21,6 +22,8 @@ import ihm.shared.PanelEntite;
  */
 public class PanelRessource extends PanelEntite
 {
+	private FrameGestionRessource frame;
+
 	private String  code;
 	private boolean select;
 	
@@ -29,10 +32,12 @@ public class PanelRessource extends PanelEntite
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelRessource(Controleur ctrl, IHM ihm, String code, String nom)
+	public PanelRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame, String code, String nom)
 	{
 		super(ctrl, ihm, code + " " + nom, " ");
 		
+		this.frame = frame;
+
 		this.code   = code;
 		this.select = this.ctrl.getRessourceActive() == this.ctrl.getRessource(this.code);
 
@@ -65,8 +70,19 @@ public class PanelRessource extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			this.ctrl.supprimerRessource(this.code);
-			this.ihm.reinitAffichageRessource();
+			int choix = JOptionPane.showConfirmDialog(
+                this.frame,
+                "Voulez-vous vraiment supprimer la ressource \"" + this.lblTitre.getText() + "\" ?",
+                "Confirmation de suppression",
+                JOptionPane.YES_NO_OPTION
+			);
+
+			if (choix == JOptionPane.YES_OPTION) 
+			{
+				this.ctrl.supprimerRessource(this.code);
+				this.ihm.reinitAffichageRessource();
+				this.ihm.reinitAffichageNotion();
+			}
 		}
 	}
 

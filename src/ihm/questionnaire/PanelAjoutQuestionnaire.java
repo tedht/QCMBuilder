@@ -15,7 +15,6 @@ import controleur.Controleur;
 import ihm.questionnaire.tableau.GrilleNotionsEditor;
 import ihm.questionnaire.tableau.GrilleNotionsModel;
 import ihm.questionnaire.tableau.GrilleNotionsRenderer;
-import metier.entite.Ressource;
 
 /**
  * Classe représentant la fenêtre de création d'une évaluation
@@ -49,7 +48,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		this.panelInfo = new JPanel(new BorderLayout());
 		this.panelInfo.setBorder(new EmptyBorder(20,20,20,20));
 
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, null));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, ""));
 		this.spGrilleNotions  = new JScrollPane(this.tblGrilleNotions);
 
 		/* ACTION */
@@ -99,10 +98,10 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		}
 	}
 
-	public void majTabNotions(Ressource ressource) 
+	public void majTabNotions(String codeRes) 
 	{
 		// Création d'une nouvelle Instance de tblGrilleNotions
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, ressource));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, codeRes));
 		
 		// Paramétrage
 		this.tblGrilleNotions.getTableHeader().setReorderingAllowed(false); 

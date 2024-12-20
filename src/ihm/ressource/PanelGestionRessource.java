@@ -9,9 +9,13 @@ import metier.entite.Ressource;
 
 public class PanelGestionRessource extends PanelGestion
 {
-	public PanelGestionRessource(Controleur ctrl, IHM ihm) 
+	private FrameGestionRessource frame;
+
+	public PanelGestionRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame) 
 	{
 		super(ctrl, ihm);
+
+		this.frame = frame;
 		
 		this.lblTitre  .setText("Ressources :");
 		this.btnAjouter.setText("Nouvelle Ressource");
@@ -36,15 +40,15 @@ public class PanelGestionRessource extends PanelGestion
 		PanelRessource panelRessource;
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
-			panelRessource = new PanelRessource(this.ctrl, this.ihm, 
-			                                ressource.getCode(), 
-											ressource.getNom());
+			panelRessource = new PanelRessource(this.ctrl, this.ihm, this.frame,
+			                                    ressource.getCode(), 
+											    ressource.getNom());
 			this.panelContenu.add(panelRessource);
 		}
 
 		for(int i = 10 - this.ctrl.getRessources().size(); i > 0; i--)
 		{
-			panelRessource = new PanelRessource(this.ctrl, this.ihm, "", "");
+			panelRessource = new PanelRessource(this.ctrl, this.ihm, this.frame, "", "");
 			panelRessource.setVisible(false);
 			this.panelContenu.add(panelRessource);
 		}

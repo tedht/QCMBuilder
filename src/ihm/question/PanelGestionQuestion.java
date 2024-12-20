@@ -24,6 +24,8 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	private JComboBox<Ressource> ddlstRessource;
 	private JComboBox<Notion>    ddlstNotion;
 
+	private JPanel panelAucuneQuestion;
+
 	public PanelGestionQuestion(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
@@ -41,33 +43,27 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		panelDdlstNotion    = new JPanel(new BorderLayout());
 
 		this.ddlstRessource = new JComboBox<Ressource>();
-		for(Ressource ressource : this.ctrl.getRessources())
-		{
-			this.ddlstRessource.addItem(ressource);
-		}
-		this.ddlstRessource.setSelectedIndex(-1);
-		this.ddlstRessource.setFocusable(false);
-		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
-
-		this.ddlstNotion = new JComboBox<Notion>();
-		this.ddlstNotion.setEnabled(false);
-		this.ddlstNotion.setSelectedIndex(-1);
-		this.ddlstNotion.setFocusable(false);
-		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%70s", " ")));
+		this.ddlstNotion    = new JComboBox<Notion>();
+		this.maj();
 
 		this.btnAjouter.setText("Nouvelle Question");
+
+		this.panelAucuneQuestion = new JPanel();
+		this.panelAucuneQuestion.add(new JLabel("Aucune question n'a été trouvée."));
 
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/
 
 		this.panelEntete   .add(panelDdlst, BorderLayout.CENTER);
+
 		panelDdlst         .add(panelDdlstRessource);
 		panelDdlstRessource.add(new JLabel("Ressource :"), BorderLayout.NORTH);
-		panelDdlstRessource.add(this.ddlstRessource, BorderLayout.CENTER);
+		panelDdlstRessource.add(this.ddlstRessource,            BorderLayout.CENTER);
+
 		panelDdlst         .add(panelDdlstNotion);
 		panelDdlstNotion   .add(new JLabel("Notion :"), BorderLayout.NORTH);
-		panelDdlstNotion   .add(this.ddlstNotion, BorderLayout.CENTER);
+		panelDdlstNotion   .add(this.ddlstNotion,            BorderLayout.CENTER);
 
 		/*---------------------------*/
 		/* Activation des composants */
@@ -91,12 +87,12 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
-		if(e.getSource() == this.ddlstRessource) 
+		if(e.getSource() == this.ddlstRessource && this.ddlstRessource.getSelectedIndex() != -1) 
 		{  
 			this.ddlstNotion.removeAllItems();
 			this.ddlstNotion.setEnabled(false);
 
-			for(Notion notion : this.ctrl.getNotions((Ressource)this.ddlstRessource.getSelectedItem()))
+			for(Notion notion : this.ctrl.getNotions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode()))
 			{
 				this.ddlstNotion.addItem(notion);
 			}
@@ -125,28 +121,43 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		}
 		else if(notion == null)
 		{
-			lstQuestions = this.ctrl.getQuestions(ressource);
+			lstQuestions = this.ctrl.getQuestions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode());
 		}
 		else
 		{
-			lstQuestions = this.ctrl.getQuestions(ressource, notion);
+			lstQuestions = this.ctrl.getQuestions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode(), notion.getIdNot());
 		}
 
 		PanelQuestion panelCarte;
-		for(Question question : lstQuestions)
-		{
-			panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
-			                               question.getIntitule(), 
-										   question.getNote() + " point(s), " + question.getTemps() + "s",
-										   0);
-			this.panelContenu.add(panelCarte);
-		}
 
-		for(int i = 8 - lstQuestions.size(); i > 0; i--)
+		if(lstQuestions.isEmpty())
 		{
-			panelCarte = new PanelQuestion(null, null, "", "", 0);
-			panelCarte.setVisible(false);
-			this.panelContenu.add(panelCarte);
+			this.panelContenu.add(this.panelAucuneQuestion);
+
+			for(int i = 9 - lstQuestions.size(); i > 0; i--)
+			{
+				panelCarte = new PanelQuestion(null, null, "", "", 0);
+				panelCarte.setVisible(false);
+				this.panelContenu.add(panelCarte);
+			}
+		}
+		else
+		{
+			for(Question question : lstQuestions)
+			{
+				panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
+											   "", 
+											   question.getNote() + " point(s), " + question.getTemps() + "s",
+											   0);
+				this.panelContenu.add(panelCarte);
+			}
+	
+			for(int i = 8 - lstQuestions.size(); i > 0; i--)
+			{
+				panelCarte = new PanelQuestion(null, null, "", "", 0);
+				panelCarte.setVisible(false);
+				this.panelContenu.add(panelCarte);
+			}
 		}
 
 		this.revalidate();
@@ -163,6 +174,12 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
 		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
+
+		this.ddlstNotion.removeAllItems();
+		this.ddlstNotion.setEnabled(false);
+		this.ddlstNotion.setSelectedIndex(-1);
+		this.ddlstNotion.setFocusable(false);
+		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%70s", " ")));
 	}
 	
 }

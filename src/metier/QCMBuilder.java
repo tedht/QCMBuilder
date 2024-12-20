@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
-import metier.banque.BanqueDeQuestions;
-import metier.banque.BanqueDeRessources;
+import metier.banque.BanqueNotions;
+import metier.banque.BanqueQuestions;
+import metier.banque.BanqueRessources;
 
 import metier.entite.Ressource;
 import metier.entite.Notion;
@@ -31,136 +31,112 @@ import metier.entite.question.elimination.PropositionElimination;
  */
 public class QCMBuilder 
 {
-	private BanqueDeQuestions  banqueQuestions;
-	private BanqueDeRessources banqueRessources;
+	private BanqueQuestions  banqueQuestions;
+	private BanqueNotions    banqueNotions;
+	private BanqueRessources banqueRessources;
 
-	private Questionnaire Questionnaire;
+	private Ressource        ressourceActive;
+	private Notion           notionActive;
 
-	private Ressource ressourceActive;
+	private Questionnaire    questionnaire;
 
-	private Notion    notionActive;
-
-	private Stack<String> historique;
-
-	
 	public QCMBuilder()
 	{
-		this.banqueRessources = new BanqueDeRessources(); 
-		this.banqueQuestions  = new BanqueDeQuestions(this);
+		this.banqueRessources = new BanqueRessources(); 
+		this.banqueNotions    = new BanqueNotions   ();
+		this.banqueQuestions  = new BanqueQuestions ();
 
-		this.ressourceActive = null;
-		this.notionActive    = null;
+		this.ressourceActive  = null;
+		this.notionActive     = null;
 
-		this.historique = new Stack<String>();
+		this.questionnaire    = null;
 	}
 
+	/*---------*/
+	/* Getters */
+	/*---------*/
+
 	/**
-	 * Retourne la liste des ressources
+	 * Retourne la liste des ressources.
 	 * 
-	 * @return la liste des ressources
+	 * @return la liste des ressources.
 	 */
-	public List<Ressource> getRessources() 
+	public List<Ressource> getRessources()
 	{
 		return this.banqueRessources.getRessources();
 	}
 
 	/**
-	 * Retourne la liste des notions
+	 * Retourne une ressource à partir de son code.
 	 * 
-	 * @param ressource la ressource
-	 * @return la liste des notions
+	 * @param  code le code de la ressource.
+	 * @return      la ressource
 	 */
-	public List<Notion> getNotions(Ressource ressource) 
+	public Ressource getRessource(String code) 
 	{
-		return this.banqueRessources.getNotions(ressource);
+		return this.banqueRessources.getRessource(code);
 	}
 
 	/**
-	 * Retourne la liste des noms des notions
+	 * Retourne la liste de toutes les notions.
 	 * 
-	 * @param ressource la ressource
-	 * @return la liste des noms des notions
+	 * @return la liste de toutes les notions.
 	 */
-	public List<String> getNomNotions(Ressource ressource) 
+	public List<Notion> getNotions()
 	{
-		return this.banqueRessources.getNomNotions(ressource);
+		return this.banqueNotions.getNotions();
 	}
 
-	
+	/**
+	 * Retourne la liste des notions associées à une ressource à partir de son code.
+	 * 
+	 * @param  codeRes le code de la ressource.
+	 * @return la liste des notions associées.
+	 */
+	public List<Notion> getNotions(String codeRes)
+	{
+		return this.banqueNotions.getNotions(codeRes);
+	}
+
+	/**
+	 * Retourne une notion à partir de son id.
+	 * 
+	 * @param idNot l'id de la notion
+	 * @return la notion
+	 */
+	public Notion getNotion(int idNot) 
+	{
+		return this.banqueNotions.getNotion(idNot);
+	}
+
+	public Notion getNotionParNom(String codeRes, String nomNot) 
+	{
+		return this.banqueNotions.getNotionParNom(codeRes, nomNot);
+	}
+
 	/**
 	 * Retourne la liste de toutes questions.
 	 * 
-	 * @return           la liste de toutes les questions.
+	 * @return la liste de toutes les questions.
 	 */
 	public List<Question> getQuestions() 
 	{
 		return this.banqueQuestions.getQuestions();
 	}
 	
-	/**
-	 * Retourne la liste des questions associées à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @return           la liste des questions.
-	 */
-	public List<Question> getQuestions(Ressource ressource) 
+	public List<Question> getQuestions(String codeRes) 
 	{
-		return this.banqueQuestions.getQuestions(ressource);
+		return this.banqueQuestions.getQuestions(codeRes);
 	}
 
-	/**
-	 * Retourne la liste des questions associées à une notion associée à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @param  notion    la notion.
-	 * @return           la liste des questions.
-	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion)
+	public List<Question> getQuestions(String codeRes, int idNot)
 	{
-		return this.banqueQuestions.getQuestions(ressource, notion);
+		return this.banqueQuestions.getQuestions(codeRes, idNot);
 	}
 
-	/**
-	 * Modifie la ressource active
-	 * 
-	 * @param ressource la ressource active
-	 */
-	public void setRessourceActive(Ressource ressource) 
+	public Question getQuestion(int idQst)
 	{
-		this.ressourceActive = ressource;
-		this.historique.add("R");
-	}
-
-	/**
-	 * Modifie la notion active
-	 *
-	 * @param notion la notion
-	 */
-	public void setNotionActive(Notion notion) 
-	{
-		this.notionActive = notion;
-		this.historique.add("N"+this.ressourceActive.getNom());
-	}
-
-	/**
-	 * Reset l'historique
-	 */
-	public void popHistorique()
-	{
-		if(!this.historique.empty())
-		{
-			String action = this.historique.pop();
-			switch(action.charAt(0))
-			{
-				case 'R' : 
-					this.ressourceActive = null;
-				break;
-				case 'N' : 
-					this.notionActive = null; 
-				break;
-				default : break;
-			}
-		}
+		return this.banqueQuestions.getQuestion(idQst);
 	}
 
 	/**
@@ -183,43 +159,57 @@ public class QCMBuilder
 		return this.notionActive;
 	}
 
+	/*---------*/
+	/* Setters */
+	/*---------*/
+
 	/**
-	 * Retourne une ressource
+	 * Modifie la ressource active
 	 * 
-	 * @param nomRessource le nom de la ressource
-	 * @return la ressource
+	 * @param ressource la ressource active
 	 */
-	public Ressource getRessource(String code) 
+	public void setRessourceActive(Ressource ressource) 
 	{
-		return this.banqueRessources.getRessource(code);
+		this.ressourceActive = ressource;
 	}
+
+	/**
+	 * Modifie la notion active
+	 *
+	 * @param notion la notion
+	 */
+	public void setNotionActive(Notion notion) 
+	{
+		this.notionActive = notion;
+	}
+
+	/*-----------------*/
+	/* Autres Méthodes */
+	/*-----------------*/
 
 	/**
 	 * Crée une ressource
 	 * 
 	 * @param code le code de la ressource
-	 * @param nomRessource le nom de la ressource
+	 * @param nom le nom de la ressource
 	 */
 	public void creerRessource(String code, String nom)
 	{
-		this.banqueRessources.ajouterRessource(new Ressource(code, nom));
-		this.banqueRessources.sauvegarderRessources("data/ressources.csv");
+		this.banqueRessources.creerRessource(code, nom);
+		this.banqueRessources.sauvegarder();
 	}
 
 	/**
 	 * Crée une notion
 	 * 
 	 * @param nomNotion le nom de la notion
+	 * @param nomNotion2 
 	 */
-	public void creerNotion(String nomNotion) 
+	public void creerNotion(String codeRes, String nomNotion) 
 	{
-		if(this.ressourceActive != null)
-		{
-			this.ressourceActive.ajouterNotion(new Notion(nomNotion, this.ressourceActive.getNotions().size(), this.ressourceActive.getCode()));
-			this.banqueRessources.sauvegarderRessources("data/ressources.csv");
-		}
+		this.banqueNotions.creerNotion(codeRes, nomNotion);
+		this.banqueNotions.sauvegarder();
 	}
-
 
 	/**
 	 * Crée une question de type QCM
@@ -236,17 +226,32 @@ public class QCMBuilder
 	 * Crée une question de type QCM
 	 * 
 	 * @param detailsQuestion les détails de la question
-	 * @param unique si la question est à réponse unique
+	 * @param explication 
+	 * @param intitule 
+	 * @param lstDetailsProp 
 	 */
-	public void creerQCM(String detailsQuestion, boolean unique) 
+	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp, boolean unique) 
 	{
-		QCM qcm;
-		DetailsQuestion details;
+		Scanner scDetails, scDetailsProp;
+		
+		scDetails = new Scanner(detailsQuestion);
+		scDetails.useDelimiter("\t");
 
-		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.QCM);
+		String     codeRes    = scDetails.next();
+		int        idNot      = scDetails.nextInt();
+		int        valDiff    = scDetails.nextInt();
+		String     sTemps     = scDetails.next();
+		int        note       = scDetails.nextInt();
 
-		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),
-		              details.temps(), details.note(), unique);
+		Difficulte difficulte = Difficulte.fromInt(valDiff);
+		int        temps      = Integer.parseInt(sTemps.substring(0, 2)) * 60 
+		                        + Integer.parseInt(sTemps.substring(4, 6));
+
+		Question question = this.banqueQuestions.creerQuestion(codeRes, idNot, note, temps, difficulte)
+
+
+		
+		qcm = new QCM(details.ressource(), details.notion(), details.difficulte(),details.temps(), details.note(), unique);
 					  
 		for (int cpt = 0 ; cpt < details.propQCM().size() ; cpt++)
 		{
@@ -256,7 +261,7 @@ public class QCMBuilder
 		this.banqueQuestions.ajouterQuestions(qcm);
 	}
 
-	public void creerAssociation(String detailsQuestion) 
+	public void creerAssociation(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
 		Association asso;
 		DetailsQuestion details;
@@ -264,6 +269,7 @@ public class QCMBuilder
 
 		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ASSOCIATION);
 
+		/*
 		asso = new Association(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
 
@@ -272,7 +278,7 @@ public class QCMBuilder
 			asso.ajouterProposition(details.propAssos().get(cpt));
 		}
 		
-		this.banqueQuestions.ajouterQuestions(asso);
+		this.banqueQuestions.ajouterQuestions(asso);*/
 
 	}
 
@@ -280,8 +286,11 @@ public class QCMBuilder
 	 * Crée une question d'élimination
 	 * 
 	 * @param detailsQuestion les détails de la question
+	 * @param lstDetailsProp 
+	 * @param explication 
+	 * @param intitule 
 	 */
-	public void creerElimination(String detailsQuestion) 
+	public void creerElimination(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
 		Elimination elim;
 		DetailsQuestion details;
@@ -289,6 +298,7 @@ public class QCMBuilder
 
 		details = this.lireDetailsQuestion(detailsQuestion, TypeQuestion.ELIMINATION);
 
+		/*
 		elim = new Elimination(details.ressource(), details.notion(), details.difficulte(),
 		                       details.temps(), details.note());
 
@@ -302,7 +312,7 @@ public class QCMBuilder
 		for (int cpt = 0 ; cpt < details.propElim().size() ; cpt++)
 		{
 			elim.ajouterProposition(details.propElim().get(cpt));
-		}
+		}*/
 	}
 
 	/**
@@ -312,7 +322,7 @@ public class QCMBuilder
 	 */
 	public void genererQuestionnaire(String cheminFichier)
 	{
-		this.Questionnaire.genererQuestionnaire(cheminFichier);
+		this.questionnaire.genererQuestionnaire(cheminFichier);
 	}
 
 	/**
@@ -329,6 +339,7 @@ public class QCMBuilder
 
 
 			// Si pas de notion, ignore simplement la boucle
+			/*
 			for (Notion notion : ressource.getNotions())
 			{
 				dossier = new File("ressources/" + ressource.getCode() + " " + ressource.getNom() + "/" + notion.getNom());
@@ -392,7 +403,7 @@ public class QCMBuilder
 			else
 			{
 				System.out.println("Le dossier " + dossier.getPath() + " existe déjà.");
-			}
+			}*/
 		}
 	}
 
@@ -435,7 +446,7 @@ public class QCMBuilder
 			sc.useDelimiter("\t");
 
 			ressource   = this.banqueRessources.getRessource(sc.next());
-			notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
+			//notion      = this.banqueRessources.getNotion(ressource.getNom(), sc.next());
 			difficulte  = Difficulte.fromInt(sc.nextInt());
 			temps       = this.enSeconde(sc.next());
 			note        = sc.nextDouble();
@@ -492,8 +503,8 @@ public class QCMBuilder
 
 			sc.close();
 
-			return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication, lstPropositionsQCM, lstPropositionsAssociation, lstPropositionsElimination);
-		
+			//return new DetailsQuestion(ressource, notion, difficulte, temps, note, intitule, explication, lstPropositionsQCM, lstPropositionsAssociation, lstPropositionsElimination);
+			return null;
 		}
 		catch (Exception e)
 		{
@@ -525,9 +536,17 @@ public class QCMBuilder
 	 */
 	public void supprimerRessource(String code) 
 	{
-		// Supprimer les questions associées à la ressource
-		// Supprimer les notions associées à la ressource
-		// Supprimer la ressource
+		// Supprime les questions associées à la ressource
+
+		
+		// Supprime les notions associées à la ressource
+		this.banqueNotions.supprimerNotions(code);
+		this.banqueNotions.sauvegarder();
+
+		
+		// Supprime la ressource
+		this.banqueRessources.supprimerRessource(code);
+		this.banqueRessources.sauvegarder();
 	}
 	
 	/**
@@ -536,8 +555,10 @@ public class QCMBuilder
 	 */
 	public void supprimerNotion(int id) 
 	{
-		// Supprimer les questions associées à la ressource
-		// Supprimer la notion
+		// Supprime les questions associées à la ressource
+		// Supprime la notion
+		this.banqueNotions.supprimerNotion(id);
+		this.banqueNotions.sauvegarder();
 	}
 
 	/**
@@ -546,22 +567,8 @@ public class QCMBuilder
 	 */
 	public void supprimerQuestion(int id) 
 	{
-		// Supprimer la question
-		//this.banqueQuestions.supprimerQuestion(codeRessource, idNotion);
+		// Supprime la question
+		//this.banqueQuestions.supprimerQuestion(codeRessource, idNot);
 	}
 
-	public static void main(String[] args)
-	{
-		QCMBuilder qcmBuilder;
-
-		qcmBuilder = new QCMBuilder();
-
-		qcmBuilder.creerArborescence();
-
-	}
-
-	public Notion getNotion(String nomNotion, Ressource ressource) 
-	{
-		return this.banqueRessources.getNotion(ressource.getNom(), nomNotion);
-	}
 }

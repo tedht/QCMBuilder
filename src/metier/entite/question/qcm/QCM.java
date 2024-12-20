@@ -1,8 +1,5 @@
 package metier.entite.question.qcm;
 
-import metier.entite.Ressource;
-import metier.entite.Notion;
-
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -20,23 +17,11 @@ public class QCM extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	/**
-	 * Constructeur d'une question QCM.
-	 * 
-	 * @param ressource  la ressource associée
-	 * @param notion     la notion associée.
-	 * @param difficulte la difficultée associée.
-	 * @param temps      le temps associé.
-	 * @param note       la note associée.
-	 * @param unique     si la question est unique.
-	 */
-	public QCM(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note, boolean unique)
+	public QCM(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
-		super(ressource, notion, difficulte, temps, note);
-		this.unique = unique;
+		super(codeRes, idNot, idQst, note, temps, difficulte);
+		this.unique = false;
 	}
-
-	
 
 	/*---------*/
 	/* Getters */
@@ -53,16 +38,22 @@ public class QCM extends Question
 	/**
 	 * Permet de définir si la question est unique.
 	 * 
-	 * @param unique
-	 *            true si la question est unique, false sinon.
+	 * @param unique true si la question est unique, false sinon.
 	 * 
 	 * @return true si la modification a été effectuée, false sinon.
 	 */
-	public boolean      isUnique() { return this.unique     ; }
+	public boolean estUnique() { return this.unique; }
+
+	public PropositionQCM getProposition(int i) { return (PropositionQCM) super.getProposition(i); }
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
+
+	public void setUnique(boolean unique)
+	{
+		this.unique = unique;
+	}
 
 	/**
 	 * Setter de proposition

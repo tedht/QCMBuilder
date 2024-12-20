@@ -12,32 +12,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.entite.Ressource;
-import metier.entite.Notion;
 
 /** Classe BanqueDeRessources
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class BanqueDeRessources
+public class BanqueRessources
 {
-	/*-----------*/
-	/* Attributs */
-	/*-----------*/
 	private List<Ressource> lstRessources;
+
+	private String cheminFic;
 
 	/**
 	 * Constructeur de la classe BanqueDeRessources.
 	 */
-	public BanqueDeRessources()
+	public BanqueRessources()
 	{
 		this.lstRessources = new ArrayList<Ressource>();
 
-		this.lireRessources("data/ressources.csv");
+		this.cheminFic = "data/ressources.csv";
+
+		this.lireRessources(this.cheminFic);
 	}
 
 	/*---------*/
 	/* Getters */
 	/*---------*/
+
+	public String getCheminFic()
+	{
+		return this.cheminFic;
+	}
 
 	/**
 	 * Retourne la liste des ressources de la banque de ressources.
@@ -47,42 +52,6 @@ public class BanqueDeRessources
 	public List<Ressource> getRessources()
 	{
 		return this.lstRessources;
-	}
-
-	/**
-	 * Retourne les notions d'une ressource.
-	 * 
-	 * @param ressource
-	 * @return la liste des notions de la ressource, ou null si la ressource n'existe pas.
-	 */
-	public List<Notion> getNotions(Ressource ressource) 
-	{
-		for(Ressource rsrc : this.lstRessources)
-		{
-			if(rsrc == ressource)
-			{
-				return ressource.getNotions();
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Retourne les noms des notions d'une ressource.
-	 * 
-	 * @param ressource
-	 * @return la liste des noms des notions de la ressource, ou null si la ressource n'existe pas.
-	 */
-	public List<String> getNomNotions(Ressource ressource) 
-	{
-		for(Ressource rsrc : this.lstRessources)
-		{
-			if(rsrc == ressource)
-			{
-				return ressource.getNomNotions();
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -101,33 +70,6 @@ public class BanqueDeRessources
 		return null;
 	}
 
-	/**
-	 * Retourne une Notion de la banque de notions.
-	 * 
-	 * @param nomRessource le nom de la ressource.
-	 * @return la notion correspondante, ou null si elle n'existe pas.
-	 */
-	public Notion getNotion(String nomRessource, String nomNotion)
-	{
-		List<Notion> lstNotions;
-
-
-		for (Ressource ressource : this.lstRessources)
-		{
-			if (ressource.getNom().equals(nomRessource))
-			{
-				lstNotions = ressource.getNotions();
-
-				for (Notion notion : lstNotions)
-				{
-					if (notion.getNom().equals(nomNotion))
-						return notion;
-				}
-			}
-		}
-		return null;
-	}
-
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
@@ -136,22 +78,22 @@ public class BanqueDeRessources
 	/** 
 	 * Lit les ressources d'un fichier CSV.
 	 * 
-	 * @param nomFichier le nom du fichier à lire.
+	 * @param cheminFic le nom du fichier à lire.
 	 * @see Scanner
 	*/
-	public void lireRessources(String nomFichier)
+	public void lireRessources(String cheminFic)
 	{
 		Scanner   scEnreg, scDonnee;
 
 		String    enreg;
 		Ressource ressource;
 
-		String codeRessource;
-		String nomRessource;
+		String code;
+		String nom;
 
 		try
 		{
-			scEnreg = new Scanner( new FileInputStream(nomFichier), "UTF8");
+			scEnreg = new Scanner( new FileInputStream(cheminFic), "UTF8");
 
 			scEnreg.nextLine();
 
@@ -162,58 +104,52 @@ public class BanqueDeRessources
 				scDonnee = new Scanner(enreg);
 				scDonnee.useDelimiter("\t");
 
-				codeRessource = scDonnee.next();
-				nomRessource  = scDonnee.next();
+				code = scDonnee.next();
+				nom  = scDonnee.next();
 
-				ressource = new Ressource(codeRessource, nomRessource);
-
-				for (int cpt = 0 ; scDonnee.hasNext() ; cpt++)
-				{
-					ressource.ajouterNotion(new Notion(scDonnee.next(), cpt, codeRessource));
-				}
+				ressource = new Ressource(code, nom);
 				
 				this.lstRessources.add(ressource);
 			}
 		}
 		catch (FileNotFoundException fnfe)
 		{
-			System.out.println("Le fichier " + nomFichier + "n'a pas été trouvé : " + fnfe.getMessage());
+			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
+	}
+
+	public void sauvegarder()
+	{
+		this.sauvegarder(this.cheminFic);
 	}
 
 	/**
 	 * Sauvegarde les ressources dans un fichier CSV.
 	 * 
-	 * @param nomFichier le nom du fichier dans lequel sauvegarder les ressources.
+	 * @param cheminFic le nom du fichier dans lequel sauvegarder les ressources.
 	 * @see PrintWriter 
 	 */
-	public void sauvegarderRessources(String nomFichier)
+	private void sauvegarder(String cheminFic)
 	{
 		PrintWriter pw;
 
 		try
 		{
-			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(nomFichier), "UTF8" ));
+			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8" ));
 
-			pw.println("code\tressource\tnotion 1\tnotion 2\tnotion N");
+			pw.println("code\tressource");
 
 			for (Ressource ressource : this.lstRessources)
 			{
 				pw.print(ressource.getCode() + "\t");
-				pw.print(ressource.getNom () + "\t");
-				for(Notion notion : ressource.getNotions())
-				{
-					pw.print(notion.getNom() + "\t");
-				}
-
-				pw.print("\n");
+				pw.print(ressource.getNom () + "\n");
 			}
 
 			pw.close();
 		}
 		catch (FileNotFoundException fnfe)
 		{
-			System.out.println("Le fichier " + nomFichier + "n'a pas été trouvé : " + fnfe.getMessage());
+			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
 		{
@@ -221,18 +157,9 @@ public class BanqueDeRessources
 		}
 	}
 
-	/**
-	 * Ajoute une ressource à la banque de ressources.
-	 * 
-	 * @param ressource
-	 * @return true si la ressource a été ajoutée, false sinon.
-	 */
-	public boolean ajouterRessource(Ressource ressource)
+	public void creerRessource(String code, String nom)
 	{
-		if (ressource == null) return false;
-
-		this.lstRessources.add(ressource);
-		return true;
+		this.lstRessources.add(new Ressource(code, nom));
 	}
 
 	/**
@@ -255,26 +182,20 @@ public class BanqueDeRessources
 		return false;
 	}
 
-	/**
-	 * Supprime une ressource de la banque de ressources.
-	 * 
-	 * @param ressource
-	 * @return true si la ressource a été supprimée, false sinon.
-	 */
-	public boolean supprimerRessource(Ressource ressource)
+	public void supprimerRessource(String codeRes)
 	{
-		if (this.lstRessources.contains(ressource))
+		for(int i = 0; i < this.lstRessources.size(); i++)
 		{
-			this.lstRessources.remove(ressource);
-			return true;
+			// this.lstRessources n'est pas censé contenir des valeurs null
+			if(this.lstRessources.get(i).getCode().equals(codeRes))
+				this.lstRessources.remove(i);
 		}
-
-		return false;
 	}
 
 	/*----------*/
 	/* ToString */
 	/*----------*/
+	/*
 	public String toString()
 	{
 		String sRet = "";
@@ -293,6 +214,7 @@ public class BanqueDeRessources
 
 		return sRet;
 	}
+	*/
 
 
 	/*

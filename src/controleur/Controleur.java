@@ -16,17 +16,7 @@ import metier.QCMBuilder;
  */
 public class Controleur
 {
-
-	/*-----------*/
-	/* Attributs */
-	/*-----------*/
 	private QCMBuilder metier;
-	
-
-
-	/*--------------*/
-	/* Constructeur */
-	/*--------------*/
 
 	/**
 	 * Constructeur de la classe Controleur.
@@ -36,8 +26,6 @@ public class Controleur
 		this.metier = new QCMBuilder();
 		new IHM(this);
 	}
-
-
 
 	/*---------*/
 	/* Getters */
@@ -65,38 +53,42 @@ public class Controleur
 	}
 
 	/**
-	 * Retourne la liste des notions associées à une ressource.
+	 * Retourne la liste de toutes les notions.
 	 * 
-	 * @param  ressource la ressource.
-	 * @return           la liste des notions.
+	 * @return la liste de toutes les notions.
 	 */
-	public List<Notion> getNotions(Ressource ressource)
+	public List<Notion> getNotions()
 	{
-		return this.metier.getNotions(ressource);
+		return this.metier.getNotions();
 	}
 
 	/**
-	 * Retourne une notion à partir de son nom et de sa ressource.
+	 * Retourne la liste des notions associées à une ressource à partir de son code.
 	 * 
-	 * @param  nomRessource le nom de la notion.
-	 * @param  ressource    la ressource
-	 * @return              la notion
+	 * @param  codeRes le code de la ressource.
+	 * @return la liste des notions associées.
 	 */
-	public Notion getNotion(String nomNotion, Ressource ressource) 
+	public List<Notion> getNotions(String codeRes)
 	{
-		return this.metier.getNotion(nomNotion, ressource);
+		return this.metier.getNotions(codeRes);
 	}
 
 	/**
-	 * Retourne la liste des noms des notions associées à une ressource.
+	 * Retourne une notion à partir de son id.
 	 * 
-	 * @param  ressource la ressource.
-	 * @return           la liste des noms.
+	 * @param idNot l'id de la notion
+	 * @return la notion
 	 */
-	public List<String> getNomNotions(Ressource ressource)
+	public Notion getNotion(int idNot) 
 	{
-		return this.metier.getNomNotions(ressource);
+		return this.metier.getNotion(idNot);
 	}
+
+	public Notion getNotionParNom(String codeRes, String nomNot) 
+	{
+		return this.metier.getNotionParNom(codeRes, nomNot);
+	}
+
 
 	/**
 	 * Retourne la liste de toutes questions.
@@ -108,50 +100,19 @@ public class Controleur
 		return this.metier.getQuestions();
 	}
 	
-	/**
-	 * Retourne la liste des questions associées à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @return           la liste des questions.
-	 */
-	public List<Question> getQuestions(Ressource ressource) 
+	public List<Question> getQuestions(String codeRes) 
 	{
-		return this.metier.getQuestions(ressource);
+		return this.metier.getQuestions(codeRes);
 	}
 
-	/**
-	 * Retourne la liste des questions associées à une notion associée à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @param  notion    la notion.
-	 * @return           la liste des questions.
-	 */
-	public List<Question> getQuestions(Ressource ressource, Notion notion)
+	public List<Question> getQuestions(String codeRes, int idNot)
 	{
-		return this.metier.getQuestions(ressource, notion);
+		return this.metier.getQuestions(codeRes, idNot);
 	}
 
-	/**
-	 * Retourne le nombre de notions associées à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @return           le nombre de notions.
-	 */
-	public int getNbNotions(Ressource ressource) 
+	public Question getQuestion(int idQst)
 	{
-		return this.getNotions(ressource).size();
-	}
-
-	/**
-	 * Retourne le nombre de questions associées à une notion associée à une ressource.
-	 * 
-	 * @param  ressource la ressource.
-	 * @param  notion    la notion.
-	 * @return           le nombre de questions.
-	 */
-	public int getNbQuestions(Ressource ressource, Notion notion) 
-	{
-		return this.getQuestions(ressource, notion).size();
+		return this.metier.getQuestion(idQst);
 	}
 
 	/**
@@ -173,8 +134,6 @@ public class Controleur
 	{
 		return this.metier.getNotionActive();
 	}
-
-
 
 	/*---------*/
 	/* Setters */
@@ -200,8 +159,6 @@ public class Controleur
 		this.metier.setNotionActive(notion);
 	}
 
-
-
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
@@ -221,9 +178,9 @@ public class Controleur
 	 * 
 	 * @param nomNotion le nom de la nouvelle notion.
 	 */
-	public void creerNotion(String nomNotion)  
+	public void creerNotion(String codeRes, String nomNotion)  
 	{
-		this.metier.creerNotion(nomNotion);
+		this.metier.creerNotion(codeRes, nomNotion);
 	}
 
 	/**
@@ -235,45 +192,17 @@ public class Controleur
 	}
 
 	/**
-	 * Vide l'historique
-	 */
-	public void popHistorique() 
-	{
-		this.metier.popHistorique();
-	}
-
-	/**
-	 * Creer une question QCM.
+	 * Creer une question.
 	 * 
 	 * @param  detailsQuestion toutes les informations de la questions.
-	 * @param  unique          true si le qcm est à réponse unique, false si il est à réponse multiples.
-	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
+	 * @param lstDetailsProp 
+	 * @param explication 
+	 * @param intitule 
+	 * @return la liste des érreures ayant pu être trouvé lors de la création de la question.
 	 */
-	public void creerQCM(String detailsQuestion, boolean unique) 
+	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
-		this.metier.creerQCM(detailsQuestion, unique);
-	}
-
-	/**
-	 * Creer une question Association.
-	 * 
-	 * @param  detailsQuestion toutes les informations de la questions.
-	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
-	 */
-	public void creerAssociation(String detailsQuestion) 
-	{
-		this.metier.creerAssociation(detailsQuestion);
-	}
-
-	/**
-	 * Creer une question Elimination.
-	 * 
-	 * @param  detailsQuestion toutes les informations de la questions.
-	 * @return                 la liste des érreures ayant pu être trouvé lors de la création de la question.
-	 */
-	public void creerElimination(String detailsQuestion) 
-	{
-		this.metier.creerElimination(detailsQuestion);
+		this.metier.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
 	/**

@@ -8,7 +8,6 @@ import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import ihm.questionnaire.PanelAjoutQuestionnaire;
 import metier.entite.Notion;
-import metier.entite.Ressource;
 
 /**
  * Classe représentant la fenêtre de création d'une évaluation
@@ -27,7 +26,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 
 	private int[]      tabNbQuestionsDiff;
 
-	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, Ressource ressource)
+	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, String codeRes)
 	{
 		this.ctrl  = ctrl;
 		this.panel = panel;
@@ -35,7 +34,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 		this.tabNbQuestionsDiff = new int[4];
 
 		String nomNotion;
-		List<Notion> lstNotions = this.ctrl.getNotions(ressource) != null ? this.ctrl.getNotions(ressource) : new ArrayList<Notion>();
+		List<Notion> lstNotions = this.ctrl.getNotions(codeRes) != null ? this.ctrl.getNotions(codeRes) : new ArrayList<Notion>();
 
 		tabDonnees = new Object[lstNotions.size()+2][7];
 

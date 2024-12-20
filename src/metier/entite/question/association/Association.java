@@ -1,8 +1,5 @@
 package metier.entite.question.association;
 
-import metier.entite.Ressource;
-import metier.entite.Notion;
-
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -18,18 +15,9 @@ public class Association extends Question
 	/* Constructeur */
 	/*--------------*/
 
-	/**
-	 * Constructeur d'une question Association sans pièce jointe.
-	 * 
-	 * @param ressource  la ressource associée
-	 * @param notion     la notion associée.
-	 * @param difficulte la difficultée associée.
-	 * @param temps      le temps associé.
-	 * @param note       la note associée.
-	 */
-	public Association(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Association(String codeRes, int idNot, int idQst,double note, int temps, Difficulte difficulte)
 	{
-		super(ressource, notion, difficulte, temps, note);
+		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
 
 	/*---------*/
@@ -42,6 +30,8 @@ public class Association extends Question
 	 * @return le type de question ELIMINATION
 	 */
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
+
+	public PropositionAssociation getProposition(int i) { return (PropositionAssociation) super.getProposition(i); }
 
 	/*---------*/
 	/* Setters */
@@ -88,6 +78,7 @@ public class Association extends Question
 		return sRet;
 	}
 
+	/*
 	public static void main(String[] args)
 	{
 		Association asso, asso2;
@@ -113,5 +104,5 @@ public class Association extends Question
 		propAnglais = new PropositionAssociation("Without", "Sans");
 		asso2.ajouterProposition(propAnglais);
 		System.out.println(asso2);
-	}
+	}*/
 }

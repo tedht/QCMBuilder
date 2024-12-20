@@ -101,7 +101,7 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setSelectedIndex(-1);
 		this.ddlstNotion.setFocusable(false);
-		this.ddlstNotion.setPrototypeDisplayValue(new Notion(String.format("%50s", " "), 0, ""));
+		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%50s", " ")));
 
 		// Type de Question 
 		this.ddlstTypeQuestion = new JComboBox<String>();
@@ -228,7 +228,7 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 		if(e.getSource() == this.ddlstRessource) 
 		{  
 			this.ddlstNotion.removeAllItems();
-			for(Notion notion : this.ctrl.getNotions((Ressource)this.ddlstRessource.getSelectedItem()))
+			for(Notion notion : this.ctrl.getNotions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode()))
 			{
 				this.ddlstNotion.addItem(notion);
 			}

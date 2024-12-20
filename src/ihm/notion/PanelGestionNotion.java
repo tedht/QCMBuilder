@@ -12,11 +12,16 @@ import metier.entite.Notion;
 
 public class PanelGestionNotion extends PanelGestion
 {
-	private JPanel panelInstruction;
+	private FrameGestionNotion frame;
 
-	public PanelGestionNotion(Controleur ctrl, IHM ihm) 
+	private JPanel panelInstruction;
+	private JPanel panelAucuneNotion;
+
+	public PanelGestionNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame) 
 	{
 		super(ctrl, ihm);
+
+		this.frame = frame;
 		
 		this.lblTitre  .setText("Notions :");
 		this.btnAjouter.setText("Nouvelle Notion");
@@ -24,6 +29,9 @@ public class PanelGestionNotion extends PanelGestion
 
 		this.panelInstruction = new JPanel();
 		this.panelInstruction.add(new JLabel("Double-cliquez sur une ressource afin d'afficher les notions associées."));
+
+		this.panelAucuneNotion = new JPanel();
+		this.panelAucuneNotion.add(new JLabel("Cette ressource ne comporte aucune notion."));
 
 		this.afficher();
 	}
@@ -52,7 +60,20 @@ public class PanelGestionNotion extends PanelGestion
 
 			for(int i = 9; i > 0; i--)
 			{
-				panelCarte = new PanelNotion(null, null, 0, "");
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
+				panelCarte.setVisible(false);
+				this.panelContenu.add(panelCarte);
+			}
+		}
+		else if(this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()).size() == 0)
+		{
+			this.btnAjouter.setEnabled(true);
+			
+			this.panelContenu.add(this.panelAucuneNotion);
+
+			for(int i = 9; i > 0; i--)
+			{
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}
@@ -60,16 +81,16 @@ public class PanelGestionNotion extends PanelGestion
 		else
 		{
 			this.btnAjouter.setEnabled(true);
-
-			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive()))
+			
+			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()))
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, notion.getId(), notion.getNom());
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, notion.getIdNot(), notion.getNom());
 				this.panelContenu.add(panelCarte);
 			}
 
-			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceActive()).size(); i > 0; i--)
+			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceActive().getCode()).size(); i > 0; i--)
 			{
-				panelCarte = new PanelNotion(null, null, 0, "");
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}

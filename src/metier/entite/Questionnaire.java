@@ -20,8 +20,6 @@ import metier.entite.question.Question;
 public class Questionnaire
 {
 
-
-
 	/*-----------*/
 	// Attributs //
 	/*-----------*/

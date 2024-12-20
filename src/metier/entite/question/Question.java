@@ -1,17 +1,7 @@
 package metier.entite.question;
 
 import java.util.List;
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import metier.entite.Ressource;
-import metier.entite.Notion;
-
-import metier.entite.question.qcm.*;
 
 /** Classe Question
  * @author Equipe 03
@@ -23,11 +13,9 @@ public abstract class Question
 	/* Attributs */
 	/*-----------*/
 
-	private static       int    compteur; // Compteur partagé entre toutes les instances de Question
-	private static final String COMPTEUR_FILE = "data/compteur.txt";
-
-	private Ressource         ressource;
-	private Notion            notion;
+	private String            codeRes;
+	private int               idNot;
+	private int               idQst;
 	private Difficulte        difficulte;
 	private int               temps;
 	private double            note;
@@ -50,26 +38,20 @@ public abstract class Question
 	 * @param temps le temps de réponse à la question (en secondes).
 	 * @param note la note de la question.
 	 */
-	public Question(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Question(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
-		compteur         = Question.nextNumQuestion();
-
-		this.ressource   = ressource;
-		this.notion      = notion;
-		this.difficulte  = difficulte;
-		this.temps       = temps;
+		this.codeRes     = codeRes;
+		this.idNot       = idNot;
+		this.idQst       = idQst;
 		this.note        = note;
-		this.piecesJointes = new ArrayList<PieceJointe>();
+		this.temps       = temps;
+		this.difficulte  = difficulte;
 
 		this.intitule    = "";
 		this.explication = "";
 
+		this.piecesJointes   = new ArrayList<PieceJointe>();
 		this.lstPropositions = new ArrayList<Proposition>();
-	}
-
-	static
-	{
-		chargerCompteur(); // Charger la valeur persistante au démarrage
 	}
 
 	/*---------*/
@@ -77,46 +59,48 @@ public abstract class Question
 	/*---------*/
 
 	/**
-	 * Retourne la ressource associée à la question.
+	 * Retourne le code de la ressource associée à la question.
 	 * 
-	 * @return la ressource associée à la question.
+	 * @return le code de la ressource associée à la question.
 	 */
-	public Ressource    getRessource  () { return this.ressource;   }
+	public String getCodeRes() { return this.codeRes; }
 
 	/**
-	 * Retourne la notion associée à la question.
+	 * Retourne l'id de la notion associée à la question.
 	 * 
-	 * @return la notion associée à la question.
+	 * @return l'id de la notion associée à la question.
 	 */
-	public Notion       getNotion     () { return this.notion;      }
+	public int getIdNot() { return this.idNot; }
+
+	/**
+	 * Retourne l'id de la question.
+	 * 
+	 * @return l'id de la question.
+	 */
+	public int getIdQst() { return this.idQst; }
+
 
 	/**
 	 * Retourne la difficulté de la question.
 	 * 
 	 * @return la difficulté de la question.
 	 */
-	public Difficulte   getDifficulte () { return this.difficulte;  }
+	public Difficulte getDifficulte () { return this.difficulte; }
 
 	/**
 	 * Retourne le temps de réponse à la question.
 	 * 
 	 * @return le temps de réponse à la question.
 	 */
-	public int          getTemps      () { return this.temps;       }
+	public int getTemps() { return this.temps; }
 
 	/**
 	 * Retourne la note de la question.
 	 * 
 	 * @return la note de la question.
 	 */
-	public double       getNote       () { return this.note;        }
+	public double getNote() { return this.note; }
 
-	/**
-	 * Retourne l'intitulé de la question.
-	 * 
-	 * @return l'intitulé de la question.
-	 */
-	public String       getIntitule   () { return this.intitule;    }
 
 	/**
 	 * Retourne le chemin de la pièce jointe associée à la question.
@@ -124,13 +108,6 @@ public abstract class Question
 	 * @return le chemin de la pièce jointe associée à la question.
 	 */
 	public List<PieceJointe> getPiecesJointes() { return this.piecesJointes; }
-
-	/**
-	 * Retourne l'explication de la question.
-	 * 
-	 * @return l'explication de la question.
-	 */
-	public String       getExplication() { return this.explication; }
 
 	/**
 	 * Retourne le type de la question(QCM, ELIMINATION, ASSOCIATION).
@@ -162,44 +139,26 @@ public abstract class Question
 	 */
 	public int getPropositionId(Proposition prop) { return this.lstPropositions.indexOf(prop); }
 
-	/**
-	 * Retourne le numéro unique de la question.
-	 * 
-	 * @return le numéro unique de la question.
-	 */
-	public int getNumQuestion() { return compteur; }
-
-
+	public String getIntitule   () { return this.intitule;    }
+	public String getExplication() { return this.explication; }
+	
 	/*---------*/
 	/* Setters */
 	/*---------*/
 
-	/**
-	 * Modifie la ressource associée à la question.
-	 * 
-	 * @param ressource la nouvelle ressource.
-	 * @return true si la ressource à été modifiée, false sinon.
-	 */
-	public boolean setRessource(Ressource ressource)
+	public void setCodeRes(String codeRes)
 	{
-		if (ressource == null) return false;
-
-		this.ressource  = ressource;
-		return true;
+		this.codeRes = codeRes;
 	}
 
-	/**
-	 * Modifie la notion associée à la question.
-	 * 
-	 * @param notion la nouvelle notion.
-	 * @return true si la notion à été modifiée, false sinon.
-	 */
-	public boolean setNotion(Notion notion)
+	public void setIdNot(int idNot)
 	{
-		if (notion == null) return false;
+		this.idNot = idNot;
+	}
 
-		this.notion = notion;
-		return true;
+	public void setIdQst(int idQst)
+	{
+		this.idQst = idQst;
 	}
 
 	/**
@@ -244,34 +203,19 @@ public abstract class Question
 		return true;
 	}
 
-	/**
-	 * Modifie l'intitulé de la question.
-	 * 
-	 * @param intitule le nouvel intitulé.
-	 * @return true si l'intitulé à été modifié, false sinon.
-	 */
-	public boolean setIntitule(String intitule)
+	public void setIntitule(String intitule)
 	{
-		if ("".equals(intitule)) return false;
-
 		this.intitule = intitule;
-		return true;
 	}
 
-	/**
-	 * Modifie l'explication de la question.
-	 * 
-	 * @param explication la nouvelle explication.
-	 * @return true si l'explication à été modifiée, false sinon.
-	 */
-	public boolean setExplication(String explication)
+	public void setExplication(String explication)
 	{
-		if ("".equals(explication)) return false;
-
 		this.explication = explication;
-		return true;
 	}
 
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 
 	/**
 	 * Ajoute une piece jointe à la liste des pièces jointes de la question.
@@ -318,10 +262,6 @@ public abstract class Question
 		this.lstPropositions.set(i, prop);                          // Set la proposition
 		return true;
 	}
-
-	/*-----------------*/
-	/* Autres méthodes */
-	/*-----------------*/
 	
 	/**
 	 * Ajoute une proposition à la liste des propositions de la question.
@@ -352,58 +292,10 @@ public abstract class Question
 		return true;
 	}
 
-	/**
-	 * Retourne le numéro de la prochaine question.
-	 * 
-	 * @return le numéro de la prochaine question.
-	 */
-	public static int nextNumQuestion()
-	{
-
-		compteur++; // Incrémenter le compteur
-		System.out.println("compteur : " + compteur);
-		sauvegarderCompteur(); // Sauvegarder la nouvelle valeur
-		return compteur;
-	}
-
-	/**
-	 * Charge la valeur du compteur depuis un fichier.
-	 */
-	private static void chargerCompteur()
-	{
-		try (Scanner sc = new Scanner(new FileInputStream(COMPTEUR_FILE)))
-		{
-			if (sc.hasNextInt())
-			{
-				compteur = sc.nextInt(); // Charger la valeur sauvegardée
-			}
-			else
-			{
-				compteur = 0; // Valeur par défaut si le fichier est vide
-			}
-		} catch (FileNotFoundException e)
-		{
-			compteur = 0; // Fichier non trouvé, initialisation par défaut
-		}
-	}
-
-	/**
-	 * Sauvegarde la valeur actuelle du compteur dans un fichier.
-	 */
-	private static void sauvegarderCompteur()
-	{
-		try (PrintWriter pw = new PrintWriter(new FileOutputStream(COMPTEUR_FILE)))
-		{
-			pw.println(compteur);
-		} catch (FileNotFoundException e)
-		{
-			System.err.println("Erreur lors de la sauvegarde du compteur : " + e.getMessage());
-		}
-	}
-
 	/*----------*/
 	/* toString */
 	/*----------*/
+	/*
 	public String toString()
 	{
 		String sRet;
@@ -427,7 +319,7 @@ public abstract class Question
 			sRet += this.piecesJointes.get(cpt) + "\n";
 
 		return sRet;
-	}
+	}*/
 
 	
 	/**
@@ -435,6 +327,7 @@ public abstract class Question
 	 * 
 	 * @param args
 	 */
+	/*
 	public static void main(String[] args)
 	{
 		Question q1, q2, q3;
@@ -448,5 +341,5 @@ public abstract class Question
 		System.out.println(q1);
 		System.out.println(q2);
 		System.out.println(q3);
-	}
+	}*/
 }

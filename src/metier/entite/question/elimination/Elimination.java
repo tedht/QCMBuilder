@@ -1,8 +1,5 @@
 package metier.entite.question.elimination;
 
-import metier.entite.Ressource;
-import metier.entite.Notion;
-
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
@@ -19,27 +16,16 @@ public class Elimination extends Question
 
 
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
-	/**
-	 * Constructeur d'une question Elimination sans pièce jointe.
-	 * 
-	 * @param ressource  la ressource associée
-	 * @param notion     la notion associée.
-	 * @param difficulte la difficultée associée.
-	 * @param temps      le temps associé.
-	 * @param note       la note associée.
-	 */
-	public Elimination(Ressource ressource, Notion notion, Difficulte difficulte, int temps, double note)
+	public Elimination(String codeRes, int idNot, int idQst,double note, int temps, Difficulte difficulte)
 	{
-		super(ressource, notion, difficulte, temps, note);
+		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
 
-
-
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -53,10 +39,10 @@ public class Elimination extends Question
 		return TypeQuestion.ELIMINATION;
 	}
 
-
+	public PropositionElimination getProposition(int i) { return (PropositionElimination) super.getProposition(i); }
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -76,7 +62,7 @@ public class Elimination extends Question
 
 
     /*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

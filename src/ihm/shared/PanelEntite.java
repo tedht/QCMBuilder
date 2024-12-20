@@ -33,8 +33,8 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 	 */
 	public PanelEntite(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{
-		this.ctrl = ctrl;
-		this.ihm  = ihm;
+		this.ctrl  = ctrl;
+		this.ihm   = ihm;
 
 		this.setLayout(new BorderLayout());
 

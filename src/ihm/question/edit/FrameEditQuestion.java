@@ -71,15 +71,17 @@ public class FrameEditQuestion extends JFrame
 
 	public boolean enregistrer() 
 	{
-		String codeRessource = this.panelParametresQuestion.getRessource  ().getCode();
-		int    idNotion      = this.panelParametresQuestion.getNotion     ().getId  ();
-		int    indDiff       = this.panelParametresQuestion.getDifficulte ();         
-		String sTemps        = this.panelParametresQuestion.getTemps      ();          
-		String sPoints       = this.panelParametresQuestion.getPoints     ();          
-		String intitule      = this.panelAjoutQuestion     .getIntitule   ();          
-		String explication   = this.panelAjoutQuestion     .getExplication();          
+		String codeRes     = this.panelParametresQuestion.getRessource  ().getCode();
+		int    idNot       = this.panelParametresQuestion.getNotion     ().getIdNot();
+		int    valDiff     = this.panelParametresQuestion.getDifficulte ();         
+		String sTemps      = this.panelParametresQuestion.getTemps      ();          
+		String sPoints     = this.panelParametresQuestion.getPoints     ();  
 
-		List<String> lstErreurs = new ArrayList<String>();
+		String intitule    = this.panelAjoutQuestion     .getIntitule   ();          
+		String explication = this.panelAjoutQuestion     .getExplication();   
+		
+		List<String> lstDetailsProp = new ArrayList<String>();
+		List<String> lstErreurs     = new ArrayList<String>();
 
 		if(intitule.isEmpty()) 
 			lstErreurs.add("L'intitulé est vide");
@@ -199,17 +201,9 @@ public class FrameEditQuestion extends JFrame
 		}
 		
 		String detailsQuestion = "";
-		String sProp           = "";
+		String detailsProp           = "";
 
-		detailsQuestion += codeRessource + '\t';
-		detailsQuestion += idNotion      + "\t";
-		detailsQuestion += indDiff       + "\t";
-		detailsQuestion += sTemps        + '\t';
-		detailsQuestion += sPoints       + '\t';
-		detailsQuestion += intitule      + '\t';
-		detailsQuestion += explication   + '\t';
-
-		System.out.println(detailsQuestion);
+		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+sTemps+"\t"+sPoints;
 
 		switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
 		{
@@ -218,54 +212,50 @@ public class FrameEditQuestion extends JFrame
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
-					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
-					sProp += panelPropQCM.getText() + '\t';
-					detailsQuestion += sProp;
+					detailsProp =  panelPropQCM.estReponse() ? "V:" : "F:";
+					detailsProp += panelPropQCM.getText() + '\t';
+					lstDetailsProp.add(detailsProp);
 				}
-				this.ctrl.creerQCM(detailsQuestion, true);
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropQRM panelPropQCM = (PanelPropQRM) panelProp;
-					sProp =  panelPropQCM.estReponse() ? "V:" : "F:";
-					sProp += panelPropQCM.getText() + '\t';
-					detailsQuestion += sProp;
-
-					System.out.println(detailsQuestion);
+					detailsProp =  panelPropQCM.estReponse() ? "V:" : "F:";
+					detailsProp += panelPropQCM.getText();
+					lstDetailsProp.add(detailsProp);
 				}
-				this.ctrl.creerQCM(detailsQuestion, false);
 			} 
 			case 2  -> // Question à Association d'Eléments
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
-					sProp =  panelPropAssoc.getTextGauche() + '\t';
-					sProp += panelPropAssoc.getTextDroite() + '\t';
-					detailsQuestion += sProp;
+					detailsProp =  panelPropAssoc.getTextGauche() + '\t';
+					detailsProp += panelPropAssoc.getTextDroite();
+					lstDetailsProp.add(detailsProp);
 				}
-				this.ctrl.creerAssociation(detailsQuestion);
 			} 
 			case 3  -> // Question avec Elimination de Propositions de Réponses
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropElim panelPropElim = (PanelPropElim) panelProp;
-					sProp = panelPropElim.estReponse() ? "V:" : "F:";
+					detailsProp = panelPropElim.estReponse() ? "V:" : "F:";
 					if(!panelPropElim.estReponse()) 
 					{
-						sProp += panelPropElim.getOrdreElim    () + ":";
-						sProp += panelPropElim.getPointsEnMoins() + ":";
+						detailsProp += panelPropElim.getOrdreElim    () + ":";
+						detailsProp += panelPropElim.getPointsEnMoins() + ":";
 					}
-					detailsQuestion += sProp;
-					sProp = panelPropElim.getText() + '\t';
+					detailsProp = panelPropElim.getText();
+					lstDetailsProp.add(detailsProp);
 				}
-				this.ctrl.creerElimination(detailsQuestion);
 			} 
 			default -> {}
 		}
+
+		this.ctrl.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
 		
 		this.dispose();
 		this.ihm.reinitAffichageQuestion();

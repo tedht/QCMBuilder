@@ -10,32 +10,32 @@ public class Notion
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
+	private String codeRes;
+	private int    idNot;
 	private String nom;
-	private int id;
-	private String codeRessource;
 	
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
-	public Notion(String nom, int id, String codeRessource) 
+	public Notion(String codeRes, int idNot, String nom) 
 	{
-		this.codeRessource = codeRessource;
-		this.id            = id;
-		this.nom           = nom;
+		this.codeRes = codeRes;
+		this.idNot   = idNot;
+		this.nom     = nom;
 	}
 
 	/*---------*/
 	/* Getters */
 	/*---------*/
 
-	public int getId() 
+	public String getCodeRes() 
 	{
-		return this.id;
+		return this.codeRes;
 	}
 
-	public String getCodeRessource() 
+	public int getIdNot() 
 	{
-		return this.codeRessource;
+		return this.idNot;
 	}
 
 	public String getNom()
@@ -47,37 +47,20 @@ public class Notion
 	/* Setters */
 	/*---------*/
 
-	public boolean setId(int id) 
+	public void setCodeRes(String codeRes) 
 	{
-		if(id != this.id)
-		{
-			this.id = id;
-			return true;
-		}
-
-		return false;
+		this.codeRes = codeRes;
 	}
 
-	public boolean setCodeRessource(String codeRessource) 
+	public void setIdNot(int idNot) 
 	{
-		if(codeRessource != null && !codeRessource.equals(this.codeRessource))
-		{
-			this.codeRessource = codeRessource;
-			return true;
-		}
-
-		return false;
+		this.idNot = idNot;
 	}
 
-	public boolean setNom(String nom) 
-	{
-		if(nom != null && !nom.equals(this.nom))
-		{
-			this.nom = nom;
-			return true;
-		}
 
-		return false;
+	public void setNom(String nom) 
+	{
+		this.nom = nom;
 	}
 
 	/*----------*/
@@ -85,6 +68,7 @@ public class Notion
 	/*----------*/
 	public String toString()
 	{
-		return this.nom;
+		//return this.codeRes + " " + this.idNot + " " + this.nom;
+		return this.nom; // ce qui s'affiche dans ddlstNotions
 	}
 }
