@@ -207,6 +207,21 @@ public class IHM
 		}
 	}
 
+	public void modifierRessource(String code) 
+	{
+		this.frameEditRessource = new FrameEditRessource(this.ctrl, this, code);
+	}
+
+	public void modifierNotion(int id) 
+	{
+
+	}
+
+	public void modifierQuestion(int id) 
+	{
+		
+	}
+
 	public void finaliserQuestionnaire() 
 	{
 		if(this.frameExport == null)
@@ -237,21 +252,6 @@ public class IHM
 			// Si frameExport existe déjà, elle est mise en avant
 			this.frameExport.toFront();
 		}
-	}
-
-	public void modifierRessource(String code) 
-	{
-
-	}
-
-	public void modifierNotion(int id) 
-	{
-
-	}
-
-	public void modifierQuestion(int id) 
-	{
-		
 	}
 
 }

@@ -53,6 +53,14 @@ public class PanelEditRessource extends PanelEditNom
 		this.panelInfoCode.add(this.txtCode, BorderLayout.CENTER);
 	}
 
+	public PanelEditRessource(Controleur ctrl, IHM ihm, String code) 
+	{
+		this(ctrl, ihm);
+
+		this.txtCode.setText(code);
+		this.txtNom .setText(this.ctrl.getRessource(code).getNom());
+	}
+
 	public String getType()
 	{
 		return "Ressource";

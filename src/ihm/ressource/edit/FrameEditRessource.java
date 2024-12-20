@@ -32,4 +32,16 @@ public class FrameEditRessource extends JFrame
 
 		this.pack();
 	}
+
+	public FrameEditRessource(Controleur ctrl, IHM ihm, String code) 
+	{
+		this.setTitle("Modifier une Ressource");
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+
+		this.panelEditRessource = new PanelEditRessource(ctrl, ihm, code);
+		this.add(this.panelEditRessource);
+
+		this.pack();
+	}
 }

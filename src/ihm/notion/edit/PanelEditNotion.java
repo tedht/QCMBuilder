@@ -61,7 +61,7 @@ public class PanelEditNotion extends PanelEditNom
 		}
 
 		if(this.ctrl.getRessourceActive() != null)
-			this.ctrl.creerNotion(this.ctrl.getRessourceActive().getNom(), this.txtNom.getText());
+			this.ctrl.creerNotion(this.ctrl.getRessourceActive().getCode(), this.txtNom.getText());
 		this.ihm.reinitAffichageNotion();
 		return true;
 	}

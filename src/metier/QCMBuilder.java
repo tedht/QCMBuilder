@@ -364,6 +364,8 @@ public class QCMBuilder
 		this.banqueNotions.sauvegarder();
 		
 		// Supprime la ressource
+		if(this.banqueRessources.getRessource(code) == this.ressourceActive) 
+			this.ressourceActive = null;
 		this.banqueRessources.supprimerRessource(code);
 		this.banqueRessources.sauvegarder();
 	}
@@ -378,6 +380,8 @@ public class QCMBuilder
 
 
 		// Supprime la notion
+		if(this.banqueNotions.getNotion(id) == this.notionActive) 
+			this.notionActive = null;
 		this.banqueNotions.supprimerNotion(id);
 		this.banqueNotions.sauvegarder();
 	}
