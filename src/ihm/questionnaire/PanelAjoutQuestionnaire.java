@@ -98,10 +98,10 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		}
 	}
 
-	public void majTabNotions() 
+	public void majTabNotions(String codeRes) 
 	{
 		// Création d'une nouvelle Instance de tblGrilleNotions
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, frame.getCodeRes()));
+		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(this.ctrl, this, codeRes));
 		
 		// Paramétrage
 		this.tblGrilleNotions.getTableHeader().setReorderingAllowed(false); 
