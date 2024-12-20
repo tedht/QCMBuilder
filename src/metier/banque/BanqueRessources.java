@@ -158,7 +158,7 @@ public class BanqueRessources
 		}
 	}
 
-	public void creerRessource(String code, String nom)
+	public void editRessource(String code, String nom)
 	{
 		this.lstRessources.add(new Ressource(code, nom));
 	}

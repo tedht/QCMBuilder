@@ -191,9 +191,9 @@ public class QCMBuilder
 	 * @param code le code de la ressource
 	 * @param nom le nom de la ressource
 	 */
-	public void creerRessource(String code, String nom)
+	public void editRessource(String code, String nom)
 	{
-		this.banqueRessources.creerRessource(code, nom);
+		this.banqueRessources.editRessource(code, nom);
 		this.banqueRessources.sauvegarder();
 	}
 
@@ -203,25 +203,14 @@ public class QCMBuilder
 	 * @param nomNotion le nom de la notion
 	 * @param nomNotion2 
 	 */
-	public void creerNotion(String codeRes, String nomNotion) 
+	public void editNotion(String codeRes, String nomNotion) 
 	{
-		this.banqueNotions.creerNotion(codeRes, nomNotion);
+		this.banqueNotions.editNotion(codeRes, nomNotion);
 		this.banqueNotions.sauvegarder();
 	}
 
 	/**
-	 * Crée une question de type QCM
-	 * 
-	 * @param cheminFichier
-	 * @param question
-	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
-	{
-		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
-	}
-
-	/**
-	 * Crée une question de type QCM
+	 * Crée une question
 	 * 
 	 * @param detailsQuestion les détails de la question
 	 * @param explication 
@@ -339,17 +328,20 @@ public class QCMBuilder
 		return m * 60 + s;
 	}
 
-	/**
-	 * Génère un questionnaire
-	 * 
-	 * @param cheminFichier le chemin du fichier
-	 */
-	public void genererQuestionnaire(String cheminFichier)
+	public void modifierRessource(String code, String nouveauCode, String nouveauNom) 
 	{
-		this.questionnaire.genererQuestionnaire(cheminFichier);
+		Ressource ressource = this.banqueRessources.getRessource(code);
+		ressource.setCode(nouveauCode);
+		ressource.setNom (nouveauNom);
+	}
+
+	public void modifierNotion(int idNot, String nouveauNom) 
+	{
+		Notion notion = this.banqueNotions.getNotion(idNot);
+		notion.setNom(nouveauNom);
 	}
 	
-		/**
+	/**
 	 * Supprime une ressource à partir de son code.
 	 * @param code le code de la ressource
 	 * 
@@ -394,6 +386,28 @@ public class QCMBuilder
 	{
 		// Supprime la question
 		//this.banqueQuestions.supprimerQuestion(codeRessource, idNot);
+	}
+
+	/**
+	 * Crée une pièce jointe
+	 * 
+	 * @param cheminFichier
+	 * @param question
+	 */
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
+	}
+
+
+	/**
+	 * Génère un questionnaire
+	 * 
+	 * @param cheminFichier le chemin du fichier
+	 */
+	public void genererQuestionnaire(String cheminFichier)
+	{
+		this.questionnaire.genererQuestionnaire(cheminFichier);
 	}
 
 }

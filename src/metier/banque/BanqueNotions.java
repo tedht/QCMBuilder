@@ -195,7 +195,7 @@ public class BanqueNotions
 		}
 	}
 	
-	public void creerNotion(String codeRes, String nom)
+	public void editNotion(String codeRes, String nom)
 	{
 		int idNot = this.recupererId();
 

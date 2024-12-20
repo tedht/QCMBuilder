@@ -42,7 +42,7 @@ public class PanelQuestion extends PanelEntite
 	{
 		if(e.getSource() == this.btnModifier)
 		{
-			this.ihm.modifierQuestion(this.id);
+			this.ihm.editQuestion(this.id);
 		}
 
 		if(e.getSource() == this.btnSupprimer)

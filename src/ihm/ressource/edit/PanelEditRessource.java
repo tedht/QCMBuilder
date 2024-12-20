@@ -1,11 +1,8 @@
 package ihm.ressource.edit;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -19,9 +16,9 @@ import ihm.shared.PanelEditNom;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class PanelEditRessource extends PanelEditNom
+public abstract class PanelEditRessource extends PanelEditNom
 {
-	private JTextField txtCode;
+	protected JTextField txtCode;
 
 	private JPanel     panelInfoCode;
 	
@@ -53,51 +50,10 @@ public class PanelEditRessource extends PanelEditNom
 		this.panelInfoCode.add(this.txtCode, BorderLayout.CENTER);
 	}
 
-	public PanelEditRessource(Controleur ctrl, IHM ihm, String code) 
-	{
-		this(ctrl, ihm);
-
-		this.txtCode.setText(code);
-		this.txtNom .setText(this.ctrl.getRessource(code).getNom());
-	}
-
 	public String getType()
 	{
 		return "Ressource";
 	}
 
-	public boolean enregistrer()
-	{
-		String code = this.txtCode.getText();
-		String nom  = this.txtNom .getText();
-
-		List<String> lstErreurs = new ArrayList<String>();
-
-		if (code.isEmpty())
-			lstErreurs.add("Le code est vide.");
-		else if(this.ctrl.getRessource(code) != null)
-			lstErreurs.add("Le code existe déjà.");
-
-		if (nom.isEmpty()) 
-			lstErreurs.add("Le nom est vide");
-
-		if(lstErreurs.size() != 0)
-		{
-			String message = "La ressource n'a pas été enregistrée pour les raisons suivantes :\n";
-			for(String msgErr : lstErreurs)
-				message += " • " + msgErr + '\n';
-	
-			JOptionPane.showMessageDialog(
-				this,
-				message,
-				"Échec de l'Enregistrement",
-				JOptionPane.ERROR_MESSAGE
-			);
-			return false;
-		}
-
-		this.ctrl.creerRessource(code, nom);
-		this.ihm.reinitAffichageRessource();
-		return true;
-	}
+	public abstract boolean enregistrer();
 }

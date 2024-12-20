@@ -168,9 +168,9 @@ public class Controleur
 	 * 
 	 * @param nomRessource le nom de la nouvelle ressource.
 	 */
-	public void creerRessource(String codeRessource, String nomRessource) 
+	public void editRessource(String codeRessource, String nomRessource) 
 	{
-		this.metier.creerRessource(codeRessource, nomRessource);
+		this.metier.editRessource(codeRessource, nomRessource);
 	}
 
 	/**
@@ -178,17 +178,9 @@ public class Controleur
 	 * 
 	 * @param nomNotion le nom de la nouvelle notion.
 	 */
-	public void creerNotion(String codeRes, String nomNotion)  
+	public void editNotion(String codeRes, String nomNotion)  
 	{
-		this.metier.creerNotion(codeRes, nomNotion);
-	}
-
-	/**
-	 * Creer une pièce jointe dans la partie metier.
-	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
-	{
-		this.metier.creerPieceJointe(cheminFichier, question);
+		this.metier.editNotion(codeRes, nomNotion);
 	}
 
 	/**
@@ -205,12 +197,15 @@ public class Controleur
 		this.metier.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
-	/**
-	 * Génére une évaluation.
-	 */
-	public void genererQuestionnaire(String cheminFichier) 
+
+	public void modiferRessource(String code, String nouveauCode, String nouveauNom) 
 	{
-		this.metier.genererQuestionnaire(cheminFichier);
+		this.metier.modifierRessource(code, nouveauCode, nouveauNom);
+	}
+
+	public void modiferNotion(int idNot, String nouveauNom) 
+	{
+		this.metier.modifierNotion(idNot, nouveauNom);
 	}
 
 	/**
@@ -241,6 +236,21 @@ public class Controleur
 		this.metier.supprimerQuestion(id);
 	}
 
+	/**
+	 * Creer une pièce jointe dans la partie metier.
+	 */
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.metier.creerPieceJointe(cheminFichier, question);
+	}
+
+	/**
+	 * Génére une évaluation.
+	 */
+	public void genererQuestionnaire(String cheminFichier) 
+	{
+		this.metier.genererQuestionnaire(cheminFichier);
+	}
 
 	public static void main(String[] args) 
 	{

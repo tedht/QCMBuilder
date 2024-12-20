@@ -48,6 +48,10 @@ public class FrameEditQuestion extends JFrame
 		this.pagePrecedente();
 	}
 	
+	public FrameEditQuestion(Controleur ctrl2, IHM ihm2, Integer idQst) {
+		//TODO Auto-generated constructor stub
+	}
+
 	public void pagePrecedente()
 	{
 		this.remove    (this.panelAjoutQuestion); 

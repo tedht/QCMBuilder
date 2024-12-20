@@ -27,7 +27,7 @@ public class FrameEditRessource extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditRessource = new PanelEditRessource(ctrl, ihm);
+		this.panelEditRessource = new PanelCreationRessource(ctrl, ihm);
 		this.add(this.panelEditRessource);
 
 		this.pack();
@@ -39,7 +39,7 @@ public class FrameEditRessource extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditRessource = new PanelEditRessource(ctrl, ihm, code);
+		this.panelEditRessource = new PanelModifRessource(ctrl, ihm, code);
 		this.add(this.panelEditRessource);
 
 		this.pack();

@@ -65,7 +65,7 @@ public class PanelRessource extends PanelEntite
 	{
 		if(e.getSource() == this.btnModifier)
 		{
-			this.ihm.modifierRessource(this.code);
+			this.ihm.editRessource(this.code);
 		}
 
 		if(e.getSource() == this.btnSupprimer)

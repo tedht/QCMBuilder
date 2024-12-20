@@ -79,7 +79,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	{
 		if(e.getSource() == this.btnAjouter)
 		{
-			this.ihm.creerQuestion();
+			this.ihm.editQuestion();
 		}
 	}
 

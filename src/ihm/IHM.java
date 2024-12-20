@@ -84,6 +84,8 @@ public class IHM
 		{
 			frame.toFront();
 		}
+
+		this.frameQCMBuilder.toFront();
 	}
 
 	public void afficherRessourceNotion() 
@@ -112,17 +114,25 @@ public class IHM
 	public void reinitAffichageNotion   () { this.frameGestionNotion   .reinitAffichage(); }
 	public void reinitAffichageQuestion () { this.frameGestionQuestion .reinitAffichage(); }
 
-	public void creerRessource() 
+	public void editRessource()
+	{
+		this.editRessource(null);
+	}
+
+	public void editRessource(String code) 
 	{
 		if(this.frameEditRessource == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de ressource
-			this.frameEditRessource = new FrameEditRessource(this.ctrl, this);
+			if(code == null)
+				this.frameEditRessource = new FrameEditRessource(this.ctrl, this);
+			else
+				this.frameEditRessource = new FrameEditRessource(this.ctrl, this, code);
 
 			// Positionne frameEditRessource au centre de la fenêtre principale
 			this.frameEditRessource.setLocation(
 				this.frameGestionRessource.getX() + this.frameGestionRessource.getWidth () / 2 - this.frameEditRessource.getWidth () / 2,
-				this.frameGestionRessource.getY() + this.frameGestionRessource.getHeight() / 4 - this.frameEditRessource.getHeight() / 2
+				this.frameGestionRessource.getY() + this.frameGestionRessource.getHeight() / 2 - this.frameEditRessource.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -144,17 +154,25 @@ public class IHM
 		}
 	}
 
-	public void creerNotion() 
+	public void editNotion()
+	{
+		this.editNotion(null);
+	}
+
+	public void editNotion(Integer idNot) 
 	{
 		if(this.frameEditNotion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de notion
-			this.frameEditNotion = new FrameEditNotion(this.ctrl, this);
+			if(idNot == null)
+				this.frameEditNotion = new FrameEditNotion(this.ctrl, this);
+			else
+				this.frameEditNotion = new FrameEditNotion(this.ctrl, this, idNot);
 
 			// Positionne frameEditNotion au centre de la fenêtre principale
 			this.frameEditNotion.setLocation(
 				this.frameGestionNotion.getX() + this.frameGestionNotion.getWidth () / 2 - this.frameEditNotion.getWidth () / 2,
-				this.frameGestionNotion.getY() + this.frameGestionNotion.getHeight() / 4 - this.frameEditNotion.getHeight() / 2
+				this.frameGestionNotion.getY() + this.frameGestionNotion.getHeight() / 2 - this.frameEditNotion.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -176,12 +194,20 @@ public class IHM
 		}
 	}
 
-	public void creerQuestion() 
+	public void editQuestion()
+	{
+		this.editQuestion(null);
+	}
+
+	public void editQuestion(Integer idQst) 
 	{
 		if(this.frameEditQuestion == null)
 		{
 			// Crée une nouvelle fenêtre d'édition de question
-			this.frameEditQuestion = new FrameEditQuestion(this.ctrl, this);
+			if(idQst == null)
+				this.frameEditQuestion = new FrameEditQuestion(this.ctrl, this);
+			else
+				this.frameEditQuestion = new FrameEditQuestion(this.ctrl, this, idQst);
 
 			// Positionne frameEditQuestion au centre de la fenêtre principale
 			this.frameEditQuestion.setLocation(
@@ -205,21 +231,6 @@ public class IHM
 			// Si la frameEditQuestion existe déjà, elle est mise en avant
 			this.frameEditQuestion.toFront();
 		}
-	}
-
-	public void modifierRessource(String code) 
-	{
-		this.frameEditRessource = new FrameEditRessource(this.ctrl, this, code);
-	}
-
-	public void modifierNotion(int id) 
-	{
-
-	}
-
-	public void modifierQuestion(int id) 
-	{
-		
 	}
 
 	public void finaliserQuestionnaire() 

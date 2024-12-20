@@ -41,7 +41,7 @@ public class PanelGestionNotion extends PanelGestion
 	{
 		if(e.getSource() == this.btnAjouter)
 		{
-			this.ihm.creerNotion();
+			this.ihm.editNotion();
 		}
 	}
 
@@ -52,7 +52,16 @@ public class PanelGestionNotion extends PanelGestion
 
 		PanelNotion panelCarte;
 
-		if(this.ctrl.getRessourceActive() == null)
+		if(this.ctrl.getRessources().isEmpty())
+		{
+			for(int i = 10; i > 0; i--)
+			{
+				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
+				panelCarte.setVisible(false);
+				this.panelContenu.add(panelCarte);
+			}
+		}
+		else if(this.ctrl.getRessourceActive() == null)
 		{
 			this.btnAjouter.setEnabled(false);
 			

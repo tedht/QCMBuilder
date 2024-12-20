@@ -26,7 +26,24 @@ public class FrameEditNotion extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelEditNotion = new PanelEditNotion(ctrl, ihm);
+		this.panelEditNotion = new PanelCreationNotion(ctrl, ihm);
+		this.add(this.panelEditNotion);
+
+		this.pack();
+	}
+
+	/**
+	 * Constructeur de la classe PanelEditRessource utilisé lorsqu'on veut modifier une notion.
+	 *
+	 * @param ctrl Le contrôleur
+	 */
+	public FrameEditNotion(Controleur ctrl, IHM ihm, Integer idNot) 
+	{
+		this.setTitle("Modifier une Notion");
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+
+		this.panelEditNotion = new PanelModifNotion(ctrl, ihm, idNot);
 		this.add(this.panelEditNotion);
 
 		this.pack();
