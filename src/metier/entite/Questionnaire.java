@@ -1,10 +1,7 @@
 package metier.entite;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
+import java.io.*;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,66 +222,104 @@ public class Questionnaire
 	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
 	 *
 	 * @param  filePath                 Le chemin du dossier où le fichier HTML sera créé (non null).
-	 * @return                          Une chaîne de caractères représentant le contenu HTML généré.
+	 * @return                          Un boolean renvoyant true si le contenu HTML est généré.
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-	public String genererQuestionnaire(String filePath) 
-	{
-		String head, body, htmlContent;
-		File file, parentDir;
 
-		PrintWriter writer;
-
-
-		head = "<!DOCTYPE html>\n"                                                                +
-		       "<html lang=\"fr\">\n"                                                             +
-		       "\t<head>\n"                                                                       +
-		       "\t\t<meta charset=\"UTF-8\">\n"                                                   +
-		       "\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-		       "\t\t<title>Titre de la page</title>\n"                                            +
-		       "\t\t<link rel=\"stylesheet\" href=\"style/style.css\">\n"                         +
-		       "\t</head>";
-
-		body = "\t<body>\n"                                                             +
-		       "\t\t<header>\n"                                                         +
-		       "\t\t\t<h1>Question X</h1>\n"                                            +
-		       "\t\t</header>\n\n\n"                                                    +
-		       "\t\t<main>\n"                                                           +
-		       "\t\t\t<p>Intitule</p>\n"                                                +
-		       "\t\t</main>\n\n\n"                                                      +
-		       "\t\t<footer>"                                                           +
-		       "\t\t\t<p>&copy; QCM Builder 2024 Equipe 03. Tous droits réservés</p>\n" +
-		       "\t\t</footer>\n"                                                        +
-		       "\t\t<script src=\"script/main.js\"></script>\n"                         +
-		       "\t</body>\n"                                                            +
-		       "</html>";
-
-		htmlContent = head + body;
-
-		try
-		{
-			file      = new File(filePath, "Questionnaire.html");
-			parentDir = file.getParentFile();
-
-			if (parentDir != null && !parentDir.exists())
-			{
-				parentDir.mkdirs();
+	
+	 public boolean genererQuestionnaire(String filePath) {
+		if (filePath == null) {
+			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
+		}
+	
+		String dataChrono = chronometre ? "true" : "false";
+		String resourceName = ressource.getCode() + " " + ressource.getNom();
+	
+		// Générer le contenu HTML
+		String contenuHTML = String.format("""
+				<!DOCTYPE html>
+				<html lang="fr">
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>QCM-Builder</title>
+					<link rel="stylesheet" href="style.css">
+				</head>
+				<body>
+					<div id="appli" data-chrono="%s" class="container">
+						<p id="progress-text"><strong>Question 0 sur 0 (0%%)</strong></p>
+						<div id="progress-container">
+							<div id="progress-bar"></div>
+						</div>
+						<!-- Accueil -->
+						<div id="accueil" class="accueil">
+							<header class="header">
+								<h1 id="titre-page">Auto-Évaluation <span id="titre-chrono"></span></h1>
+							</header>
+							<div class="content">
+								<div class="accueil-content">
+									<p><strong>Ressource :</strong> %s</p>
+									<p><strong>Notion(s) : </strong><span id="notions"></span></p>
+									<p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
+									<p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
+									<p id="p-score" style="display: none;">
+										<strong>Score total : </strong> <span id="score-total"></span>
+									</p>
+								</div>
+								<button id="start-button" class="start-button">Commencer l'évaluation</button>
+							</div>
+						</div>
+						<!-- Questionnaire -->
+						<div id="questionnaire" class="section" style="display: none;">
+							<!-- Contenu du questionnaire -->
+						</div>
+						<div id="feedback-popup" class="feedback-popup">
+							<h2 id="popup-message"></h2>
+							<p id="popup-feedback"></p>
+							<button id="btn-feedback">Fermer</button>
+						</div>
+					</div>
+					<script src="main.js" defer></script>
+				</body>
+				</html>
+				""", dataChrono, resourceName);
+	
+		// Le nom du fichier HTML
+		String fullFilePath = filePath + "/questionnaire.html";
+	
+		try {
+			// Créer le répertoire de destination si nécessaire
+			Files.createDirectories(Paths.get(filePath));
+			System.out.println("Répertoire créé à l'emplacement : " + filePath);
+	
+			// Copier les fichiers JavaScript et CSS avec les nouveaux chemins
+			copyFile("./src/metier/entite/copy/main.js", filePath + "/main.js");
+			copyFile("./src/metier/entite/copy/style.css", filePath + "/style.css");
+	
+			// Écrire le contenu HTML dans le fichier
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) {
+				writer.write(contenuHTML);
+				System.out.println("Fichier HTML généré avec succès à l'emplacement : " + fullFilePath);
 			}
-
-			writer = new PrintWriter(new FileWriter(file));
-			writer.write(htmlContent);
-
-			System.out.println("Le fichier " + file.getAbsolutePath() + " a été créé avec succès !");
+	
+			return true;
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
 		}
-		catch (IOException e)
-		{
-			System.err.println("Erreur lors de la création du fichier : " + e.getMessage());
-		}
-
-
-		return htmlContent;
+	
+		return false;
 	}
+	
+	// Méthode pour copier un fichier
+	private void copyFile(String sourcePath, String destinationPath) throws IOException {
+		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
+		Path source = Paths.get(sourcePath);
+		Path destination = Paths.get(destinationPath);
+		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+	}
+	
+	
 
 	/**
      * Retourne une représentation en chaîne de caractères du Questionnaire.
@@ -322,6 +357,6 @@ public class Questionnaire
 		q1.ajouterNotion(n2);
 		System.out.println(q1);
 
-		q1.genererQuestionnaire("./");
+		q1.genererQuestionnaire("./test");
 	}
 }
