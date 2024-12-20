@@ -65,6 +65,11 @@ public class BanqueQuestions
 	// Getters //
 	/*---------*/
 
+	/**
+	 * Retourne le chemin du fichier de la banque de questions
+	 * 
+	 * @return le chemin du fichier
+	 */
 	public String getCheminFic()
 	{
 		return this.cheminFic;
@@ -80,6 +85,12 @@ public class BanqueQuestions
 		return this.lstQuestions;
 	}
 
+	/**
+	 * Retourne la liste des questions d'une ressource
+	 * 
+	 * @param codeRes le code de la ressource
+	 * @return List<Question> la liste des questions de la ressource
+	 */
 	public List<Question> getQuestions(String codeRes) 
 	{
 		List<Question> lstQuestions = new ArrayList<Question>();
@@ -93,6 +104,13 @@ public class BanqueQuestions
 		return lstQuestions;
 	}
 
+	/**
+	 * Retourne la liste des questions d'une ressource et d'une notion
+	 * 
+	 * @param codeRes le code de la ressource
+	 * @param idNot   l'identifiant de la notion
+	 * @return List<Question> la liste des questions de la ressource et de la notion
+	 */
 	public List<Question> getQuestions(String codeRes, int idNot) 
 	{
 		List<Question> lstQuestions = new ArrayList<Question>();
@@ -107,6 +125,12 @@ public class BanqueQuestions
 		return lstQuestions;
 	}
 
+	/**
+	 * Retourne une question de la banque de questions
+	 * 
+	 * @param idQst l'identifiant de la question
+	 * @return la question grâce à l'identifiant
+	 */
 	public Question getQuestion(int idQst)
 	{
 		return this.lstQuestions.get(idQst);
@@ -289,6 +313,9 @@ public class BanqueQuestions
 		}
 	}
 
+	/**
+	 * Sauvegarde des questions dans un fichier CSV
+	 */
 	public void sauvegarder()
 	{
 		this.sauvegarder(this.cheminFic);
@@ -443,6 +470,16 @@ public class BanqueQuestions
 		}
 	}
 
+	/**
+	 * Créer une question de type QCM
+	 * 
+	 * @param codeRes    le code de la ressource
+	 * @param idNot      l'identifiant de la notion
+	 * @param difficulte la difficulté de la question
+	 * @param temps      le temps pour répondre à la question
+	 * @param note       la note de la question
+	 * @return           la question de type QCM
+	 */
 	public QCM creerQCM(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
 		int idQst = this.recupererId();
@@ -451,6 +488,16 @@ public class BanqueQuestions
 		return qcm;
 	}
 
+	/**
+	 * Créer une question de type Association
+	 * 
+	 * @param codeRes    le code de la ressource
+	 * @param idNot      l'identifiant de la notion
+	 * @param difficulte la difficulté de la question
+	 * @param temps      le temps pour répondre à la question
+	 * @param note       la note de la question
+	 * @return           la question de type Association
+	 */
 	public Association creerAssociation(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
 		int idQst = this.recupererId();
@@ -459,6 +506,16 @@ public class BanqueQuestions
 		return asso;
 	}
 
+	/**
+	 * Créer une question de type Elimination
+	 * 
+	 * @param codeRes    le code de la ressource
+	 * @param idNot      l'identifiant de la notion
+	 * @param difficulte la difficulté de la question
+	 * @param temps      le temps pour répondre à la question
+	 * @param note       la note de la question
+	 * @return           la question de type Elimination
+	 */
 	public Elimination creerElimination(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
 		int idQst = this.recupererId();
@@ -467,6 +524,11 @@ public class BanqueQuestions
 		return elim;
 	}
 
+	/**
+	 * Récupère l'identifiant de la dernière question
+	 * 
+	 * @return l'identifiant de la dernière question
+	 */
 	private int recupererId()
 	{
 		if(!this.fileIdUtilisable.isEmpty())
@@ -475,6 +537,11 @@ public class BanqueQuestions
 		return this.lstQuestions.size();
 	}
 
+	/**
+	 * Ajoute une question à la banque de questions.
+	 * 
+	 * @param question la question à ajouter à la liste.
+	 */
 	private void ajouterQuestion(Question question)
 	{
 		if(question.getIdQst() < this.lstQuestions.size())
@@ -483,21 +550,6 @@ public class BanqueQuestions
 			this.lstQuestions.add(question);
 	}
 
-	/**
-	 * Ajoute une question à la banque de questions
-	 * 
-	 * @param question la question à ajouter
-	 * @return         true si la question a été ajoutée, false sinon
-	 */
-	public boolean ajouterQuestions(Question question)
-	{
-		/*if (question == null) return false;
-
-		this.lstQuestions.add(question);
-		this.sauvegarderQuestions("data/questions.csv");
-		return true;*/
-		return false;
-	}
 
 	/**
 	 * Modifie une question

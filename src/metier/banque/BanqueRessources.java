@@ -53,6 +53,12 @@ public class BanqueRessources
 	// Getters //
 	/*---------*/
 
+
+	/**
+	 * Retourne le chemin du fichier de la banque de ressources.
+	 * 
+	 * @return le chemin du fichier.
+	 */
 	public String getCheminFic()
 	{
 		return this.cheminFic;
@@ -134,6 +140,9 @@ public class BanqueRessources
 		}
 	}
 
+	/**
+	 * Sauvegarde les ressources dans un fichier CSV.
+	 */
 	public void sauvegarder()
 	{
 		this.sauvegarder(this.cheminFic);
@@ -173,6 +182,11 @@ public class BanqueRessources
 		}
 	}
 
+	/**
+	 * Ajoute une ressource à la banque de ressources.
+	 * 
+	 * @param ressource la ressource à ajouter.
+	 */
 	public void editRessource(String code, String nom)
 	{
 		this.lstRessources.add(new Ressource(code, nom));
@@ -198,6 +212,11 @@ public class BanqueRessources
 		return false;
 	}
 
+	/**
+	 * Supprime une ressource de la banque de ressources.
+	 * 
+	 * @param ressource la ressource à supprimer.
+	 */
 	public void supprimerRessource(String codeRes)
 	{
 		for(int i = 0; i < this.lstRessources.size(); i++)
