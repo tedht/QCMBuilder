@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM-Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="appli" data-chrono="false" class="container">
+        <p id="progress-text"><strong>Question 0 sur 0 (0%)</strong></p>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <!-- Accueil -->
+        <div id="accueil" class="accueil">
+            <header class="header">
+                <h1 id="titre-page">Auto-Évaluation <span id="titre-chrono"></span></h1>
+            </header>
+            <div class="content">
+                <div class="accueil-content">
+                    <p><strong>Ressource :</strong> R1.01 Init_Dev</p>
+                    <p><strong>Notion(s) : </strong><span id="notions"></span></p>
+                    <p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
+                    <p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
+                    <p id="p-score" style="display: none;">
+                        <strong>Score total : </strong> <span id="score-total"></span>
+                    </p>
+                </div>
+                <button id="start-button" class="start-button">Commencer l'évaluation</button>
+            </div>
+        </div>
+        <!-- Questionnaire -->
+        <div id="questionnaire" class="section" style="display: none;">
+            <!-- Contenu du questionnaire -->
+        </div>
+        <div id="feedback-popup" class="feedback-popup">
+            <h2 id="popup-message"></h2>
+            <p id="popup-feedback"></p>
+            <button id="btn-feedback">Fermer</button>
+        </div>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>

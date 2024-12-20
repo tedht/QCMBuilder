@@ -221,20 +221,27 @@ public class Questionnaire
 	 * Génère un fichier HTML contenant une structure de base pour un Questionnaire.
 	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
 	 *
-	 * @param  filePath                 Le chemin du dossier où le fichier HTML sera créé (non null).
+	 * @param  cheminDossier            Le chemin du dossier où le fichier HTML sera créé (non null).
 	 * @return                          Un boolean renvoyant true si le contenu HTML est généré.
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
+	 public boolean genererQuestionnaire(String cheminDossier)
+	 {
+		String dataChrono, nomRessource;
+		String cheminCompletFichier, repCourant;
 
-	
-	 public boolean genererQuestionnaire(String filePath) {
-        if (filePath == null) {
-            throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
-        }
+		String jsPath ;
+		String cssPath;
 
-        String dataChrono = chronometre ? "true" : "false";
-        String resourceName = ressource.getCode() + " " + ressource.getNom();
+
+		if (cheminDossier == null)
+		{
+			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
+		}
+
+		dataChrono   = chronometre ? "true" : "false";
+		nomRessource = ressource.getCode() + " " + ressource.getNom();
 
         // Générer le contenu HTML
         String contenuHTML = String.format("""
@@ -283,56 +290,63 @@ public class Questionnaire
                     <script src="main.js" defer></script>
                 </body>
                 </html>
-                """, dataChrono, resourceName);
+                """, dataChrono, nomRessource);
 
-        // Le nom du fichier HTML
-        String fullFilePath = filePath + "/questionnaire.html";
+		// Le nom du fichier HTML
+		cheminCompletFichier = cheminDossier + "/questionnaire.html";
 
-        try {
-            // Obtenir le répertoire de travail actuel
-            String currentDir = System.getProperty("user.dir");
+		try
+		{
+			// Obtenir le répertoire de travail actuel
+			repCourant = System.getProperty("user.dir");
 
-            // Créer le répertoire de destination si nécessaire
-            Files.createDirectories(Paths.get(filePath));
-            System.out.println("Répertoire créé à l'emplacement : " + filePath);
+			// Créer le répertoire de destination si nécessaire
+			Files.createDirectories(Paths.get(cheminDossier));
+			System.out.println("Répertoire créé à l'emplacement : " + cheminDossier);
 
-            // Définir les chemins complets en combinant le répertoire actuel et les sous-dossiers
-            String jsPath = currentDir + "/src/metier/entite/srcWeb/main.js";
-            String cssPath = currentDir + "/src/metier/entite/srcWeb/style.css";
+			// Définir les chemins complets en combinant le répertoire actuel et les sous-dossiers
+			jsPath  = repCourant + "/src/metier/entite/srcWeb/main.js"  ;
+			cssPath = repCourant + "/src/metier/entite/srcWeb/style.css";
 
-            // Copier les fichiers JavaScript et CSS avec les nouveaux chemins
-            copyFile(jsPath, filePath + "/main.js");
-            copyFile(cssPath, filePath + "/style.css");
+			// Copier les fichiers JavaScript et CSS avec les nouveaux chemins
+			this.copierFichier(jsPath , cheminDossier + "/main.js"  );
+			this.copierFichier(cssPath, cheminDossier + "/style.css");
 
-            // Écrire le contenu HTML dans le fichier
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) {
-                writer.write(contenuHTML);
-                System.out.println("Fichier HTML généré avec succès à l'emplacement : " + fullFilePath);
-            }
+			// Écrire le contenu HTML dans le fichier
+			try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminCompletFichier), "UTF8")))
+			{
+				writer.print(contenuHTML);
+				System.out.println("Fichier HTML généré avec succès à l'emplacement : " + cheminCompletFichier);
+			}
 
-            return true;
-        } catch (IOException e) {
-            System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
-        }
+			return true;
+		}
+		catch (IOException e)
+		{
+			System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
+		}
 
-        return false;
-    }
-	
-	// Méthode pour copier un fichier
-	private void copyFile(String sourcePath, String destinationPath) throws IOException {
-		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
-		Path source = Paths.get(sourcePath);
-		Path destination = Paths.get(destinationPath);
-		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+		return false;
 	}
 	
-	
+	// Méthode pour copier un fichier
+	private void copierFichier(String cheminSource, String cheminDestination) throws IOException
+	{
+		Path source, destination;
+
+
+		System.out.println("Copie du fichier : " + cheminSource + " vers " + cheminDestination);
+
+		source      = Paths.get(cheminSource);
+		destination = Paths.get(cheminDestination);
+		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+	}
 
 	/**
-     * Retourne une représentation en chaîne de caractères du Questionnaire.
-     * 
-     * @return une représentation en chaîne de caractères du Questionnaire.
-     */
+	 * Retourne une représentation en chaîne de caractères du Questionnaire.
+	 * 
+	 * @return une représentation en chaîne de caractères du Questionnaire.
+	 */
 	public String toString()
 	{
 		return "Questionnaire :\n" +
