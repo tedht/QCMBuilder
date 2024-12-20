@@ -26,28 +26,44 @@ import metier.entite.question.elimination.*;
  */
 public class BanqueQuestions 
 {
-	/* Attributs */
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private List<Question> lstQuestions;
 	private Queue<Integer> fileIdUtilisable;
 
-	private String cheminFic;
+	private String         cheminFic;
+	private String         currentDir;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur de la classe BanqueDeQuestions
-	 * 
 	 */
 	public BanqueQuestions()
 	{
 		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
+		this.currentDir       = System.getProperty("user.dir");
 
-		String currentDir = System.getProperty("user.dir");
-
-		this.cheminFic = currentDir + "/data/questions.csv";
+		this.cheminFic        = this.currentDir + "/data/questions.csv";
 
 		this.lireQuestions(this.cheminFic);
 	}
 
+
+
+	/*---------*/
+	// Getters //
+	/*---------*/
 
 	public String getCheminFic()
 	{
@@ -95,6 +111,12 @@ public class BanqueQuestions
 	{
 		return this.lstQuestions.get(idQst);
 	}
+
+
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
 
 	/**
 	* Lecture du fichier CSV qui contient les questions
@@ -155,7 +177,7 @@ public class BanqueQuestions
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
 
-				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst = currentDir + "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 				if(scIntitule.hasNextLine())

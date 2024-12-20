@@ -21,19 +21,32 @@ import metier.entite.Notion;
  */
 public class BanqueNotions 
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private List<Notion>   lstNotions;
 	private Queue<Integer> fileIdUtilisable;
 
 	private String         cheminFic;
+	private String         currentDir;
 	
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
+
 	public BanqueNotions()
 	{
 		this.lstNotions       = new ArrayList<Notion>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
+		this.currentDir       = System.getProperty("user.dir");
 
-		String currentDir = System.getProperty("user.dir");
-
-		this.cheminFic = currentDir + "/data/notions.csv";
+		this.cheminFic        = currentDir + "/data/notions.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
@@ -101,7 +114,7 @@ public class BanqueNotions
 	}
 
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 
 	/** 

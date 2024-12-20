@@ -16,9 +16,23 @@ import metier.entite.Ressource;
  */
 public class BanqueRessources
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private List<Ressource> lstRessources;
 
-	private String cheminFic;
+	private String          cheminFic;
+	private String          currentDir;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur de la classe BanqueDeRessources.
@@ -26,16 +40,17 @@ public class BanqueRessources
 	public BanqueRessources()
 	{
 		this.lstRessources = new ArrayList<Ressource>();
+		this.currentDir    = System.getProperty("user.dir");
 
-		String currentDir = System.getProperty("user.dir");
-
-		this.cheminFic = currentDir + "/data/ressources.csv";
+		this.cheminFic     = this.currentDir + "/data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
 	public String getCheminFic()
@@ -69,10 +84,11 @@ public class BanqueRessources
 		return null;
 	}
 
-	/*-----------------*/
-	/* Autres méthodes */
-	/*-----------------*/
 
+
+	/*-----------------*/
+	// Autres méthodes //
+	/*-----------------*/
 
 	/** 
 	 * Lit les ressources d'un fichier CSV.
@@ -192,10 +208,7 @@ public class BanqueRessources
 		}
 	}
 
-	/*----------*/
-	/* ToString */
-	/*----------*/
-	/*
+/*
 	public String toString()
 	{
 		String sRet = "";
