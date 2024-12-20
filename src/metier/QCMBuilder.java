@@ -333,12 +333,16 @@ public class QCMBuilder
 		Ressource ressource = this.banqueRessources.getRessource(code);
 		ressource.setCode(nouveauCode);
 		ressource.setNom (nouveauNom);
+
+		this.banqueRessources.sauvegarder();
 	}
 
 	public void modifierNotion(int idNot, String nouveauNom) 
 	{
 		Notion notion = this.banqueNotions.getNotion(idNot);
 		notion.setNom(nouveauNom);
+
+		this.banqueNotions.sauvegarder();
 	}
 	
 	/**
