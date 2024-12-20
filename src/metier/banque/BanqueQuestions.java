@@ -554,7 +554,7 @@ public class BanqueQuestions
 	 * 
 	 * @param question la question à ajouter à la liste.
 	 */
-	private void ajouterQuestion(Question question)
+	public void ajouterQuestion(Question question)
 	{
 		if(question.getIdQst() < this.lstQuestions.size())
 			this.lstQuestions.set(question.getIdQst(), question);

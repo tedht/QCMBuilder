@@ -10,6 +10,10 @@ import metier.banque.BanqueQuestions;
 import metier.entite.question.Question;
 import metier.entite.question.Difficulte;
 
+import metier.entite.question.qcm.QCM;
+import metier.entite.question.association.Association;
+import metier.entite.question.elimination.Elimination;
+
 
 /** 
  * Classe Questionnaire
@@ -42,12 +46,12 @@ public class Questionnaire
 	 * @param notions     la liste des notions associées au Questionnaire.
 	 * @param chronometre chronometre indiquant si le Questionnaire est chronométré ou non.
 	 */
-	public Questionnaire(Ressource ressource, List<Notion> notions, boolean chronometre) 
+	public Questionnaire(BanqueQuestions banqueQuestions, Ressource ressource, List<Notion> notions, boolean chronometre) 
 	{
 		this.ressource   = ressource;
 		this.chronometre = chronometre;
 		this.notions     = notions;
-		this.banqueQuestions = new BanqueQuestions();
+		this.banqueQuestions = banqueQuestions;
 		this.questions   = new ArrayList<Question>();
 	}
 
@@ -262,7 +266,7 @@ public class Questionnaire
 		String jsPath ;
 		String cssPath;
 
-		String dataChrono, nomRessource;
+		String dataChrono, nomRessource, sScoreTotal;
 		int nbrQuestions, dureeTotale;
 
 
@@ -279,6 +283,11 @@ public class Questionnaire
 		for (Question q : this.questions)
 			dureeTotale += q.getTemps();
 
+		int scoreTotal = 0;
+		for (Question q : this.questions)
+			scoreTotal += q.getNote();
+
+		sScoreTotal = "X/" + scoreTotal;
         // Générer le contenu HTML
         String contenuHTML = String.format("""
                 <!DOCTYPE html>
@@ -307,7 +316,7 @@ public class Questionnaire
                                     <p><strong>Nombre de questions : </strong><span id="question-nombre">%d</span></p>
                                     <p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total">%d</span> seconde(s)</p>
                                     <p id="p-score" style="display: none;">
-                                        <strong>Score total : </strong> <span id="score-total"></span>
+                                        <strong>Score total : </strong> <span id="score-total">%s</span>
                                     </p>
                                 </div>
                                 <button id="start-button" class="start-button">Commencer l'évaluation</button>
@@ -326,7 +335,7 @@ public class Questionnaire
                     <script src="main.js" defer></script>
                 </body>
                 </html>
-                """, dataChrono, nomRessource, nbrQuestions, dureeTotale);
+                """, dataChrono, nomRessource, nbrQuestions, dureeTotale, sScoreTotal);
 
 		// Le nom du fichier HTML
 		cheminCompletFichier = cheminDossier + "/questionnaire.html";
@@ -394,22 +403,37 @@ public class Questionnaire
 
 	public static void main(String[] args) 
 	{
-		Ressource     r1;
+		Ressource     r1, r2;
 		Notion        n1, n2, n3;
 		List<Notion>  l1;
+
+		Question q1, q2, q3;
+
+		BanqueQuestions banqueQuestions;
 		Questionnaire quest1;
 
 		r1 = new Ressource("R1.01","Init_Dev");
+		r2 = new Ressource("R1.05","BDD");
 
 		n1 = new Notion("Algorithmique",1,"R1.01");
 		n2 = new Notion("Programmation",2,"R1.01");
 		n3 = new Notion("SQL",3,"R1.05");
 
+		q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
+		q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
+		q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
+
 		l1 = new ArrayList<Notion>();
 		l1.add(n1);
 		l1.add(n2);
 
-		quest1 = new Questionnaire(r1, l1, false);
+		banqueQuestions = new BanqueQuestions();
+
+		banqueQuestions.ajouterQuestion(q1);
+		banqueQuestions.ajouterQuestion(q2);
+		banqueQuestions.ajouterQuestion(q3);
+
+		quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
 
 		System.out.println(quest1);
 
