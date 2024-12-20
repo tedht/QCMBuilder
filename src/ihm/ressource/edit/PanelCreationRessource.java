@@ -46,7 +46,7 @@ public class PanelCreationRessource extends PanelEditRessource
 			return false;
 		}
 
-		this.ctrl.editRessource(code, nom);
+		this.ctrl.creerRessource(code, nom);
 		this.ihm.reinitAffichageRessource();
 		this.ihm.reinitAffichageNotion();
 		return true;

@@ -169,9 +169,9 @@ public class QCMBuilder
 	 * @param code le code de la ressource
 	 * @param nom le nom de la ressource
 	 */
-	public void editRessource(String code, String nom)
+	public void creerRessource(String code, String nom)
 	{
-		this.banqueRessources.editRessource(code, nom);
+		this.banqueRessources.creerRessource(code, nom);
 		this.banqueRessources.sauvegarder();
 	}
 
@@ -181,9 +181,9 @@ public class QCMBuilder
 	 * @param nomNotion le nom de la notion
 	 * @param nomNotion2 
 	 */
-	public void editNotion(String codeRes, String nomNotion) 
+	public void creerNotion(String codeRes, String nomNotion) 
 	{
-		this.banqueNotions.editNotion(codeRes, nomNotion);
+		this.banqueNotions.creerNotion(codeRes, nomNotion);
 		this.banqueNotions.sauvegarder();
 	}
 
@@ -323,6 +323,16 @@ public class QCMBuilder
 		this.banqueNotions.sauvegarder();
 	}
 	
+	public void modifierQuestion(int idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
+	{
+		Question question = this.banqueQuestions.getQuestion(idQst);
+		question.setIntitule   (intitule);
+		question.setExplication(explication);
+		//this.metier.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
+
+		this.banqueQuestions.sauvegarder();
+	}
+
 	/**
 	 * Supprime une ressource à partir de son code.
 	 * @param code le code de la ressource

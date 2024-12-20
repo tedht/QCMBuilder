@@ -237,7 +237,7 @@ public class BanqueNotions
 	 * 
 	 * @param notion la notion à modifier.
 	 */
-	public void editNotion(String codeRes, String nom)
+	public void creerNotion(String codeRes, String nom)
 	{
 		int idNot = this.recupererId();
 

@@ -99,7 +99,7 @@ public class IHM
 	public void afficherQuestion() 
 	{ 
 		this.resetVisible();
-		//this.frameGestionQuestion.maj();
+		this.frameGestionQuestion.maj();
 		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
 	}
 	public void afficherQuestionnaire () 

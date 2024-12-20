@@ -152,10 +152,15 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getSource() == this.btnEnregistrer)  { this.frame.enregistrer   (); }
+		if(e.getSource() == this.btnEnregistrer)  { this.enregistrer         (); }
 		if(e.getSource() == this.btnPrecedent)    { this.frame.pagePrecedente(); }
 		if(e.getSource() == this.btnAjouterProp)  { this.ajouterProposition  (); }
 		if(e.getSource() == this.btnAjouterExpli) { this.afficher(); }
+	}
+
+	public void enregistrer()
+	{
+		this.frame.enregistrerNouvelleQuestion();
 	}
 
 	public void ajouterProposition()

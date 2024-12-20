@@ -187,7 +187,7 @@ public class BanqueRessources
 	 * 
 	 * @param ressource la ressource à ajouter.
 	 */
-	public void editRessource(String code, String nom)
+	public void creerRessource(String code, String nom)
 	{
 		this.lstRessources.add(new Ressource(code, nom));
 	}

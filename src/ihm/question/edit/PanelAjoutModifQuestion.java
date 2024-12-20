@@ -88,6 +88,9 @@ public class PanelAjoutModifQuestion extends PanelAjoutQuestion
 		}
 	}
 	
-	
+	public void enregistrer()
+	{
+		this.frame.enregistrerModification(this.idQst);
+	}
 	
 }

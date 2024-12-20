@@ -84,7 +84,7 @@ public class FrameEditQuestion extends JFrame
 		this.repaint   ();
 	}
 
-	public boolean enregistrer() 
+	public boolean enregistrerNouvelleQuestion() 
 	{
 		String codeRes     = this.panelParametresQuestion.getRessource        ().getCode();
 		int    idNot       = this.panelParametresQuestion.getNotion           ().getIdNot();
@@ -98,8 +98,7 @@ public class FrameEditQuestion extends JFrame
 		String intitule    = this.panelAjoutQuestion     .getIntitule         ();          
 		String explication = this.panelAjoutQuestion     .getExplication      ();   
 		
-		List<String> lstDetailsProp = new ArrayList<String>();
-		List<String> lstErreurs     = new ArrayList<String>();
+		List<String> lstErreurs = new ArrayList<String>();
 
 		if(intitule.isEmpty()) 
 			lstErreurs.add("L'intitulé est vide");
@@ -218,8 +217,9 @@ public class FrameEditQuestion extends JFrame
 			return false;
 		}
 		
-		String detailsQuestion = "";
-		String detailsProp           = "";
+		String       detailsQuestion = "";
+		String       detailsProp     = "";
+		List<String> lstDetailsProp = new ArrayList<String>();
 
 		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints;
 
@@ -277,6 +277,11 @@ public class FrameEditQuestion extends JFrame
 		this.dispose();
 		this.ihm.reinitAffichageQuestion();
 		return true;
+	}
+
+	public boolean enregistrerModification(int idQst)
+	{
+		return false;
 	}
 
 	public int getIndexTypeQuestion() 

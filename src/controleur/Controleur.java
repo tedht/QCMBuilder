@@ -148,9 +148,9 @@ public class Controleur
 	 * 
 	 * @param nomRessource le nom de la nouvelle ressource.
 	 */
-	public void editRessource(String codeRessource, String nomRessource) 
+	public void creerRessource(String codeRessource, String nomRessource) 
 	{
-		this.metier.editRessource(codeRessource, nomRessource);
+		this.metier.creerRessource(codeRessource, nomRessource);
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class Controleur
 	 * 
 	 * @param nomNotion le nom de la nouvelle notion.
 	 */
-	public void editNotion(String codeRes, String nomNotion)  
+	public void creerNotion(String codeRes, String nomNotion)  
 	{
-		this.metier.editNotion(codeRes, nomNotion);
+		this.metier.creerNotion(codeRes, nomNotion);
 	}
 
 	/**
@@ -186,6 +186,11 @@ public class Controleur
 	public void modiferNotion(int idNot, String nouveauNom) 
 	{
 		this.metier.modifierNotion(idNot, nouveauNom);
+	}
+
+	public void modifierQuestion(int idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
+	{
+		this.metier.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
 	/**

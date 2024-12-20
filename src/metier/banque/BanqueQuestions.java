@@ -416,9 +416,7 @@ public class BanqueQuestions
 						{
 							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/prop"+(i+1)+".txt"), "UTF8"));
 							propQCM = qQCM.getProposition(i);
-							System.out.println(propQCM.estReponse());
-							System.out.println(propQCM.getText());
-
+							
 							if (propQCM.estReponse()) 
 								pwTxt.print("V:");
 							else

@@ -43,7 +43,7 @@ public class PanelCreationNotion extends PanelEditNotion
 		}
 
 		if(this.ctrl.getRessourceSelectionnee() != null)
-			this.ctrl.editNotion(this.ctrl.getRessourceSelectionnee().getCode(), this.txtNom.getText());
+			this.ctrl.creerNotion(this.ctrl.getRessourceSelectionnee().getCode(), this.txtNom.getText());
 		
 		this.ihm.reinitAffichageRessource();	
 		this.ihm.reinitAffichageNotion();
