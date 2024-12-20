@@ -361,7 +361,7 @@ public class BanqueQuestions
 		File   dirQst, dirProp;
 
 		try
-		{			
+		{
 			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8"));
 			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp");
 
@@ -562,6 +562,8 @@ public class BanqueQuestions
 			this.lstQuestions.set(question.getIdQst(), question);
 		else
 			this.lstQuestions.add(question);
+
+		this.sauvegarder();
 	}
 
 
