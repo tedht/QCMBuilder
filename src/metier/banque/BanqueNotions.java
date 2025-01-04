@@ -4,6 +4,7 @@ package metier.banque;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -202,6 +203,7 @@ public class BanqueNotions
 	*/
 	private void sauvegarder(String cheminFic)
 	{
+		File        fichier;
 		PrintWriter pw;
 
 		try
@@ -224,6 +226,9 @@ public class BanqueNotions
 		}
 		catch (FileNotFoundException fnfe)
 		{
+			fichier = new File(cheminFic);
+			fichier.mkdir();
+			this.sauvegarder(cheminFic);
 			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
@@ -241,7 +246,7 @@ public class BanqueNotions
 	{
 		int idNot = this.recupererId();
 
-		if(idNot < this.lstNotions.size())
+		if (idNot < this.lstNotions.size())
 			this.lstNotions.set(idNot, new Notion(codeRes, idNot, nom));
 		else
 			this.lstNotions.add(new Notion(codeRes, idNot, nom));

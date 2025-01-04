@@ -407,10 +407,11 @@ public class Questionnaire
 		Notion        n1, n2, n3;
 		List<Notion>  l1;
 
-		Question q1, q2, q3;
+		Question q1, q2, q3, q4;
 
 		BanqueQuestions banqueQuestions;
 		Questionnaire quest1;
+
 
 		r1 = new Ressource("R1.01","Init_Dev");
 		r2 = new Ressource("R1.05","BDD");
@@ -422,6 +423,7 @@ public class Questionnaire
 		q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
 		q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
 		q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
+		q4 = new QCM(r1.getCode(), n1.getIdNot(), 4, 0.5, 0, Difficulte.FACILE);
 
 		l1 = new ArrayList<Notion>();
 		l1.add(n1);
@@ -432,6 +434,7 @@ public class Questionnaire
 		banqueQuestions.ajouterQuestion(q1);
 		banqueQuestions.ajouterQuestion(q2);
 		banqueQuestions.ajouterQuestion(q3);
+		banqueQuestions.ajouterQuestion(q4);
 
 		quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
 
@@ -440,14 +443,9 @@ public class Questionnaire
 		quest1.ajouterNotion(n3);
 		System.out.println(quest1);
 
-		// q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
-		// q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
-		// q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
-
-
 		quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
-		quest1.ajouterQuestions(n2, Difficulte.MOYEN, 2);
-		quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 2);
+		quest1.ajouterQuestions(n2, Difficulte.MOYEN, 1);
+		quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 1);
 
 		quest1.genererQuestionnaire("./test");
 	}

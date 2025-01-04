@@ -9,10 +9,10 @@ import metier.entite.question.Question;
 import metier.QCMBuilder;
 
 /**
- * Classe Controleur.
+ * Classe Controleur
  * 
- * @author  Equipe 3.
- * @version 1.0 17/12/2024.
+ * @author  Equipe 3
+ * @version 1.0 17/12/2024
  */
 public class Controleur
 {

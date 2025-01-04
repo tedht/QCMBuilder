@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import metier.entite.Notion;
+import metier.entite.Ressource;
 import metier.entite.question.*;
 import metier.entite.question.association.*;
 import metier.entite.question.qcm.*;
@@ -185,7 +187,7 @@ public class BanqueQuestions
 		String       textProp;
 
 		String       textGauche, textDroite;
-		
+
 		int          ordreElim;
 		double       nbPtsPerdus;
 
@@ -195,7 +197,7 @@ public class BanqueQuestions
 		try
 		{
 			scEnreg = new Scanner(new FileInputStream(cheminFic), "UTF8");
-			
+
 			if(scEnreg.hasNextLine())
 				scEnreg.nextLine();
 
@@ -215,17 +217,23 @@ public class BanqueQuestions
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
 
-				cheminDirQst = currentDir + "/data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst = this.currentDir + "/data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
+
 				if(scIntitule.hasNextLine())
 					intitule = scIntitule.nextLine();
+
 				scIntitule.close();
 
+
 				scExplication = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
+
 				if(scExplication.hasNextLine())
 					explication = scExplication.nextLine();
+
 				scExplication.close();
+
 
 				while(cpt < idQst)
 				{
@@ -235,88 +243,89 @@ public class BanqueQuestions
 
 				switch (typeQuestion)
 				{
-				case QCM ->
-				{
-					question = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
-					
-					cptReponse = 0;
-					for(int i = 1; i <= nbProp; i++)
+					case QCM ->
 					{
-						scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						if(scProp.hasNextLine())
+						question = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
+						
+						cptReponse = 0;
+						for(int i = 1; i <= nbProp; i++)
 						{
-							detailsProp = scProp.nextLine();
+							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+							if(scProp.hasNextLine())
+							{
+								detailsProp = scProp.nextLine();
 
-							estReponse = detailsProp.charAt(0) == 'V';
-							if(estReponse) cptReponse++;
-							
-							textProp = detailsProp.substring(2);
+								estReponse = detailsProp.charAt(0) == 'V';
+								if(estReponse) cptReponse++;
+								
+								textProp = detailsProp.substring(2);
 
-							((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
+								((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
+							}
+							scProp.close();
 						}
-						scProp.close();
+						((QCM) question).setUnique(cptReponse == 1);
 					}
-					((QCM) question).setUnique(cptReponse == 1);
-				}
-				case ASSOCIATION ->
-				{
-					question = new Association(codeRes, idNot, idQst, note, temps, difficulte);
-					
-					for(int i = 1; i <= nbProp; i++)
+					case ASSOCIATION ->
 					{
-						scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						if(scProp.hasNextLine())
+						question = new Association(codeRes, idNot, idQst, note, temps, difficulte);
+						
+						for(int i = 1; i <= nbProp; i++)
 						{
-							textGauche = scProp.nextLine();
-							textDroite = scProp.nextLine();
+							scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+							if(scProp.hasNextLine())
+							{
+								textGauche = scProp.nextLine();
+								textDroite = scProp.nextLine();
 
-							((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+								((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+							}
+							scProp.close();
 						}
-						scProp.close();
 					}
-				}
-				case ELIMINATION ->
-				{
-					question = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
-					
-					for(int i = 1; i <= nbProp; i++)
+					case ELIMINATION ->
 					{
-						scProp      = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-						if(scProp.hasNextLine())
+						question = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
+						
+						for(int i = 1 ; i <= nbProp ; i++)
 						{
-							detailsProp = scProp.nextLine();
+							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
 
-							scElim = new Scanner(detailsProp);
-							scElim.useDelimiter(":");
-	
-							estReponse  = scElim.next().charAt(0) == 'V';
-							ordreElim   = scElim.nextInt();
-							nbPtsPerdus = Double.parseDouble(scElim.next());
-	
-							textProp = scElim.next();
-							
-							((Elimination) question)
-								.ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
-							
-							scElim.close();
+							if(scProp.hasNextLine())
+							{
+								detailsProp = scProp.nextLine();
+								System.out.println(detailsProp);
+
+								scElim = new Scanner(detailsProp);
+								scElim.useDelimiter(":");
+		
+								estReponse  = scElim.next().charAt(0) == 'V';
+								ordreElim   = scElim.nextInt();
+								nbPtsPerdus = Double.parseDouble(scElim.next());
+
+								textProp = scElim.next();
+
+								((Elimination) question).ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
+
+								scElim.close();
+							}
+							scProp.close();
 						}
-						scProp.close();
+					}
+					default ->
+					{
+						scDonnees.close();
+						throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
 					}
 				}
-				default ->
-				{
-					scDonnees.close();
-					throw new IllegalArgumentException("Type de question inconnu: " + typeQuestion);
-				}
-			}
 
-			question.setIntitule   (intitule);
-			question.setExplication(explication);
-			
-			this.lstQuestions.add(question);
-			cpt++;
+				question.setIntitule   (intitule);
+				question.setExplication(explication);
+				
+				this.lstQuestions.add(question);
+				cpt++;
 
-			scDonnees.close();
+				scDonnees.close();
 
 			}
 			scEnreg.close();
@@ -399,11 +408,15 @@ public class BanqueQuestions
 				}
 
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
+				System.out.println(cheminDirQst+"/intitule.txt");
 				pwTxt.println(question.getIntitule());
+				System.out.println(question.getIntitule());
 				pwTxt.close();
 
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/explication.txt"), "UTF8"));
+				System.out.println(cheminDirQst+"/explication.txt");
 				pwTxt.println(question.getExplication());
+				System.out.println(question.getExplication());
 				pwTxt.close();
 
 				switch (question.getType())
@@ -638,116 +651,34 @@ public class BanqueQuestions
 		return false;
 	}
 
-	/*
+	
 	public static void main(String[] args)
 	{
-		Ressource r1;
-		Ressource r2;
+		new Ressource("R1", "Ressource 1");
+		new Ressource("R2", "Ressource 2");
 
-		Notion n1;
-		Notion n2;
-		Notion n3;
+		// Création des notions
+		new Notion("R1", 1, "Notion 1");
+		new Notion("R2", 2, "Notion 2");
 
-		QCM q1;
-		Elimination q2;
-		Association q3;
+		// Création des questions
+		Question q1 = new QCM("R1", 1, 1, 1.0, 10, Difficulte.FACILE);
+		Question q2 = new Association("R1", 1, 2, 1.0, 10, Difficulte.FACILE);
+		Question q3 = new Elimination("R1", 1, 3, 1.0, 10, Difficulte.FACILE);
 
-		BanqueQuestions banque;
-		BanqueRessources banqueRessources;
-		QCMBuilder qcmBuilder;
+		// Création de la banque de questions
+		BanqueQuestions bq = new BanqueQuestions();
 
-		banqueRessources = new BanqueRessources();
+		// Ajout des questions à la banque
+		bq.ajouterQuestion(q1);
+		bq.ajouterQuestion(q2);
+		bq.ajouterQuestion(q3);
 
-
-
-
-		// Initialisation des ressources et notions
-		r1 = new Ressource("R1","Ressource 1");
-		r2 = new Ressource("R2","Ressource 2");
-
-		banqueRessources.ajouterRessource(r1);
-		banqueRessources.ajouterRessource(r2);
-
-		n1 = new Notion("Notion 1" , 1, r1.getCode());
-		n2 = new Notion("Notion 2" , 2, r1.getCode());
-		n3 = new Notion("Notion 3" , 3, r2.getCode());
-
-		r1.ajouterNotion(n1);
-		r1.ajouterNotion(n2);
-		r2.ajouterNotion(n3);
-
-		banqueRessources.sauvegarderRessources("data/ressources.csv");
-
-		qcmBuilder = new QCMBuilder();
-		qcmBuilder.creerArborescence();
-
-		// Création de questions de type QCM
-		q1 = new QCM(r1, n1, Difficulte.FACILE, 10, 10, true);
-		q1.setIntitule("Quelle est la capitale de la France ?");
-		q1.setExplication("La capitale de la France est Paris.");
-		q1.ajouterProposition(new PropositionQCM("Paris", true));
-		q1.ajouterProposition(new PropositionQCM("Londres", false));
-		q1.ajouterProposition(new PropositionQCM("Berlin", false));
-
-		// Création de questions de type Élimination
-		q2 = new Elimination(r2, n3, Difficulte.MOYEN, 20, 15);
-		q2.setIntitule("De quelle couleur est le cheval blanc d'Henri IV ?");
-		q2.setExplication("La réponse est évidente, mais il est intéressant de poser la question.");
-		q2.ajouterProposition(new PropositionElimination("Noir:d:d:d", false, 1, 2.0));
-		q2.ajouterProposition(new PropositionElimination("Gris", false, 2, 1.0));
-		q2.ajouterProposition(new PropositionElimination("Blanc", true, 0, 0.0));
-
-		// Création de questions de type Association
-		q3 = new Association(r1, n2, Difficulte.DIFFICILE, 30, 20);
-		q3.setIntitule("Associez les pays à leurs capitales.");
-		q3.setExplication("Exercice sur les capitales européennes.");
-		q3.ajouterProposition(new PropositionAssociation("France", "Paris"));
-		q3.ajouterProposition(new PropositionAssociation("Allemagne", "Berlin"));
-		q3.ajouterProposition(new PropositionAssociation("Espagne", "Madrid"));
-
-
-		// Initialisation de la banque de questions
-		banque = new BanqueQuestions(new QCMBuilder());
-
-
-		// Ajout des questions
-		banque.ajouterQuestions(q1);
-		banque.ajouterQuestions(q2);
-		banque.ajouterQuestions(q3);
-
-		// Affichage des questions ajoutées
-		System.out.println("=== Questions Ajoutées ===");
-		for (Question question : banque.getQuestions())
+		// Affichage des questions pour vérifier l'ajout
+		System.out.println("Questions dans la banque:");
+		for (Question q : bq.getQuestions())
 		{
-			System.out.println(question);
+			System.out.println(q);
 		}
-
-		// Sauvegarde des questions dans des fichiers
-		banque.sauvegarderQuestions("data/questions.csv");
-		System.out.println("=== Questions sauvegardées dans les fichiers CSV et TXT ===");
-
-		for (Question question : banque.getQuestions())
-		{
-			System.out.println(question);
-		}
-
-		// Suppression des questions
-		banque.supprimerQuestion(q1);
-		banque.supprimerQuestion(q2);
-		banque.supprimerQuestion(q3);
-
-		System.out.println("=== Questions après suppression ===");
-		for (Question question : banque.getQuestions())
-		{
-			System.out.println(question);
-		}
-
-		// Lecture des questions sauvegardées
-		banque.lireQuestions("data/questions.csv");
-		System.out.println("=== Questions après lecture des fichiers ===");
-		for (Question question : banque.getQuestions())
-		{
-			System.out.println(question);
-		}
-	}*/
+	}
 }

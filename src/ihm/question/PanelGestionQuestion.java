@@ -86,7 +86,6 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
-		System.out.println(e);
 		if(e.getSource() == this.ddlstRessource) 
 		{  
 			this.ddlstNotion.removeAllItems();
@@ -114,9 +113,6 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 
 		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
 		Notion    notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
-
-		//System.out.println(this.ddlstRessource.getSelectedItem());
-		//System.out.println(this.ddlstRessource.getSelectedIndex());
 
 		List<Question> lstQuestions;
 		if(ressource == null)
