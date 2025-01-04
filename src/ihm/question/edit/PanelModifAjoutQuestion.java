@@ -11,12 +11,12 @@ import metier.entite.question.association.Association;
 import metier.entite.question.elimination.Elimination;
 import metier.entite.question.qcm.QCM;
 
-public class PanelAjoutModifQuestion extends PanelAjoutQuestion
+public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 {
 	private Controleur ctrl;
 	private int        idQst;
 
-	public PanelAjoutModifQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
+	public PanelModifAjoutQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(frame);
 		this.idQst = idQst;
@@ -90,7 +90,7 @@ public class PanelAjoutModifQuestion extends PanelAjoutQuestion
 	
 	public void enregistrer()
 	{
-		this.frame.enregistrerModification(this.idQst);
+		this.frame.enregistrer(this.idQst);
 	}
 	
 }

@@ -25,7 +25,7 @@ public class FrameEditQuestion extends JFrame
 {
 	private Controleur              ctrl;
 	private IHM                     ihm;
-	private PanelParametresQuestion panelParametresQuestion;
+	private PanelInitQuestion panelParametresQuestion;
 	private PanelAjoutQuestion      panelAjoutQuestion;
 	
 	/**
@@ -42,7 +42,7 @@ public class FrameEditQuestion extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelParametresQuestion = new PanelParametresQuestion(ctrl, this);
+		this.panelParametresQuestion = new PanelInitQuestion(ctrl, this);
 		this.panelAjoutQuestion      = new PanelAjoutQuestion     (this);
 
 		this.pagePrecedente();
@@ -57,8 +57,8 @@ public class FrameEditQuestion extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelParametresQuestion = new PanelParametresModifQuestion(ctrl, this, idQst);
-		this.panelAjoutQuestion      = new PanelAjoutModifQuestion     (ctrl, this, idQst);
+		this.panelParametresQuestion = new PanelModifInitQuestion(ctrl, this, idQst);
+		this.panelAjoutQuestion      = new PanelModifAjoutQuestion     (ctrl, this, idQst);
 
 		this.pagePrecedente();
 	}
@@ -84,7 +84,12 @@ public class FrameEditQuestion extends JFrame
 		this.repaint   ();
 	}
 
-	public boolean enregistrerNouvelleQuestion() 
+	public boolean enregistrer()
+	{
+		return this.enregistrer(null);
+	}
+
+	public boolean enregistrer(Integer idQst) 
 	{
 		String codeRes     = this.panelParametresQuestion.getRessource        ().getCode();
 		int    idNot       = this.panelParametresQuestion.getNotion           ().getIdNot();
@@ -204,14 +209,14 @@ public class FrameEditQuestion extends JFrame
 
 		if(lstErreurs.size() != 0)
 		{
-			String message = "La question n'a pas été enregistrée pour les raisons suivantes :\n";
+			String message = "La question n'a pas " + (idQst == null ? "été enregistrée" : "pu être modifiée") + " pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	
 			JOptionPane.showMessageDialog(
 				this,
 				message,
-				"Échec de l'Enregistrement",
+				"Échec de " + (idQst == null ? "l'Enregistrement" : "la Modification"),
 				JOptionPane.ERROR_MESSAGE
 			);
 			return false;
@@ -277,11 +282,6 @@ public class FrameEditQuestion extends JFrame
 		this.dispose();
 		this.ihm.reinitAffichageQuestion();
 		return true;
-	}
-
-	public boolean enregistrerModification(int idQst)
-	{
-		return false;
 	}
 
 	public int getIndexTypeQuestion() 

@@ -5,11 +5,11 @@ import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 import metier.entite.question.qcm.QCM;
 
-public class PanelParametresModifQuestion extends PanelParametresQuestion
+public class PanelModifInitQuestion extends PanelInitQuestion
 {	
 	private int idQst;
 
-	public PanelParametresModifQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
+	public PanelModifInitQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(ctrl, frame);
 		this.idQst = idQst;

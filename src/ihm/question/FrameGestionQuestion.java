@@ -39,7 +39,7 @@ public class FrameGestionQuestion extends JFrame
 
 	public void maj()
 	{
-		this.panelGestionQuestion.maj();
+		this.panelGestionQuestion.initDdlsts();	
 	}
 
 }

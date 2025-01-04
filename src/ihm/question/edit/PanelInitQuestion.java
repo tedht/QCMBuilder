@@ -30,7 +30,7 @@ import metier.entite.Ressource;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class PanelParametresQuestion extends JPanel implements ActionListener, ItemListener
+public class PanelInitQuestion extends JPanel implements ActionListener, ItemListener
 {
 	protected Controleur           ctrl;
 	protected FrameEditQuestion    frame;
@@ -45,7 +45,7 @@ public class PanelParametresQuestion extends JPanel implements ActionListener, I
 
 	protected JButton              btnAnnuler, btnSuivant;
 
-	public PanelParametresQuestion(Controleur ctrl, FrameEditQuestion frame) 
+	public PanelInitQuestion(Controleur ctrl, FrameEditQuestion frame) 
 	{
 		JPanel panelInfo, panelAction;
 

@@ -215,7 +215,7 @@ public class BanqueQuestions
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
 
-				cheminDirQst = currentDir + "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst = currentDir + "/data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 				if(scIntitule.hasNextLine())

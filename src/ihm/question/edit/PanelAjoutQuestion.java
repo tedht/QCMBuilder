@@ -160,7 +160,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 
 	public void enregistrer()
 	{
-		this.frame.enregistrerNouvelleQuestion();
+		this.frame.enregistrer();
 	}
 
 	public void ajouterProposition()

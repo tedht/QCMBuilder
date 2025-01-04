@@ -44,7 +44,6 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 
 		this.ddlstRessource = new JComboBox<Ressource>();
 		this.ddlstNotion    = new JComboBox<Notion>();
-		this.maj();
 
 		this.btnAjouter.setText("Nouvelle Question");
 
@@ -87,21 +86,23 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
-		if(e.getSource() == this.ddlstRessource && this.ddlstRessource.getSelectedIndex() != -1) 
+		System.out.println(e);
+		if(e.getSource() == this.ddlstRessource) 
 		{  
 			this.ddlstNotion.removeAllItems();
-			this.ddlstNotion.setEnabled(false);
-
-			for(Notion notion : this.ctrl.getNotions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode()))
+			if(this.ddlstRessource.getSelectedItem() != null)
 			{
-				this.ddlstNotion.addItem(notion);
+				for(Notion notion : this.ctrl.getNotions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode()))
+				{
+					this.ddlstNotion.addItem(notion);
+				}
+				this.ddlstNotion.setEnabled(true);
+				this.ddlstNotion.setSelectedIndex(-1);
 			}
-			this.ddlstNotion.setSelectedIndex(-1);
-			this.ddlstNotion.setEnabled(true);
 			this.afficher();
 		}
 
-		if(e.getSource() == this.ddlstNotion && this.ddlstNotion.isEnabled())
+		if(e.getSource() == this.ddlstNotion)
 		{
 			this.afficher();
 		}
@@ -113,6 +114,9 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 
 		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
 		Notion    notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
+
+		//System.out.println(this.ddlstRessource.getSelectedItem());
+		//System.out.println(this.ddlstRessource.getSelectedIndex());
 
 		List<Question> lstQuestions;
 		if(ressource == null)
@@ -164,22 +168,23 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.repaint();
 	}
 
-	public void maj()
+	public void initDdlsts()
 	{
 		this.ddlstRessource.removeAllItems();
+		this.ddlstRessource.addItem(null);
 		for(Ressource ressource : this.ctrl.getRessources())
 		{
 			this.ddlstRessource.addItem(ressource);
 		}
-		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
 		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
-
+		
 		this.ddlstNotion.removeAllItems();
 		this.ddlstNotion.setEnabled(false);
-		this.ddlstNotion.setSelectedIndex(-1);
 		this.ddlstNotion.setFocusable(false);
 		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%70s", " ")));
+
+		this.ddlstRessource.setSelectedIndex(-1);
 	}
 	
 }
