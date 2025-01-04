@@ -266,6 +266,7 @@ public class QCMBuilder
 
 				for(String detailsProp : lstDetailsProp)
 				{
+					System.out.println(detailsProp);
 					scElim = new Scanner(detailsProp);
 					scElim.useDelimiter(":");
 

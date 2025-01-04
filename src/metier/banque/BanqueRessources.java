@@ -1,5 +1,6 @@
 package metier.banque;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import metier.entite.Ressource;
 
 /** Classe BanqueDeRessources
@@ -157,6 +159,7 @@ public class BanqueRessources
 	private void sauvegarder(String cheminFic)
 	{
 		PrintWriter pw;
+		File fichier;
 
 		try
 		{
@@ -174,6 +177,9 @@ public class BanqueRessources
 		}
 		catch (FileNotFoundException fnfe)
 		{
+			fichier = new File(cheminFic);
+			fichier.mkdir();
+			this.sauvegarder(cheminFic);
 			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
@@ -227,7 +233,7 @@ public class BanqueRessources
 		}
 	}
 
-/*
+
 	public String toString()
 	{
 		String sRet = "";
@@ -235,44 +241,25 @@ public class BanqueRessources
 
 		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
-			sRet += this.lstRessources.get(cpt).getNom() + "\n" + "Notions : ";
-			for (Notion notion : this.lstRessources.get(cpt).getNotions())
-			{
-				sRet += notion + ", ";
-			}
+			sRet += this.lstRessources.get(cpt).getNom() + "\n";
 			sRet += "\n\n";
 		}
-			
 
 		return sRet;
 	}
-	*/
-
-
-	/*
-	public static void main(String[] args)
-	{
-		BanqueDeRessources bqr, bqr2;
-		Ressource r1, r2;
-
-
-		bqr = new BanqueDeRessources();
-		r1 = new Ressource("r1.01 Init dev");
-		r2 = new Ressource("r1.02 Web");
-
-
-		r1.ajouterNotion(new Notion("Encapsulation"));
-		r1.ajouterNotion(new Notion("Les Tableaux"));
 	
 
-		bqr.ajouterRessource(r1);
-		bqr.ajouterRessource(r2);
 
-		bqr.sauvegarderRessources("testEcrire.csv");
+	public static void main(String[] args)
+	{
+		BanqueRessources bqr, bqr2;
+
+
+		bqr = new BanqueRessources();
+
+		bqr.sauvegarder("test.csv");
 		
-		bqr2 = new BanqueDeRessources();
-		bqr2.lireRessources("testLire.csv");
+		bqr2 = new BanqueRessources();
 		System.out.println(bqr2);
 	}
-	*/
 }
