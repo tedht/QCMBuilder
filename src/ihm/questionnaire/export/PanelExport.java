@@ -1,7 +1,6 @@
 package ihm.questionnaire.export;
 
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;

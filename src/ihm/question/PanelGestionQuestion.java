@@ -136,7 +136,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 
 			for(int i = 9 - lstQuestions.size(); i > 0; i--)
 			{
-				panelCarte = new PanelQuestion(null, null, "", "", 0);
+				panelCarte = new PanelQuestion();
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}
@@ -147,9 +147,16 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 			{
 				if(question != null)
 				{
+					double note = question.getNote ();
+					int    tps  = question.getTemps();
+
+					String info =   note + " point" + (note == 1.0 ? ", " : "s, ")
+					              + Math.round(tps / 60) + "min "
+								  + (tps % 60 == 0 ? "" : tps % 60 + "s");
+
 					panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
 					                               question.getIntitule(), 
-					                               question.getNote() + " point(s), " + question.getTemps() + "s",
+					                               info,
 					                               question.getIdQst());
 					this.panelContenu.add(panelCarte);
 				}
@@ -157,7 +164,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	
 			for(int i = 8 - lstQuestions.size(); i > 0; i--)
 			{
-				panelCarte = new PanelQuestion(null, null, "", "", 0);
+				panelCarte = new PanelQuestion();
 				panelCarte.setVisible(false);
 				this.panelContenu.add(panelCarte);
 			}

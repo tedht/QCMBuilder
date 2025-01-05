@@ -1,6 +1,9 @@
 package ihm.question;
 
+import java.awt.BorderLayout;
 import java.awt.event.*;
+
+import javax.swing.JPanel;
 
 import controleur.Controleur;
 import ihm.IHM;
@@ -17,7 +20,15 @@ public class PanelQuestion extends PanelEntite
 {
 	private int     id;
 	private boolean detail;
+
+	private JPanel  panelDiff;
 	
+	public PanelQuestion()
+	{
+		super(null, null, "", "");
+		this.id = 0;
+	}
+
 	/**
 	 * Constructeur de la classe PanelQuestion.
 	 *
@@ -29,6 +40,10 @@ public class PanelQuestion extends PanelEntite
 
 		this.id = id;
 
+		panelDiff = new JPanel();
+		panelDiff.setBackground(this.ctrl.getQuestion(this.id).getDifficulte().getCouleur());
+
+		this.add(panelDiff, BorderLayout.WEST);
 		/*---------------------------*/
 		/* Activation des composants */
 		/*---------------------------*/

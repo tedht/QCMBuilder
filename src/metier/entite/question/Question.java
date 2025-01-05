@@ -195,7 +195,7 @@ public abstract class Question
 	 * @param note la nouvelle note.
 	 * @return true si la note à été modifiée, false sinon.
 	 */
-	public boolean setNote(int note)
+	public boolean setNote(double note)
 	{
 		if (note < 0) return false;
 

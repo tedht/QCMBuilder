@@ -206,8 +206,9 @@ public class FrameEditQuestion extends JFrame
 					for(PanelProp panelProp : lstPanelProp)
 					{
 						PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
-						if(panelPropAssoc.getTextGauche().isEmpty() || panelPropAssoc.getTextDroite().isEmpty());
+						if(panelPropAssoc.getTextGauche().isEmpty() || panelPropAssoc.getTextDroite().isEmpty())
 						{
+							System.out.println("hello");
 							lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
 							break;
 						}

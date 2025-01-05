@@ -361,7 +361,7 @@ public class BanqueQuestions extends Banque
 		double note;
 		int    nbProp;
 
-		String cheminDirQst, cheminDirProp;
+		String cheminDirQst;
 		File   dirQst, dirProp;
 
 		try
@@ -385,9 +385,8 @@ public class BanqueQuestions extends Banque
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
 				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
-				cheminDirProp = cheminDirQst + "/propositions";
 				dirQst        = new File(cheminDirQst);
-				dirProp       = new File(cheminDirProp);
+				dirProp       = new File(cheminDirQst+"/propositions");
 				
 				if (!dirQst.exists())
 				{
@@ -422,7 +421,7 @@ public class BanqueQuestions extends Banque
 
 						for(int i = 0; i < qQCM.getPropositions().size(); i++)
 						{
-							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propQCM = qQCM.getProposition(i);
 							
 							if (propQCM.estReponse()) 
@@ -441,10 +440,10 @@ public class BanqueQuestions extends Banque
 
 						for (int i = 0; i < qAsso.getPropositions().size(); i++) 
 						{
-							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propAsso = qAsso.getProposition(i);
 
-							pwTxt.print(propAsso.getTextGauche() + "\t" );
+							pwTxt.println(propAsso.getTextGauche());
 							pwTxt.println(propAsso.getTextDroite());	
 
 							pwTxt.close();
@@ -456,7 +455,7 @@ public class BanqueQuestions extends Banque
 	
 						for (int i = 0; i < qElim.getPropositions().size(); i++)
 						{
-							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirProp+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propElim = qElim.getProposition(i);
 
 							if (propElim.estReponse()) 

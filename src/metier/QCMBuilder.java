@@ -217,6 +217,7 @@ public class QCMBuilder
 		scDetails.close();
 
 		Difficulte   difficulte = Difficulte.fromInt(valDiff);
+		System.out.println(difficulte);
 		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
 		int          temps      = this.enSeconde(sTemps);
 
@@ -238,7 +239,14 @@ public class QCMBuilder
 				if(idQst == null)
 					question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
 				else
+				{
 					question = this.banqueQuestions.getQuestion(idQst);
+					question.setCodeRes(codeRes);
+					question.setIdNot(idNot);
+					question.setDifficulte(difficulte);
+					question.setTemps(temps);
+					question.setNote(note);
+				}
 
 				question.clearPropositions();
 				cptReponse = 0;
@@ -259,13 +267,20 @@ public class QCMBuilder
 				if(idQst == null)
 					question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
 				else
-					question = this.banqueQuestions.getQuestion(idQst); 
+				{
+					question = this.banqueQuestions.getQuestion(idQst);
+					question.setCodeRes(codeRes);
+					question.setIdNot(idNot);
+					question.setDifficulte(difficulte);
+					question.setTemps(temps);
+					question.setNote(note);
+				}
 
 				question.clearPropositions();
 				for(int i = 0; i < lstDetailsProp.size(); i+=2)
 				{
 					textGauche = lstDetailsProp.get(i);
-					textDroite = lstDetailsProp.get(i);
+					textDroite = lstDetailsProp.get(i+1);
 					
 					((Association)question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
 				}
@@ -278,7 +293,14 @@ public class QCMBuilder
 				if(idQst == null)
 					question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
 				else
-					question = this.banqueQuestions.getQuestion(idQst); 
+				{
+					question = this.banqueQuestions.getQuestion(idQst);
+					question.setCodeRes(codeRes);
+					question.setIdNot(idNot);
+					question.setDifficulte(difficulte);
+					question.setTemps(temps);
+					question.setNote(note);
+				}
 
 				question.clearPropositions();
 				for(String detailsProp : lstDetailsProp)
