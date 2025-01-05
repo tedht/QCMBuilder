@@ -179,7 +179,7 @@ public class FrameEditQuestion extends JFrame
 					}
 					
 					if(!reponse)
-						lstErreurs.add("Aucune réponse a été sélectionnée.");
+						lstErreurs.add("Aucune réponse n'a été sélectionnée.");
 				} 
 				case 1  -> // Question à Choix Multiple à Réponse Multiple
 				{
