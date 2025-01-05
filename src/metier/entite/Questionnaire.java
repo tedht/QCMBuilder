@@ -4,15 +4,18 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import metier.banque.BanqueQuestions;
-
-import metier.entite.question.Question;
 import metier.entite.question.Difficulte;
-
-import metier.entite.question.qcm.QCM;
+import metier.entite.question.Question;
 import metier.entite.question.association.Association;
+import metier.entite.question.association.PropositionAssociation;
 import metier.entite.question.elimination.Elimination;
+import metier.entite.question.elimination.PropositionElimination;
+import metier.entite.question.qcm.PropositionQCM;
+import metier.entite.question.qcm.QCM;
 
 
 /** 
@@ -28,13 +31,14 @@ public class Questionnaire
 	// Attributs //
 	/*-----------*/
 
-	private Ressource       ressource;
-	private List<Notion>    notions;
-	private boolean         chronometre;
+	private Ressource      ressource;
+	private List<Notion>   notions;
+	private boolean        chronometre;
+	private List<Question> questions;
 	private BanqueQuestions banqueQuestions;
-	private List<Question>  questions;
-
-
+	
+	
+	
 	/*--------------*/
 	// Constructeur //
 	/*--------------*/
@@ -53,6 +57,11 @@ public class Questionnaire
 		this.notions     = notions;
 		this.banqueQuestions = banqueQuestions;
 		this.questions   = new ArrayList<Question>();
+		if(this.banqueQuestions != null) {
+			for (Question question : banqueQuestions.getQuestions()) {
+				this.questions.add(question);
+			}
+		}
 	}
 
 
@@ -214,37 +223,12 @@ public class Questionnaire
 	 * @param  notion	    la notion.
 	 * @param  difficulte   la difficultée.
 	 * @param  nbrQuestions le nombre de questions.
-	 * @return              true si l'ajout de question s'est bien passé, false sinon.
+	 * @return              true ........, false sinon.
 	 */
 	public boolean ajouterQuestions(Notion notion, Difficulte difficulte, int nbrQuestions)
 	{
-		Question question;
-
-
-		if (notion == null || difficulte == null || nbrQuestions <= 0)
-		{
-			return false;
-		}
-
-		for (int i = 0; i < nbrQuestions; i++)
-		{
-			question = this.banqueQuestions.getQuestion((int) (Math.random() * this.banqueQuestions.getTaille()));
-
-			if (question.getDifficulte() == difficulte)
-			{
-				if (question.getIdNot() == notion.getIdNot())
-				{
-					this.questions.add(question);
-				}
-				else
-				{
-					i--;
-				}
-			}
-			else
-			{
-				i--;
-			}
+		for (int i = 0; i < nbrQuestions; i++) {
+			//trop de trucs avec fichier rtf
 		}
 
 		return true;
@@ -254,144 +238,347 @@ public class Questionnaire
 	 * Génère un fichier HTML contenant une structure de base pour un Questionnaire.
 	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
 	 *
-	 * @param  cheminDossier            Le chemin du dossier où le fichier HTML sera créé (non null).
+	 * @param  filePath                 Le chemin du dossier où le fichier HTML sera créé (non null).
 	 * @return                          Un boolean renvoyant true si le contenu HTML est généré.
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-	 public boolean genererQuestionnaire(String cheminDossier)
-	 {
-		String cheminCompletFichier, repCourant;
 
-		String jsPath ;
-		String cssPath;
+	
+	public boolean genererQuestionnaire(String filePath) {
+        if (filePath == null) {
+            throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
+        }
 
-		String dataChrono, nomRessource, sScoreTotal;
-		int nbrQuestions, dureeTotale;
+        String dataChrono = chronometre ? "true" : "false";
+        String resourceName = ressource.getCode() + " " + ressource.getNom();
 
-
-		if (cheminDossier == null)
-		{
-			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
-		}
-
-		dataChrono   = this.chronometre ? "true" : "false";
-		nomRessource = this.ressource.getCode() + " " + this.ressource.getNom();
-		nbrQuestions = this.questions.size();
-
-		dureeTotale = 0;
-		for (Question q : this.questions)
-			dureeTotale += q.getTemps();
-
-		int scoreTotal = 0;
-		for (Question q : this.questions)
-			scoreTotal += q.getNote();
-
-		sScoreTotal = "X/" + scoreTotal;
         // Générer le contenu HTML
         String contenuHTML = String.format("""
                 <!DOCTYPE html>
-                <html lang="fr">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>QCM-Builder</title>
-                    <link rel="stylesheet" href="style.css">
-                </head>
-                <body>
-                    <div id="appli" data-chrono="%s" class="container">
-                        <p id="progress-text"><strong>Question 0 sur 0 (0%%)</strong></p>
-                        <div id="progress-container">
-                            <div id="progress-bar"></div>
-                        </div>
-                        <!-- Accueil -->
-                        <div id="accueil" class="accueil">
-                            <header class="header">
-                                <h1 id="titre-page">Auto-Évaluation <span id="titre-chrono"></span></h1>
-                            </header>
-                            <div class="content">
-                                <div class="accueil-content">
-                                    <p><strong>Ressource :</strong> %s</p>
-                                    <p><strong>Notion(s) : </strong><span id="notions"></span></p>
-                                    <p><strong>Nombre de questions : </strong><span id="question-nombre">%d</span></p>
-                                    <p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total">%d</span> seconde(s)</p>
-                                    <p id="p-score" style="display: none;">
-                                        <strong>Score total : </strong> <span id="score-total">%s</span>
-                                    </p>
-                                </div>
-                                <button id="start-button" class="start-button">Commencer l'évaluation</button>
-                            </div>
-                        </div>
-                        <!-- Questionnaire -->
-                        <div id="questionnaire" class="section" style="display: none;">
-                            <!-- Contenu du questionnaire -->
-                        </div>
-                        <div id="feedback-popup" class="feedback-popup">
-                            <h2 id="popup-message"></h2>
-                            <p id="popup-feedback"></p>
-                            <button id="btn-feedback">Fermer</button>
-                        </div>
-                    </div>
-                    <script src="main.js" defer></script>
-                </body>
-                </html>
-                """, dataChrono, nomRessource, nbrQuestions, dureeTotale, sScoreTotal);
+				<html lang="fr">
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>QCM-Builder</title>
+					<link rel="stylesheet" href="style.css">
+				</head>
+				<body>
+					
+					
+					<div id="appli" data-chrono="%s" class="container">
+						<p id="progress-text"><strong>Question 0 sur 0 (0%%)</strong></p>
+						<div id="progress-container">
+							<div id="progress-bar"></div>
+						</div>
+						<!-- Accueil -->
+						<div id="accueil" class="accueil">
+							<header class="header">
+								<h1 id="titre-page">Auto-Évaluation <span id="titre-chrono"></span></h1>
+							</header>
+					
+							<div class="content">
+								<div class="accueil-content">
+									<p><strong>Ressource :</strong> %s</p>
+									<p><strong>Notion(s) : </strong><span id="notions"></span></p>
+									
+									<p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
+									<p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
+									<p id="p-score"style="display: none;">
+										<strong>Score total : </strong> <span id="score-total"></span>
+									</p>
+								</div>
+								<!--AJOUTER UN DIV FEEDBACK EN DISPLAY NONE POUR LA FIN DU QUESTIONNAIRE SI IL Y EN A UN-->
+								<button id="start-button" class="start-button">Commencer l'évaluation</button>
+							</div>
+					
 
-		// Le nom du fichier HTML
-		cheminCompletFichier = cheminDossier + "/questionnaire.html";
+						</div>
 
-		try
-		{
-			// Obtenir le répertoire de travail actuel
-			repCourant = System.getProperty("user.dir");
+						<!-- Questionnaire -->
+						<div id="questionnaire" class="section" style="display: none;">
+							<div class="question-header">
+								<span id= "difficulte"></span>
+								<div class="question-header-center">
+									<span id="question-number"></span>
+									<span id="question-notion"></span>
+								</div>
+								<span id="question-time"></span>
+							</div>
+							<button id="btn-info" class="nav-button" style="display: none;">+ d'info</button>
+							<div class="question-title">
+								<span id="question-title"></span>
+							</div>
+							<div class="question-section">
+								<!-- Les réponses possibles seront insérées ici -->
+							</div>
+							<div class="question-footer">
+								<button id="btn-precedent" class="nav-button">Précédent</button>
+								<button id="btn-feedback" class="nav-button">Feedback</button>
+								<button id="btn-valider" class="nav-button validate-button">Valider</button>
+								<button id="btn-suivant" class="nav-button">Suivant</button>
+							</div>
+						</div>
 
-			// Créer le répertoire de destination si nécessaire
-			Files.createDirectories(Paths.get(cheminDossier));
-			System.out.println("Répertoire créé à l'emplacement : " + cheminDossier);
+						<div id="feedback-popup" class="feedback-popup">
+							<h2 id="popup-message"></h2>
+							<p id="popup-feedback"></p>
+							<button id="btn-feedback">Fermer</button>
+						</div>
+					</div>
 
-			// Définir les chemins complets en combinant le répertoire actuel et les sous-dossiers
-			jsPath  = repCourant + "/src/metier/entite/srcWeb/main.js"  ;
-			cssPath = repCourant + "/src/metier/entite/srcWeb/style.css";
+					<script src="main.js" defer></script>
+				</body>
+				</html>
+                """, dataChrono, resourceName);
 
-			// Copier les fichiers JavaScript et CSS avec les nouveaux chemins
-			this.copierFichier(jsPath , cheminDossier + "/main.js"  );
-			this.copierFichier(cssPath, cheminDossier + "/style.css");
+        // Le nom du fichier HTML
+        String fullFilePath = filePath + "/questionnaire.html";
 
-			// Écrire le contenu HTML dans le fichier
-			try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminCompletFichier), "UTF8")))
-			{
-				writer.print(contenuHTML);
-				System.out.println("Fichier HTML généré avec succès à l'emplacement : " + cheminCompletFichier);
-			}
+        try {
+            // Obtenir le répertoire de travail actuel
+            String currentDir = System.getProperty("user.dir");
 
-			return true;
-		}
-		catch (IOException e)
-		{
-			System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
-		}
+            // Créer le répertoire de destination si nécessaire
+            Files.createDirectories(Paths.get(filePath));
+            System.out.println("Répertoire créé à l'emplacement : " + filePath);
 
-		return false;
-	}
+            // Définir les chemins complets en combinant le répertoire actuel et les sous-dossiers
+            String jsPath = currentDir + "/src/metier/entite/srcWeb/main.js";
+            String cssPath = currentDir + "/src/metier/entite/srcWeb/style.css";
+
+            // Copier les fichiers JavaScript et CSS avec les nouveaux chemins
+            copyFile(jsPath, filePath + "/main.js");
+            copyFile(cssPath, filePath + "/style.css");
+
+			// genererDossierComplementaire(filePath);
+
+			genererQuestionnaireAvecJson(filePath, questions);
+
+            // Écrire le contenu HTML dans le fichier
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) {
+                writer.write(contenuHTML);
+                System.out.println("Fichier HTML généré avec succès à l'emplacement : " + fullFilePath);
+            }
+
+            return true;
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
+        }
+
+        return false;
+    }
 	
+	private String genererQuestionsEnJson(List<Question> questions) {
+		StringBuilder jsonBuilder = new StringBuilder();
+		jsonBuilder.append("[");
+	
+		for (int i = 0; i < questions.size(); i++) {
+			Question question = questions.get(i);
+			String jsonQuestion = convertirQuestionEnJson(question, i+1);
+			jsonBuilder.append(jsonQuestion);
+			if (i < questions.size() - 1) {
+				jsonBuilder.append(",");
+			}
+		}
+	
+		jsonBuilder.append("]");
+		return jsonBuilder.toString();
+	}
+
+
+	public boolean genererQuestionnaireAvecJson(String filePath, List<Question> questions) {
+		if (filePath == null) {
+			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
+		}
+	
+		String questionsJson = genererQuestionsEnJson(questions);
+	
+		// Générer le fichier JSON
+		String jsonFilePath = filePath + "/questions.json";
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFilePath))) {
+			writer.write(questionsJson);
+			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
+			return true;
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la génération du fichier JSON : " + e.getMessage());
+			return false;
+		}
+	}
+
+
 	// Méthode pour copier un fichier
-	private void copierFichier(String cheminSource, String cheminDestination) throws IOException
-	{
-		Path source, destination;
-
-
-		System.out.println("Copie du fichier : " + cheminSource + " vers " + cheminDestination);
-
-		source      = Paths.get(cheminSource);
-		destination = Paths.get(cheminDestination);
+	private void copyFile(String sourcePath, String destinationPath) throws IOException {
+		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
+		Path source = Paths.get(sourcePath);
+		Path destination = Paths.get(destinationPath);
 		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
 	}
 
+	private String convertirQuestionEnJson(Question question, int idQuestion) {
+		StringBuilder jsonBuilder = new StringBuilder();
+		jsonBuilder.append("\n\t{\n");
+	
+		appendBasicInfo(jsonBuilder, question, idQuestion);
+		appendSpecificPropositions(jsonBuilder, question);
+		appendReponses(jsonBuilder, question);
+		appendFinalElements(jsonBuilder, question);
+	
+		jsonBuilder.append("\n\t}");
+		return jsonBuilder.toString();
+	}
+	
+	private void appendBasicInfo(StringBuilder jsonBuilder, Question question, int idQuestion) {
+		jsonBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
+
+		String type = "" + question.getType();
+    	if ("QCM".equalsIgnoreCase(type) && question.getPropositions().size() < 2) {
+     	   type = "choix-unique";
+    	}
+    	jsonBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
+		
+		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));// Gestion de la difficulté
+		String difficulte = "" + question.getDifficulte();
+		String difficulteAffichee = "";
+		switch (difficulte) {
+			case "TF":
+				difficulteAffichee = "très-facile";
+				break;
+			case "F":
+				difficulteAffichee = "facile";
+				break;
+			case "M":
+				difficulteAffichee = "moyen";
+				break;
+			case "D":
+				difficulteAffichee = "difficile";
+				break;
+			default:
+				difficulteAffichee = "inconnue"; // En cas de valeur non valide
+				break;
+		}
+		jsonBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
+	}
+	
+	private void appendSpecificPropositions(StringBuilder jsonBuilder, Question question) {
+		if ("Association".equalsIgnoreCase(question.getType().toString())) {
+			appendAssociationPropositions(jsonBuilder, (Association) question);
+		} else if ("Elimination".equalsIgnoreCase(question.getType().toString())) {
+			appendEliminationPropositions(jsonBuilder, (Elimination) question);
+		} else {
+			appendStandardPropositions(jsonBuilder, question);
+		}
+	}
+	
+	private void appendAssociationPropositions(StringBuilder jsonBuilder, Association question) {
+		List<String> gaucheList = new ArrayList<>();
+		List<String> droiteList = new ArrayList<>();
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			PropositionAssociation prop = (PropositionAssociation) question.getProposition(i);
+			gaucheList.add(prop.getTextGauche());
+			droiteList.add(prop.getTextDroite());
+		}
+	
+		jsonBuilder.append("\t\t\"propositionsGauche\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", gaucheList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	
+		jsonBuilder.append("\t\t\"propositionsDroite\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", droiteList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	}
+	
+	private void appendEliminationPropositions(StringBuilder jsonBuilder, Elimination question) {
+		List<String> propositionsList = new ArrayList<>();
+		List<Double> pointsPerdusList = new ArrayList<>();
+	
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			PropositionElimination prop = question.getProposition(i);
+			propositionsList.add(prop.getText());
+			pointsPerdusList.add(prop.getNbPtsPerdus());
+		}
+	
+		jsonBuilder.append("\t\t\"propositions\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", propositionsList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	
+		jsonBuilder.append("\t\t\"pointsPerdus\": [\n");
+		jsonBuilder.append("\t\t\t" + pointsPerdusList.stream().map(String::valueOf).collect(Collectors.joining(",\n\t\t\t")) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	}
+	
+	private void appendStandardPropositions(StringBuilder jsonBuilder, Question question) {
+		jsonBuilder.append("\t\t\"propositions\": [\n");
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			jsonBuilder.append("\t\t\t\"" + question.getPropositions().get(i) + "\"");
+			if (i < question.getPropositions().size() - 1) {
+				jsonBuilder.append(",");
+			}
+			jsonBuilder.append("\n");
+		}
+		jsonBuilder.append("\t\t],\n");
+	}
+	
+	private void appendReponses(StringBuilder jsonBuilder, Question question) {
+		jsonBuilder.append("\t\t\"reponses\": [\n");
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			jsonBuilder.append("\t\t\t\"" + question.getPropositions().get(i) + "\"");
+			if (i < question.getPropositions().size() - 1) {
+				jsonBuilder.append(",");
+			}
+			jsonBuilder.append("\n");
+		}
+		jsonBuilder.append("\t\t],\n");
+	}
+	
+	private void appendFinalElements(StringBuilder jsonBuilder, Question question) {
+		jsonBuilder.append(String.format("\t\t\"temps\": %d,\n", question.getTemps()));
+		jsonBuilder.append(String.format("\t\t\"note\": %f,\n", question.getNote()));
+		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
+	
+		for (Notion notion : notions) {
+			if (notion.getIdNot() == question.getIdNot()) {
+				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\"\n", notion.getNom()));
+				break;
+			}
+		}
+	}
+	
+	
+	
+	
+
+	// à faire/décommenter à la toute fin
+	// Méthode pour générer un dossier complémentaire
+	// private void genererDossierComplementaire(String basePath) throws IOException {
+	//     // Chemin du répertoire complémentaire
+	//     String currentDir = System.getProperty("user.dir");
+	//     String complementDir = currentDir + "/src/metier/entite/complements";
+	//     String targetDir = basePath + "/complements";
+
+	//     // Créer le répertoire cible
+	//     Files.createDirectories(Paths.get(targetDir));
+
+	//     // Parcourir les fichiers du répertoire complémentaire
+	//     try (Stream<Path> files = Files.list(Paths.get(complementDir))) {
+	//         files.forEach(file -> {
+	//             try {
+	//                 Path targetFile = Paths.get(targetDir, file.getFileName().toString());
+	//                 Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
+	//                 System.out.println("Fichier complémentaire copié : " + targetFile);
+	//             } catch (IOException e) {
+	//                 System.err.println("Erreur lors de la copie du fichier complémentaire : " + e.getMessage());
+	//             }
+	//         });
+	//     }
+	// }
+	
+	
 	/**
-	 * Retourne une représentation en chaîne de caractères du Questionnaire.
-	 * 
-	 * @return une représentation en chaîne de caractères du Questionnaire.
-	 */
+     * Retourne une représentation en chaîne de caractères du Questionnaire.
+     * 
+     * @return une représentation en chaîne de caractères du Questionnaire.
+     */
 	public String toString()
 	{
 		return "Questionnaire :\n" +
@@ -403,50 +590,54 @@ public class Questionnaire
 
 	public static void main(String[] args) 
 	{
-		Ressource     r1, r2;
-		Notion        n1, n2, n3;
-		List<Notion>  l1;
+		 Ressource     r1, r2;
+        Notion        n1, n2, n3;
+        List<Notion>  l1;
 
-		Question q1, q2, q3, q4;
+        QCM q1, q4;
+		Association q2;
+		Elimination q3;
 
-		BanqueQuestions banqueQuestions;
-		Questionnaire quest1;
+        BanqueQuestions banqueQuestions;
+        Questionnaire quest1;
 
 
-		r1 = new Ressource("R1.01","Init_Dev");
-		r2 = new Ressource("R1.05","BDD");
+        r1 = new Ressource("R1.01","Init_Dev");
+        r2 = new Ressource("R1.05","BDD");
 
-		n1 = new Notion("Algorithmique",1,"R1.01");
-		n2 = new Notion("Programmation",2,"R1.01");
-		n3 = new Notion("SQL",3,"R1.05");
+        n1 = new Notion("Algorithmique",1,"R1.01");
+        n2 = new Notion("Programmation",2,"R1.01");
+        n3 = new Notion("SQL",3,"R1.05");
 
-		q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
-		q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
-		q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
-		q4 = new QCM(r1.getCode(), n1.getIdNot(), 4, 0.5, 0, Difficulte.FACILE);
+        q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
+        q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
+        q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
+        q4 = new QCM(r1.getCode(), n1.getIdNot(), 4, 0.5, 0, Difficulte.FACILE);
 
-		l1 = new ArrayList<Notion>();
-		l1.add(n1);
-		l1.add(n2);
+	
+		q1.ajouterProposition(new PropositionQCM("prop1", false));
+		q1.ajouterProposition(new PropositionQCM("prop2", true));
+		q1.ajouterProposition(new PropositionQCM("prop3", false));
 
-		banqueQuestions = new BanqueQuestions();
+        l1 = new ArrayList<Notion>();
+        l1.add(n1);
+        l1.add(n2);
 
-		banqueQuestions.ajouterQuestion(q1);
-		banqueQuestions.ajouterQuestion(q2);
-		banqueQuestions.ajouterQuestion(q3);
-		banqueQuestions.ajouterQuestion(q4);
+        banqueQuestions = new BanqueQuestions();
 
-		quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
+        banqueQuestions.ajouterQuestion(q1);
+        banqueQuestions.ajouterQuestion(q2);
+        banqueQuestions.ajouterQuestion(q3);
+        banqueQuestions.ajouterQuestion(q4);
 
-		System.out.println(quest1);
+        quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
 
-		quest1.ajouterNotion(n3);
-		System.out.println(quest1);
+        quest1.ajouterNotion(n3);
 
-		quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
-		quest1.ajouterQuestions(n2, Difficulte.MOYEN, 1);
-		quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 1);
+        quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
+        quest1.ajouterQuestions(n2, Difficulte.MOYEN, 1);
+        quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 1);
 
-		quest1.genererQuestionnaire("./test");
+        quest1.genererQuestionnaire("./test");
 	}
 }
