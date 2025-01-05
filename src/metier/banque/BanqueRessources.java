@@ -16,13 +16,11 @@ import metier.entite.Ressource;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class BanqueRessources
+public class BanqueRessources extends Banque
 {
 
-
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private List<Ressource> lstRessources;
@@ -33,7 +31,7 @@ public class BanqueRessources
 
 
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -52,7 +50,7 @@ public class BanqueRessources
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 
@@ -95,7 +93,7 @@ public class BanqueRessources
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/** 
@@ -229,7 +227,10 @@ public class BanqueRessources
 		{
 			// this.lstRessources n'est pas censé contenir des valeurs null
 			if(this.lstRessources.get(i).getCode().equals(codeRes))
-				this.lstRessources.remove(i);
+			{
+				this.lstRessources.remove(i);	
+				this.supprimerDossier(new File(this.currentDir + "/data/ressources/" + codeRes));
+			}
 		}
 	}
 

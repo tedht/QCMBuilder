@@ -197,6 +197,11 @@ public class QCMBuilder
 	 */
 	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
+		this.editQuestion(null, detailsQuestion, intitule, explication, lstDetailsProp);
+	}
+
+	private void editQuestion(Integer idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp)
+	{
 		Scanner scDetails, scElim;
 		
 		scDetails = new Scanner(detailsQuestion);
@@ -230,7 +235,10 @@ public class QCMBuilder
 		{
 			case QCM ->
 			{
-				question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
+				if(idQst == null)
+					question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
+				else
+					question = this.banqueQuestions.getQuestion(idQst);
 
 				cptReponse = 0;
 				for(String detailsProp : lstDetailsProp)
@@ -247,7 +255,10 @@ public class QCMBuilder
 			}
 			case ASSOCIATION ->
 			{
-				question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
+				if(idQst == null)
+					question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
+				else
+					question = this.banqueQuestions.getQuestion(idQst); 
 
 				for(int i = 0; i < lstDetailsProp.size(); i+=2)
 				{
@@ -262,7 +273,10 @@ public class QCMBuilder
 			}
 			case ELIMINATION ->
 			{
-				question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
+				if(idQst == null)
+					question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
+				else
+					question = this.banqueQuestions.getQuestion(idQst); 
 
 				for(String detailsProp : lstDetailsProp)
 				{
@@ -326,12 +340,7 @@ public class QCMBuilder
 	
 	public void modifierQuestion(int idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
-		Question question = this.banqueQuestions.getQuestion(idQst);
-		question.setIntitule   (intitule);
-		question.setExplication(explication);
-		//this.metier.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
-
-		this.banqueQuestions.sauvegarder();
+		this.editQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
 	/**
@@ -342,7 +351,8 @@ public class QCMBuilder
 	public void supprimerRessource(String code) 
 	{
 		// Supprime les questions associées à la ressource
-
+		this.banqueQuestions.supprimerQuestions(code);
+		this.banqueQuestions.sauvegarder();
 		
 		// Supprime les notions associées à la ressource
 		this.banqueNotions.supprimerNotions(code);
@@ -361,8 +371,9 @@ public class QCMBuilder
 	 */
 	public void supprimerNotion(int id) 
 	{
-		// Supprime les questions associées à la ressource
-
+		// Supprime les questions associées à la notion
+		this.banqueQuestions.supprimerQuestions(id);
+		this.banqueQuestions.sauvegarder();
 
 		// Supprime la notion
 		this.banqueNotions.supprimerNotion(id);
@@ -376,7 +387,7 @@ public class QCMBuilder
 	public void supprimerQuestion(int id) 
 	{
 		// Supprime la question
-		//this.banqueQuestions.supprimerQuestion(codeRessource, idNot);
+		this.banqueQuestions.supprimerQuestion(id);
 	}
 
 	/**
@@ -400,5 +411,4 @@ public class QCMBuilder
 	{
 		this.questionnaire.genererQuestionnaire(cheminFichier);
 	}
-
 }

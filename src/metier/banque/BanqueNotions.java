@@ -20,13 +20,10 @@ import metier.entite.Notion;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class BanqueNotions 
+public class BanqueNotions extends Banque
 {
-
-
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private List<Notion>   lstNotions;
@@ -35,10 +32,8 @@ public class BanqueNotions
 	private String         cheminFic;
 	private String         currentDir;
 	
-
-
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -272,8 +267,18 @@ public class BanqueNotions
 	 */
 	public void supprimerNotion(int idNot)
 	{
-		this.fileIdUtilisable.offer(idNot);
-		this.lstNotions.set(idNot, null);
+		Notion notion = this.getNotion(idNot);
+
+		if(notion != null)
+		{
+			this.lstNotions.set(idNot, null);
+			this.fileIdUtilisable.offer(idNot);
+	
+			// Supprime le dossier associer à la notion
+			this.supprimerDossier(new File(this.currentDir + "/data/ressources/" + notion.getCodeRes() + "/notion" + notion.getIdNot()));
+
+			this.sauvegarder();
+		}
 	}
 
 	/**
@@ -287,8 +292,7 @@ public class BanqueNotions
 		{
 			if(this.lstNotions.get(i) != null && this.lstNotions.get(i).getCodeRes().equals(codeRes))
 			{
-				this.fileIdUtilisable.offer(i);
-				this.lstNotions.set(i, null);
+				this.supprimerNotion(i);
 			}
 		}
 	}

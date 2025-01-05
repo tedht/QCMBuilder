@@ -145,11 +145,14 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		{
 			for(Question question : lstQuestions)
 			{
-				panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
-											   question.getIntitule(), 
-											   question.getNote() + " point(s), " + question.getTemps() + "s",
-											   0);
-				this.panelContenu.add(panelCarte);
+				if(question != null)
+				{
+					panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
+					                               question.getIntitule(), 
+					                               question.getNote() + " point(s), " + question.getTemps() + "s",
+					                               question.getIdQst());
+					this.panelContenu.add(panelCarte);
+				}
 			}
 	
 			for(int i = 8 - lstQuestions.size(); i > 0; i--)

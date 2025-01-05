@@ -19,6 +19,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 	public PanelModifAjoutQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(frame);
+		this.ctrl  = ctrl;
 		this.idQst = idQst;
 
 		Question question; 
@@ -30,7 +31,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 		question = this.ctrl.getQuestion(this.idQst);
 
 		this.txtIntitule.setText(question.getIntitule());
-		if("".equals(question.getExplication()))
+		if(!"".equals(question.getExplication()))
 		{
 			this.btnAjouterExpli.setSelected(true);
 			this.txtExpli.setText(question.getExplication());

@@ -23,10 +23,10 @@ import ihm.question.edit.proposition.PanelPropQRM;
  */
 public class FrameEditQuestion extends JFrame
 {
-	private Controleur              ctrl;
-	private IHM                     ihm;
-	private PanelInitQuestion panelParametresQuestion;
-	private PanelAjoutQuestion      panelAjoutQuestion;
+	private Controleur         ctrl;
+	private IHM                ihm;
+	private PanelInitQuestion  panelParametresQuestion;
+	private PanelAjoutQuestion panelAjoutQuestion;
 	
 	/**
 	 * Constructeur de la classe FrameEditQuestion.
@@ -277,7 +277,10 @@ public class FrameEditQuestion extends JFrame
 			default -> {}
 		}
 
-		this.ctrl.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
+		if(idQst == null)
+			this.ctrl.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
+		else
+			this.ctrl.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
 		
 		this.dispose();
 		this.ihm.reinitAffichageQuestion();
@@ -291,7 +294,8 @@ public class FrameEditQuestion extends JFrame
 
 	public void clearPanelProps() 
 	{
-		this.panelAjoutQuestion.clearPanelProp();
+		if(this.panelAjoutQuestion != null)
+			this.panelAjoutQuestion.clearPanelProp();
 	}
 	
 }

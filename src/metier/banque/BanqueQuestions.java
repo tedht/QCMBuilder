@@ -26,13 +26,10 @@ import metier.entite.question.elimination.*;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class BanqueQuestions 
+public class BanqueQuestions extends Banque
 {
-
-
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private List<Question> lstQuestions;
@@ -40,8 +37,6 @@ public class BanqueQuestions
 
 	private String         cheminFic;
 	private String         currentDir;
-
-
 
 	/*--------------*/
 	// Constructeur //
@@ -64,7 +59,7 @@ public class BanqueQuestions
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -163,7 +158,7 @@ public class BanqueQuestions
 	*
 	* @param cheminFic le chemin du fichier CSV
 	*/
-	public void lireQuestions(String cheminFic)
+	private void lireQuestions(String cheminFic)
 	{
 		Scanner scEnreg, scDonnees, scIntitule, scExplication, scProp, scElim;
 
@@ -573,10 +568,46 @@ public class BanqueQuestions
 			this.lstQuestions.set(question.getIdQst(), question);
 		else
 			this.lstQuestions.add(question);
-
-		this.sauvegarder();
 	}
 
+	public void supprimerQuestion(int id)
+	{
+		Question question = this.getQuestion(id);
+
+		if(question != null)
+		{
+			// Supprime la question de la banque
+			this.lstQuestions.set(id, null);
+			this.fileIdUtilisable.offer(id);
+
+			// Supprime les dossiers et fichiers associés à la question
+			this.supprimerDossier(new File(this.currentDir + "/data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
+		
+			this.sauvegarder();
+		}
+	}
+
+	public void supprimerQuestions(String codeRes)
+	{
+		for(int i = 0; i < this.lstQuestions.size(); i++)
+		{
+			if(this.lstQuestions.get(i) != null && this.lstQuestions.get(i).getCodeRes().equals(codeRes))
+			{
+				this.supprimerQuestion(i);
+			}
+		}
+	}
+
+	public void supprimerQuestions(int idNot)
+	{
+		for(int i = 0; i < this.lstQuestions.size(); i++)
+		{
+			if(this.lstQuestions.get(i) != null && this.lstQuestions.get(i).getIdNot() == idNot)
+			{
+				this.supprimerQuestion(i);
+			}
+		}
+	}
 
 	/**
 	 * Modifie une question
