@@ -15,7 +15,6 @@ import ihm.question.edit.proposition.PanelPropElim;
 import ihm.question.edit.proposition.PanelPropQCM;
 import ihm.question.edit.proposition.PanelPropQRM;
 
-
 /** Classe représentant la fenêtre d'édition (création ou modification) d'une question
  * 
  * @author Equipe 03
@@ -101,7 +100,8 @@ public class FrameEditQuestion extends JFrame
 		String sPoints     = this.panelParametresQuestion.getPoints           ();  
 
 		String intitule    = this.panelAjoutQuestion     .getIntitule         ();          
-		String explication = this.panelAjoutQuestion     .getExplication      ();   
+		String explication = this.panelAjoutQuestion     .getExplication      ();  
+		String pieceJointe = this.panelAjoutQuestion     .getPieceJointe      (); 
 		
 		List<String> lstErreurs = new ArrayList<String>();
 
@@ -146,6 +146,9 @@ public class FrameEditQuestion extends JFrame
 
 		if(this.panelAjoutQuestion.explicationSelected() && explication.isEmpty())
 			lstErreurs.add("L'explication est vide");
+
+		if(this.panelAjoutQuestion.PieceJointeSelected() && pieceJointe.isEmpty())
+			lstErreurs.add("Aucune pièce jointe a été sélectionnée");
 
 		List<PanelProp> lstPanelProp = this.panelAjoutQuestion.getPanelProps();
 
@@ -262,7 +265,7 @@ public class FrameEditQuestion extends JFrame
 		String       detailsProp     = "";
 		List<String> lstDetailsProp = new ArrayList<String>();
 
-		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints;
+		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints+"\t"+pieceJointe;
 
 		switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
 		{

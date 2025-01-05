@@ -9,11 +9,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -22,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileFilter;
 
 import ihm.question.edit.proposition.PanelProp;
 import ihm.question.edit.proposition.PanelPropAssoc;
@@ -35,17 +40,18 @@ import ihm.question.edit.proposition.PanelPropQRM;
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
-public class PanelAjoutQuestion extends JPanel implements ActionListener
+public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemListener
 {
 	protected FrameEditQuestion frame;
 	
-	protected JPanel            panelInfoScroll, panelInfoQuestion, panelInfoExpli, panelInfoAjout;
+	protected JPanel            panelInfoScroll, panelInfoQuestion, panelInfoExpli,  panelInfoPJ, panelInfoAjout;
 	protected JTextArea         txtIntitule, txtExpli;
 	protected List<PanelProp>   lstPanelProp;
-	protected JToggleButton     btnAjouterExpli;
-	protected JButton           btnAjouterProp;
+	protected JToggleButton     btnActiverExpli, btnActiverPJ;
+	protected JButton           btnAjouterProp, btnAjouterPJ;
 	protected JScrollPane	    scrollPanelInfo;
 	protected ButtonGroup       btgQCM;
+	protected JLabel            lblPJ;
 
 	protected JButton           btnPrecedent, btnEnregistrer;
 
@@ -53,6 +59,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 	{
 		JPanel panelInfo, panelAction;
 		JPanel panelAjout;
+		JPanel panelBtnAjouterPJ;
 		
 		this.frame = frame;
 
@@ -67,11 +74,16 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		/* INFO */
 		panelInfo = new JPanel(new BorderLayout());
 
-		panelInfoQuestion = new JPanel(new BorderLayout());
-		panelInfoQuestion.setBorder(new EmptyBorder(10, 10, 10, 10));
+		this.panelInfoQuestion = new JPanel(new BorderLayout());
+		this.panelInfoQuestion.setBorder(new EmptyBorder(0, 10, 0, 10));
 
-		panelInfoExpli = new JPanel(new BorderLayout());
-		panelInfoExpli.setBorder(new EmptyBorder(10, 10, 10, 10));
+		this.panelInfoExpli = new JPanel(new BorderLayout());
+		this.panelInfoExpli.setBorder(new EmptyBorder(10, 10, 0, 10));
+		
+		this.panelInfoPJ = new JPanel(new BorderLayout());
+		this.panelInfoPJ.setBorder(new EmptyBorder(0, 10, 0, 10));
+		
+		panelBtnAjouterPJ = new JPanel();
 
 		this.panelInfoAjout = new JPanel(new BorderLayout());
 		panelAjout          = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -95,7 +107,9 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		this.txtExpli.setMargin       (new Insets(2, 5, 2, 5));
 
 		this.btnAjouterProp  = new JButton("+");
-		this.btnAjouterExpli = new JToggleButton("Expl");
+		this.btnActiverExpli = new JToggleButton("Expl");
+		this.btnActiverPJ    = new JToggleButton("PJ");
+		this.btnAjouterPJ    = new JButton("Sélectionner une Pièce Jointe");
 
 		this.panelInfoScroll = new JPanel(new GridBagLayout());
 		this.scrollPanelInfo = new JScrollPane(this.panelInfoScroll);
@@ -107,6 +121,8 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 
 		this.btgQCM = new ButtonGroup();
 
+		this.lblPJ = new JLabel();
+		
 		/* ACTION */
 		panelAction = new JPanel();
 		panelAction.setBackground(new Color(200, 200, 250));
@@ -127,9 +143,15 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		panelInfoExpli     .add(new JLabel("Explication :"), BorderLayout.NORTH);
 		panelInfoExpli     .add(this.txtExpli, BorderLayout.CENTER);
 
+		panelInfoPJ        .add(new JLabel("Pièce Jointe :"), BorderLayout.NORTH);
+		panelInfoPJ        .add(this.lblPJ, BorderLayout.SOUTH);
+		panelInfoPJ        .add(panelBtnAjouterPJ, BorderLayout.WEST); 
+		panelBtnAjouterPJ  .add(this.btnAjouterPJ);
+
 		this.panelInfoAjout.add(panelAjout);
 		panelAjout         .add(this.btnAjouterProp);
-		panelAjout         .add(this.btnAjouterExpli);
+		panelAjout         .add(this.btnActiverPJ);
+		panelAjout         .add(this.btnActiverExpli);
 
 		/* ACTION */
 		this               .add(panelAction, BorderLayout.SOUTH);
@@ -142,20 +164,43 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 
 		/* INFO */
 		this.btnAjouterProp .addActionListener(this);
-		this.btnAjouterExpli.addActionListener(this);
+		this.btnActiverExpli.addItemListener  (this);
+		this.btnActiverPJ   .addItemListener  (this);
+		this.btnAjouterPJ   .addActionListener(this);
 
 		/* ACTION */
-		this.btnEnregistrer .addActionListener(this);
-		this.btnPrecedent   .addActionListener(this);
+		this.btnEnregistrer.addActionListener(this);
+		this.btnPrecedent  .addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getSource() == this.btnEnregistrer)  { this.enregistrer         (); }
-		if(e.getSource() == this.btnPrecedent)    { this.frame.pagePrecedente(); }
-		if(e.getSource() == this.btnAjouterProp)  { this.ajouterProposition  (); }
-		if(e.getSource() == this.btnAjouterExpli) { this.afficher(); }
+		if(e.getSource() == this.btnEnregistrer) { this.enregistrer         (); }
+		if(e.getSource() == this.btnPrecedent)   { this.frame.pagePrecedente(); }
+		if(e.getSource() == this.btnAjouterProp) { this.ajouterProposition  (); }
+		if(e.getSource() == this.btnAjouterPJ)   { this.ajouterPJ  (); }
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) 
+	{
+		if(e.getSource() == this.btnActiverExpli)       
+		{ 
+			if(e.getStateChange() == ItemEvent.DESELECTED)
+			{
+				this.txtExpli.setText("");
+			}
+			this.afficher(); 
+		}
+		if(e.getSource() == this.btnActiverPJ) 
+		{ 
+			if(e.getStateChange() == ItemEvent.DESELECTED)
+			{
+				this.lblPJ.setText("");
+			}
+			this.afficher(); 
+		}
 	}
 
 	public void enregistrer()
@@ -201,6 +246,40 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		this.afficher();
 	}
 
+	public void ajouterPJ()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Choisissez une pièce Jointe");
+        fileChooser.setFileFilter(new FileFilter() 
+		{
+            @Override
+            public boolean accept(File file) 
+			{
+                // Allow directories to be navigable
+                if (file.isDirectory()) 
+				{
+                    return true;
+                }
+                // Allow files with a ".pdf" extension
+                return file.getName().toLowerCase().endsWith(".pdf");
+            }
+
+            @Override
+            public String getDescription() 
+			{
+                return "fichiers PDF (*.pdf)";
+            }
+        });
+
+		int result = fileChooser.showOpenDialog(frame);
+
+		if (result == JFileChooser.APPROVE_OPTION) 
+		{
+			File PJ = fileChooser.getSelectedFile();
+			this.lblPJ.setText(PJ.getAbsolutePath());
+		}
+	}
+
 	public void afficher()
 	{
 		this.panelInfoScroll.removeAll();
@@ -217,13 +296,19 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 		gbc.gridy = cpt++;
 		this.panelInfoScroll.add(this.panelInfoQuestion, gbc);
 
+		if(this.btnActiverPJ.isSelected())
+		{
+			gbc.gridy = cpt++;
+			this.panelInfoScroll.add(this.panelInfoPJ, gbc);
+		}
+
 		for(PanelProp panelProp : this.lstPanelProp)
 		{
 			gbc.gridy = cpt++;
 			this.panelInfoScroll.add(panelProp, gbc);
 		}
 
-		if(this.btnAjouterExpli.isSelected())
+		if(this.btnActiverExpli.isSelected())
 		{
 			gbc.gridy = cpt++;
 			this.panelInfoScroll.add(this.panelInfoExpli, gbc);
@@ -255,12 +340,22 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 
 	public boolean explicationSelected()
 	{
-		return this.btnAjouterExpli.isSelected();
+		return this.btnActiverExpli.isSelected();
 	}
 
 	public String getExplication() 
 	{
 		return this.txtExpli.getText();
+	}
+
+	public boolean PieceJointeSelected()
+	{
+		return this.btnActiverPJ.isSelected();
+	}
+
+	public String getPieceJointe()
+	{
+		return this.lblPJ.getText();
 	}
 
 	public List<PanelProp> getPanelProps() 

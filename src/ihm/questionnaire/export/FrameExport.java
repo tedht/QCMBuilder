@@ -28,7 +28,7 @@ public class FrameExport extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelGeneration = new PanelExport(ctrl, ihm);
+		this.panelGeneration = new PanelExport(ctrl, ihm, this);
 		this.add(this.panelGeneration);
 
 		this.pack();

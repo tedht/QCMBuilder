@@ -33,7 +33,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 		this.txtIntitule.setText(question.getIntitule());
 		if(!"".equals(question.getExplication()))
 		{
-			this.btnAjouterExpli.setSelected(true);
+			this.btnActiverExpli.setSelected(true);
 			this.txtExpli.setText(question.getExplication());
 		}
 

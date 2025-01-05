@@ -292,6 +292,11 @@ public abstract class Question
 		return true;
 	}
 
+	public void clearPropositions()
+	{
+		this.lstPropositions.clear();
+	}
+
 	/*----------*/
 	/* toString */
 	/*----------*/

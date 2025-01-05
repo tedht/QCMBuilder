@@ -240,6 +240,7 @@ public class QCMBuilder
 				else
 					question = this.banqueQuestions.getQuestion(idQst);
 
+				question.clearPropositions();
 				cptReponse = 0;
 				for(String detailsProp : lstDetailsProp)
 				{
@@ -260,6 +261,7 @@ public class QCMBuilder
 				else
 					question = this.banqueQuestions.getQuestion(idQst); 
 
+				question.clearPropositions();
 				for(int i = 0; i < lstDetailsProp.size(); i+=2)
 				{
 					textGauche = lstDetailsProp.get(i);
@@ -278,9 +280,9 @@ public class QCMBuilder
 				else
 					question = this.banqueQuestions.getQuestion(idQst); 
 
+				question.clearPropositions();
 				for(String detailsProp : lstDetailsProp)
 				{
-					System.out.println(detailsProp);
 					scElim = new Scanner(detailsProp);
 					scElim.useDelimiter(":");
 
@@ -315,8 +317,8 @@ public class QCMBuilder
 	{
 		int m, s;
 
-		m = Integer.parseInt(sTemps.substring(0, 2));
-		s = Integer.parseInt(sTemps.substring(3, 5));
+		m = Integer.parseInt(sTemps.substring(0, sTemps.indexOf(':')));
+		s = Integer.parseInt(sTemps.substring(sTemps.indexOf(':') + 1));
 
 		return m * 60 + s;
 	}

@@ -1,6 +1,7 @@
 package ihm.questionnaire.export;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -28,19 +29,22 @@ import ihm.shared.PanelEditNom;
  */
 public class PanelExport extends PanelEditNom
 {
-	private JPanel     panelInfoChemin;
+	private FrameExport frame;
+	
+	private JPanel      panelInfoChemin;
 
-	private JLabel  lblChemin;
-	private JButton btnNavig;
+	private JLabel      lblChemin;
+	private JButton     btnNavig;
 	
 	/**
 	 * Constructeur de la classe PanelEditRessource.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
-	public PanelExport(Controleur ctrl, IHM ihm)
+	public PanelExport(Controleur ctrl, IHM ihm, FrameExport frame)
 	{
 		super(ctrl, ihm);
+		this.frame = frame;
 
 		JPanel panelNavig;
 
@@ -126,12 +130,12 @@ public class PanelExport extends PanelEditNom
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setAcceptAllFileFilterUsed(false);
 	
-			int result = fileChooser.showSaveDialog(null);
+			int result = fileChooser.showSaveDialog(frame);
 	
-			if (result == JFileChooser.APPROVE_OPTION) {
+			if (result == JFileChooser.APPROVE_OPTION) 
+			{
 				File   dir    = fileChooser.getSelectedFile();
-				String chemin = dir.getAbsolutePath(); // Or other file format
-				this.lblChemin.setText(chemin);
+				this.lblChemin.setText(dir.getAbsolutePath());
 			}
 		}
 	}
