@@ -406,7 +406,6 @@ public class Questionnaire
 		}
 	}
 
-
 	// Méthode pour copier un fichier
 	private void copyFile(String sourcePath, String destinationPath) throws IOException {
 		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
@@ -420,9 +419,8 @@ public class Questionnaire
 		jsonBuilder.append("\n\t{\n");
 	
 		appendBasicInfo(jsonBuilder, question, idQuestion);
-		appendSpecificPropositions(jsonBuilder, question);
-		appendReponses(jsonBuilder, question);
-		appendFinalElements(jsonBuilder, question);
+		appendQuestion(jsonBuilder, question);
+		appendFinalInfo(jsonBuilder, question);
 	
 		jsonBuilder.append("\n\t}");
 		return jsonBuilder.toString();
@@ -432,9 +430,10 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
 
 		String type = "" + question.getType();
-    	if ("QCM".equalsIgnoreCase(type) && question.getPropositions().size() < 2) {
-     	   type = "choix-unique";
-    	}
+    	if ("QCM".equalsIgnoreCase(type)) 
+			if(((QCM) question).estUnique()) 
+     	   		type = "choix-unique";
+    	
     	jsonBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
 		
 		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));// Gestion de la difficulté
@@ -460,25 +459,73 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
 	}
 	
-	private void appendSpecificPropositions(StringBuilder jsonBuilder, Question question) {
+	private void appendQuestion(StringBuilder jsonBuilder, Question question) {
 		if ("Association".equalsIgnoreCase(question.getType().toString())) {
-			appendAssociationPropositions(jsonBuilder, (Association) question);
+			appendAssociation(jsonBuilder, (Association) question);
 		} else if ("Elimination".equalsIgnoreCase(question.getType().toString())) {
-			appendEliminationPropositions(jsonBuilder, (Elimination) question);
+			appendElimination(jsonBuilder, (Elimination) question);
 		} else {
 			appendStandardPropositions(jsonBuilder, question);
 		}
 	}
 	
-	private void appendAssociationPropositions(StringBuilder jsonBuilder, Association question) {
-		List<String> gaucheList = new ArrayList<>();
-		List<String> droiteList = new ArrayList<>();
+	private void appendElimination(StringBuilder jsonBuilder, Elimination question) {
+		List<String> propositionsList = new ArrayList<>();
+		List<String> eliminationList = new ArrayList<>();
+		List<String> reponsesList = new ArrayList<>();
+		List<Double> ptsPerdusList = new ArrayList<>();
+		
+		// Parcourt toutes les propositions et organise les réponses, éliminations et points perdus
 		for (int i = 0; i < question.getPropositions().size(); i++) {
-			PropositionAssociation prop = (PropositionAssociation) question.getProposition(i);
-			gaucheList.add(prop.getTextGauche());
-			droiteList.add(prop.getTextDroite());
+			PropositionElimination prop = question.getProposition(i);
+			propositionsList.add("\"" + prop.getText() + "\"");
+			
+			if (prop.estReponse()) {
+				reponsesList.add("\"" + prop.getText() + "\"");
+			} else {
+				eliminationList.add("\"" + prop.getText() + "\"");
+				ptsPerdusList.add(prop.getNbPtsPerdus());
+			}
 		}
 	
+		// Ajouter les propositions
+		jsonBuilder.append("\t\t\"propositions\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", propositionsList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	
+		// Ajouter les réponses
+		jsonBuilder.append("\t\t\"reponses\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	
+		// Ajouter les éliminations
+		jsonBuilder.append("\t\t\"elimination\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", eliminationList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	
+		// Ajouter les points perdus
+		jsonBuilder.append("\t\t\"pointsPerdus\": [\n");
+		jsonBuilder.append("\t\t\t" + ptsPerdusList.stream().map(String::valueOf).collect(Collectors.joining(",\n\t\t\t")) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	}
+	
+	private void appendAssociation(StringBuilder jsonBuilder, Association question) {
+		List<String> gaucheList = new ArrayList<>();
+		List<String> droiteList = new ArrayList<>();
+		List<String> reponsesList = new ArrayList<>();
+		
+		// On parcourt les propositions et on sépare les éléments à gauche et à droite
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			PropositionAssociation prop = (PropositionAssociation) question.getProposition(i);
+			gaucheList.add("\"" + prop.getTextGauche() + "\"");  // Texte gauche
+			droiteList.add("\"" + prop.getTextDroite() + "\"");  // Texte droite
+	
+			// Formater les réponses sous forme de tableau de tableaux [gauche, droite]
+			String pair = String.format("[\"%s\", \"%s\"]", prop.getTextGauche(), prop.getTextDroite());
+			reponsesList.add(pair);
+		}
+	
+		// Ajouter les propositions gauche et droite
 		jsonBuilder.append("\t\t\"propositionsGauche\": [\n");
 		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", gaucheList) + "\n");
 		jsonBuilder.append("\t\t],\n");
@@ -486,52 +533,41 @@ public class Questionnaire
 		jsonBuilder.append("\t\t\"propositionsDroite\": [\n");
 		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", droiteList) + "\n");
 		jsonBuilder.append("\t\t],\n");
-	}
 	
-	private void appendEliminationPropositions(StringBuilder jsonBuilder, Elimination question) {
-		List<String> propositionsList = new ArrayList<>();
-		List<Double> pointsPerdusList = new ArrayList<>();
-	
-		for (int i = 0; i < question.getPropositions().size(); i++) {
-			PropositionElimination prop = question.getProposition(i);
-			propositionsList.add(prop.getText());
-			pointsPerdusList.add(prop.getNbPtsPerdus());
-		}
-	
-		jsonBuilder.append("\t\t\"propositions\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", propositionsList) + "\n");
-		jsonBuilder.append("\t\t],\n");
-	
-		jsonBuilder.append("\t\t\"pointsPerdus\": [\n");
-		jsonBuilder.append("\t\t\t" + pointsPerdusList.stream().map(String::valueOf).collect(Collectors.joining(",\n\t\t\t")) + "\n");
-		jsonBuilder.append("\t\t],\n");
-	}
-	
-	private void appendStandardPropositions(StringBuilder jsonBuilder, Question question) {
-		jsonBuilder.append("\t\t\"propositions\": [\n");
-		for (int i = 0; i < question.getPropositions().size(); i++) {
-			jsonBuilder.append("\t\t\t\"" + question.getPropositions().get(i) + "\"");
-			if (i < question.getPropositions().size() - 1) {
-				jsonBuilder.append(",");
-			}
-			jsonBuilder.append("\n");
-		}
-		jsonBuilder.append("\t\t],\n");
-	}
-	
-	private void appendReponses(StringBuilder jsonBuilder, Question question) {
+		// Ajouter les réponses sous forme de tableau de tableaux
 		jsonBuilder.append("\t\t\"reponses\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
+		jsonBuilder.append("\t\t],\n");
+	}
+
+	private void appendStandardPropositions(StringBuilder jsonBuilder, Question question) {
+		// Ajouter les propositions
+		jsonBuilder.append("\t\t\"propositions\": [\n");
 		for (int i = 0; i < question.getPropositions().size(); i++) {
-			jsonBuilder.append("\t\t\t\"" + question.getPropositions().get(i) + "\"");
+			PropositionQCM prop = (PropositionQCM) question.getPropositions().get(i);
+			jsonBuilder.append("\t\t\t\"" + prop.getText() + "\"");
 			if (i < question.getPropositions().size() - 1) {
 				jsonBuilder.append(",");
 			}
 			jsonBuilder.append("\n");
 		}
 		jsonBuilder.append("\t\t],\n");
+
+		// Ajouter les réponses
+		List<String> reponsesList = new ArrayList<>();
+		for (int i = 0; i < question.getPropositions().size(); i++) {
+			PropositionQCM prop = (PropositionQCM) question.getPropositions().get(i);
+			if (prop.estReponse()) {
+				reponsesList.add("\"" + prop.getText() + "\"");
+			}
+		}
+
+		jsonBuilder.append("\t\t\"reponses\": [\n");
+		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList));
+		jsonBuilder.append("\n\t\t],\n");
 	}
-	
-	private void appendFinalElements(StringBuilder jsonBuilder, Question question) {
+
+	private void appendFinalInfo(StringBuilder jsonBuilder, Question question) {
 		jsonBuilder.append(String.format("\t\t\"temps\": %d,\n", question.getTemps()));
 		jsonBuilder.append(String.format("\t\t\"note\": %f,\n", question.getNote()));
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
@@ -543,10 +579,6 @@ public class Questionnaire
 			}
 		}
 	}
-	
-	
-	
-	
 
 	// à faire/décommenter à la toute fin
 	// Méthode pour générer un dossier complémentaire
@@ -594,7 +626,7 @@ public class Questionnaire
         Notion        n1, n2, n3;
         List<Notion>  l1;
 
-        QCM q1, q4;
+        QCM q1;
 		Association q2;
 		Elimination q3;
 
@@ -611,13 +643,21 @@ public class Questionnaire
 
         q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
         q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
-        q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 1.5, 40, Difficulte.TRES_FACILE);
-        q4 = new QCM(r1.getCode(), n1.getIdNot(), 4, 0.5, 0, Difficulte.FACILE);
+        q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 4, 40, Difficulte.TRES_FACILE);
 
-	
+		q1.setUnique(true);
+		q1.setIntitule("bah choisis la bonne réponse");
+		q1.setExplication("bien joué frérot");
 		q1.ajouterProposition(new PropositionQCM("prop1", false));
 		q1.ajouterProposition(new PropositionQCM("prop2", true));
 		q1.ajouterProposition(new PropositionQCM("prop3", false));
+
+		q2.ajouterProposition(new PropositionAssociation("prop1", "prop1"));
+		q2.ajouterProposition(new PropositionAssociation("prop2", "prop2"));
+
+		q3.ajouterProposition(new PropositionElimination("prop1", true, 0, 0));
+		q3.ajouterProposition(new PropositionElimination("prop2",false, 1, 1.0));
+		q3.ajouterProposition(new PropositionElimination("prop3",false, 2, 1.5));
 
         l1 = new ArrayList<Notion>();
         l1.add(n1);
@@ -628,7 +668,6 @@ public class Questionnaire
         banqueQuestions.ajouterQuestion(q1);
         banqueQuestions.ajouterQuestion(q2);
         banqueQuestions.ajouterQuestion(q3);
-        banqueQuestions.ajouterQuestion(q4);
 
         quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
 

@@ -178,10 +178,10 @@ function afficherFin() {
 
 function stringAfficherReponses(reponse, type) {
     switch (type) {
-        case 'qcm':
+        case 'QCM':
             return `
             <label>
-                <input type="checkbox" name="qcm" value="${reponse}">
+                <input type="checkbox" name="QCM" value="${reponse}">
                 ${reponse}
             </label><br>`;    
         default:
@@ -193,6 +193,13 @@ function stringAfficherReponses(reponse, type) {
     } 
 }
 
+function melangerTableau(tableau) {
+    for (let i = tableau.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Index aléatoire entre 0 et i
+        [tableau[i], tableau[j]] = [tableau[j], tableau[i]]; // Échange des éléments
+    }
+    return tableau;
+}
 
 function afficherReponses(index) {
     const question = questions[index];
@@ -207,18 +214,21 @@ function afficherReponses(index) {
     let corpsQuestions = `<form id="qcm-form">`;
 
     // Gestion des différents types de questions
-    if (type === "qcm" || type === "choix-unique" || type === "elimination") {
+    if (type === "QCM" || type === "choix-unique" || type === "Elimination") {
         reponses.forEach((reponse) => {
             corpsQuestions += stringAfficherReponses(reponse, type);
         });
 
-        if (type === "elimination") {
+        if (type === "Elimination") {
             corpsQuestions += `
                 <button type="button" id="eliminer-btn" class="nav-button" onclick="eliminerReponse(${index})">
                     Éliminer une réponse
                 </button>`;
         }
-    } else if (type === "association") {
+    } else if (type === "Association") {
+        // // Mélange des propositionsDroite
+        // propositionsDroite = melangerTableau([...propositionsDroite]); 
+        
         // Gestion spécifique pour les questions d'association
         corpsQuestions += `
             <div class="association-container">
@@ -412,7 +422,7 @@ function recupererReponses(index) {
 
     let reponsesSelectionnees = [];
 
-    if (type === "qcm") {
+    if (type === "QCM") {
         const checkboxes = formulaire.querySelectorAll('input[type="checkbox"]:checked');
         reponsesSelectionnees = Array.from(checkboxes).map(checkbox => checkbox.value);
     } else if (type === "choix-unique") {
@@ -420,7 +430,7 @@ function recupererReponses(index) {
         if (radio) {
             reponsesSelectionnees = [radio.value];
         }
-    } else if (type === "elimination") {
+    } else if (type === "Elimination") {
         // Récupère les réponses éliminées
         const reponsesEliminees = Array.from(formulaire.querySelectorAll('.eliminee input'))
                                         .map(input => input.value);
@@ -447,7 +457,7 @@ async function validerReponses(index) {
     const { reponsesSelectionnees, reponsesEliminees } = recupererReponses(index);
 
     // Cas spécifique pour le type "association"
-    if (type === "association") {
+    if (type === "Association") {
         const reponsesAssociees = convertirReponsesEnObjets(question);
         const reponsesAssocieesUtilisateur = associations; // Supposons que `associations` contient les réponses de l'utilisateur
 
@@ -490,7 +500,7 @@ async function validerReponses(index) {
     } else {
         // Pour les autres types de questions, vérifier si des réponses ont été sélectionnées
         if (reponsesSelectionnees.length === 0) {
-            messageErreur = type === "elimination" ? 'Veuillez sélectionner une réponse après élimination' :
+            messageErreur = type === "Elimination" ? 'Veuillez sélectionner une réponse après élimination' :
                             type === "choix-unique" ? 'Veuillez sélectionner une réponse' : 
                             'Veuillez sélectionner au moins une réponse';
             alert(messageErreur);
@@ -501,7 +511,7 @@ async function validerReponses(index) {
 
     // Calculer les points perdus si c'est une question d'élimination
     let pointsPerdus = 0;
-    if (type === "elimination") {
+    if (type === "Elimination") {
         if (question.elimination) {
             reponsesEliminees.forEach((reponseEliminee) => {
                 const indexElimination = question.elimination.indexOf(reponseEliminee);
@@ -602,7 +612,7 @@ function rechargerReponses(question) {
     if (reponseUtilisateur.length > 0 || reponsesEliminees.length > 0) {
         const formulaire = document.getElementById('qcm-form');
 
-        if (question.type === "qcm") {
+        if (question.type === "QCM") {
             reponseUtilisateur.forEach(reponse => {
                 const checkbox = formulaire.querySelector(`input[type="checkbox"][value="${reponse}"]`);
                 if (checkbox) {
@@ -618,7 +628,7 @@ function rechargerReponses(question) {
                 colorierReponse(radio.parentElement, bonneReponse);
             }
         } 
-        else if (question.type === "elimination") {
+        else if (question.type === "Elimination") {
             const radios = formulaire.querySelectorAll('input[type="radio"]');
             radios.forEach(radio => {
                 if (reponsesEliminees.includes(radio.value)) {
@@ -631,7 +641,7 @@ function rechargerReponses(question) {
                 }
             });
         }
-        else if (question.type === "association") {
+        else if (question.type === "Association") {
             // Gestion des réponses pour les associations
             document.getElementById('btn-reinitialiser-asso').style.pointerEvents = 'none';
             document.getElementById('btn-reinitialiser-asso').style.opacity = '0.5';
