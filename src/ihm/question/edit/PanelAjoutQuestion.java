@@ -44,7 +44,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener
 	protected List<PanelProp>   lstPanelProp;
 	protected JToggleButton     btnAjouterExpli;
 	protected JButton           btnAjouterProp;
-	protected JScrollPane	      scrollPanelInfo;
+	protected JScrollPane	    scrollPanelInfo;
 	protected ButtonGroup       btgQCM;
 
 	protected JButton           btnPrecedent, btnEnregistrer;

@@ -105,6 +105,42 @@ public class FrameEditQuestion extends JFrame
 		
 		List<String> lstErreurs = new ArrayList<String>();
 
+		if(sPoints.isEmpty())
+		{
+			lstErreurs.add("Le champ 'Points' est vide");
+		}
+		else
+		{
+			try 
+			{
+				Double.parseDouble(sPoints);
+			} 
+			catch (Exception e) 
+			{
+				lstErreurs.add("Valeur invalide pour le champ 'Points'");
+			}
+		}
+
+		if(sTemps.isEmpty())
+		{
+			lstErreurs.add("Le champ 'Temps' est vide");
+		}
+		else
+		{
+			try 
+			{
+				int m = Integer.parseInt(sTemps.substring(0,sTemps.indexOf(':')));
+				int s = Integer.parseInt(sTemps.substring(sTemps.indexOf(':') + 1));
+				
+				if(m < 0 || m >= 60 || s < 0 || s >= 60) // durée max -> 59:59
+					lstErreurs.add("Valeur invalide pour le champ 'Temps'");
+			} 
+			catch (Exception e) 
+			{
+				lstErreurs.add("Valeur invalide pour le champ 'Temps'");
+			}
+		}		
+
 		if(intitule.isEmpty()) 
 			lstErreurs.add("L'intitulé est vide");
 
