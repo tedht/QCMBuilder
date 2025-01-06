@@ -691,9 +691,12 @@ function gererBtnInfo() {
     if (questionActuelle && questionActuelle.fichierComplementaire) {
         const fichier = questionActuelle.fichierComplementaire;
 
+        // Construire le chemin complet basé sur le dossier "fichiersComplementaires"
+        const cheminComplet = `./fichiersComplementaires/${fichier}`;
+
         // Créer un lien pour afficher le fichier
         const lien = document.createElement("a");
-        lien.href = fichier.chemin;
+        lien.href = cheminComplet;
         lien.target = "_blank"; // Ouvrir dans un nouvel onglet
         lien.click(); // Simuler un clic pour ouvrir la page
     } else {
