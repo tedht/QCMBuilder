@@ -581,7 +581,7 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
 		for (Notion notion : notions) {
-			if (notion.getIdNot() == question.getIdNot()) {
+			if (notion.getIdNot() == question.getIdNot() + 1) {
 				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", notion.getNom()));
 				break;
 			}
