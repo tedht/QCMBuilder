@@ -26,7 +26,6 @@ public class BanqueRessources extends Banque
 	private List<Ressource> lstRessources;
 
 	private String          cheminFic;
-	private String          currentDir;
 
 
 
@@ -40,9 +39,8 @@ public class BanqueRessources extends Banque
 	public BanqueRessources()
 	{
 		this.lstRessources = new ArrayList<Ressource>();
-		this.currentDir    = System.getProperty("user.dir");
 
-		this.cheminFic     = this.currentDir + "/data/ressources.csv";
+		this.cheminFic     = "../data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
@@ -228,8 +226,8 @@ public class BanqueRessources extends Banque
 			// this.lstRessources n'est pas censé contenir des valeurs null
 			if(this.lstRessources.get(i).getCode().equals(codeRes))
 			{
-				this.lstRessources.remove(i);	
-				this.supprimerDossier(new File(this.currentDir + "/data/ressources/" + codeRes));
+				this.lstRessources.remove(i);
+				this.supprimerDossier(new File("../data/ressources/" + codeRes));
 			}
 		}
 	}
