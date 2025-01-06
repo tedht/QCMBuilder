@@ -1,6 +1,7 @@
 package ihm.questionnaire.export;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -55,9 +56,11 @@ public class PanelExport extends PanelEditNom
 		this.lblNom.setText("Nom de l'évaluation :");
 
 		this.panelInfoChemin = new JPanel(new BorderLayout());
-		panelBtnNavig           = new JPanel();
+		panelBtnNavig        = new JPanel();
 		this.lblChemin       = new JLabel("");
-		this.btnNavig        = new JButton("N");
+
+		this.btnNavig = new JButton(IHM.getImgIconSVG("res/Dossier.svg", 16, 16));
+		this.btnNavig.setPreferredSize(new Dimension(24, 24));
 
 		/*-------------------------------*/
 		/* positionnement des composants */

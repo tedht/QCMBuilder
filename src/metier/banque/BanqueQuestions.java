@@ -49,7 +49,7 @@ public class BanqueQuestions extends Banque
 		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		this.cheminFic        = "../data/questions.csv";
+		this.cheminFic        = "data/questions.csv";
 
 		this.lireQuestions(this.cheminFic);
 	}
@@ -210,7 +210,7 @@ public class BanqueQuestions extends Banque
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
 
-				cheminDirQst = "../data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 
@@ -287,7 +287,6 @@ public class BanqueQuestions extends Banque
 							if(scProp.hasNextLine())
 							{
 								detailsProp = scProp.nextLine();
-								System.out.println(detailsProp);
 
 								scElim = new Scanner(detailsProp);
 								scElim.useDelimiter(":");
@@ -382,7 +381,7 @@ public class BanqueQuestions extends Banque
 
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
-				cheminDirQst  = "../data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 				dirQst        = new File(cheminDirQst);
 				dirProp       = new File(cheminDirQst+"/propositions");
 				
@@ -578,7 +577,7 @@ public class BanqueQuestions extends Banque
 			this.fileIdUtilisable.offer(id);
 
 			// Supprime les dossiers et fichiers associés à la question
-			this.supprimerDossier(new File("../data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
+			this.supprimerDossier(new File("data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
 		
 			this.sauvegarder();
 		}

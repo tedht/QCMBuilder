@@ -2,6 +2,7 @@ package ihm.question.edit;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -28,6 +29,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 
+import ihm.IHM;
 import ihm.question.edit.proposition.PanelProp;
 import ihm.question.edit.proposition.PanelPropAssoc;
 import ihm.question.edit.proposition.PanelPropElim;
@@ -106,10 +108,15 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.txtExpli.setCaretColor   (Color.BLACK);
 		this.txtExpli.setMargin       (new Insets(2, 5, 2, 5));
 
-		this.btnAjouterProp  = new JButton("+");
-		this.btnActiverExpli = new JToggleButton("Expl");
-		this.btnActiverPJ    = new JToggleButton("PJ");
-		this.btnAjouterPJ    = new JButton("Sélectionner une Pièce Jointe");
+		this.btnAjouterProp = new JButton(IHM.getImgIconSVG("res/Ajouter.svg", 16, 16));
+		this.btnAjouterProp.setPreferredSize(new Dimension(24, 24));
+
+		this.btnActiverExpli = new JToggleButton("Ajouter une Explication");
+
+		this.btnActiverPJ = new JToggleButton(IHM.getImgIconSVG("res/AjouterPJ.svg", 16, 16));
+		this.btnActiverPJ.setPreferredSize(new Dimension(24, 24));
+
+		this.btnAjouterPJ = new JButton("Sélectionner une Pièce Jointe");
 
 		this.panelInfoScroll = new JPanel(new GridBagLayout());
 		this.scrollPanelInfo = new JScrollPane(this.panelInfoScroll);

@@ -308,7 +308,6 @@ public class QCMBuilder
 					scElim.useDelimiter(":");
 
 					estReponse  = scElim.next().charAt(0) == 'V';
-					System.out.println(detailsProp);
 					ordreElim   = scElim.nextInt();
 					nbPtsPerdus = Double.parseDouble(scElim.next());
 

@@ -43,7 +43,7 @@ public class BanqueNotions extends Banque
 		this.lstNotions       = new ArrayList<Notion>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		this.cheminFic        = "../data/notions.csv";
+		this.cheminFic        = "data/notions.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
@@ -273,7 +273,7 @@ public class BanqueNotions extends Banque
 			this.fileIdUtilisable.offer(idNot);
 	
 			// Supprime le dossier associer à la notion
-			this.supprimerDossier(new File("../data/ressources/" + notion.getCodeRes() + "/notion" + notion.getIdNot()));
+			this.supprimerDossier(new File("data/ressources/" + notion.getCodeRes() + "/notion" + notion.getIdNot()));
 
 			this.sauvegarder();
 		}

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
@@ -49,7 +50,8 @@ public class PanelPropAssoc extends PanelProp
 			this.tabTxtProposition[i].setCaretColor(Color.BLACK);
 			this.tabTxtProposition[i].setMargin(new Insets(2, 5, 2, 5));
 	
-			this.tabBtnSupprimer[i] = new JButton("Suppr");
+			this.tabBtnSupprimer[i] = new JButton(IHM.getImgIconSVG("res/Supprimer.svg", 16, 16));
+			this.tabBtnSupprimer[i].setPreferredSize(new Dimension(24, 24));
 
 		}
 

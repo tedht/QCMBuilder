@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
@@ -40,7 +41,8 @@ public class PanelPropQCM extends PanelProp
 		this.txtProposition.setCaretColor(Color.BLACK);
 		this.txtProposition.setMargin(new Insets(2, 5, 2, 5));
 
-		this.btnSupprimer = new JButton("Suppr");
+		this.btnSupprimer = new JButton(IHM.getImgIconSVG("res/Supprimer.svg", 16, 16));
+		this.btnSupprimer.setPreferredSize(new Dimension(24, 24));
 
 		this.rbReponse = new JRadioButton();
 

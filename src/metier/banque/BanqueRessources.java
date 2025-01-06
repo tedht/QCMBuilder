@@ -40,7 +40,7 @@ public class BanqueRessources extends Banque
 	{
 		this.lstRessources = new ArrayList<Ressource>();
 
-		this.cheminFic     = "../data/ressources.csv";
+		this.cheminFic     = "data/ressources.csv";
 
 		this.lireRessources(this.cheminFic);
 	}
@@ -227,7 +227,7 @@ public class BanqueRessources extends Banque
 			if(this.lstRessources.get(i).getCode().equals(codeRes))
 			{
 				this.lstRessources.remove(i);
-				this.supprimerDossier(new File("../data/ressources/" + codeRes));
+				this.supprimerDossier(new File("data/ressources/" + codeRes));
 			}
 		}
 	}

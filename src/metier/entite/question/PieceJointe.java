@@ -122,7 +122,7 @@ public class PieceJointe
 
 
 		// Répertoire de départ pour l'exploration
-		repDep = Paths.get("../data/ressources/");
+		repDep = Paths.get("data/ressources/");
 
 		// Création d'une instance de notre visiteur personnalisé
 		visiteur = new MaxFileFinder();
@@ -174,9 +174,9 @@ public class PieceJointe
 		PieceJointe pj1, pj2, pj3;
 
 
-		pj1 = new PieceJointe("../data/test1.txt", "../data/ressources/R1.01 Initiation au développement/Abstraction/");
-		pj2 = new PieceJointe("../data/test2.csv", "../data/ressources/R1.02 Développement interfaces Web/CSS/");
-		pj3 = new PieceJointe("../data/test3.pdf", "../data/ressources/R3.06 Architecture des réseaux/Sockets/");
+		pj1 = new PieceJointe("data/test1.txt", "data/ressources/R1.01 Initiation au développement/Abstraction/");
+		pj2 = new PieceJointe("data/test2.csv", "data/ressources/R1.02 Développement interfaces Web/CSS/");
+		pj3 = new PieceJointe("data/test3.pdf", "data/ressources/R3.06 Architecture des réseaux/Sockets/");
 
 		System.out.println(pj1);
 		System.out.println(pj2);

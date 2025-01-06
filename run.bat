@@ -1,10 +1,12 @@
 @echo off
 
+REM Classpath
+set CLASSPATH=lib\*;bin;.
+
 REM Compilation
-javac @compile.list -d bin 
+javac -cp %CLASSPATH% @compile.list -d bin
 
 REM Exécution
-cd bin
-java controleur/Controleur
+java -cp %CLASSPATH% controleur.Controleur
 
 pause
