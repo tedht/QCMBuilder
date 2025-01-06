@@ -106,6 +106,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.txtExpli.setBorder       (new LineBorder(Color.GRAY));
 		this.txtExpli.setFont         (new Font("Arial", Font.PLAIN, 12));
 		this.txtExpli.setCaretColor   (Color.BLACK);
+		
 		this.txtExpli.setMargin       (new Insets(2, 5, 2, 5));
 
 		this.btnAjouterProp = new JButton(IHM.getImgIconSVG("res/Ajouter.svg", 16, 16));
@@ -115,8 +116,11 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 		this.btnActiverPJ = new JToggleButton(IHM.getImgIconSVG("res/AjouterPJ.svg", 16, 16));
 		this.btnActiverPJ.setPreferredSize(new Dimension(24, 24));
+		this.btnActiverPJ.setFocusable(false);
 
-		this.btnAjouterPJ = new JButton("Sélectionner une Pièce Jointe");
+		this.btnAjouterPJ = new JButton(IHM.getImgIconSVG("res/AjouterPJ.svg", 16, 16));
+		this.btnAjouterPJ.setPreferredSize(new Dimension(24, 24));
+		this.btnAjouterPJ.setFocusable(false);
 
 		this.panelInfoScroll = new JPanel(new GridBagLayout());
 		this.scrollPanelInfo = new JScrollPane(this.panelInfoScroll);
@@ -150,7 +154,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		panelInfoExpli     .add(new JLabel("Explication :"), BorderLayout.NORTH);
 		panelInfoExpli     .add(this.txtExpli, BorderLayout.CENTER);
 
-		panelInfoPJ        .add(new JLabel("Pièce Jointe :"), BorderLayout.NORTH);
+		panelInfoPJ        .add(new JLabel("Sélectionner une Pièce Jointe :"), BorderLayout.NORTH);
 		panelInfoPJ        .add(this.lblPJ, BorderLayout.CENTER);
 		panelInfoPJ        .add(panelBtnAjouterPJ, BorderLayout.WEST); 
 		panelBtnAjouterPJ  .add(this.btnAjouterPJ);
@@ -257,34 +261,39 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Choisissez une pièce Jointe");
-        fileChooser.setFileFilter(new FileFilter() 
-		{
-            @Override
-            public boolean accept(File file) 
+		fileChooser.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File file) 
 			{
-                // Allow directories to be navigable
-                if (file.isDirectory()) 
+				if (file.isDirectory()) 
 				{
-                    return true;
-                }
-                // Allow files with a ".pdf" extension
-                return file.getName().toLowerCase().endsWith(".pdf");
-            }
+					return true;
+				}
 
-            @Override
-            public String getDescription() 
+				String fileName = file.getName().toLowerCase();
+				return fileName.endsWith(".pdf")  ||
+				       fileName.endsWith(".mp3")  ||
+				       fileName.endsWith(".mp4")  ||
+				       fileName.endsWith(".jpg")  ||
+				       fileName.endsWith(".jpeg") ||
+				       fileName.endsWith(".png")  ||
+				       fileName.endsWith(".gif");
+			}
+
+			@Override
+			public String getDescription() 
 			{
-                return "fichiers PDF (*.pdf)";
-            }
-        });
+				return "Fichiers PDF, Audio, Vidéo, et Images (*.pdf, *.mp3, *.mp4, *.jpg, *.jpeg, *.png, *.gif)";
+			}
+		});
 
 		int result = fileChooser.showOpenDialog(frame);
 
-		if (result == JFileChooser.APPROVE_OPTION) 
-		{
+		if (result == JFileChooser.APPROVE_OPTION) {
 			File PJ = fileChooser.getSelectedFile();
 			this.lblPJ.setText(PJ.getAbsolutePath());
 		}
+
 	}
 
 	public void afficher()
