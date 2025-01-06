@@ -426,7 +426,7 @@ public class BanqueQuestions extends Banque
 							else
 								pwTxt.print("F:");
 
-							pwTxt.println(propQCM.getText());	
+							pwTxt.println(propQCM.getText());
 
 							pwTxt.close();
 						}
