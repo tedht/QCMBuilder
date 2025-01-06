@@ -62,6 +62,7 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 		
         this.btnModifier = new JButton(IHM.getImgIconSVG("res/Modifier.svg", 16, 16));
         this.btnModifier.setPreferredSize(new Dimension(24, 24));
+		
 		this.btnSupprimer = new JButton(IHM.getImgIconSVG("res/Supprimer.svg", 16, 16));
 		this.btnSupprimer.setPreferredSize(new Dimension(24, 24));
 
