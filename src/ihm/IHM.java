@@ -1,8 +1,22 @@
 package ihm;
 
+import java.awt.Dimension;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import org.apache.batik.transcoder.SVGAbstractTranscoder;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+
+import com.kitfox.svg.app.beans.SVGIcon;
 
 import controleur.Controleur;
 import ihm.ressource.FrameGestionRessource;
@@ -61,6 +75,22 @@ public class IHM
 
 		this.defaultX = this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () + IHM.MARGE;
 		this.defaultY = this.frameQCMBuilder.getY();
+
+		this.frameGestionNotion.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) 
+			{
+                IHM.this.frameGestionRessource.setVisible(false);
+            }
+        });
+
+		this.frameGestionRessource.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) 
+			{
+                IHM.this.frameGestionNotion.setVisible(false);
+            }
+        });
 	}
 
 	private void resetVisible()
@@ -264,5 +294,55 @@ public class IHM
 			this.frameExport.toFront();
 		}
 	}
+
+	public static SVGIcon getImgIconSVG(String chemin, int largeur, int hauteur)
+	{
+        SVGIcon svgIcon = new SVGIcon();
+        try {
+            svgIcon.setSvgURI(new URI("file:" + chemin));
+            svgIcon.setPreferredSize(new Dimension(largeur, hauteur));
+			svgIcon.setScaleToFit(true);
+            svgIcon.setAntiAlias(true);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return  svgIcon;
+	}
+
+	/*
+	public static Icon getImgIconSVG(String chemin, int largeur, int hauteur)
+	{
+		try {
+            TranscoderInput input = new TranscoderInput(new File(chemin).toURI().toString());
+
+            BufferedImage[] imageHolder = new BufferedImage[1]; // To hold the resulting image
+
+            ImageTranscoder transcoder = new ImageTranscoder() {
+                @Override
+                public BufferedImage createImage(int largeur, int hauteur) {
+                    return new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
+                }
+
+                @Override
+                public void writeImage(BufferedImage img, TranscoderOutput out) {
+                    imageHolder[0] = img;
+                }
+            };
+
+            transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, (float) largeur);
+            transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, (float) hauteur);
+
+            transcoder.transcode(input, null);
+
+            BufferedImage image = imageHolder[0];
+            return new ImageIcon(image);
+
+        } catch (Exception e) {
+			System.out.println("error");
+            e.printStackTrace();
+        }
+        return null;
+	}*/
 
 }

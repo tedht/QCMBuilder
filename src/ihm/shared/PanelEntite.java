@@ -59,9 +59,12 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 		this.lblSousTitre.setFont(new Font("Arial", Font.BOLD, 12));
 
 		this.panelAction = new JPanel(); this.panelAction.setOpaque(false);
+		
+        this.btnModifier = new JButton(IHM.getImgIconSVG("res/Modifier.svg", 16, 16));
+        this.btnModifier.setPreferredSize(new Dimension(24, 24));
+		this.btnSupprimer = new JButton(IHM.getImgIconSVG("res/Supprimer.svg", 16, 16));
+		this.btnSupprimer.setPreferredSize(new Dimension(24, 24));
 
-		this.btnModifier  = new JButton("M");
-		this.btnSupprimer = new JButton("S");
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/

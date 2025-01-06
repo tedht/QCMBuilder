@@ -50,7 +50,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	protected JToggleButton     btnActiverExpli, btnActiverPJ;
 	protected JButton           btnAjouterProp, btnAjouterPJ;
 	protected JScrollPane	    scrollPanelInfo;
-	protected ButtonGroup       btgQCM;
+	protected ButtonGroup       btgReponse;
 	protected JLabel            lblPJ;
 
 	protected JButton           btnPrecedent, btnEnregistrer;
@@ -75,13 +75,13 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		panelInfo = new JPanel(new BorderLayout());
 
 		this.panelInfoQuestion = new JPanel(new BorderLayout());
-		this.panelInfoQuestion.setBorder(new EmptyBorder(0, 10, 0, 10));
+		this.panelInfoQuestion.setBorder   (new EmptyBorder(0, 10, 0, 10));
 
 		this.panelInfoExpli = new JPanel(new BorderLayout());
-		this.panelInfoExpli.setBorder(new EmptyBorder(10, 10, 0, 10));
+		this.panelInfoExpli.setBorder   (new EmptyBorder(10, 10, 0, 10));
 		
 		this.panelInfoPJ = new JPanel(new BorderLayout());
-		this.panelInfoPJ.setBorder(new EmptyBorder(0, 10, 0, 10));
+		this.panelInfoPJ.setBorder   (new EmptyBorder(0, 10, 0, 10));
 		
 		panelBtnAjouterPJ = new JPanel();
 
@@ -119,7 +119,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.scrollPanelInfo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.scrollPanelInfo.setBorder(new EmptyBorder(0,0,0,0));
 
-		this.btgQCM = new ButtonGroup();
+		this.btgReponse = new ButtonGroup();
 
 		this.lblPJ = new JLabel();
 		
@@ -144,7 +144,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		panelInfoExpli     .add(this.txtExpli, BorderLayout.CENTER);
 
 		panelInfoPJ        .add(new JLabel("Pièce Jointe :"), BorderLayout.NORTH);
-		panelInfoPJ        .add(this.lblPJ, BorderLayout.SOUTH);
+		panelInfoPJ        .add(this.lblPJ, BorderLayout.CENTER);
 		panelInfoPJ        .add(panelBtnAjouterPJ, BorderLayout.WEST); 
 		panelBtnAjouterPJ  .add(this.btnAjouterPJ);
 
@@ -326,11 +326,11 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 	public void ajouterRbResponse(JRadioButton rbReponse)
 	{
-		this.btgQCM.add(rbReponse);
+		this.btgReponse.add(rbReponse);
 	}
 	public void supprimerRbResponse(JRadioButton rbReponse) 
 	{
-		this.btgQCM.remove(rbReponse);
+		this.btgReponse.remove(rbReponse);
 	}
 
 	public String getIntitule() 

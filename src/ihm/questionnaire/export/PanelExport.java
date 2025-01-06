@@ -45,7 +45,7 @@ public class PanelExport extends PanelEditNom
 		super(ctrl, ihm);
 		this.frame = frame;
 
-		JPanel panelNavig;
+		JPanel panelBtnNavig;
 
 		this.panelInfo.setLayout(new GridBagLayout());
 
@@ -55,7 +55,7 @@ public class PanelExport extends PanelEditNom
 		this.lblNom.setText("Nom de l'évaluation :");
 
 		this.panelInfoChemin = new JPanel(new BorderLayout());
-		panelNavig           = new JPanel();
+		panelBtnNavig           = new JPanel();
 		this.lblChemin       = new JLabel("");
 		this.btnNavig        = new JButton("N");
 
@@ -75,9 +75,10 @@ public class PanelExport extends PanelEditNom
 		gbc.gridy = 1;
 		this.panelInfo.add(this.panelInfoChemin, gbc);
 
+		this.panelInfoChemin.add(new JLabel("Répertoire de sauvegarde :"), BorderLayout.NORTH);
+		this.panelInfoChemin.add(panelBtnNavig, BorderLayout.WEST);
 		this.panelInfoChemin.add(this.lblChemin, BorderLayout.CENTER);
-		this.panelInfoChemin.add(panelNavig, BorderLayout.WEST);
-		panelNavig          .add(this.btnNavig);
+		panelBtnNavig       .add(this.btnNavig);
 
 		/*---------------------------*/
 		/* Activation des composants */

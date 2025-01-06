@@ -208,7 +208,6 @@ public class FrameEditQuestion extends JFrame
 						PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
 						if(panelPropAssoc.getTextGauche().isEmpty() || panelPropAssoc.getTextDroite().isEmpty())
 						{
-							System.out.println("hello");
 							lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
 							break;
 						}
@@ -223,20 +222,42 @@ public class FrameEditQuestion extends JFrame
 						{
 							reponse = true;
 						}
-						else
-						{
-							if(panelPropElim.getOrdreElim().isEmpty() || panelPropElim.getPointsEnMoins().isEmpty())
-							{
-								lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
-								break;
-							}
-						}
 	
 						if(panelPropElim.getText().isEmpty())
 						{
 							lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
 							reponse = true;
 							break;
+						}
+
+						try 
+						{
+							if(!"".equals(panelPropElim.getOrdreElim()))
+							{
+								int ordre = Integer.parseInt(panelPropElim.getOrdreElim());
+
+								if(ordre <= 0)
+									lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
+							}
+						} 
+						catch (Exception e) 
+						{
+							lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
+						}
+
+						try 
+						{
+							if(!"".equals(panelPropElim.getPointsEnMoins()))
+							{
+								double nbPointsEnMoins = Double.parseDouble(panelPropElim.getPointsEnMoins());
+
+								if(nbPointsEnMoins >= 0.0)
+									lstErreurs.add("Valeur invalide pour au moins un des champs 'Pts perdus'");
+							}
+						} 
+						catch (Exception e) 
+						{
+							lstErreurs.add("Valeur invalide pour au moins un des champs 'Pts perdus'");
 						}
 					}
 	
@@ -305,12 +326,9 @@ public class FrameEditQuestion extends JFrame
 				{
 					PanelPropElim panelPropElim = (PanelPropElim) panelProp;
 					detailsProp = panelPropElim.estReponse() ? "V:" : "F:";
-					if(!panelPropElim.estReponse()) 
-					{
-						detailsProp += panelPropElim.getOrdreElim    () + ":";
-						detailsProp += panelPropElim.getPointsEnMoins() + ":";
-					}
-					detailsProp = panelPropElim.getText();
+					detailsProp += ("".equals(panelPropElim.getOrdreElim    ()) ? "-1:"  : panelPropElim.getOrdreElim    () + ":");
+					detailsProp += ("".equals(panelPropElim.getPointsEnMoins()) ? "0.0:" : panelPropElim.getPointsEnMoins() + ":");
+					detailsProp += panelPropElim.getText();
 					lstDetailsProp.add(detailsProp);
 				}
 			} 

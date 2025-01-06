@@ -217,7 +217,6 @@ public class QCMBuilder
 		scDetails.close();
 
 		Difficulte   difficulte = Difficulte.fromInt(valDiff);
-		System.out.println(difficulte);
 		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
 		int          temps      = this.enSeconde(sTemps);
 
@@ -309,8 +308,9 @@ public class QCMBuilder
 					scElim.useDelimiter(":");
 
 					estReponse  = scElim.next().charAt(0) == 'V';
+					System.out.println(detailsProp);
 					ordreElim   = scElim.nextInt();
-					nbPtsPerdus = scElim.nextDouble();
+					nbPtsPerdus = Double.parseDouble(scElim.next());
 
 					text = scElim.next ();
 					

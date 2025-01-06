@@ -21,7 +21,7 @@ public class FrameGestionQuestion extends JFrame
 		this.ihm  = ihm;
 
 		this.setTitle("Gestion Question");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.setResizable(false);
 
         // Création et ajout du panneau de menu.

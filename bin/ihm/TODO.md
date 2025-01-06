@@ -1,7 +1,8 @@
 - exporter Questionnaire
-- apercu d'une Questionnaire générée
-- afficher une question lorsqu'on clique dessus
-
 - java doc
+- Icones 
 
-- gérer le cas ou + de questions dans questionnaire que dans base de la même difficulté 
+(On oublie tout ça)
+- aperçu d'une Questionnaire générée
+- afficher une question lorsqu'on clique dessus
+- gérer le cas ou + de questions dans questionnaire que dans base de la même difficulté

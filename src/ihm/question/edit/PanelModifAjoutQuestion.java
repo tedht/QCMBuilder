@@ -9,6 +9,7 @@ import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 import metier.entite.question.association.Association;
 import metier.entite.question.elimination.Elimination;
+import metier.entite.question.elimination.PropositionElimination;
 import metier.entite.question.qcm.QCM;
 
 public class PanelModifAjoutQuestion extends PanelAjoutQuestion
@@ -81,10 +82,13 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 			{
 				this.ajouterProposition();
 				panelPropElim = (PanelPropElim)this.lstPanelProp.get(i);
-				panelPropElim.setText         (   elim.getProposition(i).getText       ());
-				panelPropElim.setReponse      (   elim.getProposition(i).estReponse    ());
-				panelPropElim.setOrdreElim    (""+elim.getProposition(i).getOrdreElim  ());
-				panelPropElim.setPointsEnMoins(""+elim.getProposition(i).getNbPtsPerdus());
+
+				PropositionElimination propElim = elim.getProposition(i);
+
+				panelPropElim.setText         (propElim.getText   ());
+				panelPropElim.setReponse      (propElim.estReponse());
+				panelPropElim.setOrdreElim    ((propElim.getOrdreElim  () == -1  ? "" : ""+propElim.getOrdreElim  ()));
+				panelPropElim.setPointsEnMoins((propElim.getNbPtsPerdus() == 0.0 ? "" : ""+propElim.getNbPtsPerdus()));
 			}
 		}
 	}
