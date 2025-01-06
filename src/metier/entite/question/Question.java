@@ -1,6 +1,7 @@
 package metier.entite.question;
 
 import java.util.List;
+import java.io.File;
 import java.util.ArrayList;
 
 /** Classe Question
@@ -13,15 +14,15 @@ public abstract class Question
 	/* Attributs */
 	/*-----------*/
 
-	private String            codeRes;
-	private int               idNot;
-	private int               idQst;
-	private Difficulte        difficulte;
-	private int               temps;
-	private double            note;
-	private String            intitule;
-	private String            explication;
-	private List<PieceJointe> piecesJointes;
+	private String      codeRes;
+	private int         idNot;
+	private int         idQst;
+	private Difficulte  difficulte;
+	private int         temps;
+	private double      note;
+	private String      intitule;
+	private String      explication;
+	private PieceJointe pieceJointe;
 
 	protected List<Proposition> lstPropositions;
 
@@ -50,7 +51,7 @@ public abstract class Question
 		this.intitule    = "";
 		this.explication = "";
 
-		this.piecesJointes   = new ArrayList<PieceJointe>();
+		this.pieceJointe = null;
 		this.lstPropositions = new ArrayList<Proposition>();
 	}
 
@@ -103,11 +104,11 @@ public abstract class Question
 
 
 	/**
-	 * Retourne le chemin de la pièce jointe associée à la question.
+	 * Retourne la pièce jointe associé à la question.
 	 * 
-	 * @return le chemin de la pièce jointe associée à la question.
+	 * @return la pièce jointe associé à la question
 	 */
-	public List<PieceJointe> getPiecesJointes() { return this.piecesJointes; }
+	public PieceJointe getPieceJointe() { return this.pieceJointe; }
 
 	/**
 	 * Retourne le type de la question(QCM, ELIMINATION, ASSOCIATION).
@@ -218,7 +219,7 @@ public abstract class Question
 	/*-----------------*/
 
 	/**
-	 * Ajoute une piece jointe à la liste des pièces jointes de la question.
+	 * Ajoute une piece jointe à la question.
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
 	 * @return true si la pièce jointe a été ajoutée, false sinon.
@@ -227,7 +228,7 @@ public abstract class Question
 	{
 		if (pieceJointe == null) return false;
 
-		this.piecesJointes.add(pieceJointe);
+		this.pieceJointe = pieceJointe;
 		return true;
 	}
 
@@ -237,12 +238,17 @@ public abstract class Question
 	 * @param i l'index de la pièce jointe à supprimer.
 	 * @return true si la pièce jointe a été supprimée, false sinon.
 	 */
-	public boolean supprimerPieceJointe(int i)
+	public boolean supprimerPieceJointe()
 	{
-		if(i < 0 || i >= this.piecesJointes.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
-		if(this.piecesJointes.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
+		File fichier;
 
-		this.piecesJointes.remove(i); // Supprime la pièce jointe
+
+		if (this.pieceJointe == null) return false; // Si la pièce jointe est null -> renvoie faux
+
+		fichier = this.pieceJointe.getFichier();
+		fichier.delete(); // Supprime le fichier
+
+		this.pieceJointe = null; // Supprime la pièce jointe
 		return true;
 	}
 

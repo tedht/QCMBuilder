@@ -36,7 +36,6 @@ public class BanqueQuestions extends Banque
 	private Queue<Integer> fileIdUtilisable;
 
 	private String         cheminFic;
-	private String         currentDir;
 
 	/*--------------*/
 	// Constructeur //
@@ -49,9 +48,8 @@ public class BanqueQuestions extends Banque
 	{
 		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
-		this.currentDir       = System.getProperty("user.dir");
 
-		this.cheminFic        = this.currentDir + "/data/questions.csv";
+		this.cheminFic        = "../data/questions.csv";
 
 		this.lireQuestions(this.cheminFic);
 	}
@@ -212,7 +210,7 @@ public class BanqueQuestions extends Banque
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
 
-				cheminDirQst = this.currentDir + "/data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst = "../data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 
@@ -384,7 +382,7 @@ public class BanqueQuestions extends Banque
 
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
-				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+				cheminDirQst  = "../data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 				dirQst        = new File(cheminDirQst);
 				dirProp       = new File(cheminDirQst+"/propositions");
 				
@@ -580,7 +578,7 @@ public class BanqueQuestions extends Banque
 			this.fileIdUtilisable.offer(id);
 
 			// Supprime les dossiers et fichiers associés à la question
-			this.supprimerDossier(new File(this.currentDir + "/data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
+			this.supprimerDossier(new File("../data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
 		
 			this.sauvegarder();
 		}
@@ -667,17 +665,16 @@ public class BanqueQuestions extends Banque
 	 */
 	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
-		/*for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
+		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
 		{
 			if (this.lstQuestions.get(cpt) == question)
 			{
-				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" + question.getRessource() +
-				                                                                    "/" +  question.getNotion().getNom()   +
+				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" +  question.getCodeRes() +
+				                                                                    "/notion" + question.getIdNot() +
 																					"/question " + (cpt + 1) + "/complément"));
 				return true;
 			}
 		}
-		return false;*/
 		return false;
 	}
 

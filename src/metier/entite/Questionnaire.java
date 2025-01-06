@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import metier.banque.BanqueQuestions;
 import metier.entite.question.Difficulte;
+import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
 import metier.entite.question.association.Association;
 import metier.entite.question.association.PropositionAssociation;
@@ -421,6 +422,7 @@ public class Questionnaire
 		appendBasicInfo(jsonBuilder, question, idQuestion);
 		appendQuestion(jsonBuilder, question);
 		appendFinalInfo(jsonBuilder, question);
+		
 	
 		jsonBuilder.append("\n\t}");
 		return jsonBuilder.toString();
@@ -465,7 +467,7 @@ public class Questionnaire
 		} else if ("Elimination".equalsIgnoreCase(question.getType().toString())) {
 			appendElimination(jsonBuilder, (Elimination) question);
 		} else {
-			appendStandardPropositions(jsonBuilder, question);
+			appendQCM(jsonBuilder, question);
 		}
 	}
 	
@@ -540,7 +542,7 @@ public class Questionnaire
 		jsonBuilder.append("\t\t],\n");
 	}
 
-	private void appendStandardPropositions(StringBuilder jsonBuilder, Question question) {
+	private void appendQCM(StringBuilder jsonBuilder, Question question) {
 		// Ajouter les propositions
 		jsonBuilder.append("\t\t\"propositions\": [\n");
 		for (int i = 0; i < question.getPropositions().size(); i++) {
@@ -574,37 +576,52 @@ public class Questionnaire
 	
 		for (Notion notion : notions) {
 			if (notion.getIdNot() == question.getIdNot()) {
-				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\"\n", notion.getNom()));
+				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", notion.getNom()));
 				break;
 			}
 		}
+
+		String fichier = "";
+		if(question.getPieceJointe() != null) {
+			PieceJointe PJ = question.getPieceJointe();
+			fichier = PJ.getNomPieceJointe() + "." + PJ.getExtension(); 
+		}
+
+		jsonBuilder.append(String.format("\t\t\"fichierComplementaire\": \"%s\"\n", fichier));
+
 	}
-
-	// à faire/décommenter à la toute fin
-	// Méthode pour générer un dossier complémentaire
-	// private void genererDossierComplementaire(String basePath) throws IOException {
-	//     // Chemin du répertoire complémentaire
-	//     String currentDir = System.getProperty("user.dir");
-	//     String complementDir = currentDir + "/src/metier/entite/complements";
-	//     String targetDir = basePath + "/complements";
-
-	//     // Créer le répertoire cible
-	//     Files.createDirectories(Paths.get(targetDir));
-
-	//     // Parcourir les fichiers du répertoire complémentaire
-	//     try (Stream<Path> files = Files.list(Paths.get(complementDir))) {
-	//         files.forEach(file -> {
-	//             try {
-	//                 Path targetFile = Paths.get(targetDir, file.getFileName().toString());
-	//                 Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
-	//                 System.out.println("Fichier complémentaire copié : " + targetFile);
-	//             } catch (IOException e) {
-	//                 System.err.println("Erreur lors de la copie du fichier complémentaire : " + e.getMessage());
-	//             }
-	//         });
-	//     }
-	// }
 	
+	private static void copyToFichiersComplementaires(String cheminFichierSource) {
+        String cheminDossierCible = "./fichiersComplementaires";
+        File fichierSource = new File(cheminFichierSource);
+        File dossierCible = new File(cheminDossierCible);  
+
+        // Vérifier que le fichier source existe et est un fichier valide
+        if (!fichierSource.exists() || !fichierSource.isFile()) {
+            System.err.println("Erreur : Le fichier source n'existe pas ou n'est pas un fichier valide !");
+            return;
+        }
+
+        // Créer le dossier cible "fichiersComplementaires" s'il n'existe pas déjà
+        if (!dossierCible.exists()) {
+            boolean dossierCree = dossierCible.mkdir();
+            if (!dossierCree) {
+                System.err.println("Erreur : Impossible de créer le dossier 'fichiersComplementaires' !");
+                return;
+            }
+        }
+
+        // Déterminer le chemin complet du fichier dans le dossier cible
+        File fichierCible = new File(dossierCible, fichierSource.getName());
+
+        try {
+            // Copier le fichier source vers le dossier cible
+            Files.copy(fichierSource.toPath(), fichierCible.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Succès : Le fichier a été copié vers " + fichierCible.getPath());
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
+        }
+    }
 	
 	/**
      * Retourne une représentation en chaîne de caractères du Questionnaire.
@@ -651,6 +668,8 @@ public class Questionnaire
 		q1.ajouterProposition(new PropositionQCM("prop1", false));
 		q1.ajouterProposition(new PropositionQCM("prop2", true));
 		q1.ajouterProposition(new PropositionQCM("prop3", false));
+		q1.ajouterPieceJointe(new PieceJointe("data/fichier.pdf", "gilbert/documents/"));
+
 
 		q2.ajouterProposition(new PropositionAssociation("prop1", "prop1"));
 		q2.ajouterProposition(new PropositionAssociation("prop2", "prop2"));

@@ -25,3 +25,6 @@ replay_pid*
 *.csv
 *.rtf
 *.txt
+*.json
+*.js
+*.html
