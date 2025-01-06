@@ -1,9 +1,11 @@
 package metier.entite;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -256,7 +258,7 @@ public class Questionnaire
 
         // Générer le contenu HTML
         String contenuHTML = String.format("""
-                <!DOCTYPE html>
+				<!DOCTYPE html>
 				<html lang="fr">
 				<head>
 					<meta charset="UTF-8">
@@ -356,6 +358,10 @@ public class Questionnaire
 
 			genererQuestionnaireAvecJson(filePath, questions);
 
+			for (Question q : questions) {
+				if(q.getPieceJointe() != null) copyToFichiersComplementaires(filePath, q);
+			}
+
             // Écrire le contenu HTML dans le fichier
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) {
                 writer.write(contenuHTML);
@@ -397,7 +403,7 @@ public class Questionnaire
 	
 		// Générer le fichier JSON
 		String jsonFilePath = filePath + "/questions.json";
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFilePath))) {
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsonFilePath), StandardCharsets.UTF_8))) {
 			writer.write(questionsJson);
 			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
 			return true;
@@ -571,7 +577,7 @@ public class Questionnaire
 
 	private void appendFinalInfo(StringBuilder jsonBuilder, Question question) {
 		jsonBuilder.append(String.format("\t\t\"temps\": %d,\n", question.getTemps()));
-		jsonBuilder.append(String.format("\t\t\"note\": %f,\n", question.getNote()));
+		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n", question.getNote()));
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
 		for (Notion notion : notions) {
@@ -591,9 +597,11 @@ public class Questionnaire
 
 	}
 	
-	private static void copyToFichiersComplementaires(String cheminFichierSource) {
-        String cheminDossierCible = "./fichiersComplementaires";
-        File fichierSource = new File(cheminFichierSource);
+	private static void copyToFichiersComplementaires(String filePath, Question question) {
+		String fichier = question.getPieceJointe().getNomPieceJointe() + "."+ question.getPieceJointe().getExtension();
+        String cheminDossierCible = filePath + "/fichiersComplementaires";
+
+        File fichierSource = new File(fichier);
         File dossierCible = new File(cheminDossierCible);  
 
         // Vérifier que le fichier source existe et est un fichier valide
@@ -668,11 +676,11 @@ public class Questionnaire
 		q1.ajouterProposition(new PropositionQCM("prop1", false));
 		q1.ajouterProposition(new PropositionQCM("prop2", true));
 		q1.ajouterProposition(new PropositionQCM("prop3", false));
-		q1.ajouterPieceJointe(new PieceJointe("data/fichier.pdf", "gilbert/documents/"));
-
+		q1.ajouterPieceJointe(new PieceJointe("data/oceans.pdf", "./test"));
 
 		q2.ajouterProposition(new PropositionAssociation("prop1", "prop1"));
 		q2.ajouterProposition(new PropositionAssociation("prop2", "prop2"));
+		q2.ajouterPieceJointe(new PieceJointe("data/portugal.png", "./test"));
 
 		q3.ajouterProposition(new PropositionElimination("prop1", true, 0, 0));
 		q3.ajouterProposition(new PropositionElimination("prop2",false, 1, 1.0));
