@@ -1,6 +1,7 @@
 package metier.entite;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -402,7 +403,7 @@ public class Questionnaire
 	
 		// Générer le fichier JSON
 		String jsonFilePath = filePath + "/questions.json";
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFilePath))) {
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsonFilePath), StandardCharsets.UTF_8))) {
 			writer.write(questionsJson);
 			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
 			return true;
