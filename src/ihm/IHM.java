@@ -25,7 +25,7 @@ public class IHM
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 300;
 
-	public static final int LARGEUR_EDIT_QUESTION        = 700;
+	public static final int LARGEUR_EDIT_QUESTION        = 800;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 	
