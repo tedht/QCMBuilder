@@ -1,5 +1,6 @@
 package metier.entite.question.association;
 
+
 import  metier.entite.question.Proposition;
 
 /**

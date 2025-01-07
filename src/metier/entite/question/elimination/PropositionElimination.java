@@ -1,5 +1,6 @@
 package metier.entite.question.elimination;
 
+
 import metier.entite.question.Proposition;
 
 /**
@@ -47,14 +48,14 @@ public class PropositionElimination implements Proposition
 	/*---------*/
 
 	/**
-	 * Retourne le text associé à la proposition.
+	 * Retourne le text associé à la proposition Elimination.
 	 * 
 	 * @return le texte de la proposition.
 	 */
 	public String getText () { return this.text; }
 
 	/**
-	 * Retourne la reponse associée à la proposition.
+	 * Retourne si la proposition Elimination est correcte.
 	 * 
 	 * @return true si la reponse est vraie, false sinon.
 	 */
