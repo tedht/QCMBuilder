@@ -62,7 +62,7 @@ public class FrameGestionQuestionnaire extends JFrame
 		int[][] tabNbQuestions = this.panelAjoutQuestionnaire     .getTabNbQuestions();
 		
 		this.ctrl.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);
-		this.ihm.finaliserQuestionnaire();
+		this.ihm.exporterQuestionnaire();
 	}
 
 	public String getCodeRes()
@@ -77,6 +77,6 @@ public class FrameGestionQuestionnaire extends JFrame
 		                 ? this.panelParametresQuestionnaire.getRessource().getCode()
 						 : "";
 						 
-		this.panelAjoutQuestionnaire.majTabNotions(codeRes);
+		this.panelAjoutQuestionnaire.majTabNbQuestions(codeRes);
 	}
 }

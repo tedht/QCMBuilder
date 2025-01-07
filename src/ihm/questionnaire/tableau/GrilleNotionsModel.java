@@ -20,7 +20,6 @@ public class GrilleNotionsModel extends AbstractTableModel
 {
 	private Controleur              ctrl;
 	private PanelAjoutQuestionnaire panel;
-	private String                  codeRes;
 
 	private String[]                tabEntetes;
 	private Object[][]              tabDonnees;
@@ -31,13 +30,12 @@ public class GrilleNotionsModel extends AbstractTableModel
 	{
 		this.ctrl    = ctrl;
 		this.panel   = panel;
-		this.codeRes = codeRes;
 
 		this.tabNbQuestionsDiff = new int[4];
 
 		String nomNotion;
-		List<Notion> lstNotions =   this.ctrl.getNotions(this.codeRes) != null 
-		                          ? this.ctrl.getNotions(this.codeRes)
+		List<Notion> lstNotions =   this.ctrl.getNotions(codeRes) != null 
+		                          ? this.ctrl.getNotions(codeRes)
 								  : new ArrayList<Notion>();
 
 		tabDonnees = new Object[lstNotions.size()+2][7];
@@ -141,20 +139,14 @@ public class GrilleNotionsModel extends AbstractTableModel
 
 	public int[][] getTabNbQuestions()
 	{
-		int nbNotions = this.ctrl.getNotions(this.codeRes).size();
-		System.out.println(codeRes);
-		System.out.println(nbNotions);
-
-		int[][] tabNbQuestions = new int[nbNotions][4];
+		int[][] tabNbQuestions = new int[this.getRowCount()-2][4];
 		
-		for(int i = 0; i < nbNotions; i++)
+		for(int i = 0; i < this.getRowCount()-2; i++)
 		{
 			for(int j = 0; j < 4; j++)
 			{
-				tabNbQuestions[i][j] = this.tabDonnees[i][j+2] == null ? 0 : (Integer)this.tabDonnees[i+1][j+2];
-				System.out.print(tabNbQuestions[i][j] + "   ");
+				tabNbQuestions[i][j] = this.tabDonnees[i][j+2] == null ? 0 : (Integer)this.tabDonnees[i][j+2];
 			}
-			System.out.println();
 		}
 
 		return tabNbQuestions;
