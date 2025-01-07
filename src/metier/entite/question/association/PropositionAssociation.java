@@ -1,8 +1,10 @@
 package metier.entite.question.association;
 
+
 import  metier.entite.question.Proposition;
 
-/** Classe PropositionAssociation
+/**
+ * Classe PropositionAssociation qui correspond aux propositions des questions de type Association (implémente Proposition).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -10,7 +12,7 @@ import  metier.entite.question.Proposition;
 public class PropositionAssociation implements Proposition
 {
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private String textGauche;
@@ -18,7 +20,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -37,7 +39,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -56,7 +58,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -75,7 +77,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

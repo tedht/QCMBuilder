@@ -1,20 +1,18 @@
 package metier.entite.question.elimination;
 
+
 import metier.entite.question.Proposition;
 
 /**
- * Classe PropositionElimination.
+ * Classe PropositionElimination qui correspond aux propositions des questions de type Elimination (implémente Proposition).
  * 
  * @author Equipe 03
  * @version 1.0 2024/16/12
  */
 public class PropositionElimination implements Proposition
 {
-
-
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private String  text;
@@ -23,9 +21,8 @@ public class PropositionElimination implements Proposition
 	private double  nbPtsPerdus;
 
 
-
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -46,21 +43,21 @@ public class PropositionElimination implements Proposition
 
 
 
-	/*--------*/
-	// GETTER //
-	/*--------*/
+	/*---------*/
+	/* Getters */
+	/*---------*/
 
 	/**
-	 * Retourne le text associé à la proposition.
+	 * Retourne le text associé à la proposition Elimination.
 	 * 
-	 * @return le text.
+	 * @return le texte de la proposition.
 	 */
 	public String getText () { return this.text; }
 
 	/**
-	 * Retourne la reponse associée à la proposition.
+	 * Retourne si la proposition Elimination est correcte.
 	 * 
-	 * @return true si la reponse est vrais, false sinon.
+	 * @return true si la reponse est vraie, false sinon.
 	 */
 	public boolean estReponse() { return this.reponse; }
 
@@ -80,34 +77,33 @@ public class PropositionElimination implements Proposition
 	public double getNbPtsPerdus() { return this.nbPtsPerdus; }
 
 
-
 	/*--------*/
-	// SETTER //
+	/* SETTER */
 	/*--------*/
 
 	/**
-	 * Modifie le text associé à la Proposition.
+	 * Modifie le texte associé à la Proposition Elimination.
 	 * 
-	 * @param text le nouveau text.
+	 * @param text le nouveau texte.
 	 */
 	public void setText(String text) { this.text = text; }
 
 	/**
-	 * Modifie la réponse associée à la Proposition.
+	 * Modifie la réponse associée à la Proposition Elimination.
 	 * 
 	 * @param reponse la nouvelle réponse.
 	 */
 	public void setReponse(boolean reponse) { this.reponse = reponse; }
 
 	/**
-	 * Modifie l'ordre d'élimination associé à la Proposition.
+	 * Modifie l'ordre d'élimination associé à la Proposition Elimination.
 	 * 
 	 * @param ordreElim le nouvelle ordre.
 	 */
 	public void setOrdreElim(int ordreElim ) { this.ordreElim = ordreElim; }
 
 	/**
-	 * Modifie le nombre de point perdus associés à la Proposition.
+	 * Modifie le nombre de point perdus associés à la Proposition Elimination.
 	 * 
 	 * @param nbPtsPerdus le nouveau nombre de points perdus.
 	 */

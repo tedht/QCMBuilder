@@ -1,28 +1,26 @@
 package metier.entite.question.qcm;
 
+
 import metier.entite.question.Proposition;
 
-/** Classe PropositionQCM
+/**
+ * Classe PropositionQCM qui correspond aux propositions des questions de type QCM (implémente Proposition).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PropositionQCM implements Proposition
 {
-
-
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private String  text;
 	private boolean reponse;
 
 
-
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -38,40 +36,38 @@ public class PropositionQCM implements Proposition
 	}
 
 
-
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
-	 * Retourne le texte associée à la proposition.
+	 * Retourne le texte associée à la proposition QCM.
 	 * 
 	 * @return le texte.
 	 */
 	public String getText() { return this.text; }
 
 	/**
-	 * Retourne l'état de la proposition.
+	 * Retourne si la proposition QCM est correcte.
 	 * 
 	 * @return true si la proposition est correcte, false sinon.
 	 */
 	public boolean estReponse() { return this.reponse; }
 
 
-
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
-	 * Modifie le texte associée à la proposition.
+	 * Modifie le texte associée à la proposition QCM.
 	 * 
 	 * @param text le nouveau texte.
 	 */
 	public void setText (String  text) { this.text = text; }
 
 	/**
-	 * Modifie l'état de la réponse associée à la proposition.
+	 * Modifie la réponse associée à la proposition QCM.
 	 * 
 	 * @param reponse la nouvelle réponse.
 	 */
