@@ -235,7 +235,7 @@ public class BanqueRessources extends Banque
 			if(this.lstRessources.get(i).getCode().equals(codeRes))
 			{
 				this.lstRessources.remove(i);
-				this.supprimerDossier(new File("data/ressources/" + codeRes));
+				BanqueRessources.supprimerDossier(new File("data/ressources/" + codeRes));
 			}
 		}
 	}

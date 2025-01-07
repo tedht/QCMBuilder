@@ -395,7 +395,9 @@ public class BanqueQuestions extends Banque
 		int    nbProp;
 
 		String cheminDirQst;
-		File   dirQst, dirProp;
+		File   dirQst, dirProp, dirComp;
+
+		PieceJointe pj;
 
 		try
 		{
@@ -414,24 +416,19 @@ public class BanqueQuestions extends Banque
 				temps   = question.getTemps       ();
 				note    = question.getNote        ();
 				nbProp  = question.getPropositions().size();
+				pj      = question.getPieceJointe ();
 
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
 				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 				dirQst        = new File(cheminDirQst);
 				dirProp       = new File(cheminDirQst+"/propositions");
+				dirComp       = new File(cheminDirQst+"/complément");
 				
-				if (!dirQst.exists())
+				if (creerDossier(dirQst)) 
 				{
-					if (dirQst.mkdirs())
-					{
-						System.out.println("Le dossier " + dirQst.getPath() + " a été créé avec succès.");
-						dirProp.mkdir();
-					}
-					else
-					{
-						System.out.println("La création du dossier " + dirQst.getPath() + " a échoué.");
-					}
+					creerDossier(dirProp);
+					creerDossier(dirComp);
 				}
 
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
@@ -505,12 +502,14 @@ public class BanqueQuestions extends Banque
 
 					}
 				}
-
 				pwTxt.close();
-				
+
+				if(pj != null && !"".equals(pj.getCheminFicOrig()))
+				{
+					pj.copierFichier(cheminDirQst+"/complement/");
+				}
 			}
 			pwCsv.close();
-			
 		}
 		catch (FileNotFoundException fnfe)
 		{
@@ -520,6 +519,24 @@ public class BanqueQuestions extends Banque
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean creerDossier(File dossier) 
+	{
+		if (!dossier.exists()) 
+		{
+			if (dossier.mkdirs()) 
+			{
+				System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
+				return true;
+			} 
+			else 
+			{
+				System.out.println("Échec de la création du dossier " + dossier.getPath());
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -636,7 +653,7 @@ public class BanqueQuestions extends Banque
 			this.fileIdUtilisable.offer(id);
 
 			// Supprime les dossiers et fichiers associés à la question
-			this.supprimerDossier(new File("data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
+			BanqueQuestions.supprimerDossier(new File("data/ressources/" + question.getCodeRes() + "/notion" + question.getIdNot() + "/question" + question.getIdQst()));
 		
 			this.sauvegarder();
 		}
@@ -683,7 +700,7 @@ public class BanqueQuestions extends Banque
 	 * 
 	 * @return si oui ou non la création de la pièce jointe a été effectué
 	 */
-	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
+	/*public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
 		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt ++)
 		{
@@ -696,7 +713,7 @@ public class BanqueQuestions extends Banque
 			}
 		}
 		return false;
-	}
+	}*/
 
 	/**
 	 * Main de la classe BanqueQuestions.

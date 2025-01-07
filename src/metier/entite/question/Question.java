@@ -262,18 +262,14 @@ public abstract class Question
 		return true;
 	}
 
-		/**
+	/**
 	 * Ajoute une piece jointe à la question.
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
-	 * @return            true si la pièce jointe a été ajoutée, false sinon.
 	 */
-	public boolean setPieceJointe(PieceJointe pieceJointe)
+	public void setPieceJointe(PieceJointe pieceJointe)
 	{
-		if (pieceJointe == null) return false;
-
 		this.pieceJointe = pieceJointe;
-		return true;
 	}
 
 	/*-----------------*/
@@ -288,7 +284,6 @@ public abstract class Question
 	public boolean supprimerPieceJointe()
 	{
 		File fichier;
-
 
 		if (this.pieceJointe == null) return false; // Si la pièce jointe est null -> renvoie faux
 

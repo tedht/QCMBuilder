@@ -15,6 +15,7 @@ import metier.entite.Notion;
 import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
+import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 
@@ -291,11 +292,11 @@ public class QCMBuilder
 		if(idQst != null)
 		{
 			question = this.banqueQuestions.getQuestion(idQst);
-			question.setCodeRes(codeRes);
-			question.setIdNot(idNot);
+			question.setCodeRes   (codeRes);
+			question.setIdNot     (idNot);
 			question.setDifficulte(difficulte);
-			question.setTemps(temps);
-			question.setNote(note);
+			question.setTemps     (temps);
+			question.setNote      (note);
 		}
 	
 		switch (type) 
@@ -363,6 +364,11 @@ public class QCMBuilder
 				question.setExplication(explication);
 			}
 			default -> {}
+		}
+
+		if(!"".equals(cheminPJ))
+		{
+			question.setPieceJointe(new PieceJointe(cheminPJ));
 		}
 		
 		this.banqueQuestions.sauvegarder();
@@ -483,10 +489,10 @@ public class QCMBuilder
 	 * @param cheminFichier le chemin du fichier.
 	 * @param question      la question.
 	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
+	/*public void creerPieceJointe(String cheminFichier, Question question)
 	{
 		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
-	}
+	}*/
 
 	/**
 	 * Génère un questionnaire.

@@ -18,14 +18,26 @@ public class PieceJointe
 
 	private static int numPieceJointe;
 
+	private String cheminFicOrig;
+	private String cheminFic;
 	private String nomPieceJointe;
 	private String extension;
 	private File   fichier;
 
-
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
+
+	public PieceJointe(String cheminFicOrig)
+	{
+		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
+
+		this.cheminFicOrig  = cheminFicOrig;
+		this.cheminFic      = "";
+		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.numPieceJointe);
+		this.extension      = cheminFicOrig.substring(cheminFicOrig.lastIndexOf('.') + 1);
+		this.fichier        = null;
+	}
 
 	/**
 	 * Constructeur de la classe PieceJointe.
@@ -33,24 +45,17 @@ public class PieceJointe
 	 * @param cheminFichierOriginal le chemin du fichier original.
 	 * @param cheminFichier le chemin du fichier (destination du ficXXXX).
 	 */
-	public PieceJointe(String cheminFichierOriginal, String cheminFichier)
+	/*public PieceJointe(String cheminFichierOriginal, String cheminFichier)
 	{
+		
 		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
 
 		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.numPieceJointe);
 		this.extension      = cheminFichierOriginal.substring(cheminFichierOriginal.lastIndexOf('.') + 1);
 		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) +
 		                      this.nomPieceJointe + "." + this.extension);
-
-		try
-		{
-			Files.copy(Paths.get(cheminFichierOriginal), this.fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		}
-		catch (Exception e)
-		{
-			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
-		}
-	}
+		this.fichier        = null;
+	}*/
 
 
 	/*---------*/
@@ -85,6 +90,16 @@ public class PieceJointe
 	public String getExtension()
 	{
 		return this.extension;
+	}
+
+	public String getCheminFicOrig()
+	{
+		return this.cheminFicOrig;
+	}
+
+	public String getCheminFic()
+	{
+		return this.cheminFic;
 	}
 
 	/**
@@ -141,13 +156,6 @@ public class PieceJointe
 	 * @param cheminFichier le nouveau chemin du fichier.
 	 * @return              true si le chemin du fichier est modifié, false sinon.
 	 */
-	public boolean setFichier(String cheminFichier)
-	{
-		if (cheminFichier == null) return false;
-
-		this.fichier = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
-		return true;
-	}
 
 	/**
 	 * Modifier le nom de la pièce jointe.
@@ -163,24 +171,34 @@ public class PieceJointe
 		return true;
 	}
 
-	/**
-	 * Modifier l'extension de la pièce jointe.
-	 * 
-	 * @param extension la nouvelle extension de la pièce jointe.
-	 * @return          true si l'extension de la pièce jointe est modifiée, false sinon.
-	 */
-	public boolean setExtension(String extension)
+	public boolean setCheminFicOrig(String cheminFicOrig)
 	{
-		if (extension == null) return false;
+		if (cheminFicOrig == null) return false;
 
-		this.extension = extension;
+		this.cheminFicOrig = cheminFicOrig;
 		return true;
 	}
-
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
+
+	public void copierFichier(String nouveauCheminFichier)
+	{
+
+		this.fichier = new File(nouveauCheminFichier + this.nomPieceJointe + "." + this.extension);
+
+		try
+		{
+			Files.copy(Paths.get(this.cheminFicOrig), this.fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			this.cheminFic     = this.fichier.toPath().toString();
+			this.cheminFicOrig = "";
+		}
+		catch (Exception e)
+		{
+			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
+		}
+	}
 
 	/**
 	 * Retourne sous forme de texte l'objet PieceJointe.
@@ -198,6 +216,8 @@ public class PieceJointe
 	 * 
 	 * @param args les arguments de la ligne de commande.
 	 */
+
+	 /*
 	public static void main(String[] args)
 	{
 		PieceJointe pj1, pj2, pj3;
@@ -212,5 +232,5 @@ public class PieceJointe
 		System.out.println(pj3);
 
 		System.out.println(PieceJointe.getNumPieceJointe());
-	}
+	}*/
 }

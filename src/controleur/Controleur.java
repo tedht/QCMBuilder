@@ -228,10 +228,10 @@ public class Controleur
 	 * @param cheminFichier le chemin du fichier à associer.
 	 * @param question      la question à laquelle associer la pièce jointe.
 	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
+	/*public void creerPieceJointe(String cheminFichier, Question question)
 	{
 		this.metier.creerPieceJointe(cheminFichier, question);
-	}
+	}*/
 
 
 

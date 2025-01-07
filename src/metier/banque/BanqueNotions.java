@@ -296,7 +296,7 @@ public class BanqueNotions extends Banque
 			this.fileIdUtilisable.offer(idNot);
 	
 			// Supprime le dossier associer à la notion
-			this.supprimerDossier(new File("data/ressources/" + notion.getCodeRes() + "/notion" + notion.getIdNot()));
+			BanqueNotions.supprimerDossier(new File("data/ressources/" + notion.getCodeRes() + "/notion" + notion.getIdNot()));
 
 			this.sauvegarder();
 		}
