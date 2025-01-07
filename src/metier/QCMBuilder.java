@@ -423,7 +423,7 @@ public class QCMBuilder
 	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions)
 	{
 		Ressource    ressource = this.banqueRessources.getRessource(codeRes);
-		List<Notion> lstNotons = this.getNotions(codeRes);
+		List<Notion> lstNotons = this.banqueNotions   .getNotions(codeRes);
 
 		this.questionnaire = new Questionnaire(this.banqueQuestions, ressource, lstNotons, chronometre);
 	}
