@@ -311,7 +311,7 @@ public class IHM
 	{
 		if(this.frameGestionQuestionnaire != null)
 		{
-			this.frameGestionQuestionnaire.setVisible(false);
+			this.frameGestionQuestionnaire.dispose();;
 		}
 	}
 

@@ -132,6 +132,25 @@ public class BanqueQuestions extends Banque
 		return lstQuestions;
 	}
 
+	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff) 
+	{
+		List<Question> lstQuestions;
+
+		lstQuestions = new ArrayList<Question>();
+
+		for(Question question : this.lstQuestions)
+		{
+			if(   question != null 
+			   && question.getCodeRes().equals(codeRes) 
+			   && question.getIdNot()      == idNot
+			   && question.getDifficulte() == diff)
+			{
+				lstQuestions.add(question);
+			}
+		}
+		return lstQuestions;
+	}
+
 	/**
 	 * Retourne une question de la banque de questions à partir de son identifiant.
 	 * 

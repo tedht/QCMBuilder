@@ -4,12 +4,11 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import metier.banque.BanqueQuestions;
 import metier.entite.question.Difficulte;
 import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
@@ -31,17 +30,13 @@ public class Questionnaire
 {
 
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
+	private Ressource      ressource;
+	private List<Notion>   lstNotions;
+	private boolean        chronometre;
+	private List<Question> lstQuestions;
 
-	private Ressource       ressource;
-	private List<Notion>    notions;
-	private boolean         chronometre;
-	private List<Question>  questions;
-	private BanqueQuestions banqueQuestions;
-	
-	
-	
 	/*--------------*/
 	// Constructeur //
 	/*--------------*/
@@ -49,48 +44,27 @@ public class Questionnaire
 	/**
 	 * Constructeur de la classe Questionnaire.
 	 * 
-	 * @param ressource   la ressource associée au Questionnaire.
-	 * @param notions     la liste des notions associées au Questionnaire.
-	 * @param chronometre chronometre indiquant si le Questionnaire est chronométré ou non.
 	 */
-	public Questionnaire(BanqueQuestions banqueQuestions, Ressource ressource, List<Notion> notions, boolean chronometre) 
+	public Questionnaire(Ressource ressource, List<Notion> lstNotions, boolean chronometre) 
 	{
-		this.ressource   = ressource;
-		this.chronometre = chronometre;
-		this.notions     = notions;
-		this.banqueQuestions = banqueQuestions;
-		this.questions   = new ArrayList<Question>();
-		if(this.banqueQuestions != null) {
-			for (Question question : banqueQuestions.getQuestions()) {
-				this.questions.add(question);
-			}
-		}
+		this.ressource    = ressource;
+		this.lstNotions   = lstNotions;
+		this.chronometre  = chronometre;
+		this.lstQuestions = new ArrayList<Question>();
 	}
 
-
-
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
-	/**
-	 * Retourne la ressource associée au Questionnaire.
-	 * 
-	 * @return la ressource.
-	 */
 	public Ressource getRessource()
 	{
 		return this.ressource;
 	}
 
-	/**
-	 * Retourne la liste des notions associée au Questionnaire.
-	 * 
-	 * @return la liste des notions.
-	 */
 	public List<Notion> getNotions()
 	{
-		return this.notions;
+		return this.lstNotions;
 	}
 
 	/**
@@ -98,25 +72,24 @@ public class Questionnaire
 	 * 
 	 * @return true si le chronométre est activé, false sinon.
 	 */
-	public boolean isChronometre()
+	public boolean estChronometree()
 	{
 		return this.chronometre;
 	}
 
 	/**
-	 * Retourne la liste des questions associée au Questionnaire.
+	 * Retourne la liste des lstQuestions associée au Questionnaire.
 	 * 
 	 * @return la liste des question.
 	 */
 	public List<Question> getQuestions()
 	{
-		return this.questions;
+		return this.lstQuestions;
 	}
 
 
-
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -125,7 +98,7 @@ public class Questionnaire
 	 * @param  ressource la ressource.
 	 * @return           true si la ressource a été modifée, false sinon.
 	 */
-	public boolean setRessource  (Ressource ressource) 
+	public boolean setRessource(Ressource ressource) 
 	{
 		if (ressource == null)
 		{
@@ -138,99 +111,43 @@ public class Questionnaire
 	}
 
 	/**
-	 * Modifie la liste des notions associée au Questionnaire. 
-	 * 
-	 * @param  notions la liste des notions.
-	 * @return         true si la liste des notions a été modifiée, false sinon.
-	 */
-	public boolean setNotions(List<Notion> notions) 
-	{
-		if (notions == null)
-		{
-			return false;
-		}
-
-		this.notions = notions;
-
-		return true;
-	}
-
-	/**
 	 * Modifie l'état du chronométre.
 	 * True si le chronométre était à false, false sinon.
 	 */
-	public void setChronometre() 
+	public void setChronometre(boolean chronometre) 
 	{
-		this.chronometre = !this.chronometre;
+		this.chronometre = chronometre;
 	}
-
-	/**
-	 * Modifie la liste des questions associée au Questionnaire.
-	 * 
-	 * @param  questions la liste des questions.
-	 * @return           true si la liste des questions a été mofifiée, false sinon.
-	 */
-	public boolean setQuestions(List<Question> questions) 
-	{
-		if (questions == null)
-		{
-			return false;
-		}
-
-		this.questions = questions;
-
-		return true;
-	}
-
-
 
 	/*-----------------*/
 	// Autres méthodes //
 	/*-----------------*/
 
-	/**
-	 * Ajout d'une notion à la liste des notions associées au Questionnaire.
-	 * 
-	 * @param  notion la notion.
-	 * @return        true si la notion à été ajoutée, false sinon.
-	 */
-	public boolean ajouterNotion(Notion autre)
+	public void ajouterQuestion(Question question)
 	{
-		if (notions.contains(autre))
+		if(question != null)
 		{
-			return false;
+			this.lstQuestions.add(question);
 		}
-
-		this.notions.add(autre);
-
-		return true;
 	}
 
-	/**
-	 * Supression d'une notion de la liste des notions associées au Questionnaire.
-	 * 
-	 * @param  notion la notion à supprimer.
-	 * @return        true si la notion à été suprimmée, false sinon.
-	 */
-	public boolean supprimerNotion(Notion autre)
+	public void shuffleQuestions()
 	{
-		if (!notions.contains(autre)) return false;
-
-		this.notions.remove(autre);
-		return true;
+		Collections.shuffle(this.lstQuestions);
 	}
 
 	/**
-	 * Ajout de questions à la liste des questions associées au Questionnaire.
+	 * Ajout de lstQuestions à la liste des lstQuestions associées au Questionnaire.
 	 * 
 	 * @param  notion	    la notion.
 	 * @param  difficulte   la difficultée.
-	 * @param  nbrQuestions le nombre de questions.
+	 * @param  nbrQuestions le nombre de lstQuestions.
 	 * @return              true ........, false sinon.
 	 */
 	public boolean ajouterQuestions(Notion notion, Difficulte difficulte, int nbrQuestions)
 	{
-		for (int i = 0; i < nbrQuestions; i++) {
+		for (int i = 0; i < nbrQuestions; i++) 
+		{
 			//trop de trucs avec fichier rtf
 		}
 
@@ -246,8 +163,12 @@ public class Questionnaire
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-	public boolean genererQuestionnaire(String filePath) {
-        if (filePath == null) {
+
+	
+	public boolean genererQuestionnaire(String filePath) 
+	{
+        if (filePath == null) 
+		{
             throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
         }
 
@@ -283,7 +204,7 @@ public class Questionnaire
 									<p><strong>Ressource :</strong> %s</p>
 									<p><strong>Notion(s) : </strong><span id="notions"></span></p>
 									
-									<p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
+									<p><strong>Nombre de lstQuestions : </strong><span id="question-nombre"></span></p>
 									<p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
 									<p id="p-score"style="display: none;">
 										<strong>Score total : </strong> <span id="score-total"></span>
@@ -336,7 +257,8 @@ public class Questionnaire
         // Le nom du fichier HTML
         String fullFilePath = filePath + "/questionnaire.html";
 
-        try {
+        try 
+		{
             // Obtenir le répertoire de travail actuel
             String currentDir = System.getProperty("user.dir");
 
@@ -354,41 +276,42 @@ public class Questionnaire
 
 			// genererDossierComplementaire(filePath);
 
-			genererQuestionnaireAvecJson(filePath, questions);
+			genererQuestionnaireAvecJson(filePath, lstQuestions);
 
-			for (Question q : questions) {
+			for (Question q : lstQuestions) 
+			{
 				if(q.getPieceJointe() != null) copyToFichiersComplementaires(filePath, q);
 			}
 
             // Écrire le contenu HTML dans le fichier
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath))) 
+			{
                 writer.write(contenuHTML);
                 System.out.println("Fichier HTML généré avec succès à l'emplacement : " + fullFilePath);
             }
 
             return true;
-        } catch (IOException e) {
+        } 
+		catch (IOException e)
+		{
             System.err.println("Erreur lors de la génération du fichier HTML ou de la copie des fichiers : " + e.getMessage());
         }
 
         return false;
     }
 	
-	/**
-	 * Génère un fichier JSON contenant les questions du questionnaire.
-	 * 
-	 * @param  questions la liste des questions à inclure dans le fichier JSON.
-	 * @return           true si le fichier JSON est généré, false sinon.
-	 */
-	private String genererQuestionsEnJson(List<Question> questions) {
+	private String genererQuestionsEnJson(List<Question> lstQuestions) 
+	{
 		StringBuilder jsonBuilder = new StringBuilder();
 		jsonBuilder.append("[");
 	
-		for (int i = 0; i < questions.size(); i++) {
-			Question question = questions.get(i);
+		for (int i = 0; i < lstQuestions.size(); i++) 
+		{
+			Question question = lstQuestions.get(i);
 			String jsonQuestion = convertirQuestionEnJson(question, i+1);
 			jsonBuilder.append(jsonQuestion);
-			if (i < questions.size() - 1) {
+			if (i < lstQuestions.size() - 1) 
+			{
 				jsonBuilder.append(",");
 			}
 		}
@@ -398,55 +321,40 @@ public class Questionnaire
 	}
 
 
-	/**
-	 * Génère un fichier JSON contenant les questions du questionnaire.
-	 * 
-	 * @param  filePath  le chemin du dossier où le fichier JSON sera créé (non null).
-	 * @param  questions la liste des questions à inclure dans le fichier JSON.
-	 * @return           true si le fichier JSON est généré, false sinon.
-	 * @throws IllegalArgumentException si le chemin fourni est null.
-	 */
-	public boolean genererQuestionnaireAvecJson(String filePath, List<Question> questions) {
-		if (filePath == null) {
+	public boolean genererQuestionnaireAvecJson(String filePath, List<Question> lstQuestions) 
+	{
+		if (filePath == null) 
+		{
 			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
 		}
 	
-		String questionsJson = genererQuestionsEnJson(questions);
+		String lstQuestionsJson = genererQuestionsEnJson(lstQuestions);
 	
 		// Générer le fichier JSON
-		String jsonFilePath = filePath + "/questions.json";
+		String jsonFilePath = filePath + "/lstQuestions.json";
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsonFilePath), StandardCharsets.UTF_8))) {
-			writer.write(questionsJson);
+			writer.write(lstQuestionsJson);
 			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
 			return true;
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			System.err.println("Erreur lors de la génération du fichier JSON : " + e.getMessage());
 			return false;
 		}
 	}
 
-	/**
-	 * Copie un fichier source vers un fichier de destination.
-	 * 
-	 * @param sourcePath      le chemin du fichier source.
-	 * @param destinationPath le chemin du fichier de destination.
-	 * @throws IOException si une erreur survient lors de la copie du fichier.
-	 */
-	private void copyFile(String sourcePath, String destinationPath) throws IOException {
+	// Méthode pour copier un fichier
+	private void copyFile(String sourcePath, String destinationPath) throws IOException 
+	{
 		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
 		Path source = Paths.get(sourcePath);
 		Path destination = Paths.get(destinationPath);
 		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
 	}
 
-	/**
-	 * Convertit une question en format JSON. Appelle les méthodes pour ajouter les informations de base, la question et les informations finales.
-	 * 
-	 * @param  question   la question à convertir.
-	 * @param  idQuestion l'identifiant de la question.
-	 * @return            une chaîne de caractères représentant la question au format JSON.
-	 */
-	private String convertirQuestionEnJson(Question question, int idQuestion) {
+	private String convertirQuestionEnJson(Question question, int idQuestion) 
+	{
 		StringBuilder jsonBuilder = new StringBuilder();
 		jsonBuilder.append("\n\t{\n");
 	
@@ -459,13 +367,8 @@ public class Questionnaire
 		return jsonBuilder.toString();
 	}
 	
-	/**
-	 * Ajoute les informations de base d'une question au JSON. (id, type, intitulé, difficulté)
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question à ajouter.
-	 * @param idQuestion  l'identifiant de la question.
-	 */
-	private void appendBasicInfo(StringBuilder jsonBuilder, Question question, int idQuestion) {
+	private void appendBasicInfo(StringBuilder jsonBuilder, Question question, int idQuestion) 
+	{
 		jsonBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
 
 		String type = "" + question.getType();
@@ -478,60 +381,52 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));// Gestion de la difficulté
 		String difficulte = "" + question.getDifficulte();
 		String difficulteAffichee = "";
-		switch (difficulte) {
-			case "TF":
-				difficulteAffichee = "très-facile";
-				break;
-			case "F":
-				difficulteAffichee = "facile";
-				break;
-			case "M":
-				difficulteAffichee = "moyen";
-				break;
-			case "D":
-				difficulteAffichee = "difficile";
-				break;
-			default:
-				difficulteAffichee = "inconnue"; // En cas de valeur non valide
-				break;
+		switch (difficulte) 
+		{
+			case "TF" -> { difficulteAffichee = "très-facile"; }
+			case "F"  -> { difficulteAffichee = "facile";      }
+			case "M"  -> { difficulteAffichee = "moyen";       }
+			case "D"  -> { difficulteAffichee = "difficile";   }
+			default   -> { difficulteAffichee = "inconnue";    } // En cas de valeur non valide
 		}
 		jsonBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
 	}
 	
-	/**
-	 * Appelle la bonne méthode pour ajouter les propositions et les réponses d'une question au JSON en fonction de son type.
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question à ajouter.
-	 */
-	private void appendQuestion(StringBuilder jsonBuilder, Question question) {
-		if ("Association".equalsIgnoreCase(question.getType().toString())) {
+	private void appendQuestion(StringBuilder jsonBuilder, Question question) 
+	{
+		if ("Association".equalsIgnoreCase(question.getType().toString())) 
+		{
 			appendAssociation(jsonBuilder, (Association) question);
-		} else if ("Elimination".equalsIgnoreCase(question.getType().toString())) {
+		} 
+		else if ("Elimination".equalsIgnoreCase(question.getType().toString())) 
+		{
 			appendElimination(jsonBuilder, (Elimination) question);
-		} else {
+		} 
+		else 
+		{
 			appendQCM(jsonBuilder, question);
 		}
 	}
 	
-	/**
-	 * Ajoute les propositions et les réponses d'une question de type Elimination au JSON.
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type Elimination.
-	 */
-	private void appendElimination(StringBuilder jsonBuilder, Elimination question) {
+	private void appendElimination(StringBuilder jsonBuilder, Elimination question) 
+	{
 		List<String> propositionsList = new ArrayList<>();
-		List<String> eliminationList = new ArrayList<>();
-		List<String> reponsesList = new ArrayList<>();
-		List<Double> ptsPerdusList = new ArrayList<>();
+		List<String> eliminationList  = new ArrayList<>();
+		List<String> reponsesList     = new ArrayList<>();
+		List<Double> ptsPerdusList    = new ArrayList<>();
 		
 		// Parcourt toutes les propositions et organise les réponses, éliminations et points perdus
-		for (int i = 0; i < question.getPropositions().size(); i++) {
+		for (int i = 0; i < question.getPropositions().size(); i++) 
+		{
 			PropositionElimination prop = question.getProposition(i);
 			propositionsList.add("\"" + prop.getText() + "\"");
 			
-			if (prop.estReponse()) {
+			if (prop.estReponse()) 
+			{
 				reponsesList.add("\"" + prop.getText() + "\"");
-			} else {
+			} 
+			else 
+			{
 				eliminationList.add("\"" + prop.getText() + "\"");
 				ptsPerdusList.add(prop.getNbPtsPerdus());
 			}
@@ -558,19 +453,16 @@ public class Questionnaire
 		jsonBuilder.append("\t\t],\n");
 	}
 	
-	/**
-	 * Ajoute les propositions et les réponses d'une question de type Association au JSON.
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type Association.
-	 */
 	private void appendAssociation(StringBuilder jsonBuilder, Association question) {
-		List<String> gaucheList = new ArrayList<>();
-		List<String> droiteList = new ArrayList<>();
+		List<String> gaucheList   = new ArrayList<>();
+		List<String> droiteList   = new ArrayList<>();
 		List<String> reponsesList = new ArrayList<>();
 		
 		// On parcourt les propositions et on sépare les éléments à gauche et à droite
-		for (int i = 0; i < question.getPropositions().size(); i++) {
+		for (int i = 0; i < question.getPropositions().size(); i++) 
+		{
 			PropositionAssociation prop = (PropositionAssociation) question.getProposition(i);
+
 			gaucheList.add("\"" + prop.getTextGauche() + "\"");  // Texte gauche
 			droiteList.add("\"" + prop.getTextDroite() + "\"");  // Texte droite
 	
@@ -594,18 +486,17 @@ public class Questionnaire
 		jsonBuilder.append("\t\t],\n");
 	}
 
-	/**
-	 * Ajoute les propositions et les réponses d'une question de type QCM au JSON.
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type QCM.
-	 */
-	private void appendQCM(StringBuilder jsonBuilder, Question question) {
+	private void appendQCM(StringBuilder jsonBuilder, Question question) 
+	{
 		// Ajouter les propositions
 		jsonBuilder.append("\t\t\"propositions\": [\n");
-		for (int i = 0; i < question.getPropositions().size(); i++) {
+		for (int i = 0; i < question.getPropositions().size(); i++) 
+		{
 			PropositionQCM prop = (PropositionQCM) question.getPropositions().get(i);
+
 			jsonBuilder.append("\t\t\t\"" + prop.getText() + "\"");
-			if (i < question.getPropositions().size() - 1) {
+			if (i < question.getPropositions().size() - 1) 
+			{
 				jsonBuilder.append(",");
 			}
 			jsonBuilder.append("\n");
@@ -614,9 +505,11 @@ public class Questionnaire
 
 		// Ajouter les réponses
 		List<String> reponsesList = new ArrayList<>();
-		for (int i = 0; i < question.getPropositions().size(); i++) {
+		for (int i = 0; i < question.getPropositions().size(); i++) 
+		{
 			PropositionQCM prop = (PropositionQCM) question.getPropositions().get(i);
-			if (prop.estReponse()) {
+			if (prop.estReponse()) 
+			{
 				reponsesList.add("\"" + prop.getText() + "\"");
 			}
 		}
@@ -631,15 +524,18 @@ public class Questionnaire
 		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n", question.getNote()));
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
-		for (Notion notion : notions) {
-			if (notion.getIdNot() == question.getIdNot() + 1) {
+		for (Notion notion : this.lstNotions) 
+		{
+			if (notion.getIdNot() == question.getIdNot() + 1) 
+			{
 				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", notion.getNom()));
 				break;
 			}
 		}
 
 		String fichier = "";
-		if(question.getPieceJointe() != null) {
+		if(question.getPieceJointe() != null) 
+		{
 			PieceJointe PJ = question.getPieceJointe();
 			fichier = PJ.getNomPieceJointe() + "." + PJ.getExtension(); 
 		}
@@ -648,12 +544,8 @@ public class Questionnaire
 
 	}
 	
-	/**
-	 * Copie le fichier en paramètre dans le dossier du questionnaire généré.	
-	 * @param filePath le chemin du dossier du questionnaire généré.
-	 * @param question la question contenant la pièce jointe à copier.
-	 */
-	private static void copyToFichiersComplementaires(String filePath, Question question) {
+	private static void copyToFichiersComplementaires(String filePath, Question question) 
+	{
 		String fichier = question.getPieceJointe().getNomPieceJointe() + "."+ question.getPieceJointe().getExtension();
         String cheminDossierCible = filePath + "/fichiersComplementaires";
 
@@ -661,15 +553,18 @@ public class Questionnaire
         File dossierCible = new File(cheminDossierCible);  
 
         // Vérifier que le fichier source existe et est un fichier valide
-        if (!fichierSource.exists() || !fichierSource.isFile()) {
+        if (!fichierSource.exists() || !fichierSource.isFile()) 
+		{
             System.err.println("Erreur : Le fichier source n'existe pas ou n'est pas un fichier valide !");
             return;
         }
 
         // Créer le dossier cible "fichiersComplementaires" s'il n'existe pas déjà
-        if (!dossierCible.exists()) {
+        if (!dossierCible.exists()) 
+		{
             boolean dossierCree = dossierCible.mkdir();
-            if (!dossierCree) {
+            if (!dossierCree) 
+			{
                 System.err.println("Erreur : Impossible de créer le dossier 'fichiersComplementaires' !");
                 return;
             }
@@ -678,11 +573,14 @@ public class Questionnaire
         // Déterminer le chemin complet du fichier dans le dossier cible
         File fichierCible = new File(dossierCible, fichierSource.getName());
 
-        try {
+        try 
+		{
             // Copier le fichier source vers le dossier cible
             Files.copy(fichierSource.toPath(), fichierCible.toPath(), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Succès : Le fichier a été copié vers " + fichierCible.getPath());
-        } catch (IOException e) {
+        } 
+		catch (IOException e) 
+		{
             System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
         }
     }
@@ -696,11 +594,11 @@ public class Questionnaire
 	{
 		return "Questionnaire :\n" +
 				"   ressource : " + this.ressource   + "\n" +
-				"   questions : " + this.questions   + "\n" + 
-				"     notions : " + this.notions     + "\n" +
+				"   lstQuestions : " + this.lstQuestions   + "\n" +
 				" chronometre : " + this.chronometre + "\n" ;
 	}
 
+	/*
 	public static void main(String[] args) 
 	{
 		 Ressource     r1, r2;
@@ -752,14 +650,14 @@ public class Questionnaire
         banqueQuestions.ajouterQuestion(q2);
         banqueQuestions.ajouterQuestion(q3);
 
-        quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
+       // quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
 
-        quest1.ajouterNotion(n3);
+        //quest1.ajouterNotion(n3);
 
         quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
         quest1.ajouterQuestions(n2, Difficulte.MOYEN, 1);
         quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 1);
 
         quest1.genererQuestionnaire("./test");
-	}
+	}*/
 }

@@ -13,7 +13,6 @@ import metier.entite.Notion;
 import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
-import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 import metier.entite.question.association.Association;
@@ -130,6 +129,11 @@ public class QCMBuilder
 	public List<Question> getQuestions(String codeRes, int idNot)
 	{
 		return this.banqueQuestions.getQuestions(codeRes, idNot);
+	}
+	
+	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff)
+	{
+		return this.banqueQuestions.getQuestions(codeRes, idNot, diff);
 	}
 
 	public Question getQuestion(int idQst)
@@ -425,36 +429,34 @@ public class QCMBuilder
 		Ressource      ressource;
 		List<Notion>   lstNotions;
 		List<Question> lstQuestions;
-		List<Question> lstQstUtilisees;
 		Question       question;
+		int            nbQuestions;
 		
 		ressource       = this.banqueRessources.getRessource(codeRes);
-		lstNotions       = this.banqueNotions   .getNotions  (codeRes);
-		lstQstUtilisees = new ArrayList<Question>();
+		lstNotions      = this.banqueNotions   .getNotions  (codeRes);
+
+		this.questionnaire = new Questionnaire(ressource, lstNotions, chronometre);
 
 		for(int i = 0; i < tabNbQuestions.length; i++)
 		{
-			lstQuestions = this.banqueQuestions.getQuestions(codeRes, i);
-			for(int j = 0; j < 4; i++)
+			for(int j = 0; j < 4; j++)
 			{
-				for(int k = 0; k < tabNbQuestions[i][j]; k++)
+				lstQuestions = new ArrayList<Question>(this.banqueQuestions.getQuestions(codeRes, i, Difficulte.fromInt(j)));
+				nbQuestions = tabNbQuestions[i][j] > lstQuestions.size() ? lstQuestions.size() : tabNbQuestions[i][j];
+				for(int k = 0; k < nbQuestions; k++)
 				{
 					question = this.banqueQuestions.getQuestions(codeRes, i).get((int)(Math.random() * lstQuestions.size()));
-					while(!lstQstUtilisees.contains(question))
-					{
-						question = this.banqueQuestions.getQuestions(codeRes, i).get((int)(Math.random() * lstQuestions.size()));
-					}
-
-					//this.questionnaire.ajouterQuestions(null, null, i);
+					this.questionnaire.ajouterQuestion(question);
 				}
 			}
 		}
 
-		this.questionnaire = new Questionnaire(this.banqueQuestions, ressource, lstNotions, chronometre);
+		this.questionnaire.shuffleQuestions();
 	}
 
 	public void exporterQuestionnaire(String dossierSauvegarde)
 	{
-		//this.questionnaire.genererQuestionnaire(dossierSauvegarde);
+		if(this.questionnaire != null)
+			this.questionnaire.genererQuestionnaire(dossierSauvegarde);
 	}
 }
