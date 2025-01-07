@@ -19,11 +19,13 @@ import metier.entite.Ressource;
 /**
  * Classe BanqueDeRessources qui gère les ressources (hérite de Banque).
  * 
- * @author Equipe 03
+ * @author  Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class BanqueRessources extends Banque
 {
+
+
 
 	/*-----------*/
 	/* Attributs */
@@ -57,7 +59,6 @@ public class BanqueRessources extends Banque
 	/* Getters */
 	/*---------*/
 
-
 	/**
 	 * Retourne le chemin du fichier de la banque de ressources.
 	 * 
@@ -81,8 +82,8 @@ public class BanqueRessources extends Banque
 	/**
 	 * Retourne une ressource de la banque de ressources.
 	 * 
-	 * @param code le code de la ressource à retourner.
-	 * @return     la ressource correspondante, ou null si elle n'existe pas.
+	 * @param  code le code de la ressource à retourner.
+	 * @return      la ressource correspondante, ou null si elle n'existe pas.
 	 */
 	public Ressource getRessource(String code)
 	{
@@ -204,9 +205,9 @@ public class BanqueRessources extends Banque
 	/**
 	 * Modifie le nom d'une ressource.
 	 * 
-	 * @param ressource  la ressource à modifier.
-	 * @param nouveauNom le nouveau nom de la ressource.
-	 * @return           true si le nom de la ressource a été modifié, false sinon.
+	 * @param  ressource  la ressource à modifier.
+	 * @param  nouveauNom le nouveau nom de la ressource.
+	 * @return            true si le nom de la ressource a été modifié, false sinon.
 	 */
 	public boolean modifierRessource(Ressource ressource, String nouveauNom)
 	{
