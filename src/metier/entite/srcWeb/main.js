@@ -8,8 +8,10 @@ let associations = [];
 
 let intervalId = null; // Stocke l'identifiant de l'intervalle du chrono
 
-
-// charge le tableau questions depuis le questions.json
+/**
+ * Charge le tableau questions depuis le fichier questions.json.
+ * Affiche le nombre de questions, les notions et le temps d'accueil.
+ */
 async function chargerQuestions() {
     fetch('questions.json')
         .then(response => {
@@ -48,7 +50,9 @@ const startEval = document.getElementById('start-button').addEventListener('clic
 });
 
 
-// Affiche le nombre de questions sur la page d'accueil
+/**
+ * Affiche le nombre de questions sur la page d'accueil.
+ */
 function afficherNbQuestions() {
     const questionNombres = document.getElementById('question-nombre');
 
@@ -69,8 +73,9 @@ function afficherNbQuestions() {
     questionNombres.innerText = `${totalQuestions} questions dont ${details}`;
 }   
 
-
-// Affiche le temps en min:sec sur la page d'accueil
+/**
+ * Affiche le temps total en minutes et secondes sur la page d'accueil.
+ */
 function afficherTempsAccueil() {
     const tempsTotal = document.getElementById('temps-total');
     let temps = 0;
@@ -87,6 +92,9 @@ function afficherTempsAccueil() {
     tempsTotal.innerHTML = `${minutes}:${secondes < 10 ? '0' : ''}${secondes} minutes`;
 }
 
+/**
+ * Affiche les notions présentes dans les questions sur la page d'accueil.
+ */
 function afficherNotions() {
     const notionQuestion = questions.reduce((acc, q) =>
 			acc.includes(q.notion) ? acc : acc.concat(q.notion),
@@ -97,7 +105,9 @@ function afficherNotions() {
     contentNotion.innerText = notions;  
 }
 
-// Sert surtout à passer de accueil à question et appelle afficherQuestion()
+/**
+ * Passe de la page d'accueil à la page des questions et appelle afficherQuestion().
+ */
 function afficherQuestions() {
     const contentQuestionnaire = document.getElementById('questionnaire');
     contentQuestionnaire.style.display = 'flex';
@@ -112,8 +122,10 @@ function afficherQuestions() {
     gererBoutons();
 }
 
-
-//Affiche la question selon l'index dans questions 
+/**
+ * Affiche la question selon l'index dans le tableau questions.
+ * @param {number} index - L'index de la question à afficher.
+ */
 function afficherQuestion(index) {
     if(gererChrono()) {
         demarrerChrono();
@@ -161,7 +173,9 @@ function afficherQuestion(index) {
     rechargerReponses(question);
 }
 
-
+/**
+ * Affiche la page de fin avec le score total.
+ */
 function afficherFin() {
     const contentQuestionnaire = document.getElementById('questionnaire');
     const page = document.getElementById('accueil');
@@ -185,7 +199,12 @@ function afficherFin() {
     reinitialiserEtatReponses();
 }
 
-
+/**
+ * Retourne une chaîne HTML pour afficher les réponses en fonction du type de question.
+ * @param {string} reponse - La réponse à afficher.
+ * @param {string} type - Le type de question (QCM, choix-unique, etc.).
+ * @returns {string} - La chaîne HTML pour afficher la réponse.
+ */
 function stringAfficherReponses(reponse, type) {
     switch (type) {
         case 'QCM':
@@ -203,6 +222,11 @@ function stringAfficherReponses(reponse, type) {
     } 
 }
 
+/**
+ * Mélange les éléments d'un tableau de manière aléatoire.
+ * @param {Array} tableau - Le tableau à mélanger.
+ * @returns {Array} - Le tableau mélangé.
+ */
 function melangerTableau(tableau) {
     for (let i = tableau.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1)); // Index aléatoire entre 0 et i
@@ -211,6 +235,11 @@ function melangerTableau(tableau) {
     return tableau;
 }
 
+/**
+ * Affiche les réponses pour une question donnée.
+ * @param {number} index - L'index de la question.
+ * @returns {string} - La chaîne HTML pour afficher les réponses.
+ */
 function afficherReponses(index) {
     const question = questions[index];
     const reponses = question.propositions;
@@ -266,7 +295,10 @@ function afficherReponses(index) {
     return corpsQuestions;
 }
 
-// Fonction pour ajouter les listeners et gérer les associations
+
+/**
+ * Ajoute les listeners pour gérer les associations dans les questions de type Association.
+ */
 function ajouterListenersAssociation() {
     const gaucheItems = document.querySelectorAll('.gauche-item');
     const droiteItems = document.querySelectorAll('.droite-item');
@@ -292,6 +324,11 @@ function ajouterListenersAssociation() {
     });
 }
 
+/**
+ * Dessine un trait entre deux éléments pour les associer visuellement.
+ * @param {HTMLElement} itemGauche - L'élément de gauche.
+ * @param {HTMLElement} itemDroite - L'élément de droite.
+ */
 function dessinerTrait(itemGauche, itemDroite) {
     if (!itemGauche || !itemDroite) {
         console.error("Un des éléments est manquant !");
@@ -330,7 +367,9 @@ function dessinerTrait(itemGauche, itemDroite) {
     svg.appendChild(line);
 }
 
-// Fonction pour associer automatiquement si un élément de chaque colonne est sélectionné
+/**
+ * Vérifie si une association est possible et l'effectue si c'est le cas.
+ */
 function verifierEtAssocier() {
     const itemGauche = document.querySelector('.gauche-item.selected');
     const itemDroite = document.querySelector('.droite-item.selected');
@@ -356,18 +395,25 @@ function verifierEtAssocier() {
 }
 
 
-// Fonction pour désélectionner tous les éléments d'une colonne
+/**
+ * Désélectionne tous les éléments d'une colonne.
+ * @param {string} selector - Le sélecteur des éléments à désélectionner.
+ */
 function deselectionnerTous(selector) {
     const items = document.querySelectorAll(selector);
     items.forEach(item => item.classList.remove('selected'));
 }
 
-
-// Fonction pour réinitialiser toutes les associations et supprimer les lignes dessinées
+/**
+ * Réinitialise toutes les associations
+ */
 function reinitialiserVariableAssociations() {
     associations = [];
 }
 
+/**
+ * Supprime les lignes dessinées.
+ */
 function reinitialiserSvg() {
     const svg = document.getElementById('svg-traits');
     if (svg) {
@@ -375,6 +421,9 @@ function reinitialiserSvg() {
     }
 }
 
+/**
+ * Réinitialise les associations et le SVG.
+ */
 function reinitialiserAssociationsEtSvg() {
     reinitialiserVariableAssociations();
     reinitialiserSvg();
@@ -392,7 +441,11 @@ function reinitialiserAssociationsEtSvg() {
     });
 }
 
-
+/**
+ * Convertit les réponses en objets pour les questions de type Association.
+ * @param {Object} question - La question contenant les réponses.
+ * @returns {Array} - Un tableau d'objets représentant les associations.
+ */
 function convertirReponsesEnObjets(question) {
     const listeArrays = question.reponses;
 
@@ -402,6 +455,10 @@ function convertirReponsesEnObjets(question) {
     }));
 }
 
+/**
+ * Élimine une réponse pour une question de type Elimination.
+ * @param {number} questionIndex - L'index de la question.
+ */
 function eliminerReponse(questionIndex) {
     const question = questions[questionIndex];
 
@@ -436,7 +493,11 @@ function eliminerReponse(questionIndex) {
     }
 }
 
-
+/**
+ * Récupère les réponses sélectionnées par l'utilisateur pour une question donnée.
+ * @param {number} index - L'index de la question.
+ * @returns {Object} - Un objet contenant les réponses sélectionnées.
+ */
 function recupererReponses(index) {
     const formulaire = document.getElementById('qcm-form');
     const question = questions[index];
@@ -469,7 +530,10 @@ function recupererReponses(index) {
     return { reponsesSelectionnees };
 }
 
-
+/**
+ * Valide les réponses de l'utilisateur pour une question donnée.
+ * @param {number} index - L'index de la question.
+ */
 async function validerReponses(index) {
     const question = questions[index];
     const type = question.type;
@@ -572,8 +636,13 @@ async function validerReponses(index) {
     }
 }
 
-
-
+/**
+ * Affiche un feedback après la validation d'une réponse.
+ * @param {boolean} bonneReponse - Indique si la réponse est correcte.
+ * @param {Object} question - La question actuelle.
+ * @param {Array} reponsesUtilisateur - Les réponses de l'utilisateur.
+ * @returns {Promise} - Une promesse résolue après la fermeture du feedback.
+ */
 function afficherFeedback(bonneReponse, question, reponsesUtilisateur) {
     return new Promise((resolve) => {
         let feedbackPopup = document.querySelector('.feedback-popup');
@@ -615,7 +684,9 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur) {
     });
 }
 
-
+/**
+ * Initialise l'état des réponses pour toutes les questions.
+ */
 function initialiserEtatReponses() {
     etatReponses = questions.map(() => ({
         repondu: false,
@@ -624,7 +695,10 @@ function initialiserEtatReponses() {
     }));
 }
 
-
+/**
+ * Recharge les réponses de l'utilisateur pour une question donnée.
+ * @param {Object} question - La question actuelle.
+ */
 function rechargerReponses(question) {
     const etatReponse = etatReponses[questionIndex]; // Récupère l'état sauvegardé de la réponse
     const reponseUtilisateur = etatReponse?.optionSelectionnee || []; // Réponses sauvegardées
@@ -689,7 +763,11 @@ function rechargerReponses(question) {
     }
 }
 
-
+/**
+ * Colore une réponse en fonction de sa correction.
+ * @param {HTMLElement} element - L'élément de la réponse.
+ * @param {boolean} estCorrecte - Indique si la réponse est correcte.
+ */
 function colorierReponse(element, estCorrecte) {
     if (estCorrecte) {
         element.classList.add('correct');
@@ -699,13 +777,16 @@ function colorierReponse(element, estCorrecte) {
     }
 }
 
-
+/**
+ * Réinitialise l'état des réponses.
+ */
 function reinitialiserEtatReponses() {
     etatReponses = []; 
 }
 
-
-// Fonction pour gérer l'affichage des fichiers
+/**
+ * Gère l'affichage des fichiers complémentaires pour une question.
+ */
 function gererBtnInfo() {
     // Récupérer la question actuelle via questionIndex
     const questionActuelle = questions[questionIndex];
@@ -726,9 +807,9 @@ function gererBtnInfo() {
     }
 }
 
-
-
-// Gère suivant et précédent selon si c'est chrono ou pas
+/**
+ * Gère les boutons suivant et précédent en fonction du chrono.
+ */
 function gererBoutons() {   
     const btnPrecedent = document.getElementById('btn-precedent');
     if(gererChrono())  {
@@ -757,15 +838,20 @@ function gererBoutons() {
     });
 }
 
-
-// Gère si l'éval est chronométré ou pas
+/**
+ * Vérifie si l'évaluation est chronométrée.
+ * @returns {boolean} - True si l'évaluation est chronométrée, false sinon.
+ */
 function gererChrono() {
     const appli = document.getElementById('appli');
     return appli.getAttribute("data-chrono") === 'true';
 }
 
-
-// Prend une difficulté en valeur et renvoie le char associé
+/**
+ * Retourne le caractère associé à une difficulté.
+ * @param {string} difficulte - La difficulté de la question.
+ * @returns {string} - Le caractère associé à la difficulté.
+ */
 function gererCoulDifficulte(difficulte) {
     switch (difficulte) {
         case 'tres-facile': return 'TF';
@@ -776,6 +862,10 @@ function gererCoulDifficulte(difficulte) {
     }
 }
 
+/**
+ * Met à jour l'état du bouton de validation en fonction de la réponse de l'utilisateur.
+ * @param {number} questionIndex - L'index de la question.
+ */
 function aRepondu(questionIndex) {
     const repondu = etatReponses[questionIndex]?.repondu;
     document.getElementById('btn-valider').style.cssText = repondu ? 'pointer-events: none; opacity: 0.5;' 
@@ -785,7 +875,11 @@ function aRepondu(questionIndex) {
                                                                     : 'pointer-events: none; opacity: 0.5;';
 }
 
-
+/**
+ * Met à jour la barre de progression en fonction de la question actuelle.
+ * @param {number} questionIndex - L'index de la question actuelle.
+ * @param {number} totalQuestions - Le nombre total de questions.
+ */
 function mettreAJourBarreDeProgression(questionIndex, totalQuestions) {
     const pourcentage = Math.round(((questionIndex + 1) / totalQuestions) * 100);
 
@@ -796,17 +890,18 @@ function mettreAJourBarreDeProgression(questionIndex, totalQuestions) {
     texteProgression.textContent = `Question ${questionIndex + 1} sur ${totalQuestions} (${pourcentage}%)`;
 }
 
+/**
+ * Démarre le chrono pour une question chronométrée.
+ */
 function demarrerChrono() {
     const contentTemps = document.getElementById('question-time');
-    const question = questions[questionIndex]; // Question actuelle
-    let tempsRestant = question.temps; // Temps initial pour cette question
+    const question = questions[questionIndex]; 
+    let tempsRestant = question.temps;
 
-    // Si le chrono est désactivé, ne rien faire
     if (!gererChrono()) {
         return;
     }
 
-    // Arrête l'ancien intervalle s'il existe
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
