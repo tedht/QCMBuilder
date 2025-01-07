@@ -185,7 +185,7 @@ public class Questionnaire
 					
 					
 					<div id="appli" data-chrono="%s" class="container">
-						<p id="progress-text"><strong>Question 0 sur 0 (0%%)</strong></p>
+						<p id="progress-text"><strong>Question 0 sur %d (0%%)</strong></p>
 						<div id="progress-container">
 							<div id="progress-bar"></div>
 						</div>
@@ -248,7 +248,7 @@ public class Questionnaire
 					<script src="main.js" defer></script>
 				</body>
 				</html>
-                """, dataChrono, resourceName);
+                """, dataChrono, lstQuestions.size(), resourceName);
 
         // Le nom du fichier HTML
         String fullFilePath = filePath + "/questionnaire.html";
