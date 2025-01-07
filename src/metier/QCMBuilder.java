@@ -12,6 +12,7 @@ import metier.entite.Notion;
 import metier.entite.Questionnaire;
 
 import metier.entite.question.Difficulte;
+import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 import metier.entite.question.association.Association;
@@ -43,9 +44,9 @@ public class QCMBuilder
 		this.banqueNotions    = new BanqueNotions   ();
 		this.banqueQuestions  = new BanqueQuestions ();
 
-		this.ressourceSelectionnee  = null;
+		this.ressourceSelectionnee = null;
 
-		this.questionnaire    = null;
+		this.questionnaire = null;
 	}
 
 	/*---------*/
@@ -213,6 +214,7 @@ public class QCMBuilder
 		int        indexType    = scDetails.nextInt();
 		String     sTemps       = scDetails.next();
 		double     note         = Double.parseDouble(scDetails.next());
+		String     cheminPJ     = scDetails.next();
 
 		scDetails.close();
 
@@ -240,6 +242,11 @@ public class QCMBuilder
 			question.setDifficulte(difficulte);
 			question.setTemps(temps);
 			question.setNote(note);
+		}
+
+		if(!"".equals(cheminPJ))
+		{
+			//question.ajouterPieceJointe(new PieceJointe(cheminPJ, ));
 		}
 	
 		switch (type) 

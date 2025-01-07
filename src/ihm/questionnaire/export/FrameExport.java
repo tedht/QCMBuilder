@@ -15,7 +15,7 @@ import ihm.IHM;
  */
 public class FrameExport extends JFrame
 {
-	private PanelExport panelGeneration;
+	private PanelExport panelExport;
 
 	/**
 	 * Constructeur
@@ -28,8 +28,8 @@ public class FrameExport extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelGeneration = new PanelExport(ctrl, ihm, this);
-		this.add(this.panelGeneration);
+		this.panelExport = new PanelExport(ctrl, ihm, this);
+		this.add(this.panelExport);
 
 		this.pack();
 	}

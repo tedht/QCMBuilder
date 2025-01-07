@@ -242,7 +242,6 @@ public abstract class Question
 	{
 		File fichier;
 
-
 		if (this.pieceJointe == null) return false; // Si la pièce jointe est null -> renvoie faux
 
 		fichier = this.pieceJointe.getFichier();
