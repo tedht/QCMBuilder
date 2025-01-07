@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import metier.entite.Notion;
 
 /**
- * Classe BanqueDeNotions qui gère les notions.
+ * Classe BanqueDeNotions qui gère les notions (hérite de Banque).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -40,7 +40,7 @@ public class BanqueNotions extends Banque
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe BanqueDeNotions.
+	 * Constructeur de la classe BanqueNotions.
 	 */
 	public BanqueNotions()
 	{

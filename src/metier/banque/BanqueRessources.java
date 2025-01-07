@@ -1,18 +1,24 @@
 package metier.banque;
 
+
+import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Scanner;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+import java.io.PrintWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+
+import java.io.FileNotFoundException;
 
 import metier.entite.Ressource;
 
-/** Classe BanqueDeRessources
+/**
+ * Classe BanqueDeRessources qui gère les ressources (hérite de Banque).
+ * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
@@ -34,7 +40,7 @@ public class BanqueRessources extends Banque
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe BanqueDeRessources.
+	 * Constructeur de la classe BanqueRessources.
 	 */
 	public BanqueRessources()
 	{
@@ -76,7 +82,7 @@ public class BanqueRessources extends Banque
 	 * Retourne une ressource de la banque de ressources.
 	 * 
 	 * @param code le code de la ressource à retourner.
-	 * @return la ressource correspondante, ou null si elle n'existe pas.
+	 * @return     la ressource correspondante, ou null si elle n'existe pas.
 	 */
 	public Ressource getRessource(String code)
 	{
@@ -98,7 +104,7 @@ public class BanqueRessources extends Banque
 	 * Lit les ressources d'un fichier CSV.
 	 * 
 	 * @param cheminFic le nom du fichier à lire.
-	 * @see Scanner
+	 * @see   Scanner   pour lire le fichier.
 	*/
 	public void lireRessources(String cheminFic)
 	{
@@ -149,8 +155,8 @@ public class BanqueRessources extends Banque
 	/**
 	 * Sauvegarde les ressources dans un fichier CSV.
 	 * 
-	 * @param cheminFic le nom du fichier dans lequel sauvegarder les ressources.
-	 * @see PrintWriter 
+	 * @param cheminFic   le nom du fichier dans lequel sauvegarder les ressources.
+	 * @see   PrintWriter pour écrire dans le fichier.
 	 */
 	private void sauvegarder(String cheminFic)
 	{
@@ -187,7 +193,8 @@ public class BanqueRessources extends Banque
 	/**
 	 * Ajoute une ressource à la banque de ressources.
 	 * 
-	 * @param ressource la ressource à ajouter.
+	 * @param code le code de la ressource.
+	 * @param nom  le nom de la ressource.
 	 */
 	public void creerRessource(String code, String nom)
 	{
@@ -197,9 +204,9 @@ public class BanqueRessources extends Banque
 	/**
 	 * Modifie le nom d'une ressource.
 	 * 
-	 * @param ressource
-	 * @param nouveauNom
-	 * @return true si le nom de la ressource a été modifié, false sinon.
+	 * @param ressource  la ressource à modifier.
+	 * @param nouveauNom le nouveau nom de la ressource.
+	 * @return           true si le nom de la ressource a été modifié, false sinon.
 	 */
 	public boolean modifierRessource(Ressource ressource, String nouveauNom)
 	{
@@ -217,7 +224,7 @@ public class BanqueRessources extends Banque
 	/**
 	 * Supprime une ressource de la banque de ressources.
 	 * 
-	 * @param ressource la ressource à supprimer.
+	 * @param codeRes le code de la ressource à supprimer.
 	 */
 	public void supprimerRessource(String codeRes)
 	{
@@ -233,11 +240,17 @@ public class BanqueRessources extends Banque
 	}
 
 
+	/**
+	 * Retourne une chaîne de caractères représentant la banque de ressources.
+	 * 
+	 * @return la chaîne de caractères.
+	 */
 	public String toString()
 	{
-		String sRet = "";
+		String sRet;
 
 
+		sRet = "";
 		for (int cpt = 0 ; cpt < this.lstRessources.size() ; cpt++)
 		{
 			sRet += this.lstRessources.get(cpt).getNom() + "\n";
@@ -248,7 +261,9 @@ public class BanqueRessources extends Banque
 	}
 	
 
-
+	/**
+	 * Main de la classe BanqueRessources.
+	 */
 	public static void main(String[] args)
 	{
 		BanqueRessources bqr, bqr2;

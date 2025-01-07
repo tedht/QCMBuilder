@@ -1,28 +1,34 @@
 package metier.banque;
 
 import java.util.List;
-import java.util.Queue;
 import java.util.ArrayList;
+
+import java.util.Queue;
 import java.util.LinkedList;
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileInputStream;
 
-import java.io.FileNotFoundException;
-
+import java.io.PrintWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+
+import java.io.FileNotFoundException;
 
 import metier.entite.Notion;
 import metier.entite.Ressource;
+
 import metier.entite.question.*;
+
 import metier.entite.question.association.*;
 import metier.entite.question.qcm.*;
 import metier.entite.question.elimination.*;
 
 
-/** Classe BanqueDeQuestions
+/**
+ * Classe BanqueDeQuestions qui gère les questions (hérite de Banque).
+ * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
@@ -42,7 +48,7 @@ public class BanqueQuestions extends Banque
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe BanqueDeQuestions
+	 * Constructeur de la classe BanqueQuestions.
 	 */
 	public BanqueQuestions()
 	{
@@ -61,9 +67,9 @@ public class BanqueQuestions extends Banque
 	/*---------*/
 
 	/**
-	 * Retourne le chemin du fichier de la banque de questions
+	 * Retourne le chemin du fichier de la banque de questions.
 	 * 
-	 * @return le chemin du fichier
+	 * @return le chemin du fichier.
 	 */
 	public String getCheminFic()
 	{
@@ -71,9 +77,9 @@ public class BanqueQuestions extends Banque
 	}
 
 	/** 
-	 * Retourne la liste des questions
+	 * Retourne la liste des questions.
 	 * 
-	 * @return List<Question> la liste des questions
+	 * @return la liste des questions.
 	 */
 	public List<Question> getQuestions()
 	{
@@ -81,14 +87,17 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Retourne la liste des questions d'une ressource
+	 * Retourne la liste des questions d'une ressource à partir de son code.
 	 * 
-	 * @param codeRes le code de la ressource
-	 * @return List<Question> la liste des questions de la ressource
+	 * @param codeRes le code de la ressource.
+	 * @return        la liste des questions de la ressource.
 	 */
 	public List<Question> getQuestions(String codeRes) 
 	{
-		List<Question> lstQuestions = new ArrayList<Question>();
+		List<Question> lstQuestions;
+
+
+		lstQuestions = new ArrayList<Question>();
 
 		for(Question question : this.lstQuestions)
 		{
@@ -100,15 +109,18 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Retourne la liste des questions d'une ressource et d'une notion
+	 * Retourne la liste des questions d'une ressource et d'une notion à partir de son code et de son identifiant.
 	 * 
-	 * @param codeRes le code de la ressource
-	 * @param idNot   l'identifiant de la notion
-	 * @return List<Question> la liste des questions de la ressource et de la notion
+	 * @param codeRes le code de la ressource.
+	 * @param idNot   l'identifiant de la notion.
+	 * @return        la liste des questions de la ressource et de la notion.
 	 */
 	public List<Question> getQuestions(String codeRes, int idNot) 
 	{
-		List<Question> lstQuestions = new ArrayList<Question>();
+		List<Question> lstQuestions;
+
+
+		lstQuestions = new ArrayList<Question>();
 
 		for(Question question : this.lstQuestions)
 		{
@@ -121,10 +133,10 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Retourne une question de la banque de questions
+	 * Retourne une question de la banque de questions à partir de son identifiant.
 	 * 
-	 * @param idQst l'identifiant de la question
-	 * @return la question grâce à l'identifiant
+	 * @param idQst l'identifiant de la question.
+	 * @return      la question.
 	 */
 	public Question getQuestion(int idQst)
 	{
@@ -133,7 +145,6 @@ public class BanqueQuestions extends Banque
 
 		return this.lstQuestions.get(idQst);
 	}
-
 
 	/**
 	 * Retourne la taille de la liste des questions
@@ -152,9 +163,10 @@ public class BanqueQuestions extends Banque
 	/*-----------------*/
 
 	/**
-	* Lecture du fichier CSV qui contient les questions
+	* Lecture du fichier CSV qui contient les questions.
 	*
-	* @param cheminFic le chemin du fichier CSV
+	* @param cheminFic le chemin du fichier CSV.
+	* @see   Scanner   pour lire le fichier.
 	*/
 	private void lireQuestions(String cheminFic)
 	{
@@ -172,8 +184,8 @@ public class BanqueQuestions extends Banque
 		double       note;
 		Question     question;
 
-		String       intitule    = "";
-		String       explication = "";
+		String       intitule;
+		String       explication;
 
 		int          nbProp;
 		String       detailsProp;
@@ -186,6 +198,10 @@ public class BanqueQuestions extends Banque
 
 		boolean      estReponse;
 		int          cptReponse;
+
+
+		intitule = "";
+		explication = "";
 
 		try
 		{
@@ -329,7 +345,7 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Sauvegarde des questions dans un fichier CSV
+	 * Sauvegarde des questions dans un fichier CSV et des fichiers TXT
 	 */
 	public void sauvegarder()
 	{
@@ -337,9 +353,10 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Sauvegarde des questions dans un fichier CSV et un fichier TXT
+	 * Sauvegarde des questions dans un fichier CSV et des fichiers TXT.
 	 * 
-	 * @param cheminFic le chemin du fichier CSV
+	 * @param cheminFic   le chemin du fichier CSV.
+	 * @see   PrintWriter pour écrire dans le fichier.
 	 */
 	private void sauvegarder(String cheminFic)
 	{
@@ -487,7 +504,7 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Créer une question de type QCM
+	 * Créer une question de type QCM et l'ajoute à la banque de questions.
 	 * 
 	 * @param codeRes    le code de la ressource
 	 * @param idNot      l'identifiant de la notion
@@ -498,14 +515,19 @@ public class BanqueQuestions extends Banque
 	 */
 	public QCM creerQCM(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
-		int idQst = this.recupererId();
-		QCM qcm = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
+		int idQst;
+		QCM qcm;
+
+
+		idQst = this.recupererId();
+		qcm   = new QCM(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(qcm);
+
 		return qcm;
 	}
 
 	/**
-	 * Créer une question de type Association
+	 * Créer une question de type Association et l'ajoute à la banque de questions.
 	 * 
 	 * @param codeRes    le code de la ressource
 	 * @param idNot      l'identifiant de la notion
@@ -516,14 +538,19 @@ public class BanqueQuestions extends Banque
 	 */
 	public Association creerAssociation(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
-		int idQst = this.recupererId();
-		Association asso = new Association(codeRes, idNot, idQst, note, temps, difficulte);
+		int idQst;
+		Association asso;
+
+
+		idQst = this.recupererId();
+		asso  = new Association(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(asso);
+
 		return asso;
 	}
 
 	/**
-	 * Créer une question de type Elimination
+	 * Créer une question de type Elimination et l'ajoute à la banque de questions.
 	 * 
 	 * @param codeRes    le code de la ressource
 	 * @param idNot      l'identifiant de la notion
@@ -534,20 +561,25 @@ public class BanqueQuestions extends Banque
 	 */
 	public Elimination creerElimination(String codeRes, int idNot, Difficulte difficulte, int temps, double note) 
 	{
-		int idQst = this.recupererId();
-		Elimination elim = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
+		int idQst;
+		Elimination elim;
+
+
+		idQst = this.recupererId();
+		elim  = new Elimination(codeRes, idNot, idQst, note, temps, difficulte);
 		this.ajouterQuestion(elim);
+
 		return elim;
 	}
 
 	/**
-	 * Récupère l'identifiant de la dernière question
+	 * Récupère l'identifiant de la dernière question.
 	 * 
-	 * @return l'identifiant de la dernière question
+	 * @return l'identifiant de la dernière question.
 	 */
 	private int recupererId()
 	{
-		if(!this.fileIdUtilisable.isEmpty())
+		if (!this.fileIdUtilisable.isEmpty())
 			return this.fileIdUtilisable.poll();
 
 		return this.lstQuestions.size();
@@ -560,15 +592,23 @@ public class BanqueQuestions extends Banque
 	 */
 	public void ajouterQuestion(Question question)
 	{
-		if(question.getIdQst() < this.lstQuestions.size())
+		if (question.getIdQst() < this.lstQuestions.size())
 			this.lstQuestions.set(question.getIdQst(), question);
 		else
 			this.lstQuestions.add(question);
 	}
 
+	/**
+	 * Supprime une question de la banque de questions grâce à son identifiant.
+	 * 
+	 * @param id l'identifiant de la question à supprimer.
+	 */
 	public void supprimerQuestion(int id)
 	{
-		Question question = this.getQuestion(id);
+		Question question;
+
+
+		question = this.getQuestion(id);
 
 		if(question != null)
 		{
@@ -583,6 +623,11 @@ public class BanqueQuestions extends Banque
 		}
 	}
 
+	/**
+	 * Supprime les questions d'une ressource.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 */
 	public void supprimerQuestions(String codeRes)
 	{
 		for(int i = 0; i < this.lstQuestions.size(); i++)
@@ -594,6 +639,11 @@ public class BanqueQuestions extends Banque
 		}
 	}
 
+	/**
+	 * Supprime les questions d'une notion.
+	 * 
+	 * @param idNot l'identifiant de la notion.
+	 */
 	public void supprimerQuestions(int idNot)
 	{
 		for(int i = 0; i < this.lstQuestions.size(); i++)
@@ -655,12 +705,12 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
-	 * Créer une pièce jointe
+	 * Créer une pièce jointe et l'associe à la question
 	 * 
-	 * @param cheminFichierOriginal le chemin du fichier original
-	 * @param question la question à laquelle la pièce jointe est associée
+	 * @param cheminFichierOriginal le chemin du fichier original (en local)
+	 * @param question              la question à laquelle la pièce jointe est associée
 	 * 
-	 * @return boolean si oui ou non la création de la pièce jointe a été effectué
+	 * @return si oui ou non la création de la pièce jointe a été effectué
 	 */
 	public boolean creerPieceJointe(String cheminFichierOriginal, Question question)
 	{
@@ -677,9 +727,17 @@ public class BanqueQuestions extends Banque
 		return false;
 	}
 
-	
+	/**
+	 * Main de la classe BanqueQuestions.
+	 * 
+	 * @param args les arguments de la ligne de commande.
+	 */
 	public static void main(String[] args)
 	{
+		BanqueQuestions bq;
+		Question q1, q2, q3;
+
+
 		new Ressource("R1", "Ressource 1");
 		new Ressource("R2", "Ressource 2");
 
@@ -688,12 +746,12 @@ public class BanqueQuestions extends Banque
 		new Notion("R2", 2, "Notion 2");
 
 		// Création des questions
-		Question q1 = new QCM("R1", 1, 1, 1.0, 10, Difficulte.FACILE);
-		Question q2 = new Association("R1", 1, 2, 1.0, 10, Difficulte.FACILE);
-		Question q3 = new Elimination("R1", 1, 3, 1.0, 10, Difficulte.FACILE);
+		q1 = new QCM("R1", 1, 1, 1.0, 10, Difficulte.FACILE);
+		q2 = new Association("R1", 1, 2, 1.0, 10, Difficulte.FACILE);
+		q3 = new Elimination("R1", 1, 3, 1.0, 10, Difficulte.FACILE);
 
 		// Création de la banque de questions
-		BanqueQuestions bq = new BanqueQuestions();
+		bq = new BanqueQuestions();
 
 		// Ajout des questions à la banque
 		bq.ajouterQuestion(q1);
