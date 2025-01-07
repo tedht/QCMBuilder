@@ -2,7 +2,8 @@ package metier.entite.question.association;
 
 import  metier.entite.question.Proposition;
 
-/** Classe PropositionAssociation
+/**
+ * Classe PropositionAssociation qui correspond aux propositions des questions de type Association (implémente Proposition).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
