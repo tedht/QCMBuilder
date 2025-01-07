@@ -655,54 +655,6 @@ public class BanqueQuestions extends Banque
 		}
 	}
 
-	/**
-	 * Modifie une question
-	 * 
-	 * @param question
-	 * @param critere
-	 * @param modif
-	 * @return
-	 */
-	public boolean modifierQuestion(Question question, String critere, Object modif)
-	{
-		/*if (question == null) return false; // Si la question est null     -> renvoie faux
-		if (critere  == null) return false; // Si le critère est null      -> renvoie faux
-		if (modif    == null) return false; // Si la modification est null -> renvoie faux
-
-		switch (critere)
-		{
-			case "difficulte" -> question.setDifficulte((Difficulte)modif);
-			case "ressource"  -> question.setRessource ((Ressource) modif);
-			case "notion"     -> question.setNotion    ((Notion)    modif);
-			case "temps"      -> question.setTemps     ((int)       modif);
-			case "note"       -> question.setNote      ((int)       modif);
-		}
-		return true;*/
-		return false;
-	}
-
-	/**
-	 * Supprime une question
-	 * 
-	 * @param question
-	 * @return boolean si oui ou non la suppression de la question a été effectué
-	 */
-	public boolean supprimerQuestion(Question question)
-	{
-		/*
-		if (question == null) return false; // N'a pas trouvé la question
-
-		for (int cpt = 0 ; cpt < this.lstQuestions.size() ; cpt++)
-		{
-			if (this.lstQuestions.get(cpt) == question)
-			{
-				this.lstQuestions.remove(cpt);
-			}
-		}
-
-		return true;*/
-		return false;
-	}
 
 	/**
 	 * Créer une pièce jointe et l'associe à la question
