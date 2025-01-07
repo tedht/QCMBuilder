@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import controleur.Controleur;
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.question.Difficulte;
 
 /** Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une question
  * 
@@ -113,17 +114,17 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		this.ddlstTypeQuestion.setSelectedIndex(-1);
 
 		/* Boutons Radio */
+		btgDifficulte   = new ButtonGroup();
 		tabRbDifficulte = new JRadioButton[4];
-		tabRbDifficulte[0] = new JRadioButton("TF");
-		tabRbDifficulte[1] = new JRadioButton("F");
-		tabRbDifficulte[2] = new JRadioButton("M");
-		tabRbDifficulte[3] = new JRadioButton("D");
-
-		btgDifficulte = new ButtonGroup();
-		for(JRadioButton rb : tabRbDifficulte)
+		for(int i = 0; i < 4; i++)
 		{
-			btgDifficulte.add(rb);
-			rb.setEnabled(false);
+			Difficulte diff = Difficulte.fromInt(i);
+			
+			tabRbDifficulte[i] = new JRadioButton(diff.toString());
+			tabRbDifficulte[i].setForeground(diff.getCouleur());
+			tabRbDifficulte[i].setEnabled(false);
+
+			btgDifficulte.add(tabRbDifficulte[i]);
 		}
 
 		/* ACTION */

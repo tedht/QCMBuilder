@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -11,10 +14,19 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+/*
+import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
+import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscodingHints;
+import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.transcoder.image.JPEGTranscoder;
+import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
+import org.apache.batik.util.SVGConstants;*/
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
@@ -43,7 +55,7 @@ public class IHM
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 	
-	private Controleur ctrl;
+	private Controleur                ctrl;
 
 	private FrameQCMBuilder           frameQCMBuilder;
 
@@ -301,7 +313,7 @@ public class IHM
         try {
             svgIcon.setSvgURI(new URI("file:" + chemin));
             svgIcon.setPreferredSize(new Dimension(largeur, hauteur));
-			svgIcon.setScaleToFit(true);
+			//svgIcon.setScaleToFit(true);
             svgIcon.setAntiAlias(true);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -313,36 +325,51 @@ public class IHM
 	/*
 	public static Icon getImgIconSVG(String chemin, int largeur, int hauteur)
 	{
-		try {
-            TranscoderInput input = new TranscoderInput(new File(chemin).toURI().toString());
+		SvgTranscoder t = new SvgTranscoder();
+		t.setTranscodingHints(IHM.getHints((float)largeur, (float)hauteur));
 
-            BufferedImage[] imageHolder = new BufferedImage[1]; // To hold the resulting image
+		try 
+		{
+			TranscoderInput input = new TranscoderInput(new File(chemin).toURI().toString());
+			t.transcode(input, null);
+		} 
+		catch (TranscoderException e) 
+		{
+			e.printStackTrace();
+		}
 
-            ImageTranscoder transcoder = new ImageTranscoder() {
-                @Override
-                public BufferedImage createImage(int largeur, int hauteur) {
-                    return new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
-                }
+		return new ImageIcon(t.getImage());
+	}
 
-                @Override
-                public void writeImage(BufferedImage img, TranscoderOutput out) {
-                    imageHolder[0] = img;
-                }
-            };
+	private static TranscodingHints getHints(float largeur, float hauteur) 
+	{
+		TranscodingHints hints = new TranscodingHints();
+		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, SVGDOMImplementation.getDOMImplementation());
+		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, SVGConstants.SVG_NAMESPACE_URI);
+		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, SVGConstants.SVG_SVG_TAG);
 
-            transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, (float) largeur);
-            transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, (float) hauteur);
+		hints.put(SVGAbstractTranscoder.KEY_WIDTH, largeur);
+		hints.put(SVGAbstractTranscoder.KEY_HEIGHT, hauteur);
+		return hints;
+	}
 
-            transcoder.transcode(input, null);
-
-            BufferedImage image = imageHolder[0];
-            return new ImageIcon(image);
-
-        } catch (Exception e) {
-			System.out.println("error");
-            e.printStackTrace();
-        }
-        return null;
+	private static class SvgTranscoder extends ImageTranscoder 
+	{
+		private BufferedImage image = null;
+	
+		@Override
+		public BufferedImage createImage(int width, int height) 
+		{
+		  	image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		  	return image;
+		}
+	
+		@Override
+		public void writeImage(BufferedImage img, TranscoderOutput out) {}
+	
+		BufferedImage getImage() 
+		{
+		  	return image;
+		}
 	}*/
-
 }

@@ -74,7 +74,6 @@ public class PanelQuestion extends PanelEntite
 		public void mouseClicked(MouseEvent e) 
 		{
 			PanelQuestion.this.detail = !PanelQuestion.this.detail;
-
 		}
 	}
 }

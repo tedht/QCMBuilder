@@ -297,7 +297,7 @@ public class FrameEditQuestion extends JFrame
 				{
 					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
 					detailsProp =  panelPropQCM.estReponse() ? "V:" : "F:";
-					detailsProp += panelPropQCM.getText() + '\t';
+					detailsProp += panelPropQCM.getText();
 					lstDetailsProp.add(detailsProp);
 				}
 			} 

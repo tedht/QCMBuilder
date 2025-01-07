@@ -1,6 +1,6 @@
-- exporter Questionnaire
+- générer Questionnaire
 - java doc
-- Icones 
+- refaire méthode getImgIconSVG pour ne pas utiliser une méthode deprecated
 
 (On oublie tout ça)
 - aperçu d'une Questionnaire générée
