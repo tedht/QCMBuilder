@@ -40,7 +40,7 @@ public class BanqueNotions extends Banque
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe BanqueDeNotions.
+	 * Constructeur de la classe BanqueNotions.
 	 */
 	public BanqueNotions()
 	{

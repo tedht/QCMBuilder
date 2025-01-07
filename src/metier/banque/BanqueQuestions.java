@@ -48,7 +48,7 @@ public class BanqueQuestions extends Banque
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe BanqueDeQuestions.
+	 * Constructeur de la classe BanqueQuestions.
 	 */
 	public BanqueQuestions()
 	{
