@@ -1,14 +1,10 @@
 package controleur;
 
-import java.util.List;
-
 import ihm.IHM;
-
+import java.util.List;
 import metier.QCMBuilder;
-
-import metier.entite.Ressource;
 import metier.entite.Notion;
-
+import metier.entite.Ressource;
 import metier.entite.question.Question;
 
 /**
@@ -19,7 +15,20 @@ import metier.entite.question.Question;
  */
 public class Controleur
 {
+
+
+
+	/*-----------*/
+	// Attributs //
+	/*-----------*/
+
 	private QCMBuilder metier;
+
+
+
+	/*--------------*/
+	// Constructeur //
+	/*--------------*/
 
 	/**
 	 * Constructeur de la classe Controleur.
@@ -30,8 +39,10 @@ public class Controleur
 		new IHM(this);
 	}
 
+
+
 	/*---------*/
-	/* Getters */
+	// Getters //
 	/*---------*/
 
 	/**
@@ -153,8 +164,10 @@ public class Controleur
 		return this.metier.getRessourceSelectionnee();
 	}
 
+
+
 	/*---------*/
-	/* Setters */
+	// Setters //
 	/*---------*/
 
 	/**
@@ -167,8 +180,11 @@ public class Controleur
 		this.metier.setRessourceSelectionnee(ressource);
 	}
 
+
+
+
 	/*-----------------*/
-	/* Autres méthodes */
+	// Autres méthodes //
 	/*-----------------*/
 
 	/**
@@ -205,6 +221,18 @@ public class Controleur
 	{
 		this.metier.creerQuestion(detailsQuestion, intitule, explication, lstDetailsProp);
 	}
+
+	/**
+	 * Creer une pièce jointe dans la partie metier et l'associe à la question.
+	 * 
+	 * @param cheminFichier le chemin du fichier à associer.
+	 * @param question      la question à laquelle associer la pièce jointe.
+	 */
+	public void creerPieceJointe(String cheminFichier, Question question)
+	{
+		this.metier.creerPieceJointe(cheminFichier, question);
+	}
+
 
 
 	/**
@@ -244,6 +272,8 @@ public class Controleur
 		this.metier.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
+
+
 	/**
 	 * Supprime une ressource à partir de son code.
 	 * 
@@ -274,25 +304,21 @@ public class Controleur
 		this.metier.supprimerQuestion(id);
 	}
 
-	/**
-	 * Creer une pièce jointe dans la partie metier et l'associe à la question.
-	 * 
-	 * @param cheminFichier le chemin du fichier à associer.
-	 * @param question      la question à laquelle associer la pièce jointe.
-	 */
-	public void creerPieceJointe(String cheminFichier, Question question)
-	{
-		this.metier.creerPieceJointe(cheminFichier, question);
-	}
 
+	
 	/**
 	 * Génére une évaluation.
 	 * 
 	 * @param cheminFichier le chemin du fichier à générer.
 	 */
-	public void genererQuestionnaire(String cheminFichier) 
+	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions) 
 	{
-		this.metier.genererQuestionnaire(cheminFichier);
+		this.metier.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);
+	}
+
+	public void exporterQuestionnaire(String dossierSauvegarde)
+	{
+		this.metier.exporterQuestionnaire(dossierSauvegarde);
 	}
 
 	/**

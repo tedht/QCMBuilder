@@ -55,8 +55,13 @@ public class FrameGestionQuestionnaire extends JFrame
 		this.repaint   ();
 	}
 
-	public void genererQuestionnaire()
+	public void creerQuestionnaire()
 	{
+		String  codeRes        = this.panelParametresQuestionnaire.getCodeRes       ();
+		boolean chronometre    = this.panelParametresQuestionnaire.estChronometree  ();
+		int[][] tabNbQuestions = this.panelAjoutQuestionnaire     .getTabNbQuestions();
+		
+		this.ctrl.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);
 		this.ihm.finaliserQuestionnaire();
 	}
 

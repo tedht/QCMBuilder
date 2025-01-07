@@ -34,10 +34,10 @@ public class Questionnaire
 	// Attributs //
 	/*-----------*/
 
-	private Ressource      ressource;
-	private List<Notion>   notions;
-	private boolean        chronometre;
-	private List<Question> questions;
+	private Ressource       ressource;
+	private List<Notion>    notions;
+	private boolean         chronometre;
+	private List<Question>  questions;
 	private BanqueQuestions banqueQuestions;
 	
 	
