@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -222,7 +223,7 @@ public class QCMBuilder
 		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
 		int          temps      = this.enSeconde(sTemps);
 
-		Question question;
+		Question question = null;
 
 		boolean  estReponse;
 		int      cptReponse;
@@ -233,7 +234,6 @@ public class QCMBuilder
 		double   nbPtsPerdus;
 		String   text;
 
-		question = null;
 		if(idQst != null)
 		{
 			question = this.banqueQuestions.getQuestion(idQst);
@@ -422,10 +422,35 @@ public class QCMBuilder
 	 */
 	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions)
 	{
-		Ressource    ressource = this.banqueRessources.getRessource(codeRes);
-		List<Notion> lstNotons = this.banqueNotions   .getNotions(codeRes);
+		Ressource      ressource;
+		List<Notion>   lstNotions;
+		List<Question> lstQuestions;
+		List<Question> lstQstUtilisees;
+		Question       question;
+		
+		ressource       = this.banqueRessources.getRessource(codeRes);
+		lstNotions       = this.banqueNotions   .getNotions  (codeRes);
+		lstQstUtilisees = new ArrayList<Question>();
 
-		this.questionnaire = new Questionnaire(this.banqueQuestions, ressource, lstNotons, chronometre);
+		for(int i = 0; i < tabNbQuestions.length; i++)
+		{
+			lstQuestions = this.banqueQuestions.getQuestions(codeRes, i);
+			for(int j = 0; j < 4; i++)
+			{
+				for(int k = 0; k < tabNbQuestions[i][j]; k++)
+				{
+					question = this.banqueQuestions.getQuestions(codeRes, i).get((int)(Math.random() * lstQuestions.size()));
+					while(!lstQstUtilisees.contains(question))
+					{
+						question = this.banqueQuestions.getQuestions(codeRes, i).get((int)(Math.random() * lstQuestions.size()));
+					}
+
+					//this.questionnaire.ajouterQuestions(null, null, i);
+				}
+			}
+		}
+
+		this.questionnaire = new Questionnaire(this.banqueQuestions, ressource, lstNotions, chronometre);
 	}
 
 	public void exporterQuestionnaire(String dossierSauvegarde)
