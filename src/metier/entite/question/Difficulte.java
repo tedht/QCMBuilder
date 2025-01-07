@@ -7,8 +7,7 @@ import java.awt.Color;
  * Cette énumération inclut des méthodes utilitaires pour manipuler et convertir les difficultés.
  * 
  * @author Equipe 03
- * @date 2024/12/12
- * @version 1.0
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public enum Difficulte
 {
@@ -18,17 +17,15 @@ public enum Difficulte
 	DIFFICILE  (3);
 
 
-
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private final int valeur;
 
 
-
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -42,9 +39,8 @@ public enum Difficulte
 	}
 
 
-
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -78,7 +74,7 @@ public enum Difficulte
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

@@ -1,10 +1,14 @@
 package metier.entite.question;
 
+
 import java.util.List;
-import java.io.File;
 import java.util.ArrayList;
 
-/** Classe Question
+import java.io.File;
+
+/**
+ * Classe abstraite Question qui correspond aux questions de façon générique
+ * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
@@ -31,13 +35,13 @@ public abstract class Question
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe Question
+	 * Constructeur de la classe Question.
 	 * 
-	 * @param ressource la ressource associée à la question.
-	 * @param notion la notion associée à la question.
+	 * @param ressource  la ressource associée à la question.
+	 * @param notion     la notion associée à la question.
 	 * @param difficulte la difficulté de la question(TF,F,M,D).
-	 * @param temps le temps de réponse à la question (en secondes).
-	 * @param note la note de la question.
+	 * @param temps      le temps de réponse à la question (en secondes).
+	 * @param note       la note de la question.
 	 */
 	public Question(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
@@ -54,6 +58,7 @@ public abstract class Question
 		this.pieceJointe = null;
 		this.lstPropositions = new ArrayList<Proposition>();
 	}
+
 
 	/*---------*/
 	/* Getters */
@@ -127,8 +132,8 @@ public abstract class Question
 	/**
 	 * Retourne une proposition de la question en fonction de son indice dans la liste.
 	 * 
-	 * @param i l'indice de la proposition à retourner.
-	 * @return la proposition correspondante, ou null si elle n'existe pas.
+	 * @param i l'indice de la proposition dans la liste.
+	 * @return  la proposition correspondante, ou null si elle n'existe pas.
 	 */
 	protected Proposition getProposition(int i) { return this.lstPropositions.get(i); }
 
@@ -136,27 +141,43 @@ public abstract class Question
 	 * Retourne l'indice d'une proposition dans la liste des propositions de la question.
 	 * 
 	 * @param prop la proposition dont on veut l'indice.
-	 * @return l'indice de la proposition, ou -1 si elle n'existe pas.
+	 * @return     l'indice de la proposition, ou -1 si elle n'existe pas.
 	 */
 	public int getPropositionId(Proposition prop) { return this.lstPropositions.indexOf(prop); }
 
 	public String getIntitule   () { return this.intitule;    }
 	public String getExplication() { return this.explication; }
-	
+
+
 	/*---------*/
 	/* Setters */
 	/*---------*/
 
+	/**
+	 * Modifie le code de la ressource associée à la question.
+	 * 
+	 * @param codeRes le nouveau code de la ressource.
+	 */
 	public void setCodeRes(String codeRes)
 	{
 		this.codeRes = codeRes;
 	}
 
+	/**
+	 * Modifie l'id de la notion associée à la question.
+	 * 
+	 * @param idNot le nouvel id de la notion.
+	 */
 	public void setIdNot(int idNot)
 	{
 		this.idNot = idNot;
 	}
 
+	/**
+	 * Modifie l'id de la question.
+	 * 
+	 * @param idQst le nouvel id de la question.
+	 */
 	public void setIdQst(int idQst)
 	{
 		this.idQst = idQst;
@@ -166,7 +187,7 @@ public abstract class Question
 	 * Modifie la difficulté de la question.
 	 * 
 	 * @param difficulte la nouvelle difficulté.
-	 * @return true si la difficulté à été modifiée, false sinon.
+	 * @return           true si la difficulté à été modifiée, false sinon.
 	 */
 	public boolean setDifficulte(Difficulte difficulte)
 	{
@@ -180,7 +201,7 @@ public abstract class Question
 	 * Modifie le temps de réponse à la question.
 	 * 
 	 * @param temps le nouveau temps de réponse.
-	 * @return true si le temps à été modifié, false sinon.
+	 * @return      true si le temps à été modifié, false sinon.
 	 */
 	public boolean setTemps(int temps)
 	{
@@ -194,7 +215,7 @@ public abstract class Question
 	 * Modifie la note de la question.
 	 * 
 	 * @param note la nouvelle note.
-	 * @return true si la note à été modifiée, false sinon.
+	 * @return     true si la note à été modifiée, false sinon.
 	 */
 	public boolean setNote(double note)
 	{
@@ -204,14 +225,41 @@ public abstract class Question
 		return true;
 	}
 
+	/**
+	 * Modifie l'intitulé de la question.
+	 * 
+	 * @param intitule le nouvel intitulé.
+	 */
 	public void setIntitule(String intitule)
 	{
 		this.intitule = intitule;
 	}
 
+	/**
+	 * Modifie l'explication de la question.
+	 * 
+	 * @param explication la nouvelle explication.
+	 */
 	public void setExplication(String explication)
 	{
 		this.explication = explication;
+	}
+
+	/**
+	 * Modifie une proposition dans la liste des propositions associées à la question.
+	 * 
+	 * @param i    l'index de la proposition à modifier.
+	 * @param prop la nouvelle proposition.
+	 * @return     true si la modification a été effectuée, false sinon.
+	 */
+	protected boolean setProposition(int i, Proposition prop)
+	{
+		if(i < 0 || i >= this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
+		if(this.lstPropositions.isEmpty())            return false;  // Si la liste est vide                                                            -> renvoie faux
+		if(!this.lstPropositions.get(i).equals(prop)) return false;  // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
+
+		this.lstPropositions.set(i, prop);                           // Set la proposition
+		return true;
 	}
 
 	/*-----------------*/
@@ -222,7 +270,7 @@ public abstract class Question
 	 * Ajoute une piece jointe à la question.
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
-	 * @return true si la pièce jointe a été ajoutée, false sinon.
+	 * @return            true si la pièce jointe a été ajoutée, false sinon.
 	 */
 	public boolean ajouterPieceJointe(PieceJointe pieceJointe)
 	{
@@ -233,14 +281,14 @@ public abstract class Question
 	}
 
 	/**
-	 * Supprime une pièce jointe de la liste des pièces jointes de la question.
+	 * Supprime la pièce jointe de la question.
 	 * 
-	 * @param i l'index de la pièce jointe à supprimer.
-	 * @return true si la pièce jointe a été supprimée, false sinon.
+	 * @return  true si la pièce jointe a été supprimée, false sinon.
 	 */
 	public boolean supprimerPieceJointe()
 	{
 		File fichier;
+
 
 		if (this.pieceJointe == null) return false; // Si la pièce jointe est null -> renvoie faux
 
@@ -248,23 +296,6 @@ public abstract class Question
 		fichier.delete(); // Supprime le fichier
 
 		this.pieceJointe = null; // Supprime la pièce jointe
-		return true;
-	}
-
-	/**
-	 * Modifie une proposition dans la liste des propositions associées à la question.
-	 * 
-	 * @param i l'index de la proposition à modifier.
-	 * @param prop la nouvelle proposition.
-	 * @return true si la modification a été effectuée, false sinon.
-	 */
-	protected boolean setProposition(int i, Proposition prop)
-	{
-		if(i < 0 || i >= this.lstPropositions.size())  return false; // Si l'indice est en dehors de la liste                                           -> renvoie faux
-		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                                                            -> renvoie faux
-		if(!this.lstPropositions.get(i).equals(prop)) return false; // Si la proposition modifié est égale à la même chose que la nouvelle proposition -> renvoie faux
-
-		this.lstPropositions.set(i, prop);                          // Set la proposition
 		return true;
 	}
 	
@@ -297,14 +328,14 @@ public abstract class Question
 		return true;
 	}
 
+	/**
+	 * Supprime toutes les propositions de la question.
+	 */
 	public void clearPropositions()
 	{
 		this.lstPropositions.clear();
 	}
 
-	/*----------*/
-	/* toString */
-	/*----------*/
 	/*
 	public String toString()
 	{
@@ -333,9 +364,9 @@ public abstract class Question
 
 	
 	/**
-	 * Test de la classe Question
+	 * Main de la classe Question
 	 * 
-	 * @param args
+	 * @param args les arguments de la ligne de commande
 	 */
 	/*
 	public static void main(String[] args)

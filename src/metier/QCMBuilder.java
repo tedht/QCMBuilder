@@ -1,7 +1,9 @@
 package metier;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import metier.banque.BanqueNotions;
@@ -15,21 +17,24 @@ import metier.entite.Questionnaire;
 import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
-import metier.entite.question.association.Association;
-import metier.entite.question.qcm.QCM;
-import metier.entite.question.elimination.Elimination;
 
-import metier.entite.question.qcm.PropositionQCM;
-import metier.entite.question.association.PropositionAssociation;
-import metier.entite.question.elimination.PropositionElimination;
+import metier.entite.question.association.*;
+import metier.entite.question.qcm.*;
+import metier.entite.question.elimination.*;
 
-/** Classe QCMBuilder
+
+/**
+ * Classe QCMBuilder, classe principale métier de l'application QCMBuilder.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class QCMBuilder 
 {
+	/*-----------*/
+	/* Attributs */
+	/*-----------*/
+
 	private BanqueQuestions  banqueQuestions;
 	private BanqueNotions    banqueNotions;
 	private BanqueRessources banqueRessources;
@@ -38,6 +43,14 @@ public class QCMBuilder
 
 	private Questionnaire    questionnaire;
 
+
+	/*--------------*/
+	/* Constructeur */
+	/*--------------*/
+
+	/**
+	 * Constructeur de la classe QCMBuilder.
+	 */
 	public QCMBuilder()
 	{
 		this.banqueRessources = new BanqueRessources(); 
@@ -67,7 +80,7 @@ public class QCMBuilder
 	 * Retourne une ressource à partir de son code.
 	 * 
 	 * @param  code le code de la ressource.
-	 * @return      la ressource
+	 * @return      la ressource.
 	 */
 	public Ressource getRessource(String code) 
 	{
@@ -88,7 +101,7 @@ public class QCMBuilder
 	 * Retourne la liste des notions associées à une ressource à partir de son code.
 	 * 
 	 * @param  codeRes le code de la ressource.
-	 * @return la liste des notions associées.
+	 * @return         la liste des notions associées.
 	 */
 	public List<Notion> getNotions(String codeRes)
 	{
@@ -98,14 +111,21 @@ public class QCMBuilder
 	/**
 	 * Retourne une notion à partir de son id.
 	 * 
-	 * @param idNot l'id de la notion
-	 * @return la notion
+	 * @param idNot l'id de la notion.
+	 * @return      la notion.
 	 */
 	public Notion getNotion(int idNot) 
 	{
 		return this.banqueNotions.getNotion(idNot);
 	}
 
+	/**
+	 * Retourne une notion à partir de son nom et son code de ressource.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param nomNot  le nom de la notion.
+	 * @return        la notion.
+	 */
 	public Notion getNotionParNom(String codeRes, String nomNot) 
 	{
 		return this.banqueNotions.getNotionParNom(codeRes, nomNot);
@@ -120,12 +140,25 @@ public class QCMBuilder
 	{
 		return this.banqueQuestions.getQuestions();
 	}
-	
+
+	/**
+	 * Retourne la liste des questions associées à une ressource à partir de son code.
+	 * 
+	 * @param  codeRes le code de la ressource.
+	 * @return         la liste des questions associées.
+	 */
 	public List<Question> getQuestions(String codeRes) 
 	{
 		return this.banqueQuestions.getQuestions(codeRes);
 	}
 
+	/**
+	 * Retourne la liste des questions associées à une ressource à partir de son code et de l'id de la notion.
+	 * 
+	 * @param  codeRes le code de la ressource.
+	 * @param  idNot   l'id de la notion.
+	 * @return         la liste des questions associées.
+	 */
 	public List<Question> getQuestions(String codeRes, int idNot)
 	{
 		return this.banqueQuestions.getQuestions(codeRes, idNot);
@@ -136,34 +169,42 @@ public class QCMBuilder
 		return this.banqueQuestions.getQuestions(codeRes, idNot, diff);
 	}
 
+	/**
+	 * Retourne une question à partir de son id.
+	 * 
+	 * @param idQst l'id de la question.
+	 * @return      la question.
+	 */
 	public Question getQuestion(int idQst)
 	{
 		return this.banqueQuestions.getQuestion(idQst);
 	}
 
 	/**
-	 * Retourne la ressource active
+	 * Retourne la ressource active.
 	 * 
-	 * @return la ressource active
+	 * @return la ressource active.
 	 */
 	public Ressource getRessourceSelectionnee() 
 	{
 		return this.ressourceSelectionnee;
 	}
 
+
 	/*---------*/
 	/* Setters */
 	/*---------*/
 
 	/**
-	 * Modifie la ressource active
+	 * Modifie la ressource active.
 	 * 
-	 * @param ressource la ressource active
+	 * @param ressource la nouvelle ressource active.
 	 */
 	public void setRessourceSelectionnee(Ressource ressource) 
 	{
 		this.ressourceSelectionnee = ressource;
 	}
+
 
 	/*-----------------*/
 	/* Autres Méthodes */
@@ -172,8 +213,8 @@ public class QCMBuilder
 	/**
 	 * Crée une ressource
 	 * 
-	 * @param code le code de la ressource
-	 * @param nom le nom de la ressource
+	 * @param code le code de la ressource.
+	 * @param nom  le nom de la ressource.
 	 */
 	public void creerRessource(String code, String nom)
 	{
@@ -184,8 +225,8 @@ public class QCMBuilder
 	/**
 	 * Crée une notion
 	 * 
-	 * @param nomNotion le nom de la notion
-	 * @param nomNotion2 
+	 * @param codeRes   le code de la ressource.
+	 * @param nomNotion le nom de la notion.
 	 */
 	public void creerNotion(String codeRes, String nomNotion) 
 	{
@@ -194,18 +235,27 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Crée une question
+	 * Crée une question.
 	 * 
-	 * @param detailsQuestion les détails de la question
-	 * @param explication 
-	 * @param intitule 
-	 * @param lstDetailsProp 
+	 * @param detailsQuestion les détails de la question.
+	 * @param explication     l'explication.
+	 * @param intitule        l'intitulé.
+	 * @param lstDetailsProp  la liste des détails des propositions.
 	 */
 	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
 		this.editQuestion(null, detailsQuestion, intitule, explication, lstDetailsProp);
 	}
 
+	/**
+	 * Edite une question.
+	 * 
+	 * @param idQst           l'id de la question.
+	 * @param detailsQuestion les détails de la question.
+	 * @param explication     l'explication.
+	 * @param intitule        l'intitulé.
+	 * @param lstDetailsProp  la liste des détails des propositions.
+	 */
 	private void editQuestion(Integer idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp)
 	{
 		Scanner scDetails, scElim;
@@ -324,10 +374,10 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Convertit un temps en seconde
+	 * Convertit un temps en seconde.
 	 * 
-	 * @param sTemps le temps
-	 * @return le temps en seconde
+	 * @param sTemps le temps.
+	 * @return       le temps en seconde.
 	 */
 	private int enSeconde(String sTemps)
 	{
@@ -339,6 +389,13 @@ public class QCMBuilder
 		return m * 60 + s;
 	}
 
+	/**
+	 * Modifie une ressource par le code de la ressource.
+	 * 
+	 * @param code        le code de la ressource.
+	 * @param nouveauCode le nouveau code de la ressource.
+	 * @param nouveauNom  le nouveau nom de la ressource.
+	 */
 	public void modifierRessource(String code, String nouveauCode, String nouveauNom) 
 	{
 		Ressource ressource = this.banqueRessources.getRessource(code);
@@ -348,6 +405,12 @@ public class QCMBuilder
 		this.banqueRessources.sauvegarder();
 	}
 
+	/**
+	 * Modifie une notion par son id.
+	 * 
+	 * @param idNot      l'id de la notion.
+	 * @param nouveauNom le nouveau nom de la notion.
+	 */
 	public void modifierNotion(int idNot, String nouveauNom) 
 	{
 		Notion notion = this.banqueNotions.getNotion(idNot);
@@ -356,6 +419,15 @@ public class QCMBuilder
 		this.banqueNotions.sauvegarder();
 	}
 	
+	/**
+	 * Modifie une question par son id.
+	 * 
+	 * @param idQst           l'id de la question.
+	 * @param detailsQuestion les détails de la question.
+	 * @param intitule        l'intitulé.
+	 * @param explication     l'explication.
+	 * @param lstDetailsProp  la liste des détails des propositions.
+	 */
 	public void modifierQuestion(int idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
 		this.editQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
@@ -363,8 +435,8 @@ public class QCMBuilder
 
 	/**
 	 * Supprime une ressource à partir de son code.
-	 * @param code le code de la ressource
 	 * 
+	 * @param code le code de la ressource.
 	 */
 	public void supprimerRessource(String code) 
 	{
@@ -385,7 +457,8 @@ public class QCMBuilder
 	
 	/**
 	 * Supprime une notion à partir de son id.
-	 * @param id l'id de la notion
+	 * 
+	 * @param id l'id de la notion.
 	 */
 	public void supprimerNotion(int id) 
 	{
@@ -400,7 +473,8 @@ public class QCMBuilder
 
 	/**
 	 * Supprime une question à partir de son id.
-	 * @param id l'id de la question
+	 * 
+	 * @param id l'id de la question.
 	 */
 	public void supprimerQuestion(int id) 
 	{
@@ -409,10 +483,10 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Crée une pièce jointe
+	 * Crée une pièce jointe et l'associe à la question.
 	 * 
-	 * @param cheminFichier
-	 * @param question
+	 * @param cheminFichier le chemin du fichier.
+	 * @param question      la question.
 	 */
 	public void creerPieceJointe(String cheminFichier, Question question)
 	{
@@ -420,9 +494,11 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Génère un questionnaire
+	 * Génère un questionnaire.
 	 * 
-	 * @param cheminFichier le chemin du fichier
+	 * @param codeRes        le code de la ressource.
+	 * @param chronometre    true si le questionnaire est chronométré, false sinon.
+	 * @param tabNbQuestions le tableau du nombre de questions par difficulté et notions.
 	 */
 	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions)
 	{
@@ -454,6 +530,11 @@ public class QCMBuilder
 		this.questionnaire.shuffleQuestions();
 	}
 
+	/**
+	 * Exporte le questionnaire.
+	 * 
+	 * @param dossierSauvegarde le dossier de sauvegarde.
+	 */
 	public void exporterQuestionnaire(String dossierSauvegarde)
 	{
 		if(this.questionnaire != null)

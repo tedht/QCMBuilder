@@ -27,7 +27,7 @@ public class Elimination extends Question
 	 * @param temps      le temps associée à la question.
 	 * @param difficulte la difficultée.
 	 * 
-	 * @see Question la classe Question.
+	 * @see Question la classe Question parente de Elimination.
 	 */
 	public Elimination(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{

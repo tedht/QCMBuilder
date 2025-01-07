@@ -10,7 +10,7 @@ import metier.entite.question.Question;
 /**
  * Classe Controleur qui gère les interactions entre l'IHM et le métier.
  * 
- * @author Equipe 03
+ * @author  Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Controleur
@@ -19,7 +19,7 @@ public class Controleur
 
 
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private QCMBuilder metier;
@@ -27,7 +27,7 @@ public class Controleur
 
 
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -42,7 +42,7 @@ public class Controleur
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -167,7 +167,7 @@ public class Controleur
 
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -184,7 +184,7 @@ public class Controleur
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

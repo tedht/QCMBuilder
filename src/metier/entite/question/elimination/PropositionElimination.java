@@ -32,6 +32,8 @@ public class PropositionElimination implements Proposition
 	 * @param reponse     true si la reponse est vraie, false sinon.
 	 * @param ordreElim   l'ordre dans lequel éliminer la proposition.
 	 * @param nbPtsPerdus le nombre de points perdus.
+	 * 
+	 * @see Elimination la classe Elimination.
 	 */
 	public PropositionElimination(String text, boolean reponse, int ordreElim, double nbPtsPerdus)
 	{
@@ -77,9 +79,9 @@ public class PropositionElimination implements Proposition
 	public double getNbPtsPerdus() { return this.nbPtsPerdus; }
 
 
-	/*--------*/
-	/* SETTER */
-	/*--------*/
+	/*---------*/
+	/* Setters */
+	/*---------*/
 
 	/**
 	 * Modifie le texte associé à la Proposition Elimination.

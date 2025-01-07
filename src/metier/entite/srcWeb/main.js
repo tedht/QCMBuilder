@@ -6,6 +6,9 @@ let etatReponses = [];
 let notions;
 let associations = [];
 
+let intervalId = null; // Stocke l'identifiant de l'intervalle du chrono
+
+
 // charge le tableau questions depuis le questions.json
 async function chargerQuestions() {
     fetch('questions.json')
@@ -112,8 +115,13 @@ function afficherQuestions() {
 
 //Affiche la question selon l'index dans questions 
 function afficherQuestion(index) {
+    if(gererChrono()) {
+        demarrerChrono();
+    }
+
     const questionContainer = document.querySelector('.question-section');
     const question = questions[index];
+    
     const lettreDifficulte = gererCoulDifficulte(question.difficulte);  
     const notion = question.notion;
 
@@ -127,14 +135,16 @@ function afficherQuestion(index) {
     contentDifficulte.className = 'cercle-difficulte';
     contentDifficulte.classList.add(question.difficulte);
     contentDifficulte.innerText = lettreDifficulte;
+    contentDifficulte.style.color = 'white';
 
     contentNumber.innerText = `${question.id}/${questions.length}`;
 
-    contentNotion.innerText = "[ " + notion + " ]";
+    contentNotion.innerText = `[ ${notion} ]`;
 
     contentTitre.innerText = question.intitule;
-    contentTitre.innerHTML += question.fichierComplementaire ? ' <button id="btn-info" class="nav-button" onclick="gererBtnInfo()">+ d\'infos</button>' : '';
-    
+    if (question.fichierComplementaire) {
+        contentTitre.innerHTML += ' <button id="btn-info" class="nav-button" onclick="gererBtnInfo()">+ d\'infos</button>';
+    }
 
     if(gererChrono())  {
         contentTemps.style.color = 'red';
@@ -204,7 +214,7 @@ function melangerTableau(tableau) {
 function afficherReponses(index) {
     const question = questions[index];
     const reponses = question.propositions;
-    const { propositionsGauche, propositionsDroite, type } = question;
+    let { propositionsGauche, propositionsDroite, type } = question;
 
     if (!question || (!reponses && (!propositionsGauche || !propositionsDroite))) {
         console.error("Question ou propositions non définies.");
@@ -227,7 +237,7 @@ function afficherReponses(index) {
         }
     } else if (type === "Association") {
         // // Mélange des propositionsDroite
-        // propositionsDroite = melangerTableau([...propositionsDroite]); 
+        propositionsDroite = melangerTableau([...propositionsDroite]); 
         
         // Gestion spécifique pour les questions d'association
         corpsQuestions += `
@@ -368,6 +378,18 @@ function reinitialiserSvg() {
 function reinitialiserAssociationsEtSvg() {
     reinitialiserVariableAssociations();
     reinitialiserSvg();
+
+    const itemsGauche = document.querySelectorAll('.gauche-item.disabled');
+    const itemsDroite = document.querySelectorAll('.droite-item.disabled');
+
+    itemsGauche.forEach(item => {
+        item.classList.remove('disabled');
+    });
+
+    // Supprime la classe 'disabled' pour tous les éléments de droite
+    itemsDroite.forEach(item => {
+        item.classList.remove('disabled');
+    });
 }
 
 
@@ -728,6 +750,9 @@ function gererBoutons() {
             questionIndex++;
             reinitialiserAssociationsEtSvg();
             afficherQuestion(questionIndex);
+            if (gererChrono()) {
+                demarrerChrono();
+            }
         }
     });
 }
@@ -743,7 +768,7 @@ function gererChrono() {
 // Prend une difficulté en valeur et renvoie le char associé
 function gererCoulDifficulte(difficulte) {
     switch (difficulte) {
-        case 'très-facile': return 'TF';
+        case 'tres-facile': return 'TF';
         case 'facile':      return 'F';
         case 'moyen':       return 'M'; 
         case 'difficile':   return 'D';
@@ -769,4 +794,40 @@ function mettreAJourBarreDeProgression(questionIndex, totalQuestions) {
 
     const texteProgression = document.getElementById('progress-text');
     texteProgression.textContent = `Question ${questionIndex + 1} sur ${totalQuestions} (${pourcentage}%)`;
+}
+
+function demarrerChrono() {
+    const contentTemps = document.getElementById('question-time');
+    const question = questions[questionIndex]; // Question actuelle
+    let tempsRestant = question.temps; // Temps initial pour cette question
+
+    // Si le chrono est désactivé, ne rien faire
+    if (!gererChrono()) {
+        return;
+    }
+
+    // Arrête l'ancien intervalle s'il existe
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+
+    // Initialise le texte du chrono
+    contentTemps.style.color = 'red';
+    contentTemps.innerText = `Chrono : ${tempsRestant} secondes`;
+
+    // Démarre un nouveau chrono
+    intervalId = setInterval(() => {
+        tempsRestant--;
+
+        // Met à jour l'affichage
+        contentTemps.innerText = `Chrono : ${tempsRestant} secondes`;
+
+        // Quand le temps est écoulé
+        if (tempsRestant <= 0) {
+            clearInterval(intervalId); // Stoppe l'intervalle
+            intervalId = null; // Réinitialise la variable globale
+            alert("Temps écoulé pour cette question !");
+        }
+    }, 1000); // Décrémentation toutes les secondes
 }

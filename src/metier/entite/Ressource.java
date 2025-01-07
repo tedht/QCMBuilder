@@ -1,7 +1,8 @@
 package metier.entite;
 
+
 /**
- * Classe Ressource
+ * Classe Ressource qui correspond aux ressources.
  * 
  * @author  Equipe03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -15,16 +16,17 @@ public class Ressource
 	private String code;
 	private String nom;
 
+
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
-	 * Constructeur de la classe Ressource avec le chemin du fichier.
+	 * Constructeur de la classe Ressource.
 	 * 
 	 * @param  idRes L'id de la ressource.
-	 * @param  code        Le code de la ressource.
-	 * @param  nom         Le nom de la Ressource.
+	 * @param  code  Le code de la ressource.
+	 * @param  nom   Le nom de la Ressource.
 	 */
 	public Ressource(String code,String nom)
 	{
@@ -32,10 +34,10 @@ public class Ressource
 		this.nom  = nom;
 	}
 
+
 	/*---------*/
 	/* Getters */
 	/*---------*/
-
 
 	/**
 	 * Retourne le code de la Ressource.
@@ -81,8 +83,9 @@ public class Ressource
 		this.code = code;
 	}
 
+
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

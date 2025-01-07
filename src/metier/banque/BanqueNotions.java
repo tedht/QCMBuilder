@@ -21,11 +21,14 @@ import metier.entite.Notion;
 /**
  * Classe BanqueDeNotions qui gère les notions (hérite de Banque).
  * 
- * @author Equipe 03
+ * @author  Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class BanqueNotions extends Banque
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
@@ -35,6 +38,8 @@ public class BanqueNotions extends Banque
 
 	private String         cheminFic;
 	
+
+
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
@@ -51,6 +56,8 @@ public class BanqueNotions extends Banque
 
 		this.lireRessources(this.cheminFic);
 	}
+
+
 
 	/*---------*/
 	/* Getters */
@@ -138,8 +145,10 @@ public class BanqueNotions extends Banque
 		return null;
 	}
 
+
+
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/** 
@@ -268,18 +277,6 @@ public class BanqueNotions extends Banque
 			this.lstNotions.add(new Notion(codeRes, idNot, nom));
 	}
 
-	/**
-	 * Recupère l'id de la dernière notion de la liste de notions.
-	 * 
-	 * @return la taille de la lstNotions (qui donne donc l'id de la dernière notion).
-	 */
-	private int recupererId()
-	{
-		if(!this.fileIdUtilisable.isEmpty())
-			return this.fileIdUtilisable.poll();
-
-		return this.lstNotions.size();
-	}
 
 	/**
 	 * Supprime une notion de la banque de notions.
@@ -317,42 +314,16 @@ public class BanqueNotions extends Banque
 				this.supprimerNotion(i);
 	}
 
-	/*
-	public static void main(String[] args) {
-		
-		Notion n1 = new Notion("n1", 1, "code1");
-		Notion n2 = new Notion("n2", 2, "code2");
-		Notion n3 = new Notion("n3", 3, "code3");
-		
-		BanqueNotions bdn = new BanqueNotions();
+	/**
+	 * Recupère l'id de la dernière notion de la liste de notions.
+	 * 
+	 * @return la taille de la lstNotions (qui donne donc l'id de la dernière notion).
+	 */
+	private int recupererId()
+	{
+		if(!this.fileIdUtilisable.isEmpty())
+			return this.fileIdUtilisable.poll();
 
-		bdn.ajouterNotion(n1);
-		bdn.ajouterNotion(n2);
-		bdn.ajouterNotion(n3);
-
-		for (Notion notion : bdn.getNotions())
-		{
-			System.out.println(notion);
-
-		}
-
-
-		bdn.sauvegarderNotions();
-
-		bdn.supprimerNotion(1);
-		bdn.supprimerNotion(2);
-		bdn.supprimerNotion(3);
-		for (Notion notion : bdn.getNotions())
-		{
-			System.out.println(notion);
-
-		}
-
-		bdn.lireNotions();
-
-		for (Notion notion : bdn.getNotions()) {
-			System.out.println(notion);
-			
-		}
-	}*/
+		return this.lstNotions.size();
+	}
 }
