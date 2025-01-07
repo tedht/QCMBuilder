@@ -275,7 +275,7 @@ public class IHM
 		}
 	}
 
-	public void finaliserQuestionnaire() 
+	public void exporterQuestionnaire() 
 	{
 		if(this.frameExport == null)
 		{

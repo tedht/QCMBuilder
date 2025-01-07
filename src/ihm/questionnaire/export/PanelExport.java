@@ -118,10 +118,8 @@ public class PanelExport extends PanelEditNom
 			return false;
 		}
 
-		this.lblChemin.getText();
-
 		this.ihm.fermerFrameGestionQuestionnaire();
-		//this.ctrl.genererQuestionnaire();
+		this.ctrl.exporterQuestionnaire(chemin);
 
 		return true;
 	}
