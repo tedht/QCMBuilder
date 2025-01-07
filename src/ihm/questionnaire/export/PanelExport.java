@@ -118,6 +118,9 @@ public class PanelExport extends PanelEditNom
 			return false;
 		}
 
+		this.ihm.fermerFrameGestionQuestionnaire();
+		this.ctrl.genererQuestionnaire(this.lblChemin.getText());
+
 		return true;
 	}
 
@@ -137,7 +140,7 @@ public class PanelExport extends PanelEditNom
 	
 			if (result == JFileChooser.APPROVE_OPTION) 
 			{
-				File   dir    = fileChooser.getSelectedFile();
+				File dir = fileChooser.getSelectedFile();
 				this.lblChemin.setText(dir.getAbsolutePath());
 			}
 		}

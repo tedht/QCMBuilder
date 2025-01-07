@@ -307,13 +307,21 @@ public class IHM
 		}
 	}
 
+	public void fermerFrameGestionQuestionnaire()
+	{
+		if(this.frameGestionQuestionnaire != null)
+		{
+			this.frameGestionQuestionnaire.setVisible(false);
+		}
+	}
+
 	public static SVGIcon getImgIconSVG(String chemin, int largeur, int hauteur)
 	{
         SVGIcon svgIcon = new SVGIcon();
         try {
             svgIcon.setSvgURI(new URI("file:" + chemin));
             svgIcon.setPreferredSize(new Dimension(largeur, hauteur));
-			//svgIcon.setScaleToFit(true);
+			svgIcon.setScaleToFit(true);
             svgIcon.setAntiAlias(true);
         } catch (URISyntaxException e) {
             e.printStackTrace();

@@ -285,7 +285,7 @@ public class FrameEditQuestion extends JFrame
 		
 		String       detailsQuestion = "";
 		String       detailsProp     = "";
-		List<String> lstDetailsProp = new ArrayList<String>();
+		List<String> lstDetailsProp  = new ArrayList<String>();
 
 		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints+"\t"+pieceJointe;
 
