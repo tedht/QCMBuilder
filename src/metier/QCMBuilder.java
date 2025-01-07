@@ -230,6 +230,17 @@ public class QCMBuilder
 		int      ordreElim;
 		double   nbPtsPerdus;
 		String   text;
+
+		question = null;
+		if(idQst != null)
+		{
+			question = this.banqueQuestions.getQuestion(idQst);
+			question.setCodeRes(codeRes);
+			question.setIdNot(idNot);
+			question.setDifficulte(difficulte);
+			question.setTemps(temps);
+			question.setNote(note);
+		}
 	
 		switch (type) 
 		{
@@ -237,15 +248,6 @@ public class QCMBuilder
 			{
 				if(idQst == null)
 					question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
-				else
-				{
-					question = this.banqueQuestions.getQuestion(idQst);
-					question.setCodeRes(codeRes);
-					question.setIdNot(idNot);
-					question.setDifficulte(difficulte);
-					question.setTemps(temps);
-					question.setNote(note);
-				}
 
 				question.clearPropositions();
 				cptReponse = 0;
@@ -265,15 +267,6 @@ public class QCMBuilder
 			{
 				if(idQst == null)
 					question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
-				else
-				{
-					question = this.banqueQuestions.getQuestion(idQst);
-					question.setCodeRes(codeRes);
-					question.setIdNot(idNot);
-					question.setDifficulte(difficulte);
-					question.setTemps(temps);
-					question.setNote(note);
-				}
 
 				question.clearPropositions();
 				for(int i = 0; i < lstDetailsProp.size(); i+=2)
@@ -291,15 +284,6 @@ public class QCMBuilder
 			{
 				if(idQst == null)
 					question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
-				else
-				{
-					question = this.banqueQuestions.getQuestion(idQst);
-					question.setCodeRes(codeRes);
-					question.setIdNot(idNot);
-					question.setDifficulte(difficulte);
-					question.setTemps(temps);
-					question.setNote(note);
-				}
 
 				question.clearPropositions();
 				for(String detailsProp : lstDetailsProp)
