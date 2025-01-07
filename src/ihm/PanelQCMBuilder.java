@@ -9,12 +9,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Classe PanelQCMBuilder qui gère l'interface de gestion des QCM.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class PanelQCMBuilder extends JPanel implements ActionListener
 {
 	private IHM        ihm;	
 
 	private JButton    btnRessourceNotion, btnQuestion, btnQuestionnaire, btnQuitter;
 
+	/** 
+	 * Constructeur du panel de gestion des QCM.
+	 * 
+	 * @param ihm L'interface homme-machine.
+	 */
 	public PanelQCMBuilder(IHM ihm) 
 	{
 		this.ihm  = ihm;
@@ -53,6 +64,11 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
