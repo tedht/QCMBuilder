@@ -480,7 +480,7 @@ public class Questionnaire
 		String difficulteAffichee = "";
 		switch (difficulte) {
 			case "TF":
-				difficulteAffichee = "très-facile";
+				difficulteAffichee = "tres-facile";
 				break;
 			case "F":
 				difficulteAffichee = "facile";
@@ -632,7 +632,7 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
 		for (Notion notion : notions) {
-			if (notion.getIdNot() == question.getIdNot() + 1) {
+			if (notion.getIdNot() == question.getIdNot()) {
 				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", notion.getNom()));
 				break;
 			}
