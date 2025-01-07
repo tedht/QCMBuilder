@@ -10,7 +10,7 @@ import  metier.entite.question.Proposition;
 public class PropositionAssociation implements Proposition
 {
 	/*-----------*/
-	// Attributs //
+	/* Attributs */
 	/*-----------*/
 
 	private String textGauche;
@@ -18,7 +18,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -37,7 +37,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
@@ -56,7 +56,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -75,7 +75,7 @@ public class PropositionAssociation implements Proposition
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

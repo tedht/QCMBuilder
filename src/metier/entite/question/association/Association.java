@@ -15,7 +15,7 @@ import  metier.entite.question.TypeQuestion;
 public class Association extends Question
 {
 	/*--------------*/
-	// Constructeur //
+	/* Constructeur */
 	/*--------------*/
 
 	/**
@@ -45,6 +45,7 @@ public class Association extends Question
 	 * 
 	 * @return  le type de question ASSOCIATION.
 	 */
+	@Override
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
 
 	/**
@@ -59,7 +60,7 @@ public class Association extends Question
 
 
 	/*---------*/
-	// Setters //
+	/* Setters */
 	/*---------*/
 
 	/**
@@ -73,11 +74,11 @@ public class Association extends Question
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**
-	 * Ajouter une proposition Association.
+	 * Ajoute une proposition Association.
 	 * 
 	 * @param  prop la proposition à ajouter.
 	 * @return true si la proposition a été ajoutée, false sinon.
