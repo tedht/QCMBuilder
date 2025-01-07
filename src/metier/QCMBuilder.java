@@ -415,14 +415,21 @@ public class QCMBuilder
 		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
 	}
 
-
 	/**
 	 * Génère un questionnaire
 	 * 
 	 * @param cheminFichier le chemin du fichier
 	 */
-	public void genererQuestionnaire(String cheminFichier)
+	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions)
 	{
-		this.questionnaire.genererQuestionnaire(cheminFichier);
+		Ressource    ressource = this.banqueRessources.getRessource(codeRes);
+		List<Notion> lstNotons = this.getNotions(codeRes);
+
+		this.questionnaire = new Questionnaire(this.banqueQuestions, ressource, lstNotons, chronometre);
+	}
+
+	public void exporterQuestionnaire(String dossierSauvegarde)
+	{
+		//this.questionnaire.genererQuestionnaire(dossierSauvegarde);
 	}
 }

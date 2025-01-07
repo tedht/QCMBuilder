@@ -28,10 +28,11 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 	private Controleur                ctrl;
 	private FrameGestionQuestionnaire frame;
 
-	private JPanel panelInfo, panelAction;
-	private JTable tblGrilleNotions;
-	private JScrollPane spGrilleNotions;
-	private JButton btnPrecedent, btnGenerer;
+	private JPanel             panelInfo, panelAction;
+	private GrilleNotionsModel grilleNotionsModel;
+	private JTable             tblGrilleNotions;
+	private JScrollPane        spGrilleNotions;
+	private JButton            btnPrecedent, btnGenerer;
 
 	public PanelAjoutQuestionnaire(Controleur ctrl, FrameGestionQuestionnaire frame) 
 	{
@@ -48,8 +49,9 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		this.panelInfo = new JPanel(new BorderLayout());
 		this.panelInfo.setBorder(new EmptyBorder(20,20,20,20));
 
-		this.tblGrilleNotions = new JTable(new GrilleNotionsModel(ctrl, this, frame.getCodeRes()));
-		this.spGrilleNotions  = new JScrollPane(this.tblGrilleNotions);
+		this.grilleNotionsModel = new GrilleNotionsModel(ctrl, this, frame.getCodeRes());
+		this.tblGrilleNotions   = new JTable(this.grilleNotionsModel);
+		this.spGrilleNotions    = new JScrollPane(this.tblGrilleNotions);
 
 		/* ACTION */
 		this.panelAction = new JPanel();
@@ -94,7 +96,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 
 		if(e.getSource() == this.btnGenerer)
 		{
-			this.frame.genererQuestionnaire();
+			this.frame.creerQuestionnaire();
 		}
 	}
 
@@ -154,6 +156,11 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 	public void setBtnGenererEnabled(boolean b) 
 	{
 		this.btnGenerer.setEnabled(b);
+	}
+
+	public int[][] getTabNbQuestions()
+	{
+		return this.grilleNotionsModel.getTabNbQuestions();
 	}
 	
 }

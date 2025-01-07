@@ -232,9 +232,14 @@ public class Controleur
 	/**
 	 * Génére une évaluation.
 	 */
-	public void genererQuestionnaire(String cheminFichier) 
+	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions) 
 	{
-		this.metier.genererQuestionnaire(cheminFichier);
+		this.metier.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);
+	}
+
+	public void exporterQuestionnaire(String dossierSauvegarde)
+	{
+		this.metier.exporterQuestionnaire(dossierSauvegarde);
 	}
 
 	public static void main(String[] args) 

@@ -18,23 +18,27 @@ import metier.entite.Notion;
  */
 public class GrilleNotionsModel extends AbstractTableModel
 {
-	private Controleur           ctrl;
+	private Controleur              ctrl;
 	private PanelAjoutQuestionnaire panel;
+	private String                  codeRes;
 
-	private String[]   tabEntetes;
-	private Object[][] tabDonnees;
+	private String[]                tabEntetes;
+	private Object[][]              tabDonnees;
 
-	private int[]      tabNbQuestionsDiff;
+	private int[]                   tabNbQuestionsDiff;
 
 	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, String codeRes)
 	{
-		this.ctrl  = ctrl;
-		this.panel = panel;
+		this.ctrl    = ctrl;
+		this.panel   = panel;
+		this.codeRes = codeRes;
 
 		this.tabNbQuestionsDiff = new int[4];
 
 		String nomNotion;
-		List<Notion> lstNotions = this.ctrl.getNotions(codeRes) != null ? this.ctrl.getNotions(codeRes) : new ArrayList<Notion>();
+		List<Notion> lstNotions =   this.ctrl.getNotions(this.codeRes) != null 
+		                          ? this.ctrl.getNotions(this.codeRes)
+								  : new ArrayList<Notion>();
 
 		tabDonnees = new Object[lstNotions.size()+2][7];
 
@@ -70,7 +74,6 @@ public class GrilleNotionsModel extends AbstractTableModel
 
 	public boolean isCellEditable(int lig, int col)
 	{
-		
 		return (col == 1 || (2 <= col && col <= 5 && this.getValueAt(lig, 1) == Boolean.TRUE))
 		       && lig < tabDonnees.length-2;
 	}
@@ -101,7 +104,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 		}
 		if (2 <= col && col <= 5)
 		{
-			if (value instanceof Integer && 0 <= (Integer)value && (Integer)value <= 999)
+			if (value instanceof Integer && 0 <= (Integer)value && (Integer)value <= 99)
 			{
 				Integer oldVal = (Integer)this.tabDonnees[lig][col];
 				Integer newVal = (Integer)value;
@@ -136,5 +139,24 @@ public class GrilleNotionsModel extends AbstractTableModel
 			   + this.tabNbQuestionsDiff[3];
 	}
 
+	public int[][] getTabNbQuestions()
+	{
+		int nbNotions = this.ctrl.getNotions(this.codeRes).size();
+		System.out.println(codeRes);
+		System.out.println(nbNotions);
 
+		int[][] tabNbQuestions = new int[nbNotions][4];
+		
+		for(int i = 0; i < nbNotions; i++)
+		{
+			for(int j = 0; j < 4; j++)
+			{
+				tabNbQuestions[i][j] = this.tabDonnees[i][j+2] == null ? 0 : (Integer)this.tabDonnees[i+1][j+2];
+				System.out.print(tabNbQuestions[i][j] + "   ");
+			}
+			System.out.println();
+		}
+
+		return tabNbQuestions;
+	}
 }
