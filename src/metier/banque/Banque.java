@@ -9,6 +9,11 @@ import java.io.File;
  */
 public abstract class Banque 
 {
+	/**
+	 * Supprime le dossier et son contenu.
+	 * 
+	 * @param dossier le dossier à supprimer.
+	 */
 	public boolean supprimerDossier(File dossier)
 	{
 		if (dossier.isDirectory())

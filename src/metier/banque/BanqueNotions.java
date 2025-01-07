@@ -1,21 +1,25 @@
 package metier.banque;
 
-
 import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Queue;
+import java.util.LinkedList;
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+import java.io.PrintWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
+import java.io.FileNotFoundException;
 
 import metier.entite.Notion;
 
-/** Classe BanqueDeNotions
+/**
+ * Classe BanqueDeNotions qui gère les notions.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -69,7 +73,10 @@ public class BanqueNotions extends Banque
 	 */
 	public List<Notion> getNotions()
 	{
-		List<Notion> lstNotions = new ArrayList<Notion>();
+		List<Notion> lstNotions;
+
+
+		lstNotions = new ArrayList<Notion>();
 
 		for(Notion notion : this.lstNotions)
 		{
@@ -83,12 +90,15 @@ public class BanqueNotions extends Banque
 	/** 
 	 * Retourne la liste des notions de la banque de notions en fonction du code de la ressource.
 	 * 
-	 * @param codeRes le code de la ressource
-	 * @return la liste des notions.
+	 * @param codeRes le code de la ressource.
+	 * @return        la liste des notions.
 	 */
 	public List<Notion> getNotions(String codeRes) 
 	{
-		List<Notion> lstNotions = new ArrayList<Notion>();
+		List<Notion> lstNotions;
+
+
+		lstNotions = new ArrayList<Notion>();
 
 		for(Notion notion : this.lstNotions)
 		{
@@ -100,16 +110,23 @@ public class BanqueNotions extends Banque
 	}
 
 	/**
-	 * Retourne la notion de la banque de notions.
+	 * Retourne la notion de la banque de notions à partir de son id.
 	 * 
-	 * @param id l'id de la notion
-	 * @return la notion grâce à l'id.
+	 * @param id l'id de la notion.
+	 * @return   la notion.
 	 */
 	public Notion getNotion(int idNot)
 	{
 		return this.lstNotions.get(idNot);
 	}
 
+	/**
+	 * Retourne la notion de la banque de notions à partir de son code de ressource et de son nom.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param nomNot  le nom de la notion.
+	 * @return        la notion.
+	 */
 	public Notion getNotionParNom(String codeRes, String nomNot) 
 	{
 		for(Notion notion : this.lstNotions)
@@ -129,7 +146,7 @@ public class BanqueNotions extends Banque
 	 * Lit les notions d'un fichier CSV.
 	 * 
 	 * @param cheminFic le nom du fichier à lire.
-	 * @see Scanner
+	 * @see   Scanner   pour lire le fichier.
 	*/
 	public void lireRessources(String cheminFic)
 	{
@@ -143,6 +160,7 @@ public class BanqueNotions extends Banque
 		String  nom;
 
 		int     cpt;
+
 
 		try
 		{
@@ -192,7 +210,8 @@ public class BanqueNotions extends Banque
 	/** 
 	 * Sauvegarde les notions dans un fichier CSV.
 	 * 
-	 * @param cheminFic le nom du fichier dans lequel sauvegarder les notions.
+	 * @param cheminFic   le nom du fichier dans lequel sauvegarder les notions.
+	 * @see   PrintWriter pour écrire dans le fichier.
 	*/
 	private void sauvegarder(String cheminFic)
 	{
@@ -231,13 +250,17 @@ public class BanqueNotions extends Banque
 	}
 	
 	/**
-	 * Modifie une notion à la banque de notions.
+	 * Créer une notion dans la banque de notions
 	 * 
-	 * @param notion la notion à modifier.
+	 * @param codeRes le code de la ressource de la notion.
+	 * @param nom     le nom de la notion.
 	 */
 	public void creerNotion(String codeRes, String nom)
 	{
-		int idNot = this.recupererId();
+		int idNot;
+
+
+		idNot = this.recupererId();
 
 		if (idNot < this.lstNotions.size())
 			this.lstNotions.set(idNot, new Notion(codeRes, idNot, nom));
@@ -246,7 +269,7 @@ public class BanqueNotions extends Banque
 	}
 
 	/**
-	 * Recupère l'id de la dernière notion
+	 * Recupère l'id de la dernière notion de la liste de notions.
 	 * 
 	 * @return la taille de la lstNotions (qui donne donc l'id de la dernière notion).
 	 */
@@ -265,7 +288,10 @@ public class BanqueNotions extends Banque
 	 */
 	public void supprimerNotion(int idNot)
 	{
-		Notion notion = this.getNotion(idNot);
+		Notion notion;
+
+
+		notion = this.getNotion(idNot);
 
 		if(notion != null)
 		{
@@ -287,12 +313,8 @@ public class BanqueNotions extends Banque
 	public void supprimerNotions(String codeRes)
 	{
 		for(int i = 0; i < this.lstNotions.size(); i++)
-		{
 			if(this.lstNotions.get(i) != null && this.lstNotions.get(i).getCodeRes().equals(codeRes))
-			{
 				this.supprimerNotion(i);
-			}
-		}
 	}
 
 	/*
