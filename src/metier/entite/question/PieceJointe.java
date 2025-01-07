@@ -4,13 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 
-/** Classe PieceJointe
+/**
+ * Classe PieceJointe pour représenter une pièce jointe.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PieceJointe
 {
+	/*-----------*/
+	/* Attributs */
+	/*-----------*/
+
 	private static int numPieceJointe;
 
 	private String nomPieceJointe;
@@ -18,10 +23,15 @@ public class PieceJointe
 	private File   fichier;
 
 
+	/*--------------*/
+	/* Constructeur */
+	/*--------------*/
+
 	/**
 	 * Constructeur de la classe PieceJointe.
 	 * 
-	 * @param cheminFichier le chemin du fichier.
+	 * @param cheminFichierOriginal le chemin du fichier original.
+	 * @param cheminFichier le chemin du fichier (destination du ficXXXX).
 	 */
 	public PieceJointe(String cheminFichierOriginal, String cheminFichier)
 	{
@@ -41,6 +51,11 @@ public class PieceJointe
 			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
 		}
 	}
+
+
+	/*---------*/
+	/* Getters */
+	/*---------*/
 
 	/**
 	 * Retourne le fichier.
@@ -72,49 +87,12 @@ public class PieceJointe
 		return this.extension;
 	}
 
-
 	/**
-	 * Modifier le chemin du fichier.
+	 * Retourne le numéro de la dernière pièce jointe dans l'arborescence.
 	 * 
-	 * @param cheminFichier le chemin du fichier.
-	 * @return              true si le chemin du fichier est modifié, false sinon.
+	 * @return               le numéro de la dernière pièce jointe dans l'arborescence.
+	 * @see    MaxFileFinder MaxFileFinder qui permet de trouver le fichier avec le plus grand numéro.
 	 */
-	public boolean setFichier(String cheminFichier)
-	{
-		if (cheminFichier == null) return false;
-
-		this.fichier = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
-		return true;
-	}
-
-	/**
-	 * Modifier le nom de la pièce jointe.
-	 * 
-	 * @param nomPieceJointe le nom de la pièce jointe.
-	 * @return               true si le nom de la pièce jointe est modifié, false sinon.
-	 */
-	public boolean setNomPieceJointe(String nomPieceJointe)
-	{
-		if (nomPieceJointe == null) return false;
-
-		this.nomPieceJointe = nomPieceJointe;
-		return true;
-	}
-
-	/**
-	 * Modifier l'extension de la pièce jointe.
-	 * 
-	 * @param extension l'extension de la pièce jointe.
-	 * @return          true si l'extension de la pièce jointe est modifiée, false sinon.
-	 */
-	public boolean setExtension(String extension)
-	{
-		if (extension == null) return false;
-
-		this.extension = extension;
-		return true;
-	}
-
 	public static int getNumPieceJointe()
 	{
 		Path repDep;
@@ -153,6 +131,57 @@ public class PieceJointe
 	}
 
 
+	/*---------*/
+	/* Setters */
+	/*---------*/
+
+	/**
+	 * Modifier le chemin du fichier.
+	 * 
+	 * @param cheminFichier le nouveau chemin du fichier.
+	 * @return              true si le chemin du fichier est modifié, false sinon.
+	 */
+	public boolean setFichier(String cheminFichier)
+	{
+		if (cheminFichier == null) return false;
+
+		this.fichier = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) + this.nomPieceJointe + "." + this.extension);
+		return true;
+	}
+
+	/**
+	 * Modifier le nom de la pièce jointe.
+	 * 
+	 * @param nomPieceJointe le nouveau nom de la pièce jointe.
+	 * @return               true si le nom de la pièce jointe est modifié, false sinon.
+	 */
+	public boolean setNomPieceJointe(String nomPieceJointe)
+	{
+		if (nomPieceJointe == null) return false;
+
+		this.nomPieceJointe = nomPieceJointe;
+		return true;
+	}
+
+	/**
+	 * Modifier l'extension de la pièce jointe.
+	 * 
+	 * @param extension la nouvelle extension de la pièce jointe.
+	 * @return          true si l'extension de la pièce jointe est modifiée, false sinon.
+	 */
+	public boolean setExtension(String extension)
+	{
+		if (extension == null) return false;
+
+		this.extension = extension;
+		return true;
+	}
+
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
+
 	/**
 	 * Retourne sous forme de texte l'objet PieceJointe.
 	 * 
@@ -165,7 +194,7 @@ public class PieceJointe
 
 
 	/**
-	 * Test de la classe PieceJointe.
+	 * Main de la classe PieceJointe.
 	 * 
 	 * @param args les arguments de la ligne de commande.
 	 */

@@ -31,6 +31,8 @@ public class QCM extends Question
 	 * @param note       la note.
 	 * @param temps      le temps associée à la question.
 	 * @param difficulte la difficultée.
+	 * 
+	 * @see Question la classe Question parente de QCM.
 	 */
 	public QCM(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
@@ -85,7 +87,7 @@ public class QCM extends Question
 	 * @param  prop la proposition qui va modifier l'ancienne.
 	 * 
 	 * @return      true si la modification a été effectuée, false sinon.
-	 * @see         super#{@link #setProposition(int, PropositionQCM)}.
+	 * @see         super#{@link #setProposition(int, Proposition)}.
 	 */
 	public boolean setProposition(int i, PropositionQCM prop) { return super.setProposition(i, prop); }
 

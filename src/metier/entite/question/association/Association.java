@@ -28,7 +28,7 @@ public class Association extends Question
 	 * @param temps      le temps associée à la question.
 	 * @param difficulte la difficultée.
 	 * 
-	 * @see Question la classe Question.
+	 * @see Question la classe Question parente de Association.
 	 */
 	public Association(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{

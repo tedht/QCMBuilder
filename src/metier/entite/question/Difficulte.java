@@ -74,7 +74,7 @@ public enum Difficulte
 
 
 	/*-----------------*/
-	// Autres méthodes //
+	/* Autres méthodes */
 	/*-----------------*/
 
 	/**

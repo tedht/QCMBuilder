@@ -28,6 +28,8 @@ public class PropositionQCM implements Proposition
 	 * 
 	 * @param text    le texte associée à la proposition.
 	 * @param reponse true si la proposition est correcte, false sinon.
+	 * 
+	 * @see QCM la classe QCM.
 	 */
 	public PropositionQCM(String text, boolean reponse)
 	{
