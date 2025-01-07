@@ -246,8 +246,6 @@ public class Questionnaire
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
 	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
-
-	
 	public boolean genererQuestionnaire(String filePath) {
         if (filePath == null) {
             throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
@@ -376,6 +374,12 @@ public class Questionnaire
         return false;
     }
 	
+	/**
+	 * Génère un fichier JSON contenant les questions du questionnaire.
+	 * 
+	 * @param  questions la liste des questions à inclure dans le fichier JSON.
+	 * @return           true si le fichier JSON est généré, false sinon.
+	 */
 	private String genererQuestionsEnJson(List<Question> questions) {
 		StringBuilder jsonBuilder = new StringBuilder();
 		jsonBuilder.append("[");
@@ -394,6 +398,14 @@ public class Questionnaire
 	}
 
 
+	/**
+	 * Génère un fichier JSON contenant les questions du questionnaire.
+	 * 
+	 * @param  filePath  le chemin du dossier où le fichier JSON sera créé (non null).
+	 * @param  questions la liste des questions à inclure dans le fichier JSON.
+	 * @return           true si le fichier JSON est généré, false sinon.
+	 * @throws IllegalArgumentException si le chemin fourni est null.
+	 */
 	public boolean genererQuestionnaireAvecJson(String filePath, List<Question> questions) {
 		if (filePath == null) {
 			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
@@ -413,7 +425,13 @@ public class Questionnaire
 		}
 	}
 
-	// Méthode pour copier un fichier
+	/**
+	 * Copie un fichier source vers un fichier de destination.
+	 * 
+	 * @param sourcePath      le chemin du fichier source.
+	 * @param destinationPath le chemin du fichier de destination.
+	 * @throws IOException si une erreur survient lors de la copie du fichier.
+	 */
 	private void copyFile(String sourcePath, String destinationPath) throws IOException {
 		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
 		Path source = Paths.get(sourcePath);
@@ -421,6 +439,13 @@ public class Questionnaire
 		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
 	}
 
+	/**
+	 * Convertit une question en format JSON. Appelle les méthodes pour ajouter les informations de base, la question et les informations finales.
+	 * 
+	 * @param  question   la question à convertir.
+	 * @param  idQuestion l'identifiant de la question.
+	 * @return            une chaîne de caractères représentant la question au format JSON.
+	 */
 	private String convertirQuestionEnJson(Question question, int idQuestion) {
 		StringBuilder jsonBuilder = new StringBuilder();
 		jsonBuilder.append("\n\t{\n");
@@ -434,6 +459,12 @@ public class Questionnaire
 		return jsonBuilder.toString();
 	}
 	
+	/**
+	 * Ajoute les informations de base d'une question au JSON. (id, type, intitulé, difficulté)
+	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param question    la question à ajouter.
+	 * @param idQuestion  l'identifiant de la question.
+	 */
 	private void appendBasicInfo(StringBuilder jsonBuilder, Question question, int idQuestion) {
 		jsonBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
 
@@ -467,6 +498,11 @@ public class Questionnaire
 		jsonBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
 	}
 	
+	/**
+	 * Appelle la bonne méthode pour ajouter les propositions et les réponses d'une question au JSON en fonction de son type.
+	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param question    la question à ajouter.
+	 */
 	private void appendQuestion(StringBuilder jsonBuilder, Question question) {
 		if ("Association".equalsIgnoreCase(question.getType().toString())) {
 			appendAssociation(jsonBuilder, (Association) question);
@@ -477,6 +513,11 @@ public class Questionnaire
 		}
 	}
 	
+	/**
+	 * Ajoute les propositions et les réponses d'une question de type Elimination au JSON.
+	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param question    la question de type Elimination.
+	 */
 	private void appendElimination(StringBuilder jsonBuilder, Elimination question) {
 		List<String> propositionsList = new ArrayList<>();
 		List<String> eliminationList = new ArrayList<>();
@@ -517,6 +558,11 @@ public class Questionnaire
 		jsonBuilder.append("\t\t],\n");
 	}
 	
+	/**
+	 * Ajoute les propositions et les réponses d'une question de type Association au JSON.
+	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param question    la question de type Association.
+	 */
 	private void appendAssociation(StringBuilder jsonBuilder, Association question) {
 		List<String> gaucheList = new ArrayList<>();
 		List<String> droiteList = new ArrayList<>();
@@ -548,6 +594,11 @@ public class Questionnaire
 		jsonBuilder.append("\t\t],\n");
 	}
 
+	/**
+	 * Ajoute les propositions et les réponses d'une question de type QCM au JSON.
+	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param question    la question de type QCM.
+	 */
 	private void appendQCM(StringBuilder jsonBuilder, Question question) {
 		// Ajouter les propositions
 		jsonBuilder.append("\t\t\"propositions\": [\n");
@@ -597,6 +648,11 @@ public class Questionnaire
 
 	}
 	
+	/**
+	 * Copie le fichier en paramètre dans le dossier du questionnaire généré.	
+	 * @param filePath le chemin du dossier du questionnaire généré.
+	 * @param question la question contenant la pièce jointe à copier.
+	 */
 	private static void copyToFichiersComplementaires(String filePath, Question question) {
 		String fichier = question.getPieceJointe().getNomPieceJointe() + "."+ question.getPieceJointe().getExtension();
         String cheminDossierCible = filePath + "/fichiersComplementaires";
