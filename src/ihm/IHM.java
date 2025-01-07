@@ -147,7 +147,7 @@ public class IHM
 	public void afficherQuestionnaire () 
 	{ 
 		this.resetVisible();
-		//this.frameGestionQuestionnaire.maj();
+		this.frameGestionQuestionnaire.maj();
 		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
 	}
 	public void quitter() { System.exit(0); }

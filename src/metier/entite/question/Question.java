@@ -262,23 +262,23 @@ public abstract class Question
 		return true;
 	}
 
-	/*-----------------*/
-	/* Autres méthodes */
-	/*-----------------*/
-
-	/**
+		/**
 	 * Ajoute une piece jointe à la question.
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
 	 * @return            true si la pièce jointe a été ajoutée, false sinon.
 	 */
-	public boolean ajouterPieceJointe(PieceJointe pieceJointe)
+	public boolean setPieceJointe(PieceJointe pieceJointe)
 	{
 		if (pieceJointe == null) return false;
 
 		this.pieceJointe = pieceJointe;
 		return true;
 	}
+
+	/*-----------------*/
+	/* Autres méthodes */
+	/*-----------------*/
 
 	/**
 	 * Supprime la pièce jointe de la question.

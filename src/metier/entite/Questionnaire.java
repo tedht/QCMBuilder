@@ -619,11 +619,11 @@ public class Questionnaire
 		q1.ajouterProposition(new PropositionQCM("prop1", false));
 		q1.ajouterProposition(new PropositionQCM("prop2", true));
 		q1.ajouterProposition(new PropositionQCM("prop3", false));
-		q1.ajouterPieceJointe(new PieceJointe("data/oceans.pdf", "./test"));
+		q1.setPieceJointe(new PieceJointe("data/oceans.pdf", "./test"));
 
 		q2.ajouterProposition(new PropositionAssociation("prop1", "prop1"));
 		q2.ajouterProposition(new PropositionAssociation("prop2", "prop2"));
-		q2.ajouterPieceJointe(new PieceJointe("data/portugal.png", "./test"));
+		q2.setPieceJointe(new PieceJointe("data/portugal.png", "./test"));
 
 		q3.ajouterProposition(new PropositionElimination("prop1", true, 0, 0));
 		q3.ajouterProposition(new PropositionElimination("prop2",false, 1, 1.0));

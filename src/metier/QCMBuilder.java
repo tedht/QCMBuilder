@@ -297,11 +297,6 @@ public class QCMBuilder
 			question.setTemps(temps);
 			question.setNote(note);
 		}
-
-		if(!"".equals(cheminPJ))
-		{
-			//question.ajouterPieceJointe(new PieceJointe(cheminPJ, ));
-		}
 	
 		switch (type) 
 		{

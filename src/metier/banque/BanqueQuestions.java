@@ -689,9 +689,9 @@ public class BanqueQuestions extends Banque
 		{
 			if (this.lstQuestions.get(cpt) == question)
 			{
-				question.ajouterPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" +  question.getCodeRes() +
-				                                                                    "/notion" + question.getIdNot() +
-																					"/question " + (cpt + 1) + "/complément"));
+				question.setPieceJointe(new PieceJointe(cheminFichierOriginal, "ressources/" +  question.getCodeRes() +
+				                                                               "/notion" + question.getIdNot() +
+																			   "/question " + (cpt + 1) + "/complément"));
 				return true;
 			}
 		}
