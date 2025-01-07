@@ -331,7 +331,7 @@ public class Questionnaire
 		String lstQuestionsJson = genererQuestionsEnJson(lstQuestions);
 	
 		// Générer le fichier JSON
-		String jsonFilePath = filePath + "/lstQuestions.json";
+		String jsonFilePath = filePath + "/questions.json";
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsonFilePath), StandardCharsets.UTF_8))) {
 			writer.write(lstQuestionsJson);
 			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
