@@ -1,21 +1,19 @@
 package metier.entite.question.association;
 
+
 import  metier.entite.question.Difficulte;
 import  metier.entite.question.Proposition;
 import  metier.entite.question.Question;
 import  metier.entite.question.TypeQuestion;
 
 /**
- * Classe Association
+ * Classe Association qui correspond aux questions de type Association (hérite de Question).
  *
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Association extends Question
 {
-
-
-
 	/*--------------*/
 	// Constructeur //
 	/*--------------*/
@@ -36,22 +34,22 @@ public class Association extends Question
 	}
 
 
-
 	/*---------*/
-	// Getters //
+	/* Getters */
 	/*---------*/
 
 	/**
 	 * Retourne le type de la question.
 	 * 
-	 * @return  le type de question ELIMINATION.
+	 * @return  le type de question ASSOCIATION.
 	 */
 	public TypeQuestion getType() { return TypeQuestion.ASSOCIATION; }
 
 	/**
 	 * Retourne une proposition association.
 	 * 
-	 * @return  la proposition.
+	 * @param  i indice de la proposition.
+	 * @return   la proposition.
 	 */
 	public PropositionAssociation getProposition(int i) { return (PropositionAssociation) super.getProposition(i); }
 
@@ -63,14 +61,13 @@ public class Association extends Question
 	/*---------*/
 
 	/**
-	 * Setter de proposition.
+	 * Modifie une proposition Association.
 	 * 
-	 * @param  i indice de la proposition à modifier.
+	 * @param  i    indice de la proposition à modifier.
 	 * @param  prop la proposition qui va modifier l'ancienne.
-	 * @return true si la modification a été effectuée, false sinon.
+	 * @return      true si la modification a été effectuée, false sinon.
 	 */
 	public boolean setProposition(int i, PropositionAssociation prop) { return super.setProposition(i, prop); }
-
 
 
 	/*-----------------*/
@@ -78,7 +75,7 @@ public class Association extends Question
 	/*-----------------*/
 
 	/**
-	 * Ajouter une proposition.
+	 * Ajouter une proposition Association.
 	 * 
 	 * @param  prop la proposition à ajouter.
 	 * @return true si la proposition a été ajoutée, false sinon.
@@ -89,10 +86,10 @@ public class Association extends Question
 	}
 
 	/**
-     * Retourne une représentation en chaîne de caractères d'une question association.
-     * 
-     * @return une représentation en chaîne de caractères d'une question association.
-     */
+	 * Retourne une représentation en chaîne de caractères d'une proposition Association.
+	 * 
+	 * @return une représentation en chaîne de caractères d'une proposition Association.
+	 */
 	public String toString()
 	{
 		String sRet;

@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 import metier.entite.Ressource;
 
 /**
- * Classe BanqueDeRessources qui gère les ressources.
+ * Classe BanqueDeRessources qui gère les ressources (hérite de Banque).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601

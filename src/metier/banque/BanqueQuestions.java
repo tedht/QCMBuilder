@@ -27,7 +27,7 @@ import metier.entite.question.elimination.*;
 
 
 /**
- * Classe BanqueDeQuestions qui gère les questions.
+ * Classe BanqueDeQuestions qui gère les questions (hérite de Banque).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
