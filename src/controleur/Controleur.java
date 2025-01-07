@@ -3,16 +3,19 @@ package controleur;
 import java.util.List;
 
 import ihm.IHM;
-import metier.entite.Ressource;
-import metier.entite.Notion;
-import metier.entite.question.Question;
+
 import metier.QCMBuilder;
 
+import metier.entite.Ressource;
+import metier.entite.Notion;
+
+import metier.entite.question.Question;
+
 /**
- * Classe Controleur
+ * Classe Controleur qui gère les interactions entre l'IHM et le métier.
  * 
- * @author  Equipe 3
- * @version 1.0 17/12/2024
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Controleur
 {
@@ -45,7 +48,7 @@ public class Controleur
 	 * Retourne une ressource à partir de son code.
 	 * 
 	 * @param  code le code de la ressource.
-	 * @return      la ressource
+	 * @return      la ressource.
 	 */
 	public Ressource getRessource(String code) 
 	{
@@ -66,7 +69,7 @@ public class Controleur
 	 * Retourne la liste des notions associées à une ressource à partir de son code.
 	 * 
 	 * @param  codeRes le code de la ressource.
-	 * @return la liste des notions associées.
+	 * @return         la liste des notions associées.
 	 */
 	public List<Notion> getNotions(String codeRes)
 	{
@@ -76,19 +79,25 @@ public class Controleur
 	/**
 	 * Retourne une notion à partir de son id.
 	 * 
-	 * @param idNot l'id de la notion
-	 * @return la notion
+	 * @param idNot l'id de la notion.
+	 * @return      la notion.
 	 */
 	public Notion getNotion(int idNot) 
 	{
 		return this.metier.getNotion(idNot);
 	}
 
+	/**
+	 * Retourne une notion à partir de son nom et son code de ressource.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param nomNot  le nom de la notion.
+	 * @return        la notion.
+	 */
 	public Notion getNotionParNom(String codeRes, String nomNot) 
 	{
 		return this.metier.getNotionParNom(codeRes, nomNot);
 	}
-
 
 	/**
 	 * Retourne la liste de toutes questions.
@@ -100,16 +109,35 @@ public class Controleur
 		return this.metier.getQuestions();
 	}
 	
+	/**
+	 * Retourne la liste des questions associées à une ressource à partir de son code.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @return        la liste des questions associées.
+	 */
 	public List<Question> getQuestions(String codeRes) 
 	{
 		return this.metier.getQuestions(codeRes);
 	}
 
+	/**
+	 * Retourne la liste des questions associées à une ressource à partir de son code et de l'id de la notion.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param idNot   l'id de la notion.
+	 * @return        la liste des questions associées.
+	 */
 	public List<Question> getQuestions(String codeRes, int idNot)
 	{
 		return this.metier.getQuestions(codeRes, idNot);
 	}
 
+	/**
+	 * Retourne une question à partir de son id.
+	 * 
+	 * @param idQst l'id de la question.
+	 * @return      la question.
+	 */
 	public Question getQuestion(int idQst)
 	{
 		return this.metier.getQuestion(idQst);
@@ -146,7 +174,8 @@ public class Controleur
 	/**
 	 * Creer une nouvelle ressource.
 	 * 
-	 * @param nomRessource le nom de la nouvelle ressource.
+	 * @param codeRessource le code de la nouvelle ressource.
+	 * @param nomRessource  le nom de la nouvelle ressource.
 	 */
 	public void creerRessource(String codeRessource, String nomRessource) 
 	{
@@ -156,6 +185,7 @@ public class Controleur
 	/**
 	 * Creer une nouvelle notion.
 	 * 
+	 * @param codeRes   le code de la ressource à laquelle la notion est associée.
 	 * @param nomNotion le nom de la nouvelle notion.
 	 */
 	public void creerNotion(String codeRes, String nomNotion)  
@@ -166,11 +196,10 @@ public class Controleur
 	/**
 	 * Creer une question.
 	 * 
-	 * @param  detailsQuestion toutes les informations de la questions.
-	 * @param lstDetailsProp 
-	 * @param explication 
-	 * @param intitule 
-	 * @return la liste des érreures ayant pu être trouvé lors de la création de la question.
+	 * @param detailsQuestion toutes les informations de la questions.
+	 * @param intitule        l'intitulé de la question.
+	 * @param explication     l'explication de la question.
+	 * @param lstDetailsProp  la liste des informations des propositions.
 	 */
 	public void creerQuestion(String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
@@ -178,16 +207,38 @@ public class Controleur
 	}
 
 
+	/**
+	 * Modifie une ressource à partir de son code.
+	 * 
+	 * @param code        le code de la ressource à modifier.
+	 * @param nouveauCode le nouveau code de la ressource.
+	 * @param nouveauNom  le nouveau nom de la ressource.
+	 */
 	public void modifierRessource(String code, String nouveauCode, String nouveauNom) 
 	{
 		this.metier.modifierRessource(code, nouveauCode, nouveauNom);
 	}
 
+	/**
+	 * Modifie une notion à partir de son id.
+	 * 
+	 * @param idNot       l'id de la notion à modifier.
+	 * @param nouveauNom  le nouveau nom de la notion.
+	 */
 	public void modiferNotion(int idNot, String nouveauNom) 
 	{
 		this.metier.modifierNotion(idNot, nouveauNom);
 	}
 
+	/**
+	 * Modifie une question à partir de son id.
+	 * 
+	 * @param idQst           l'id de la question à modifier.
+	 * @param detailsQuestion toutes les informations de la questions.
+	 * @param intitule        l'intitulé de la question.
+	 * @param explication     l'explication de la question.
+	 * @param lstDetailsProp  la liste des informations des propositions.
+	 */
 	public void modifierQuestion(int idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp) 
 	{
 		this.metier.modifierQuestion(idQst, detailsQuestion, intitule, explication, lstDetailsProp);
@@ -195,8 +246,8 @@ public class Controleur
 
 	/**
 	 * Supprime une ressource à partir de son code.
-	 * @param code le code de la ressource
 	 * 
+	 * @param code le code de la ressource.
 	 */
 	public void supprimerRessource(String code) 
 	{
@@ -205,6 +256,7 @@ public class Controleur
 	
 	/**
 	 * Supprime une notion à partir de son id.
+	 * 
 	 * @param id l'id de la notion
 	 */
 	public void supprimerNotion(int id) 
@@ -214,7 +266,8 @@ public class Controleur
 
 	/**
 	 * Supprime une question à partir de son id.
-	 * @param id            l'id de la question
+	 * 
+	 * @param id l'id de la question.
 	 */
 	public void supprimerQuestion(int id) 
 	{
@@ -222,7 +275,10 @@ public class Controleur
 	}
 
 	/**
-	 * Creer une pièce jointe dans la partie metier.
+	 * Creer une pièce jointe dans la partie metier et l'associe à la question.
+	 * 
+	 * @param cheminFichier le chemin du fichier à associer.
+	 * @param question      la question à laquelle associer la pièce jointe.
 	 */
 	public void creerPieceJointe(String cheminFichier, Question question)
 	{
@@ -231,12 +287,19 @@ public class Controleur
 
 	/**
 	 * Génére une évaluation.
+	 * 
+	 * @param cheminFichier le chemin du fichier à générer.
 	 */
 	public void genererQuestionnaire(String cheminFichier) 
 	{
 		this.metier.genererQuestionnaire(cheminFichier);
 	}
 
+	/**
+	 * Main de la classe Controleur.
+	 * 
+	 * @param args les arguments de la ligne de commande.
+	 */
 	public static void main(String[] args) 
 	{
 		new Controleur();
