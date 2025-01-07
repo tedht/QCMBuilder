@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import metier.QCMBuilder;
 import metier.entite.question.Difficulte;
 import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
@@ -32,8 +33,8 @@ public class Questionnaire
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
+	private QCMBuilder     qcmBuilder;
 	private Ressource      ressource;
-	private List<Notion>   lstNotions;
 	private boolean        chronometre;
 	private List<Question> lstQuestions;
 
@@ -45,10 +46,10 @@ public class Questionnaire
 	 * Constructeur de la classe Questionnaire.
 	 * 
 	 */
-	public Questionnaire(Ressource ressource, List<Notion> lstNotions, boolean chronometre) 
+	public Questionnaire(QCMBuilder qcmBuilder, Ressource ressource, boolean chronometre) 
 	{
+		this.qcmBuilder   = qcmBuilder;
 		this.ressource    = ressource;
-		this.lstNotions   = lstNotions;
 		this.chronometre  = chronometre;
 		this.lstQuestions = new ArrayList<Question>();
 	}
@@ -60,11 +61,6 @@ public class Questionnaire
 	public Ressource getRessource()
 	{
 		return this.ressource;
-	}
-
-	public List<Notion> getNotions()
-	{
-		return this.lstNotions;
 	}
 
 	/**
@@ -524,14 +520,7 @@ public class Questionnaire
 		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n", question.getNote()));
 		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
-		for (Notion notion : this.lstNotions) 
-		{
-			if (notion.getIdNot() == question.getIdNot() + 1) 
-			{
-				jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", notion.getNom()));
-				break;
-			}
-		}
+		jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
 
 		String fichier = "";
 		if(question.getPieceJointe() != null) 
