@@ -77,7 +77,7 @@ function afficherNbQuestions()
 
     const totalQuestions = questions.length;
 
-    const ordreDifficultes = ['très-facile', 'facile', 'moyen', 'difficile'];
+    const ordreDifficultes = ['tres-facile', 'facile', 'moyen', 'difficile'];
 
     const details = ordreDifficultes
         .filter(difficulte => difficultesQuestion[difficulte])
