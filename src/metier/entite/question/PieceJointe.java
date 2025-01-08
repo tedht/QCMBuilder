@@ -44,7 +44,7 @@ public class PieceJointe
 		this.cheminFic      = cheminFic;
 		this.nomPieceJointe = this.cheminFic.substring(cheminFic.lastIndexOf('/') + 1, cheminFic.lastIndexOf('.'));
 		this.extension      = this.cheminFic.substring(cheminFic.lastIndexOf('.') + 1);
-	}
+	} 
 
 	/*---------*/
 	/* Getters */
@@ -104,19 +104,20 @@ public class PieceJointe
 		}
 		catch (IOException e)
 		{
-			System.out.println("Erreur lors du walkFileTree : " + e.getMessage());
+			//System.out.println("Erreur lors du walkFileTree : " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 
 		// Affichage du résultat
 		if (visiteur.getMaxFile() != null)
 		{
-			System.out.println("Le fichier avec le plus grand numéro est : " + visiteur.getMaxFile());
-			System.out.println("Son numéro est : " + visiteur.getMaxNb());
+			//System.out.println("Le fichier avec le plus grand numéro est : " + visiteur.getMaxFile());
+			//System.out.println("Son numéro est : " + visiteur.getMaxNb());
 		}
 		else
 		{
-			System.out.println("Aucun fichier correspondant trouvé.");
+			//System.out.println("Aucun fichier correspondant trouvé.");
 		}
 
 		return visiteur.getMaxNb();
@@ -163,15 +164,15 @@ public class PieceJointe
 		}
 		catch (Exception e)
 		{
-			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
-	public static String nouveauNomFic(String extendsion)
+	public static String nouveauNomFic(String extension)
 	{
 		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
 
-		return "fic" + String.format("%05d", ++PieceJointe.numPieceJointe) + "." + extendsion;
+		return "fic" + String.format("%05d", ++PieceJointe.numPieceJointe) + "." + extension;
 	}
 
 	/**

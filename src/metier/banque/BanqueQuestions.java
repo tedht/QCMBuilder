@@ -206,7 +206,7 @@ public class BanqueQuestions extends Banque
 		String       intitule;
 		String       explication;
 
-		File         dirPJ;
+		String       ficComp;
 		PieceJointe  pj;
 
 		int          nbProp;
@@ -251,6 +251,7 @@ public class BanqueQuestions extends Banque
 				temps        = scDonnees.nextInt();
 				note         = Double.parseDouble(scDonnees.next());
 				nbProp       = scDonnees.nextInt();
+				ficComp      = scDonnees.next();
 
 				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
@@ -363,15 +364,10 @@ public class BanqueQuestions extends Banque
 				question.setIntitule   (intitule   );
 				question.setExplication(explication);
 				
-				dirPJ = new File(cheminDirQst+"/complément/");
-				if(dirPJ.exists())
+				if(!"".equals(ficComp))
 				{
-					File[] tabFic = dirPJ.listFiles();
-					if(tabFic != null && tabFic.length == 1) 
-					{
-						pj = new PieceJointe(tabFic[0].toPath().toString());
-						question.setPieceJointe(pj);
-					}
+					pj = new PieceJointe(cheminDirQst+"/complément/"+ficComp);
+					question.setPieceJointe(pj);
 				}
 
 				this.lstQuestions.add(question);
@@ -423,6 +419,7 @@ public class BanqueQuestions extends Banque
 		File   dirQst, dirProp, dirComp;
 
 		PieceJointe pj;
+		String      ficComp;
 
 		try
 		{
@@ -430,7 +427,7 @@ public class BanqueQuestions extends Banque
 			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFicCSV), "UTF8"));
 
 			// Entête
-			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp");
+			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp\tficComp\t");
 
 			// Données
 			for (Question question : this.lstQuestions)
@@ -447,7 +444,9 @@ public class BanqueQuestions extends Banque
 				nbProp  = question.getPropositions().size();
 				pj      = question.getPieceJointe ();
 
-				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
+				ficComp = pj == null ? "" : pj.getNomPieceJointe() + "." + pj.getExtension();
+
+				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp+"\t"+ficComp+"\t");
 
 				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
@@ -460,16 +459,12 @@ public class BanqueQuestions extends Banque
 
 				// PrintWriter appliqué sur le fichier TXT de l'intitulé (intitule.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
-				System.out.println(cheminDirQst+"/intitule.txt");
 				pwTxt     .println(question.getIntitule());
-				System.out.println(question.getIntitule());
 				pwTxt.close();
 
 				// PrintWriter appliqué sur le fichier TXT de l'explication (explication.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/explication.txt"), "UTF8"));
-				System.out.println(cheminDirQst+"/explication.txt");
 				pwTxt     .println(question.getExplication());
-				System.out.println(question.getExplication());
 				pwTxt.close();
 
 				BanqueQuestions.supprimerDossier(dirProp);
@@ -542,7 +537,7 @@ public class BanqueQuestions extends Banque
 				{
 					BanqueQuestions.supprimerDossier(dirComp);
 				}
-				else if(pj != null && !"".equals(pj.getCheminFicOrig()))
+				else if(pj != null && !pj.getCheminFicOrig().equals(pj.getCheminFic()))
 				{
 					BanqueQuestions.supprimerDossier(dirComp);
 					BanqueQuestions.creerDossier    (dirComp);
@@ -567,12 +562,12 @@ public class BanqueQuestions extends Banque
 		{
 			if (dossier.mkdirs()) 
 			{
-				System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
+				//System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
 				return true;
 			} 
 			else 
 			{
-				System.out.println("Échec de la création du dossier " + dossier.getPath());
+				//System.out.println("Échec de la création du dossier " + dossier.getPath());
 				return false;
 			}
 		}

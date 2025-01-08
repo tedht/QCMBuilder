@@ -374,12 +374,22 @@ public class QCMBuilder
 		}
 		else
 		{
-			question.setPieceJointe(new PieceJointe(cheminPJOrig, "data/ressources/" 
-			                                                      + question.getCodeRes()
-																  + "/notion" + question.getIdNot()
-																  + "/question" + question.getIdQst()
-																  + "/complément/"
-																  + PieceJointe.nouveauNomFic(cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1))));
+			PieceJointe pj = question.getPieceJointe();
+			
+			String cheminPJ = "data/ressources/" 
+			                  + question.getCodeRes()
+			                  + "/notion" + question.getIdNot()
+			                  + "/question" + question.getIdQst()
+			                  + "/complément/";
+
+			String extension = cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1);
+			
+			if(pj == null)
+				cheminPJ += PieceJointe.nouveauNomFic(extension);
+			else
+				cheminPJ += pj.getNomPieceJointe() + "." + extension;
+
+			question.setPieceJointe(new PieceJointe(cheminPJOrig, cheminPJ));
 		}
 		
 		this.banqueQuestions.sauvegarder();
