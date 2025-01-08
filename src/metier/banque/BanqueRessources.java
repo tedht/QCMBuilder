@@ -119,11 +119,14 @@ public class BanqueRessources extends Banque
 
 		try
 		{
+			// Scanner appliqué au fichier CSV
 			scEnreg = new Scanner( new FileInputStream(cheminFic), "UTF8");
 
+			// Pour passer l'entête
 			if(scEnreg.hasNextLine())
 				scEnreg.nextLine();
 
+			// Récupération des données
 			while (scEnreg.hasNextLine())
 			{
 				enreg = scEnreg.nextLine();
@@ -166,10 +169,13 @@ public class BanqueRessources extends Banque
 
 		try
 		{
+			// PrintWriter appliqué sur le fichier CSV
 			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8" ));
 
+			// Entête
 			pw.println("code\tressource");
 
+			// Données
 			for (Ressource ressource : this.lstRessources)
 			{
 				pw.print(ressource.getCode() + "\t");
@@ -180,10 +186,14 @@ public class BanqueRessources extends Banque
 		}
 		catch (FileNotFoundException fnfe)
 		{
+			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
+
+			// Création du fichier si non existant
 			fichier = new File(cheminFic);
 			fichier.mkdir();
+
+			// Resauvegarde (Récursif)
 			this.sauvegarder(cheminFic);
-			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
 		{
