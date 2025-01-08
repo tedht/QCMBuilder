@@ -103,7 +103,7 @@ public class Questionnaire
 	 * @param  ressource la ressource.
 	 * @return           true si la ressource a été modifée, false sinon.
 	 */
-	public boolean setRessource(Ressource ressource) 
+	public boolean setRessource(Ressource ressource)
 	{
 		if (ressource == null)
 			return false;
@@ -288,9 +288,7 @@ public class Questionnaire
 			genererQuestionnaireAvecJson(filePath, lstQuestions);
 
 			for (Question q : lstQuestions) 
-			{
 				if(q.getPieceJointe() != null) copyToFichiersComplementaires(filePath, q);
-			}
 
 			// Écrire le contenu HTML dans le fichier
 			try (PrintWriter writer = new PrintWriter(new FileWriter(fullFilePath))) 
@@ -330,15 +328,17 @@ public class Questionnaire
 		for (int i = 0; i < lstQuestions.size(); i++) 
 		{
 			question = lstQuestions.get(i);
+
 			jsonQuestion = convertirQuestionEnJson(question, i+1);
+
 			jsonBuilder.append(jsonQuestion);
+
 			if (i < lstQuestions.size() - 1) 
-			{
 				jsonBuilder.append(",");
-			}
 		}
 	
 		jsonBuilder.append("]");
+
 		return jsonBuilder.toString();
 	}
 
@@ -388,8 +388,10 @@ public class Questionnaire
 
 
 		System.out.println("Copie du fichier : " + sourcePath + " vers " + destinationPath);
-		source = Paths.get(sourcePath);
+
+		source      = Paths.get(sourcePath);
 		destination = Paths.get(destinationPath);
+
 		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
 	}
 
@@ -409,11 +411,11 @@ public class Questionnaire
 		jsonBuilder.append("\n\t{\n");
 	
 		appendBasicInfo(jsonBuilder, question, idQuestion);
-		appendQuestion(jsonBuilder, question);
-		appendFinalInfo(jsonBuilder, question);
-		
-	
+		appendQuestion (jsonBuilder, question            );
+		appendFinalInfo(jsonBuilder, question            );
+
 		jsonBuilder.append("\n\t}");
+
 		return jsonBuilder.toString();
 	}
 
@@ -436,10 +438,12 @@ public class Questionnaire
 		if ("QCM".equalsIgnoreCase(type)) 
 			if(((QCM) question).estUnique()) 
 				type = "choix-unique";
-		
+
 		jsonBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
 		
-		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));// Gestion de la difficulté
+		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));
+
+		// Gestion de la difficulté
 		difficulte = "" + question.getDifficulte();
 		difficulteAffichee = "";
 		switch (difficulte) 
@@ -462,17 +466,12 @@ public class Questionnaire
 	private void appendQuestion(StringBuilder jsonBuilder, Question question) 
 	{
 		if ("Association".equalsIgnoreCase(question.getType().toString())) 
-		{
 			this.appendAssociation(jsonBuilder, (Association) question);
-		} 
-		else if ("Elimination".equalsIgnoreCase(question.getType().toString())) 
-		{
-			this.appendElimination(jsonBuilder, (Elimination) question);
-		} 
-		else 
-		{
+		else
+			if ("Elimination".equalsIgnoreCase(question.getType().toString())) 
+				this.appendElimination(jsonBuilder, (Elimination) question);
+		else
 			this.appendQCM(jsonBuilder, question);
-		}
 	}
 
 	/**
@@ -500,16 +499,17 @@ public class Questionnaire
 		for (int i = 0; i < question.getPropositions().size(); i++) 
 		{
 			prop = question.getProposition(i);
-			propositionsList.add("\"" + prop.getText() + "\"");
+
+			propositionsList   .add("\"" + prop.getText() + "\"");
 			
 			if (prop.estReponse()) 
 			{
-				reponsesList.add("\"" + prop.getText() + "\"");
+				reponsesList   .add("\"" + prop.getText() + "\"");
 			} 
 			else 
 			{
 				eliminationList.add("\"" + prop.getText() + "\"");
-				ptsPerdusList.add(prop.getNbPtsPerdus());
+				ptsPerdusList  .add(prop.getNbPtsPerdus());
 			}
 		}
 	
@@ -546,6 +546,8 @@ public class Questionnaire
 		List<String> droiteList  ;
 		List<String> reponsesList;
 
+		String pair;
+
 		PropositionAssociation prop;
 
 
@@ -562,7 +564,7 @@ public class Questionnaire
 			droiteList.add("\"" + prop.getTextDroite() + "\"");  // Texte droite
 	
 			// Formater les réponses sous forme de tableau de tableaux [gauche, droite]
-			String pair = String.format("[\"%s\", \"%s\"]", prop.getTextGauche(), prop.getTextDroite());
+			pair = String.format("[\"%s\", \"%s\"]", prop.getTextGauche(), prop.getTextDroite());
 			reponsesList.add(pair);
 		}
 	
@@ -601,10 +603,10 @@ public class Questionnaire
 			prop = (PropositionQCM) question.getPropositions().get(i);
 
 			jsonBuilder.append("\t\t\t\"" + prop.getText() + "\"");
-			if (i < question.getPropositions().size() - 1) 
-			{
+
+			if (i < question.getPropositions().size() - 1)
 				jsonBuilder.append(",");
-			}
+
 			jsonBuilder.append("\n");
 		}
 		jsonBuilder.append("\t\t],\n");
@@ -614,10 +616,9 @@ public class Questionnaire
 		for (int i = 0; i < question.getPropositions().size(); i++) 
 		{
 			prop = (PropositionQCM) question.getPropositions().get(i);
-			if (prop.estReponse()) 
-			{
+
+			if (prop.estReponse())
 				reponsesList.add("\"" + prop.getText() + "\"");
-			}
 		}
 
 		jsonBuilder.append("\t\t\"reponses\": [\n");
@@ -637,17 +638,17 @@ public class Questionnaire
 		PieceJointe PJ;
 
 
-		jsonBuilder.append(String.format("\t\t\"temps\": %d,\n", question.getTemps()));
-		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n", question.getNote()));
-		jsonBuilder.append(String.format("\t\t\"feedback\": \"%s\",\n", question.getExplication()));
+		jsonBuilder.append(String.format(          "\t\t\"temps\": %d,\n"       , question.getTemps      ()));
+		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n"        , question.getNote       ()));
+		jsonBuilder.append(String.format(          "\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
-		jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n", this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
+		jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n"  , this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
 
 		fichier = "";
-		if(question.getPieceJointe() != null) 
+		if(question.getPieceJointe() != null)
 		{
-			PJ = question.getPieceJointe();
-			fichier = PJ.getNomPieceJointe() + "." + PJ.getExtension(); 
+			PJ      = question.getPieceJointe();
+			fichier = PJ      .getNomPieceJointe() + "." + PJ.getExtension(); 
 		}
 
 		jsonBuilder.append(String.format("\t\t\"fichierComplementaire\": \"%s\"\n", fichier));
@@ -670,8 +671,8 @@ public class Questionnaire
 		fichier = question.getPieceJointe().getNomPieceJointe() + "."+ question.getPieceJointe().getExtension();
 		cheminDossierCible = filePath + "/fichiersComplementaires";
 
-		fichierSource = new File(fichier);
-		dossierCible = new File(cheminDossierCible);  
+		fichierSource = new File(fichier           );
+		dossierCible  = new File(cheminDossierCible);
 
 		// Vérifier que le fichier source existe et est un fichier valide
 		if (!fichierSource.exists() || !fichierSource.isFile()) 
@@ -713,10 +714,10 @@ public class Questionnaire
 	 */
 	public String toString()
 	{
-		return "Questionnaire :\n" +
-				"   ressource : " + this.ressource   + "\n" +
-				"   lstQuestions : " + this.lstQuestions   + "\n" +
-				" chronometre : " + this.chronometre + "\n" ;
+		return "Questionnaire :\n"   +
+				"   ressource : "    + this.ressource    + "\n" +
+				"   lstQuestions : " + this.lstQuestions + "\n" +
+				" chronometre : "    + this.chronometre  + "\n"   ;
 	}
 
 	/*
