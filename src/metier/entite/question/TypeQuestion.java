@@ -46,10 +46,7 @@ public enum TypeQuestion
 	 * 
 	 * @return La valeur entière du type.
 	 */
-	public int getValeur() 
-	{ 
-	    return this.valeur; 
-	}
+	public int getValeur() { return this.valeur; }
 
 
 	/*-----------------*/
@@ -67,12 +64,8 @@ public enum TypeQuestion
 	{
 		// Parcours de toutes les valeurs de l'énumération pour trouver une correspondance.
 		for (TypeQuestion type : TypeQuestion.values()) 
-		{
 			if (type.getValeur() == valeur) 
-			{
-				return type; 
-			}
-		}
+				return type;
 
 		// Lancer une exception si la valeur n'est pas valide.
 		throw new IllegalArgumentException("Valeur difficulté non valide : " + valeur);

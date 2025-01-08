@@ -156,30 +156,21 @@ public abstract class Question
 	 * 
 	 * @param codeRes le nouveau code de la ressource.
 	 */
-	public void setCodeRes(String codeRes)
-	{
-		this.codeRes = codeRes;
-	}
+	public void setCodeRes(String codeRes) { this.codeRes = codeRes; }
 
 	/**
 	 * Modifie l'id de la notion associée à la question.
 	 * 
 	 * @param idNot le nouvel id de la notion.
 	 */
-	public void setIdNot(int idNot)
-	{
-		this.idNot = idNot;
-	}
+	public void setIdNot(int idNot) { this.idNot = idNot; }
 
 	/**
 	 * Modifie l'id de la question.
 	 * 
 	 * @param idQst le nouvel id de la question.
 	 */
-	public void setIdQst(int idQst)
-	{
-		this.idQst = idQst;
-	}
+	public void setIdQst(int idQst) { this.idQst = idQst; }
 
 	/**
 	 * Modifie la difficulté de la question.
@@ -228,20 +219,14 @@ public abstract class Question
 	 * 
 	 * @param intitule le nouvel intitulé.
 	 */
-	public void setIntitule(String intitule)
-	{
-		this.intitule = intitule;
-	}
+	public void setIntitule(String intitule) { this.intitule = intitule; }
 
 	/**
 	 * Modifie l'explication de la question.
 	 * 
 	 * @param explication la nouvelle explication.
 	 */
-	public void setExplication(String explication)
-	{
-		this.explication = explication;
-	}
+	public void setExplication(String explication) { this.explication = explication; }
 
 	/**
 	 * Modifie une proposition dans la liste des propositions associées à la question.
@@ -265,10 +250,7 @@ public abstract class Question
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
 	 */
-	public void setPieceJointe(PieceJointe pieceJointe)
-	{
-		this.pieceJointe = pieceJointe;
-	}
+	public void setPieceJointe(PieceJointe pieceJointe) { this.pieceJointe = pieceJointe; }
 
 	/*-----------------*/
 	/* Autres méthodes */
@@ -319,10 +301,7 @@ public abstract class Question
 	/**
 	 * Supprime toutes les propositions de la question.
 	 */
-	public void clearPropositions()
-	{
-		this.lstPropositions.clear();
-	}
+	public void clearPropositions() { this.lstPropositions.clear(); }
 
 	/*
 	public String toString()
