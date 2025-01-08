@@ -49,7 +49,7 @@ public class BanqueNotions extends Banque
 	 */
 	public BanqueNotions()
 	{
-		this.lstNotions       = new ArrayList<Notion>();
+		this.lstNotions       = new ArrayList <Notion >();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
 		this.cheminFic        = "data/notions.csv";
@@ -173,8 +173,10 @@ public class BanqueNotions extends Banque
 
 		try
 		{
+			// Scanner appliqué sur le fichier CSV
 			scEnreg = new Scanner( new FileInputStream(cheminFic), "UTF8");
 
+			// Pour passer l'entête
 			if(scEnreg.hasNextLine())
 				scEnreg.nextLine();
 
@@ -183,22 +185,26 @@ public class BanqueNotions extends Banque
 			{
 				enreg = scEnreg.nextLine();
 
+				// Scanner appliqué sur une ligne du fichier CSV utilisant le délimiteur "\t"
 				scDonnee = new Scanner(enreg);
 				scDonnee.useDelimiter("\t");
 
+				// Récupération des données
 				codeRes = scDonnee.next   ();
 				idNot   = scDonnee.nextInt();
 				nom     = scDonnee.next   ();
 
+				// Création de la notion
 				notion = new Notion(codeRes, idNot, nom);
 
+				// Ajout de la notion à la liste des notions
 				while(cpt < idNot)
 				{
 					this.lstNotions.add(null);
 					this.fileIdUtilisable.offer(cpt++);
 				}
-				
 				this.lstNotions.add(notion);
+
 				cpt++;
 			}
 		}
@@ -229,10 +235,13 @@ public class BanqueNotions extends Banque
 
 		try
 		{
+			// PrintWriter appliqué sur le fichier CSV
 			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8" ));
 
+			// Entête
 			pw.println("codeRes\tidNot\tnom");
 
+			// Données
 			for (Notion notion : this.lstNotions)
 			{
 				if(notion != null)
@@ -247,10 +256,15 @@ public class BanqueNotions extends Banque
 		}
 		catch (FileNotFoundException fnfe)
 		{
+			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
+
+			// Création du fichier si non existant
+			System.out.println("Création du fichier " + cheminFic);
 			fichier = new File(cheminFic);
 			fichier.mkdir();
+
+			// Resauvegarde (Récursif)
 			this.sauvegarder(cheminFic);
-			System.out.println("Le fichier " + cheminFic + "n'a pas été trouvé : " + fnfe.getMessage());
 		}
 		catch (Exception e)
 		{
