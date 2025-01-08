@@ -448,7 +448,7 @@ public class Questionnaire
 		difficulteAffichee = "";
 		switch (difficulte) 
 		{
-			case "TF" -> { difficulteAffichee = "très-facile"; }
+			case "TF" -> { difficulteAffichee = "tres-facile"; }
 			case "F"  -> { difficulteAffichee = "facile";      }
 			case "M"  -> { difficulteAffichee = "moyen";       }
 			case "D"  -> { difficulteAffichee = "difficile";   }
@@ -663,17 +663,20 @@ public class Questionnaire
 	 */
 	private static void copyToFichiersComplementaires(String filePath, Question question) 
 	{
-		String fichier, cheminDossierCible;
+		String cheminFichierSource, cheminDossierCible;
 		File fichierSource, dossierCible, fichierCible;
 		boolean dossierCree;
 
 
-		fichier = question.getPieceJointe().getNomPieceJointe() + "."+ question.getPieceJointe().getExtension();
 		cheminDossierCible = filePath + "/fichiersComplementaires";
 
-		fichierSource = new File(fichier           );
-		dossierCible  = new File(cheminDossierCible);
+		cheminFichierSource = question.getPieceJointe().getCheminFic();
 
+
+		fichierSource = new File(cheminFichierSource);           
+		dossierCible  = new File(cheminDossierCible );
+
+		System.out.println(fichierSource);
 		// Vérifier que le fichier source existe et est un fichier valide
 		if (!fichierSource.exists() || !fichierSource.isFile()) 
 		{
