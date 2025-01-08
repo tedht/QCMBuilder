@@ -375,9 +375,9 @@ public class QCMBuilder
 		else
 		{
 			question.setPieceJointe(new PieceJointe(cheminPJOrig, "data/ressources/" 
-			                                                      + codeRes 
-																  + "/notion"+idNot 
-																  + "/question"+idQst
+			                                                      + question.getCodeRes()
+																  + "/notion" + question.getIdNot()
+																  + "/question" + question.getIdQst()
 																  + "/complément/"
 																  + PieceJointe.nouveauNomFic(cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1))));
 		}
