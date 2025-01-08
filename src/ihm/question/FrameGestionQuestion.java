@@ -34,12 +34,8 @@ public class FrameGestionQuestion extends JFrame
 
 	public void reinitAffichage() 
 	{
+		this.panelGestionQuestion.reinitDdlsts();	
 		this.panelGestionQuestion.afficher();
-	}
-
-	public void maj()
-	{
-		this.panelGestionQuestion.initDdlsts();	
 	}
 
 }

@@ -41,7 +41,7 @@ public class BanqueQuestions extends Banque
 	private List<Question> lstQuestions;
 	private Queue<Integer> fileIdUtilisable;
 
-	private String         cheminFic;
+	private String         cheminFicCSV;
 
 	/*--------------*/
 	// Constructeur //
@@ -55,9 +55,9 @@ public class BanqueQuestions extends Banque
 		this.lstQuestions     = new ArrayList<Question>();
 		this.fileIdUtilisable = new LinkedList<Integer>();
 
-		this.cheminFic        = "data/questions.csv";
+		this.cheminFicCSV     = "data/questions.csv";
 
-		this.lireQuestions(this.cheminFic);
+		this.lireQuestions(this.cheminFicCSV);
 	}
 
 
@@ -71,9 +71,9 @@ public class BanqueQuestions extends Banque
 	 * 
 	 * @return le chemin du fichier.
 	 */
-	public String getCheminFic()
+	public String getCheminFicCSV()
 	{
-		return this.cheminFic;
+		return this.cheminFicCSV;
 	}
 
 	/** 
@@ -184,10 +184,10 @@ public class BanqueQuestions extends Banque
 	/**
 	* Lecture du fichier CSV qui contient les questions.
 	*
-	* @param cheminFic le chemin du fichier CSV.
+	* @param cheminFicCSV le chemin du fichier CSV.
 	* @see   Scanner   pour lire le fichier.
 	*/
-	private void lireQuestions(String cheminFic)
+	private void lireQuestions(String cheminFicCSV)
 	{
 		Scanner scEnreg, scDonnees, scIntitule, scExplication, scProp, scElim;
 
@@ -206,6 +206,9 @@ public class BanqueQuestions extends Banque
 		String       intitule;
 		String       explication;
 
+		File         dirPJ;
+		PieceJointe  pj;
+
 		int          nbProp;
 		String       detailsProp;
 		String       textProp;
@@ -218,13 +221,14 @@ public class BanqueQuestions extends Banque
 		boolean      estReponse;
 		int          cptReponse;
 
-
-		intitule = "";
+		intitule    = "";
 		explication = "";
+		
+		pj = null;
 
 		try
 		{
-			scEnreg = new Scanner(new FileInputStream(cheminFic), "UTF8");
+			scEnreg = new Scanner(new FileInputStream(cheminFicCSV), "UTF8");
 
 			if(scEnreg.hasNextLine())
 				scEnreg.nextLine();
@@ -349,6 +353,17 @@ public class BanqueQuestions extends Banque
 				question.setIntitule   (intitule);
 				question.setExplication(explication);
 				
+				dirPJ = new File(cheminDirQst+"/complément/");
+				if(dirPJ.exists())
+				{
+					File[] tabFic = dirPJ.listFiles();
+					if(tabFic != null && tabFic.length == 1) 
+					{
+						pj = new PieceJointe(tabFic[0].toPath().toString());
+						question.setPieceJointe(pj);
+					}
+				}
+
 				this.lstQuestions.add(question);
 				cpt++;
 
@@ -368,16 +383,16 @@ public class BanqueQuestions extends Banque
 	 */
 	public void sauvegarder()
 	{
-		this.sauvegarder(this.cheminFic);
+		this.sauvegarder(this.cheminFicCSV);
 	}
 
 	/**
 	 * Sauvegarde des questions dans un fichier CSV et des fichiers TXT.
 	 * 
-	 * @param cheminFic   le chemin du fichier CSV.
+	 * @param cheminFicCSV   le chemin du fichier CSV.
 	 * @see   PrintWriter pour écrire dans le fichier.
 	 */
-	private void sauvegarder(String cheminFic)
+	private void sauvegarder(String cheminFicCSV)
 	{
 		PrintWriter pwCsv, pwTxt;
 
@@ -401,7 +416,7 @@ public class BanqueQuestions extends Banque
 
 		try
 		{
-			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFic), "UTF8"));
+			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFicCSV), "UTF8"));
 			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp");
 
 			for (Question question : this.lstQuestions)
@@ -425,11 +440,7 @@ public class BanqueQuestions extends Banque
 				dirProp       = new File(cheminDirQst+"/propositions");
 				dirComp       = new File(cheminDirQst+"/complément");
 				
-				if (creerDossier(dirQst)) 
-				{
-					creerDossier(dirProp);
-					creerDossier(dirComp);
-				}
+				BanqueQuestions.creerDossier(dirQst);
 
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
 				System.out.println(cheminDirQst+"/intitule.txt");
@@ -442,6 +453,9 @@ public class BanqueQuestions extends Banque
 				pwTxt.println(question.getExplication());
 				System.out.println(question.getExplication());
 				pwTxt.close();
+
+				BanqueQuestions.supprimerDossier(dirProp);
+				BanqueQuestions.creerDossier    (dirProp);
 
 				switch (question.getType())
 				{
@@ -499,14 +513,20 @@ public class BanqueQuestions extends Banque
 
 							pwTxt.close();
 						}
-
 					}
 				}
 				pwTxt.close();
 
-				if(pj != null && !"".equals(pj.getCheminFicOrig()))
+
+				if(pj == null)
 				{
-					pj.copierFichier(cheminDirQst+"/complement/");
+					BanqueQuestions.supprimerDossier(dirComp);
+				}
+				else if(pj != null && !pj.getCheminFicOrig().equals(pj.getCheminFic()))
+				{
+					BanqueQuestions.supprimerDossier(dirComp);
+					BanqueQuestions.creerDossier    (dirComp);
+					pj.copierFichier();
 				}
 			}
 			pwCsv.close();

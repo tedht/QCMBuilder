@@ -270,9 +270,10 @@ public class QCMBuilder
 		int        indexType    = scDetails.nextInt();
 		String     sTemps       = scDetails.next();
 		double     note         = Double.parseDouble(scDetails.next());
-		String     cheminPJ     = scDetails.next();
+		String     cheminPJOrig = scDetails.next();
 
 		scDetails.close();
+
 
 		Difficulte   difficulte = Difficulte.fromInt(valDiff);
 		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
@@ -366,9 +367,19 @@ public class QCMBuilder
 			default -> {}
 		}
 
-		if(!"".equals(cheminPJ))
+		
+		if("".equals(cheminPJOrig))
 		{
-			question.setPieceJointe(new PieceJointe(cheminPJ));
+			question.setPieceJointe(null);
+		}
+		else
+		{
+			question.setPieceJointe(new PieceJointe(cheminPJOrig, "data/ressources/" 
+			                                                      + codeRes 
+																  + "/notion"+idNot 
+																  + "/question"+idQst
+																  + "/complément/"
+																  + PieceJointe.nouveauNomFic(cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1))));
 		}
 		
 		this.banqueQuestions.sauvegarder();

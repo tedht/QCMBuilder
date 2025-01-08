@@ -47,10 +47,11 @@ public class FrameGestionQuestionnaire extends JFrame
 	
 	public void pageSuivante()
 	{
+		this.panelAjoutQuestionnaire.majTabNbQuestions(this.panelParametresQuestionnaire.getCodeRes());
+		
 		this.remove    (this.panelParametresQuestionnaire);
 		this.add       (this.panelAjoutQuestionnaire);
 		this.setSize   (IHM.LARGEUR_CREER_QUESTIONNAIRE, IHM.HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2);
-		this.repaint   ();
 		this.revalidate();
 		this.repaint   ();
 	}
@@ -71,8 +72,9 @@ public class FrameGestionQuestionnaire extends JFrame
 	}
 
 	
-	public void maj()
+	public void reinitAffichage()
 	{
-		this.panelParametresQuestionnaire.majDdlstRessources();
+		this.panelParametresQuestionnaire.reinitDdlstRessources();
+		this.panelParametresQuestionnaire.reinitRbChronometre  ();
 	}
 }

@@ -174,7 +174,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.repaint();
 	}
 
-	public void initDdlsts()
+	public void reinitDdlsts()
 	{
 		this.ddlstRessource.removeAllItems();
 		this.ddlstRessource.addItem(null);

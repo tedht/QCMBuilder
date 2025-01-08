@@ -38,6 +38,12 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 			this.txtExpli.setText(question.getExplication());
 		}
 
+		if(question.getPieceJointe() != null)
+		{
+			this.btnActiverPJ.setSelected(true);
+			this.lblPJ.setText(question.getPieceJointe().getCheminFic());
+		}
+
 		if(question.getType() == TypeQuestion.QCM)
 		{
 			qcm = (QCM)question;

@@ -82,7 +82,7 @@ public class IHM
 		this.frameGestionQuestion      = new FrameGestionQuestion     (this.ctrl, this);
 		this.frameGestionQuestionnaire = new FrameGestionQuestionnaire(this.ctrl, this);
 
-		this.frameQCMBuilder.setLocation(IHM.MARGE,IHM.MARGE);
+		this.frameQCMBuilder.setLocation(IHM.MARGE, IHM.MARGE);
 		this.frameQCMBuilder.setVisible (true);
 
 		this.defaultX = this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () + IHM.MARGE;
@@ -107,10 +107,10 @@ public class IHM
 
 	private void resetVisible()
 	{
-		this.frameGestionRessource    .setVisible(false);
-		this.frameGestionNotion       .setVisible(false);
-		this.frameGestionQuestion     .setVisible(false);
-		this.frameGestionQuestionnaire.setVisible(false);
+		if(this.frameGestionRessource     != null) this.frameGestionRessource    .setVisible(false);
+		if(this.frameGestionNotion        != null) this.frameGestionNotion       .setVisible(false);
+		if(this.frameGestionQuestion      != null) this.frameGestionQuestion     .setVisible(false);
+		if(this.frameGestionQuestionnaire != null) this.frameGestionQuestionnaire.setVisible(false);
 	}
 
 	private void afficher(JFrame frame, int posX, int posY)
@@ -141,20 +141,22 @@ public class IHM
 	public void afficherQuestion() 
 	{ 
 		this.resetVisible();
-		this.frameGestionQuestion.maj();
+		this.frameGestionQuestion.reinitAffichage();
 		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
 	}
 	public void afficherQuestionnaire () 
 	{ 
 		this.resetVisible();
-		this.frameGestionQuestionnaire.maj();
+		this.frameGestionQuestionnaire.reinitAffichage();
+		this.frameGestionQuestionnaire.pagePrecedente();
 		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
 	}
 	public void quitter() { System.exit(0); }
 
-	public void reinitAffichageRessource() { this.frameGestionRessource.reinitAffichage(); }
-	public void reinitAffichageNotion   () { this.frameGestionNotion   .reinitAffichage(); }
-	public void reinitAffichageQuestion () { this.frameGestionQuestion .reinitAffichage(); }
+	public void reinitAffichageRessource    () { this.frameGestionRessource    .reinitAffichage(); }
+	public void reinitAffichageNotion       () { this.frameGestionNotion       .reinitAffichage(); }
+	public void reinitAffichageQuestion     () { this.frameGestionQuestion     .reinitAffichage(); }
+	public void reinitAffichageQuestionnaire() { this.frameGestionQuestionnaire.reinitAffichage(); }
 
 	public void editRessource()
 	{

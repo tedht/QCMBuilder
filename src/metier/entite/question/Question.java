@@ -4,8 +4,6 @@ package metier.entite.question;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.io.File;
-
 /**
  * Classe abstraite Question qui correspond aux questions de façon générique
  * 
@@ -283,12 +281,7 @@ public abstract class Question
 	 */
 	public boolean supprimerPieceJointe()
 	{
-		File fichier;
-
 		if (this.pieceJointe == null) return false; // Si la pièce jointe est null -> renvoie faux
-
-		fichier = this.pieceJointe.getFichier();
-		fichier.delete(); // Supprime le fichier
 
 		this.pieceJointe = null; // Supprime la pièce jointe
 		return true;

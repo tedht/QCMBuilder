@@ -18,60 +18,37 @@ public class PieceJointe
 
 	private static int numPieceJointe;
 
-	private String cheminFicOrig;
-	private String cheminFic;
-	private String nomPieceJointe;
-	private String extension;
-	private File   fichier;
+	private String  cheminFicOrig;
+	private String  cheminFic;
+	private String  nomPieceJointe;
+	private String  extension;
 
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
 
-	public PieceJointe(String cheminFicOrig)
+	public PieceJointe(String cheminFic)
 	{
-		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
-
-		this.cheminFicOrig  = cheminFicOrig;
-		this.cheminFic      = "";
-		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.numPieceJointe);
-		this.extension      = cheminFicOrig.substring(cheminFicOrig.lastIndexOf('.') + 1);
-		this.fichier        = null;
+		this(cheminFic, cheminFic);
 	}
 
 	/**
 	 * Constructeur de la classe PieceJointe.
 	 * 
-	 * @param cheminFichierOriginal le chemin du fichier original.
-	 * @param cheminFichier le chemin du fichier (destination du ficXXXX).
+	 * @param cheminFichierOrig le chemin du fichier original.
+	 * @param cheminFichier     le chemin du fichier.
 	 */
-	/*public PieceJointe(String cheminFichierOriginal, String cheminFichier)
+	public PieceJointe(String cheminFicOrig, String cheminFic)
 	{
-		
-		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
-
-		this.nomPieceJointe = "fic" + String.format("%05d", ++PieceJointe.numPieceJointe);
-		this.extension      = cheminFichierOriginal.substring(cheminFichierOriginal.lastIndexOf('.') + 1);
-		this.fichier        = new File(cheminFichier.substring(0, cheminFichier.lastIndexOf('/') + 1) +
-		                      this.nomPieceJointe + "." + this.extension);
-		this.fichier        = null;
-	}*/
-
+		this.cheminFicOrig  = cheminFicOrig;
+		this.cheminFic      = cheminFic;
+		this.nomPieceJointe = this.cheminFic.substring(cheminFic.lastIndexOf('/') + 1, cheminFic.lastIndexOf('.'));
+		this.extension      = this.cheminFic.substring(cheminFic.lastIndexOf('.') + 1);
+	}
 
 	/*---------*/
 	/* Getters */
 	/*---------*/
-
-	/**
-	 * Retourne le fichier.
-	 * 
-	 * @return le fichier.
-	 */
-	public File getFichier()
-	{
-		return this.fichier;
-	}
-
 	/**
 	 * Retourne le nom de la pièce jointe.
 	 * 
@@ -92,7 +69,7 @@ public class PieceJointe
 		return this.extension;
 	}
 
-	public String getCheminFicOrig()
+	public String getCheminFicOrig() 
 	{
 		return this.cheminFicOrig;
 	}
@@ -145,31 +122,9 @@ public class PieceJointe
 		return visiteur.getMaxNb();
 	}
 
-
 	/*---------*/
 	/* Setters */
 	/*---------*/
-
-	/**
-	 * Modifier le chemin du fichier.
-	 * 
-	 * @param cheminFichier le nouveau chemin du fichier.
-	 * @return              true si le chemin du fichier est modifié, false sinon.
-	 */
-
-	/**
-	 * Modifier le nom de la pièce jointe.
-	 * 
-	 * @param nomPieceJointe le nouveau nom de la pièce jointe.
-	 * @return               true si le nom de la pièce jointe est modifié, false sinon.
-	 */
-	public boolean setNomPieceJointe(String nomPieceJointe)
-	{
-		if (nomPieceJointe == null) return false;
-
-		this.nomPieceJointe = nomPieceJointe;
-		return true;
-	}
 
 	public boolean setCheminFicOrig(String cheminFicOrig)
 	{
@@ -179,25 +134,44 @@ public class PieceJointe
 		return true;
 	}
 
+	/**
+	 * Modifier le chemin du fichier.
+	 * 
+	 * @param cheminFichier le nouveau chemin du fichier.
+	 * @return              true si le chemin du fichier est modifié, false sinon.
+	 */
+	public boolean setCheminFic(String cheminFic)
+	{
+		if (cheminFic == null) return false;
+
+		this.cheminFic = cheminFic;
+		return true;
+	}
+
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
 
-	public void copierFichier(String nouveauCheminFichier)
+	public void copierFichier()
 	{
-
-		this.fichier = new File(nouveauCheminFichier + this.nomPieceJointe + "." + this.extension);
-
+		File fichier = new File(this.cheminFic);
+		
 		try
 		{
-			Files.copy(Paths.get(this.cheminFicOrig), this.fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			this.cheminFic     = this.fichier.toPath().toString();
-			this.cheminFicOrig = "";
+			Files.copy(Paths.get(this.cheminFicOrig), fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			this.cheminFicOrig = this.cheminFic;
 		}
 		catch (Exception e)
 		{
 			System.out.println("Erreur lors de la copie du fichier : " + e.getMessage());
 		}
+	}
+
+	public static String nouveauNomFic(String extendsion)
+	{
+		PieceJointe.numPieceJointe = PieceJointe.getNumPieceJointe();
+
+		return "fic" + String.format("%05d", ++PieceJointe.numPieceJointe) + "." + extendsion;
 	}
 
 	/**
@@ -207,7 +181,7 @@ public class PieceJointe
 	 */
 	public String toString()
 	{
-		return this.nomPieceJointe + "." + this.extension + " : " + this.fichier.getPath();
+		return this.cheminFic;
 	}
 
 

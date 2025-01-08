@@ -165,8 +165,6 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		{
 			for(JRadioButton rb : this.tabRbChronometre)
 				rb.setEnabled(true);
-
-			this.frame.maj();
 		}
 
 		if(e.getSource() == this.tabRbChronometre[0] || e.getSource() ==  this.tabRbChronometre[1])
@@ -192,7 +190,7 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		return this.tabRbChronometre[0].isSelected();         
 	}
 
-	public void majDdlstRessources()
+	public void reinitDdlstRessources()
 	{
 		this.ddlstRessource.removeAllItems();
 		for(Ressource ressource : this.ctrl.getRessources())
@@ -202,5 +200,10 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		this.ddlstRessource.setSelectedIndex(-1);
 		this.ddlstRessource.setFocusable(false);
 		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("",String.format("%70s"," ")));
+	}
+
+	public void reinitRbChronometre()
+	{
+		btgChronometre.clearSelection();
 	}
 }
