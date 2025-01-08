@@ -44,20 +44,14 @@ public class Ressource
 	 * 
 	 * @return code de la Ressource.
 	 */
-	public String getCode()
-	{
-		return this.code;
-	}
+	public String getCode() { return this.code; }
 
 	/**
 	 * Retourne le nom de la Ressource.
 	 * 
 	 * @return nom de la Ressource.
 	 */
-	public String getNom()
-	{
-		return this.nom;
-	}
+	public String getNom() { return this.nom; }
 
 	/*---------*/
 	/* Setters */
@@ -68,20 +62,14 @@ public class Ressource
 	 * 
 	 * @param nom le nouveau nom à de la Ressource.
 	 */
-	public void setNom(String nom) 
-	{
-		this.nom = nom;
-	}
+	public void setNom(String nom)  { this.nom = nom; }
 
 	/**
 	 * Modifie le code de la Ressource.
 	 * 
 	 * @param code le nouveau code à de la Ressource.
 	 */
-	public void setCode(String code)
-	{
-		this.code = code;
-	}
+	public void setCode(String code) { this.code = code; }
 
 
 	/*-----------------*/
@@ -93,8 +81,5 @@ public class Ressource
 	 * 
 	 * @return l'objet Ressource sous forme textuel (code + nom)
 	 */
-	public String toString()
-	{
-		return this.code + " " + this.nom;
-	}
+	public String toString() { return this.code + " " + this.nom; }
 }

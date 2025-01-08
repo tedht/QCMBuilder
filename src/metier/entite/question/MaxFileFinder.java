@@ -48,20 +48,14 @@ public class MaxFileFinder extends SimpleFileVisitor<Path>
 	 * 
 	 * @return le chemin du fichier.
 	 */
-	public String getMaxFile()
-	{
-		return maxFile;
-	}
+	public String getMaxFile() { return maxFile; }
 
 	/**
 	 * Retourne le plus grand numéro trouvé dans les fichiers.
 	 * 
 	 * @return le numéro.
 	 */
-	public int getMaxNb()
-	{
-		return maxNb;
-	}
+	public int getMaxNb() { return maxNb; }
 
 
 	/*-----------------*/
@@ -87,19 +81,24 @@ public class MaxFileFinder extends SimpleFileVisitor<Path>
 		int nb;
 
 
+		// Récupère le nom du fichier et le compare au motif
 		nomFichier = file.getFileName().toString();
-		matcher    = pattern.matcher(nomFichier);
+		matcher    = this.pattern.matcher(nomFichier);
 
+		// Si le fichier correspond au motif "fic00001", "fic00002", etc.
 		if (matcher.matches())
 		{
 			nb = Integer.parseInt(matcher.group(1)); // Récupère le numéro
 
+			// Maximum
 			if (nb > this.maxNb)
 			{
 				this.maxNb = nb;
 				this.maxFile = file.toString();
 			}
 		}
+
+		// Continue le parcours
 		return FileVisitResult.CONTINUE;
 	}
 }

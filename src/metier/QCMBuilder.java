@@ -72,10 +72,7 @@ public class QCMBuilder
 	 * 
 	 * @return la liste des ressources.
 	 */
-	public List<Ressource> getRessources()
-	{
-		return this.banqueRessources.getRessources();
-	}
+	public List<Ressource> getRessources() { return this.banqueRessources.getRessources(); }
 
 	/**
 	 * Retourne une ressource à partir de son code.
@@ -83,20 +80,14 @@ public class QCMBuilder
 	 * @param  code le code de la ressource.
 	 * @return      la ressource.
 	 */
-	public Ressource getRessource(String code) 
-	{
-		return this.banqueRessources.getRessource(code);
-	}
+	public Ressource getRessource(String code) { return this.banqueRessources.getRessource(code); }
 
 	/**
 	 * Retourne la liste de toutes les notions.
 	 * 
 	 * @return la liste de toutes les notions.
 	 */
-	public List<Notion> getNotions()
-	{
-		return this.banqueNotions.getNotions();
-	}
+	public List<Notion> getNotions() { return this.banqueNotions.getNotions(); }
 
 	/**
 	 * Retourne la liste des notions associées à une ressource à partir de son code.
@@ -104,10 +95,7 @@ public class QCMBuilder
 	 * @param  codeRes le code de la ressource.
 	 * @return         la liste des notions associées.
 	 */
-	public List<Notion> getNotions(String codeRes)
-	{
-		return this.banqueNotions.getNotions(codeRes);
-	}
+	public List<Notion> getNotions(String codeRes) { return this.banqueNotions.getNotions(codeRes); }
 
 	/**
 	 * Retourne une notion à partir de son id.
@@ -115,10 +103,7 @@ public class QCMBuilder
 	 * @param idNot l'id de la notion.
 	 * @return      la notion.
 	 */
-	public Notion getNotion(int idNot) 
-	{
-		return this.banqueNotions.getNotion(idNot);
-	}
+	public Notion getNotion(int idNot)  { return this.banqueNotions.getNotion(idNot); }
 
 	/**
 	 * Retourne une notion à partir de son nom et son code de ressource.
@@ -127,20 +112,14 @@ public class QCMBuilder
 	 * @param nomNot  le nom de la notion.
 	 * @return        la notion.
 	 */
-	public Notion getNotionParNom(String codeRes, String nomNot) 
-	{
-		return this.banqueNotions.getNotionParNom(codeRes, nomNot);
-	}
+	public Notion getNotionParNom(String codeRes, String nomNot)  { return this.banqueNotions.getNotionParNom(codeRes, nomNot); }
 
 	/**
 	 * Retourne la liste de toutes questions.
 	 * 
 	 * @return la liste de toutes les questions.
 	 */
-	public List<Question> getQuestions() 
-	{
-		return this.banqueQuestions.getQuestions();
-	}
+	public List<Question> getQuestions()  { return this.banqueQuestions.getQuestions(); }
 
 	/**
 	 * Retourne la liste des questions associées à une ressource à partir de son code.
@@ -148,10 +127,7 @@ public class QCMBuilder
 	 * @param  codeRes le code de la ressource.
 	 * @return         la liste des questions associées.
 	 */
-	public List<Question> getQuestions(String codeRes) 
-	{
-		return this.banqueQuestions.getQuestions(codeRes);
-	}
+	public List<Question> getQuestions(String codeRes)  { return this.banqueQuestions.getQuestions(codeRes); }
 
 	/**
 	 * Retourne la liste des questions associées à une ressource à partir de son code et de l'id de la notion.
@@ -160,10 +136,7 @@ public class QCMBuilder
 	 * @param  idNot   l'id de la notion.
 	 * @return         la liste des questions associées.
 	 */
-	public List<Question> getQuestions(String codeRes, int idNot)
-	{
-		return this.banqueQuestions.getQuestions(codeRes, idNot);
-	}
+	public List<Question> getQuestions(String codeRes, int idNot) { return this.banqueQuestions.getQuestions(codeRes, idNot); }
 	
 	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff)
 	{
@@ -176,20 +149,14 @@ public class QCMBuilder
 	 * @param idQst l'id de la question.
 	 * @return      la question.
 	 */
-	public Question getQuestion(int idQst)
-	{
-		return this.banqueQuestions.getQuestion(idQst);
-	}
+	public Question getQuestion(int idQst) { return this.banqueQuestions.getQuestion(idQst); }
 
 	/**
 	 * Retourne la ressource active.
 	 * 
 	 * @return la ressource active.
 	 */
-	public Ressource getRessourceSelectionnee() 
-	{
-		return this.ressourceSelectionnee;
-	}
+	public Ressource getRessourceSelectionnee() { return this.ressourceSelectionnee; }
 
 
 	/*---------*/
@@ -201,10 +168,7 @@ public class QCMBuilder
 	 * 
 	 * @param ressource la nouvelle ressource active.
 	 */
-	public void setRessourceSelectionnee(Ressource ressource) 
-	{
-		this.ressourceSelectionnee = ressource;
-	}
+	public void setRessourceSelectionnee(Ressource ressource) { this.ressourceSelectionnee = ressource; }
 
 
 	/*-----------------*/
@@ -260,26 +224,21 @@ public class QCMBuilder
 	private void editQuestion(Integer idQst, String detailsQuestion, String intitule, String explication, List<String> lstDetailsProp)
 	{
 		Scanner scDetails, scElim;
-		
-		scDetails = new Scanner(detailsQuestion);
-		scDetails.useDelimiter("\t");
 
-		String     codeRes      = scDetails.next();
-		int        idNot        = scDetails.nextInt();
-		int        valDiff      = scDetails.nextInt();
-		int        indexType    = scDetails.nextInt();
-		String     sTemps       = scDetails.next();
-		double     note         = Double.parseDouble(scDetails.next());
-		String     cheminPJOrig = scDetails.next();
+		String     codeRes     ;
+		int        idNot       ;
+		int        valDiff     ;
+		int        indexType   ;
+		String     sTemps      ;
+		double     note        ;
+		String     cheminPJOrig;
 
-		scDetails.close();
+		Difficulte   difficulte;
+		TypeQuestion type      ;
+		int          temps     ;
 
 
-		Difficulte   difficulte = Difficulte.fromInt(valDiff);
-		TypeQuestion type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
-		int          temps      = this.enSeconde(sTemps);
-
-		Question question = null;
+		Question question;
 
 		boolean  estReponse;
 		int      cptReponse;
@@ -290,6 +249,29 @@ public class QCMBuilder
 		double   nbPtsPerdus;
 		String   text;
 
+
+		// Scanner appliqué aux détails de la question utilisant le délimiteur "\t"
+		scDetails = new Scanner(detailsQuestion);
+		scDetails.useDelimiter("\t");
+
+		// Récupération des données
+		codeRes      = scDetails.next();
+		idNot        = scDetails.nextInt();
+		valDiff      = scDetails.nextInt();
+		indexType    = scDetails.nextInt();
+		sTemps       = scDetails.next();
+		note         = Double.parseDouble(scDetails.next());
+		cheminPJOrig = scDetails.next();
+
+		scDetails.close();
+
+
+		difficulte = Difficulte.fromInt(valDiff);
+		type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
+		temps      = this.enSeconde(sTemps);
+
+
+		question = null;
 		if(idQst != null)
 		{
 			question = this.banqueQuestions.getQuestion(idQst);
@@ -304,9 +286,11 @@ public class QCMBuilder
 		{
 			case QCM ->
 			{
+				// Création de la question QCM
 				if(idQst == null)
 					question = this.banqueQuestions.creerQCM(codeRes, idNot, difficulte, temps, note);
 
+				// Ajout des propositions
 				question.clearPropositions();
 				cptReponse = 0;
 				for(String detailsProp : lstDetailsProp)
@@ -316,6 +300,7 @@ public class QCMBuilder
 					((QCM)question).ajouterProposition(new PropositionQCM(detailsProp.substring(2), estReponse));
 				}
 
+				// Définition de l'unicité
 				((QCM)question).setUnique(cptReponse == 1);
 
 				question.setIntitule   (intitule);
@@ -323,9 +308,11 @@ public class QCMBuilder
 			}
 			case ASSOCIATION ->
 			{
+				// Création de la question Association
 				if(idQst == null)
 					question = this.banqueQuestions.creerAssociation(codeRes, idNot, difficulte, temps, note);
 
+				// Ajout des propositions
 				question.clearPropositions();
 				for(int i = 0; i < lstDetailsProp.size(); i+=2)
 				{
@@ -340,12 +327,15 @@ public class QCMBuilder
 			}
 			case ELIMINATION ->
 			{
+				// Création de la question Elimination
 				if(idQst == null)
 					question = this.banqueQuestions.creerElimination(codeRes, idNot, difficulte, temps, note);
 
+				// Ajout des propositions
 				question.clearPropositions();
 				for(String detailsProp : lstDetailsProp)
 				{
+					// Scanner appliqué aux détails de la proposition utilisant le délimiteur ":"
 					scElim = new Scanner(detailsProp);
 					scElim.useDelimiter(":");
 
@@ -367,7 +357,7 @@ public class QCMBuilder
 			default -> {}
 		}
 
-		
+		// Ajout de la pièce jointe
 		if("".equals(cheminPJOrig))
 		{
 			question.setPieceJointe(null);
@@ -391,7 +381,8 @@ public class QCMBuilder
 
 			question.setPieceJointe(new PieceJointe(cheminPJOrig, cheminPJ));
 		}
-		
+
+
 		this.banqueQuestions.sauvegarder();
 	}
 
@@ -420,7 +411,10 @@ public class QCMBuilder
 	 */
 	public void modifierRessource(String code, String nouveauCode, String nouveauNom) 
 	{
-		Ressource ressource = this.banqueRessources.getRessource(code);
+		Ressource ressource;
+
+
+		ressource = this.banqueRessources.getRessource(code);
 		ressource.setCode(nouveauCode);
 		ressource.setNom (nouveauNom);
 
@@ -435,7 +429,10 @@ public class QCMBuilder
 	 */
 	public void modifierNotion(int idNot, String nouveauNom) 
 	{
-		Notion notion = this.banqueNotions.getNotion(idNot);
+		Notion notion;
+
+
+		notion = this.banqueNotions.getNotion(idNot);
 		notion.setNom(nouveauNom);
 
 		this.banqueNotions.sauvegarder();
@@ -530,6 +527,7 @@ public class QCMBuilder
 
 		this.questionnaire = new Questionnaire(this, this.banqueRessources.getRessource(codeRes), chronometre);
 
+		// Ajout des questions au questionnaire
 		for(int i = 0; i < tabNbQuestions.length; i++)
 		{
 			for(int j = 0; j < 4; j++)
@@ -544,6 +542,7 @@ public class QCMBuilder
 			}
 		}
 
+		// Mélange les questions
 		this.questionnaire.shuffleQuestions();
 	}
 
