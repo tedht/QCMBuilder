@@ -5,9 +5,8 @@ import javax.swing.*;
 /**
  * Classe représentant la fenêtre principale de l'application.
  * 
- * @author Ted Herambert
- * @date 2024/12/06
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-06 Norme ISO-8601
  */
 public class FrameQCMBuilder extends JFrame
 {

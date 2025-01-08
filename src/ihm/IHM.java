@@ -40,36 +40,53 @@ import ihm.question.edit.FrameEditQuestion;
 import ihm.questionnaire.FrameGestionQuestionnaire  ;
 import ihm.questionnaire.export.FrameExport;
 
+/**
+ * Classe représentant l'interface graphique de l'application.
+ * Cette classe gère l'affichage des différentes fenêtres
+ * et les interactions avec l'utilisateur.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-06 Norme ISO-8601
+ */
 public class IHM 
 {
+	/* Constantes */
 	public static final int MARGE = 5;
 
+	// Dimensions des fenêtres de gestion
 	public static final int LARGEUR_GESTION = 600;
 	public static final int HAUTEUR_GESTION = 680;
 
+	// Dimensions de la fenêtre de création de questionnaire
 	public static final int LARGEUR_CREER_QUESTIONNAIRE        = 500;
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_1 = 150;
 	public static final int HAUTEUR_CREER_QUESTIONNAIRE_PAGE_2 = 300;
 
+	// Dimensions de la fenêtre d'édition de question
 	public static final int LARGEUR_EDIT_QUESTION        = 800;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_1 = 250;
 	public static final int HAUTEUR_EDIT_QUESTION_PAGE_2 = 400;
 	
+	/* Attributs */
 	private Controleur                ctrl;
 
 	private FrameQCMBuilder           frameQCMBuilder;
 
+	// Ressource/Notion
 	private FrameGestionRessource     frameGestionRessource;
 	private FrameGestionNotion        frameGestionNotion;
 	private FrameEditRessource        frameEditRessource;
 	private FrameEditNotion           frameEditNotion;
 
+	// Question
 	private FrameGestionQuestion      frameGestionQuestion;
 	private FrameEditQuestion         frameEditQuestion;
 
+	// Questionnaire
 	private FrameGestionQuestionnaire frameGestionQuestionnaire;
 	private FrameExport               frameExport; 
 	
+	// Coordonnées par défaut des fén^tres à part la fenêtre principale
 	private int defaultX, defaultY;
 	
 	public IHM(Controleur ctrl)
