@@ -228,22 +228,25 @@ public class BanqueQuestions extends Banque
 
 		try
 		{
+			// Scanner appliqué sur le fichier CSV
 			scEnreg = new Scanner(new FileInputStream(cheminFicCSV), "UTF8");
 
+			// Pour passer l'entête
 			if(scEnreg.hasNextLine())
 				scEnreg.nextLine();
 
 			cpt = 0;
 			while (scEnreg.hasNextLine())
 			{
+				// Scanner des données appliqué sur la ligne du CSV utilisant le délimiteur "\t"
 				scDonnees = new Scanner(scEnreg.nextLine());
-
 				scDonnees.useDelimiter("\t");
 
+				// Récupération des données
 				codeRes	     = scDonnees.next();
 				idNot        = scDonnees.nextInt();
 				idQst        = scDonnees.nextInt();
-				difficulte   = Difficulte.fromInt(scDonnees.nextInt());
+				difficulte   = Difficulte  .fromInt(scDonnees.nextInt());
 				typeQuestion = TypeQuestion.fromInt(scDonnees.nextInt());
 				temps        = scDonnees.nextInt();
 				note         = Double.parseDouble(scDonnees.next());
@@ -251,16 +254,20 @@ public class BanqueQuestions extends Banque
 
 				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
+				// Scanner pour lire le fichier TXT de l'intitulé (intitule.txt)
 				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 
+				// Récupération de l'intitulé
 				if(scIntitule.hasNextLine())
 					intitule = scIntitule.nextLine();
 
 				scIntitule.close();
 
 
+				// Scanner pour lire le fichier TXT de l'explication (explication.txt)
 				scExplication = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
 
+				// Récupération de l'explication
 				if(scExplication.hasNextLine())
 					explication = scExplication.nextLine();
 
@@ -282,6 +289,7 @@ public class BanqueQuestions extends Banque
 						cptReponse = 0;
 						for(int i = 1; i <= nbProp; i++)
 						{
+							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
 							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
 							if(scProp.hasNextLine())
 							{
@@ -304,6 +312,7 @@ public class BanqueQuestions extends Banque
 						
 						for(int i = 1; i <= nbProp; i++)
 						{
+							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
 							scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
 							if(scProp.hasNextLine())
 							{
@@ -321,6 +330,7 @@ public class BanqueQuestions extends Banque
 						
 						for(int i = 1 ; i <= nbProp ; i++)
 						{
+							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
 							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
 
 							if(scProp.hasNextLine())
@@ -350,7 +360,7 @@ public class BanqueQuestions extends Banque
 					}
 				}
 
-				question.setIntitule   (intitule);
+				question.setIntitule   (intitule   );
 				question.setExplication(explication);
 				
 				dirPJ = new File(cheminDirQst+"/complément/");
@@ -416,9 +426,13 @@ public class BanqueQuestions extends Banque
 
 		try
 		{
+			// PrintWriter appliqué sur le fichier CSV
 			pwCsv = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminFicCSV), "UTF8"));
+
+			// Entête
 			pwCsv.println("codeRes\tidNot\tidQst\tvalDiff\tvalType\ttemps\tnote\tnbProp");
 
+			// Données
 			for (Question question : this.lstQuestions)
 			{   
 				if(question == null) continue;
@@ -436,21 +450,25 @@ public class BanqueQuestions extends Banque
 				pwCsv.println(codeRes+"\t"+idNot+"\t"+idQst+"\t"+valDiff+"\t"+valType+"\t"+temps+"\t"+note+"\t"+nbProp);
 
 				cheminDirQst  = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
+
+				// Création des dossiers
 				dirQst        = new File(cheminDirQst);
 				dirProp       = new File(cheminDirQst+"/propositions");
-				dirComp       = new File(cheminDirQst+"/complément");
+				dirComp       = new File(cheminDirQst+"/complément"  );
 				
 				BanqueQuestions.creerDossier(dirQst);
 
+				// PrintWriter appliqué sur le fichier TXT de l'intitulé (intitule.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
 				System.out.println(cheminDirQst+"/intitule.txt");
-				pwTxt.println(question.getIntitule());
+				pwTxt     .println(question.getIntitule());
 				System.out.println(question.getIntitule());
 				pwTxt.close();
 
+				// PrintWriter appliqué sur le fichier TXT de l'explication (explication.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/explication.txt"), "UTF8"));
 				System.out.println(cheminDirQst+"/explication.txt");
-				pwTxt.println(question.getExplication());
+				pwTxt     .println(question.getExplication());
 				System.out.println(question.getExplication());
 				pwTxt.close();
 
@@ -459,12 +477,13 @@ public class BanqueQuestions extends Banque
 
 				switch (question.getType())
 				{
-					case QCM -> 
+					case QCM ->
 					{
 						qQCM = (QCM) question;
 
 						for(int i = 0; i < qQCM.getPropositions().size(); i++)
 						{
+							// PrintWriter appliqué sur le fichier TXT de la proposition (propX.txt)
 							pwTxt   = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propQCM = qQCM.getProposition(i);
 							
@@ -484,11 +503,12 @@ public class BanqueQuestions extends Banque
 
 						for (int i = 0; i < qAsso.getPropositions().size(); i++) 
 						{
+							// PrintWriter appliqué sur le fichier TXT de la proposition (propX.txt)
 							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propAsso = qAsso.getProposition(i);
 
 							pwTxt.println(propAsso.getTextGauche());
-							pwTxt.println(propAsso.getTextDroite());	
+							pwTxt.println(propAsso.getTextDroite());
 
 							pwTxt.close();
 						}
@@ -499,6 +519,7 @@ public class BanqueQuestions extends Banque
 	
 						for (int i = 0; i < qElim.getPropositions().size(); i++)
 						{
+							// PrintWriter appliqué sur le fichier TXT de la proposition (propX.txt)
 							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
 							propElim = qElim.getProposition(i);
 
@@ -507,9 +528,9 @@ public class BanqueQuestions extends Banque
 							else 
 								pwTxt.print("F:");
 
-							pwTxt.print(propElim.getOrdreElim  () + ":" );
-							pwTxt.print(propElim.getNbPtsPerdus() + ":");
-							pwTxt.println(propElim.getText());
+							pwTxt.print  (propElim.getOrdreElim  () + ":" );
+							pwTxt.print  (propElim.getNbPtsPerdus() + ":" );
+							pwTxt.println(propElim.getText       ()       );
 
 							pwTxt.close();
 						}
@@ -517,12 +538,11 @@ public class BanqueQuestions extends Banque
 				}
 				pwTxt.close();
 
-
 				if(pj == null)
 				{
 					BanqueQuestions.supprimerDossier(dirComp);
 				}
-				else if(pj != null && !pj.getCheminFicOrig().equals(pj.getCheminFic()))
+				else if(pj != null && !"".equals(pj.getCheminFicOrig()))
 				{
 					BanqueQuestions.supprimerDossier(dirComp);
 					BanqueQuestions.creerDossier    (dirComp);

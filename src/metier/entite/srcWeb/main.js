@@ -12,51 +12,65 @@ let intervalId = null; // Stocke l'identifiant de l'intervalle du chrono
  * Charge le tableau questions depuis le fichier questions.json.
  * Affiche le nombre de questions, les notions et le temps d'accueil.
  */
-async function chargerQuestions() {
+async function chargerQuestions()
+{
     fetch('questions.json')
-        .then(response => {
-            if (!response.ok) {
+        .then(response =>
+        {
+            if (!response.ok)
+            {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
-        .then(data => {
+        .then(data =>
+        {
             questions = data;
 
             afficherNbQuestions();
             afficherNotions();
             afficherTempsAccueil();
         })
-        .catch(error => {
+        .catch(error =>
+        {
             console.error("Erreur lors de la lecture du JSON :", error);
         });
 }
+
 chargerQuestions();
 
 
 const contentAccueil = document.getElementById('accueil');
 const titreChrono = document.getElementById('titre-chrono');
-if(gererChrono()) {
+
+if (gererChrono())
+{
     titreChrono.style.color = 'red';
     titreChrono.innerText = 'chronométré';
-} else {
-    titreChrono.innerText = 'non-chronométré';     
+}
+else
+{
+    titreChrono.innerText = 'non-chronométré';
 }
 
-const startEval = document.getElementById('start-button').addEventListener('click', () => {
+const startEval = document.getElementById('start-button').addEventListener('click', () =>
+{
     contentAccueil.style.display = 'none';
     reinitialiserEtatReponses();
     afficherQuestions();
 });
 
 
+
 /**
  * Affiche le nombre de questions sur la page d'accueil.
  */
-function afficherNbQuestions() {
+function afficherNbQuestions()
+{
     const questionNombres = document.getElementById('question-nombre');
 
-    const difficultesQuestion = questions.reduce((acc, q) => {
+    const difficultesQuestion = questions.reduce((acc, q) =>
+    {
         acc[q.difficulte] = (acc[q.difficulte] || 0) + 1;
         return acc;
     }, {});
@@ -66,36 +80,41 @@ function afficherNbQuestions() {
     const ordreDifficultes = ['très-facile', 'facile', 'moyen', 'difficile'];
 
     const details = ordreDifficultes
-        .filter(difficulte => difficultesQuestion[difficulte]) 
+        .filter(difficulte => difficultesQuestion[difficulte])
         .map(difficulte => `${difficultesQuestion[difficulte]} ${gererCoulDifficulte(difficulte)}`)
         .join(", ");
 
     questionNombres.innerText = `${totalQuestions} questions dont ${details}`;
-}   
+}
+ 
 
 /**
  * Affiche le temps total en minutes et secondes sur la page d'accueil.
  */
-function afficherTempsAccueil() {
+function afficherTempsAccueil()
+{
     const tempsTotal = document.getElementById('temps-total');
     let temps = 0;
     let minutes = 0;
     let secondes = 0;
 
-    questions.forEach(q => {
+    questions.forEach(q =>
+    {
         temps += q.temps;
     });
 
-    minutes = Math.floor(temps / 60); 
-    secondes = temps % 60; 
+    minutes = Math.floor(temps / 60);
+    secondes = temps % 60;
 
     tempsTotal.innerHTML = `${minutes}:${secondes < 10 ? '0' : ''}${secondes} minutes`;
 }
 
+
 /**
  * Affiche les notions présentes dans les questions sur la page d'accueil.
  */
-function afficherNotions() {
+function afficherNotions() 
+{
     const notionQuestion = questions.reduce((acc, q) =>
 			acc.includes(q.notion) ? acc : acc.concat(q.notion),
 		[]);
@@ -108,13 +127,15 @@ function afficherNotions() {
 /**
  * Passe de la page d'accueil à la page des questions et appelle afficherQuestion().
  */
-function afficherQuestions() {
+function afficherQuestions() 
+{
     const contentQuestionnaire = document.getElementById('questionnaire');
     contentQuestionnaire.style.display = 'flex';
     afficherQuestion(questionIndex);
 
     const btnValider = document.getElementById('btn-valider');
-    btnValider.addEventListener('click', function() {
+    btnValider.addEventListener('click', function() 
+    {
         validerReponses(questionIndex);
     });
 
@@ -126,8 +147,10 @@ function afficherQuestions() {
  * Affiche la question selon l'index dans le tableau questions.
  * @param {number} index - L'index de la question à afficher.
  */
-function afficherQuestion(index) {
-    if(gererChrono()) {
+function afficherQuestion(index) 
+{
+    if(gererChrono()) 
+    {
         demarrerChrono();
     }
 
@@ -154,14 +177,18 @@ function afficherQuestion(index) {
     contentNotion.innerText = `[ ${notion} ]`;
 
     contentTitre.innerText = question.intitule;
-    if (question.fichierComplementaire) {
+    if (question.fichierComplementaire) 
+        {
         contentTitre.innerHTML += ' <button id="btn-info" class="nav-button" onclick="gererBtnInfo()">+ d\'infos</button>';
     }
 
-    if(gererChrono())  {
+    if(gererChrono())  
+    {
         contentTemps.style.color = 'red';
         contentTemps.innerText = `Chrono : ${question.temps} secondes`;
-    } else {
+    } 
+    else 
+    {
         contentTemps.innerText = `Temps estimé: ${question.temps} secondes`;
     }
 
@@ -176,7 +203,8 @@ function afficherQuestion(index) {
 /**
  * Affiche la page de fin avec le score total.
  */
-function afficherFin() {
+function afficherFin() 
+{
     const contentQuestionnaire = document.getElementById('questionnaire');
     const page = document.getElementById('accueil');
 
@@ -189,7 +217,8 @@ function afficherFin() {
     document.getElementById('start-button').style.display = 'none';
     
     let scoreMax = 0;
-    questions.forEach(q => {
+    questions.forEach(q => 
+    {
         scoreMax += q.note;
     });
  
@@ -205,8 +234,10 @@ function afficherFin() {
  * @param {string} type - Le type de question (QCM, choix-unique, etc.).
  * @returns {string} - La chaîne HTML pour afficher la réponse.
  */
-function stringAfficherReponses(reponse, type) {
-    switch (type) {
+function stringAfficherReponses(reponse, type) 
+{
+    switch (type) 
+    {
         case 'QCM':
             return `
             <label>
@@ -227,8 +258,10 @@ function stringAfficherReponses(reponse, type) {
  * @param {Array} tableau - Le tableau à mélanger.
  * @returns {Array} - Le tableau mélangé.
  */
-function melangerTableau(tableau) {
-    for (let i = tableau.length - 1; i > 0; i--) {
+function melangerTableau(tableau) 
+{
+    for (let i = tableau.length - 1; i > 0; i--) 
+    {
         const j = Math.floor(Math.random() * (i + 1)); // Index aléatoire entre 0 et i
         [tableau[i], tableau[j]] = [tableau[j], tableau[i]]; // Échange des éléments
     }
@@ -240,12 +273,14 @@ function melangerTableau(tableau) {
  * @param {number} index - L'index de la question.
  * @returns {string} - La chaîne HTML pour afficher les réponses.
  */
-function afficherReponses(index) {
+function afficherReponses(index)
+{
     const question = questions[index];
     const reponses = question.propositions;
     let { propositionsGauche, propositionsDroite, type } = question;
 
-    if (!question || (!reponses && (!propositionsGauche || !propositionsDroite))) {
+    if (!question || (!reponses && (!propositionsGauche || !propositionsDroite)))
+    {
         console.error("Question ou propositions non définies.");
         return '';
     }
@@ -253,21 +288,26 @@ function afficherReponses(index) {
     let corpsQuestions = `<form id="qcm-form">`;
 
     // Gestion des différents types de questions
-    if (type === "QCM" || type === "choix-unique" || type === "Elimination") {
-        reponses.forEach((reponse) => {
+    if (type === "QCM" || type === "choix-unique" || type === "Elimination")
+    {
+        reponses.forEach((reponse) =>
+        {
             corpsQuestions += stringAfficherReponses(reponse, type);
         });
 
-        if (type === "Elimination") {
+        if (type === "Elimination")
+        {
             corpsQuestions += `
                 <button type="button" id="eliminer-btn" class="nav-button" onclick="eliminerReponse(${index})">
                     Éliminer une réponse
                 </button>`;
         }
-    } else if (type === "Association") {
-        // // Mélange des propositionsDroite
-        propositionsDroite = melangerTableau([...propositionsDroite]); 
-        
+    }
+    else if (type === "Association")
+    {
+        // Mélange des propositionsDroite
+        propositionsDroite = melangerTableau([...propositionsDroite]);
+
         // Gestion spécifique pour les questions d'association
         corpsQuestions += `
             <div class="association-container">
@@ -283,14 +323,19 @@ function afficherReponses(index) {
                 </div>
             </div>
             <button type="button" id="btn-reinitialiser-asso" onClick="reinitialiserAssociationsEtSvg()" class="nav-button">Réinitialiser associations</button>`;
-    } else {
+    }
+    else
+    {
         console.error("Type de question non supporté.");
     }
 
     corpsQuestions += `</form>`;
 
     // Appel de la méthode pour ajouter les listeners après le rendu
-    setTimeout(() => ajouterListenersAssociation(), 0);
+    setTimeout(() =>
+    {
+        ajouterListenersAssociation();
+    }, 0);
 
     return corpsQuestions;
 }
@@ -299,13 +344,16 @@ function afficherReponses(index) {
 /**
  * Ajoute les listeners pour gérer les associations dans les questions de type Association.
  */
-function ajouterListenersAssociation() {
+function ajouterListenersAssociation() 
+{
     const gaucheItems = document.querySelectorAll('.gauche-item');
     const droiteItems = document.querySelectorAll('.droite-item');
 
     // Ajouter l'événement click sur les éléments de gauche
-    gaucheItems.forEach(itemGauche => {
-        itemGauche.addEventListener('click', () => {
+    gaucheItems.forEach(itemGauche => 
+    {
+        itemGauche.addEventListener('click', () => 
+        {
             // Gestion de la sélection
             deselectionnerTous('.gauche-item');
             itemGauche.classList.add('selected');
@@ -314,8 +362,10 @@ function ajouterListenersAssociation() {
     });
 
     // Ajouter l'événement click sur les éléments de droite
-    droiteItems.forEach(itemDroite => {
-        itemDroite.addEventListener('click', () => {
+    droiteItems.forEach(itemDroite => 
+    {
+        itemDroite.addEventListener('click', () => 
+        {
             // Gestion de la sélection
             deselectionnerTous('.droite-item');
             itemDroite.classList.add('selected');
@@ -329,14 +379,17 @@ function ajouterListenersAssociation() {
  * @param {HTMLElement} itemGauche - L'élément de gauche.
  * @param {HTMLElement} itemDroite - L'élément de droite.
  */
-function dessinerTrait(itemGauche, itemDroite) {
-    if (!itemGauche || !itemDroite) {
+function dessinerTrait(itemGauche, itemDroite) 
+{
+    if (!itemGauche || !itemDroite) 
+    {
         console.error("Un des éléments est manquant !");
         return;
     }
 
     let svg = document.querySelector('#svg-traits');
-    if (!svg) {
+    if (!svg) 
+    {
         svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttribute("id", "svg-traits");
         svg.style.position = "absolute";
@@ -370,13 +423,16 @@ function dessinerTrait(itemGauche, itemDroite) {
 /**
  * Vérifie si une association est possible et l'effectue si c'est le cas.
  */
-function verifierEtAssocier() {
+function verifierEtAssocier() 
+{
     const itemGauche = document.querySelector('.gauche-item.selected');
     const itemDroite = document.querySelector('.droite-item.selected');
 
-    if (itemGauche && itemDroite) {
+    if (itemGauche && itemDroite) 
+    {
         // Enregistre l'association
-        const association = {
+        const association = 
+        {
             gauche: itemGauche.innerText,
             droite: itemDroite.innerText
         };
@@ -399,7 +455,8 @@ function verifierEtAssocier() {
  * Désélectionne tous les éléments d'une colonne.
  * @param {string} selector - Le sélecteur des éléments à désélectionner.
  */
-function deselectionnerTous(selector) {
+function deselectionnerTous(selector)
+{
     const items = document.querySelectorAll(selector);
     items.forEach(item => item.classList.remove('selected'));
 }
@@ -407,16 +464,19 @@ function deselectionnerTous(selector) {
 /**
  * Réinitialise toutes les associations
  */
-function reinitialiserVariableAssociations() {
+function reinitialiserVariableAssociations() 
+{
     associations = [];
 }
 
 /**
  * Supprime les lignes dessinées.
  */
-function reinitialiserSvg() {
+function reinitialiserSvg() 
+{
     const svg = document.getElementById('svg-traits');
-    if (svg) {
+    if (svg) 
+        {
         svg.remove();
     }
 }
@@ -424,19 +484,22 @@ function reinitialiserSvg() {
 /**
  * Réinitialise les associations et le SVG.
  */
-function reinitialiserAssociationsEtSvg() {
+function reinitialiserAssociationsEtSvg() 
+{
     reinitialiserVariableAssociations();
     reinitialiserSvg();
 
     const itemsGauche = document.querySelectorAll('.gauche-item.disabled');
     const itemsDroite = document.querySelectorAll('.droite-item.disabled');
 
-    itemsGauche.forEach(item => {
+    itemsGauche.forEach(item => 
+    {
         item.classList.remove('disabled');
     });
 
     // Supprime la classe 'disabled' pour tous les éléments de droite
-    itemsDroite.forEach(item => {
+    itemsDroite.forEach(item =>
+    {
         item.classList.remove('disabled');
     });
 }
@@ -446,10 +509,12 @@ function reinitialiserAssociationsEtSvg() {
  * @param {Object} question - La question contenant les réponses.
  * @returns {Array} - Un tableau d'objets représentant les associations.
  */
-function convertirReponsesEnObjets(question) {
+function convertirReponsesEnObjets(question) 
+{
     const listeArrays = question.reponses;
 
-    return listeArrays.map(array => ({
+    return listeArrays.map(array => (
+    {
         gauche: array[0], 
         droite: array[1] 
     }));
@@ -459,10 +524,12 @@ function convertirReponsesEnObjets(question) {
  * Élimine une réponse pour une question de type Elimination.
  * @param {number} questionIndex - L'index de la question.
  */
-function eliminerReponse(questionIndex) {
+function eliminerReponse(questionIndex)
+{
     const question = questions[questionIndex];
 
-    if (!question.elimination || question.elimination.length === 0) {
+    if (!question.elimination || question.elimination.length === 0)
+    {
         console.warn("Aucune réponse à éliminer.");
         return;
     }
@@ -472,14 +539,17 @@ function eliminerReponse(questionIndex) {
 
     const inputs = document.querySelectorAll(`#qcm-form input[type="radio"]`);
 
-    inputs.forEach(input => {
-        if (input.value === reponseAEliminer && !input.classList.contains('eliminee')) {
-            input.parentElement.classList.add('eliminee'); 
-            input.disabled = true; 
+    inputs.forEach(input =>
+    {
+        if (input.value === reponseAEliminer && !input.classList.contains('eliminee'))
+        {
+            input.parentElement.classList.add('eliminee');
+            input.disabled = true;
             input.parentElement.appendChild(document.createTextNode(` - Points perdus : ${pointsPerdus}`));
 
             let scoreMax = 0;
-            questions.forEach(q => {
+            questions.forEach(q =>
+            {
                 scoreMax += q.note;
             });
             score -= pointsPerdus;
@@ -487,40 +557,53 @@ function eliminerReponse(questionIndex) {
         }
     });
 
-    if (question.elimination.length === 0) {
+    if (question.elimination.length === 0)
+    {
         const button = document.getElementById('eliminer-btn');
-        if (button) button.disabled = true;
+        if (button)
+        {
+            button.disabled = true;
+        }
     }
 }
+
 
 /**
  * Récupère les réponses sélectionnées par l'utilisateur pour une question donnée.
  * @param {number} index - L'index de la question.
  * @returns {Object} - Un objet contenant les réponses sélectionnées.
  */
-function recupererReponses(index) {
+function recupererReponses(index)
+{
     const formulaire = document.getElementById('qcm-form');
     const question = questions[index];
     const type = question.type;
 
     let reponsesSelectionnees = [];
 
-    if (type === "QCM") {
+    if (type === "QCM")
+    {
         const checkboxes = formulaire.querySelectorAll('input[type="checkbox"]:checked');
         reponsesSelectionnees = Array.from(checkboxes).map(checkbox => checkbox.value);
-    } else if (type === "choix-unique") {
+    }
+    else if (type === "choix-unique")
+    {
         const radio = formulaire.querySelector('input[type="radio"]:checked');
-        if (radio) {
+        if (radio)
+        {
             reponsesSelectionnees = [radio.value];
         }
-    } else if (type === "Elimination") {
+    }
+    else if (type === "Elimination")
+    {
         // Récupère les réponses éliminées
         const reponsesEliminees = Array.from(formulaire.querySelectorAll('.eliminee input'))
-                                        .map(input => input.value);
+            .map(input => input.value);
 
         // Récupère la réponse sélectionnée
         const inputSelectionne = formulaire.querySelector('input[type="radio"]:checked');
-        if (inputSelectionne) {
+        if (inputSelectionne)
+        {
             reponsesSelectionnees = [inputSelectionne.value];
         }
 
@@ -530,11 +613,13 @@ function recupererReponses(index) {
     return { reponsesSelectionnees };
 }
 
+
 /**
  * Valide les réponses de l'utilisateur pour une question donnée.
  * @param {number} index - L'index de la question.
  */
-async function validerReponses(index) {
+async function validerReponses(index)
+{
     const question = questions[index];
     const type = question.type;
     let messageErreur;
@@ -543,11 +628,13 @@ async function validerReponses(index) {
     const { reponsesSelectionnees, reponsesEliminees } = recupererReponses(index);
 
     // Cas spécifique pour le type "association"
-    if (type === "Association") {
+    if (type === "Association")
+    {
         const reponsesAssociees = convertirReponsesEnObjets(question);
         const reponsesAssocieesUtilisateur = associations; // Supposons que `associations` contient les réponses de l'utilisateur
 
-        if (reponsesAssocieesUtilisateur.length !== reponsesAssociees.length) {
+        if (reponsesAssocieesUtilisateur.length !== reponsesAssociees.length)
+        {
             alert('Veuillez faire toutes les associations avant de valider');
             return;
         }
@@ -559,12 +646,14 @@ async function validerReponses(index) {
         const bonneReponse = JSON.stringify(reponsesUtilisateur) === JSON.stringify(reponsesCorrectes);
 
         // Si la réponse est correcte, ajouter les points
-        if (bonneReponse) {
+        if (bonneReponse)
+        {
             score += question.note;
         }
 
         // Mise à jour de l'état de la réponse
-        etatReponses[index] = {
+        etatReponses[index] = 
+        {
             repondu: true,
             corrige: bonneReponse,
             optionSelectionnee: reponsesAssocieesUtilisateur
@@ -576,16 +665,22 @@ async function validerReponses(index) {
 
         // Passage à la question suivante ou fin
         questionIndex++;
-        if (questionIndex < questions.length) {
+        if (questionIndex < questions.length)
+        {
             afficherQuestion(questionIndex);
-        } else {
+        }
+        else
+        {
             afficherFin();
         }
 
         return; // Sortie pour éviter de continuer avec le reste du code dans cette fonction
-    } else {
+    }
+    else
+    {
         // Pour les autres types de questions, vérifier si des réponses ont été sélectionnées
-        if (reponsesSelectionnees.length === 0) {
+        if (reponsesSelectionnees.length === 0)
+        {
             messageErreur = type === "Elimination" ? 'Veuillez sélectionner une réponse après élimination' :
                             type === "choix-unique" ? 'Veuillez sélectionner une réponse' : 
                             'Veuillez sélectionner au moins une réponse';
@@ -593,15 +688,18 @@ async function validerReponses(index) {
             return;
         }
     }
-       
 
     // Calculer les points perdus si c'est une question d'élimination
     let pointsPerdus = 0;
-    if (type === "Elimination") {
-        if (question.elimination) {
-            reponsesEliminees.forEach((reponseEliminee) => {
+    if (type === "Elimination")
+    {
+        if (question.elimination)
+        {
+            reponsesEliminees.forEach((reponseEliminee) => 
+            {
                 const indexElimination = question.elimination.indexOf(reponseEliminee);
-                if (indexElimination !== -1) {
+                if (indexElimination !== -1)
+                {
                     question.note -= question.pointsPerdus[indexElimination];
                 }
             });
@@ -611,12 +709,14 @@ async function validerReponses(index) {
     // Vérifie si les réponses sont correctes pour d'autres types de questions
     const bonneReponse = JSON.stringify(reponsesSelectionnees.sort()) === JSON.stringify(question.reponses.sort());
 
-    if (bonneReponse) {
+    if (bonneReponse)
+    {
         score += question.note;
     }
 
     // Mise à jour de l'état de la réponse
-    etatReponses[index] = {
+    etatReponses[index] = 
+    {
         repondu: true,
         corrige: bonneReponse,
         optionSelectionnee: reponsesSelectionnees,
@@ -629,12 +729,16 @@ async function validerReponses(index) {
 
     // Passage à la question suivante ou fin
     questionIndex++;
-    if (questionIndex < questions.length) {
+    if (questionIndex < questions.length)
+    {
         afficherQuestion(questionIndex);
-    } else {
+    }
+    else
+    {
         afficherFin();
     }
 }
+
 
 /**
  * Affiche un feedback après la validation d'une réponse.
@@ -643,10 +747,13 @@ async function validerReponses(index) {
  * @param {Array} reponsesUtilisateur - Les réponses de l'utilisateur.
  * @returns {Promise} - Une promesse résolue après la fermeture du feedback.
  */
-function afficherFeedback(bonneReponse, question, reponsesUtilisateur) {
-    return new Promise((resolve) => {
+function afficherFeedback(bonneReponse, question, reponsesUtilisateur)
+{
+    return new Promise((resolve) => 
+    {
         let feedbackPopup = document.querySelector('.feedback-popup');
-        if (!feedbackPopup) {
+        if (!feedbackPopup) 
+        {
             feedbackPopup = document.createElement('div');
             feedbackPopup.classList.add('feedback-popup');
             document.body.appendChild(feedbackPopup);
@@ -658,7 +765,8 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur) {
         const feedbackMessage = bonneReponse ? question.feedback : `Essayez encore ! ${question.feedback}`;
 
         let scoreMax = 0;
-        questions.forEach(q => {
+        questions.forEach(q => 
+        {
             scoreMax += q.note;
         });
 
@@ -677,17 +785,20 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur) {
         feedbackPopup.classList.add('show');
 
         const fermerBtn = document.getElementById('fermerPopup');
-        fermerBtn.addEventListener('click', () => {
+        fermerBtn.addEventListener('click', () => 
+        {
             feedbackPopup.remove();
             resolve(); 
         }, { once: true }); 
     });
 }
 
+
 /**
  * Initialise l'état des réponses pour toutes les questions.
  */
-function initialiserEtatReponses() {
+function initialiserEtatReponses() 
+{
     etatReponses = questions.map(() => ({
         repondu: false,
         corrige: false,
@@ -699,54 +810,68 @@ function initialiserEtatReponses() {
  * Recharge les réponses de l'utilisateur pour une question donnée.
  * @param {Object} question - La question actuelle.
  */
-function rechargerReponses(question) {
+function rechargerReponses(question)
+{
     const etatReponse = etatReponses[questionIndex]; // Récupère l'état sauvegardé de la réponse
     const reponseUtilisateur = etatReponse?.optionSelectionnee || []; // Réponses sauvegardées
     const reponsesEliminees = etatReponse?.reponsesEliminees || []; // Réponses éliminées (pour "elimination")
     const bonneReponse = JSON.stringify(reponseUtilisateur) === JSON.stringify(question.reponses);
 
-    if (reponseUtilisateur.length > 0 || reponsesEliminees.length > 0) {
+    if (reponseUtilisateur.length > 0 || reponsesEliminees.length > 0) 
+    {
         const formulaire = document.getElementById('qcm-form');
 
-        if (question.type === "QCM") {
-            reponseUtilisateur.forEach(reponse => {
+        if (question.type === "QCM") 
+        {
+            reponseUtilisateur.forEach(reponse => 
+            {
                 const checkbox = formulaire.querySelector(`input[type="checkbox"][value="${reponse}"]`);
-                if (checkbox) {
+                if (checkbox) 
+                {
                     checkbox.checked = true;
                     colorierReponse(checkbox.parentElement, question.reponses.includes(reponse));
                 }
             });
         } 
-        else if (question.type === "choix-unique") {
+        else if (question.type === "choix-unique") 
+        {
             const radio = formulaire.querySelector(`input[type="radio"][value="${reponseUtilisateur?.[0]}"]`);
-            if (radio) {
+            if (radio) 
+            {
                 radio.checked = true;
                 colorierReponse(radio.parentElement, bonneReponse);
             }
         } 
-        else if (question.type === "Elimination") {
+        else if (question.type === "Elimination") 
+        {
             const radios = formulaire.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                if (reponsesEliminees.includes(radio.value)) {
+            radios.forEach(radio => 
+            {
+                if (reponsesEliminees.includes(radio.value)) 
+                {
                     radio.parentElement.classList.add('eliminee');
                     radio.disabled = true;
                 }
-                if (reponseUtilisateur.includes(radio.value)) {
+                if (reponseUtilisateur.includes(radio.value)) 
+                {
                     radio.checked = true;
                     colorierReponse(radio.parentElement, bonneReponse);
                 }
             });
-        }
-        else if (question.type === "Association") {
+        } 
+        else if (question.type === "Association") 
+        {
             // Gestion des réponses pour les associations
             document.getElementById('btn-reinitialiser-asso').style.pointerEvents = 'none';
             document.getElementById('btn-reinitialiser-asso').style.opacity = '0.5';
 
-            reponseUtilisateur.forEach(association => {
+            reponseUtilisateur.forEach(association => 
+            {
                 const itemGauche = document.querySelector(`.gauche-item[data-value="${association.gauche}"]`);
                 const itemDroite = document.querySelector(`.droite-item[data-value="${association.droite}"]`);
 
-                if (itemGauche && itemDroite) {
+                if (itemGauche && itemDroite) 
+                {
                     itemGauche.classList.add('selected');
                     itemDroite.classList.add('selected');
                     dessinerTrait(itemGauche, itemDroite); 
@@ -757,22 +882,28 @@ function rechargerReponses(question) {
         }
 
         const btnFeedback = document.getElementById('btn-feedback');
-        btnFeedback.addEventListener('click', async () => {
+        btnFeedback.addEventListener('click', async () => 
+        {
             await afficherFeedback(bonneReponse, question, reponseUtilisateur);
         });
     }
 }
+
 
 /**
  * Colore une réponse en fonction de sa correction.
  * @param {HTMLElement} element - L'élément de la réponse.
  * @param {boolean} estCorrecte - Indique si la réponse est correcte.
  */
-function colorierReponse(element, estCorrecte) {
-    if (estCorrecte) {
+function colorierReponse(element, estCorrecte) 
+{
+    if (estCorrecte) 
+    {
         element.classList.add('correct');
         element.classList.remove('incorrect');
-    } else {
+    } 
+    else 
+    {
         element.classList.add('incorrect');
     }
 }
@@ -780,18 +911,21 @@ function colorierReponse(element, estCorrecte) {
 /**
  * Réinitialise l'état des réponses.
  */
-function reinitialiserEtatReponses() {
+function reinitialiserEtatReponses() 
+{
     etatReponses = []; 
 }
 
 /**
  * Gère l'affichage des fichiers complémentaires pour une question.
  */
-function gererBtnInfo() {
+function gererBtnInfo() 
+{
     // Récupérer la question actuelle via questionIndex
     const questionActuelle = questions[questionIndex];
 
-    if (questionActuelle && questionActuelle.fichierComplementaire) {
+    if (questionActuelle && questionActuelle.fichierComplementaire) 
+    {
         const fichier = questionActuelle.fichierComplementaire;
 
         // Construire le chemin complet basé sur le dossier "fichiersComplementaires"
@@ -802,7 +936,9 @@ function gererBtnInfo() {
         lien.href = cheminComplet;
         lien.target = "_blank"; // Ouvrir dans un nouvel onglet
         lien.click(); // Simuler un clic pour ouvrir la page
-    } else {
+    } 
+    else 
+    {
         alert("Aucun fichier complémentaire disponible pour cette question.");
     }
 }
@@ -810,14 +946,20 @@ function gererBtnInfo() {
 /**
  * Gère les boutons suivant et précédent en fonction du chrono.
  */
-function gererBoutons() {   
+function gererBoutons()
+{   
     const btnPrecedent = document.getElementById('btn-precedent');
-    if(gererChrono())  {
+    if (gererChrono())  
+    {
         btnPrecedent.style.pointerEvents = 'none'; 
         btnPrecedent.style.opacity = '0.5';  
-    } else {
-        btnPrecedent.addEventListener('click', () => {
-            if (questionIndex <= questions.length - 1 && questionIndex > 0) {
+    } 
+    else 
+    {
+        btnPrecedent.addEventListener('click', () => 
+        {
+            if (questionIndex <= questions.length - 1 && questionIndex > 0) 
+            {
                 questionIndex--;
                 reinitialiserAssociationsEtSvg();
                 afficherQuestion(questionIndex);
@@ -826,23 +968,28 @@ function gererBoutons() {
     }
 
     const btnSuivant = document.getElementById('btn-suivant');
-    btnSuivant.addEventListener('click', () => {
-        if (questionIndex < questions.length - 1) {
+    btnSuivant.addEventListener('click', () => 
+    {
+        if (questionIndex < questions.length - 1) 
+        {
             questionIndex++;
             reinitialiserAssociationsEtSvg();
             afficherQuestion(questionIndex);
-            if (gererChrono()) {
+            if (gererChrono()) 
+            {
                 demarrerChrono();
             }
         }
     });
 }
 
+
 /**
  * Vérifie si l'évaluation est chronométrée.
  * @returns {boolean} - True si l'évaluation est chronométrée, false sinon.
  */
-function gererChrono() {
+function gererChrono() 
+{
     const appli = document.getElementById('appli');
     return appli.getAttribute("data-chrono") === 'true';
 }
@@ -852,8 +999,10 @@ function gererChrono() {
  * @param {string} difficulte - La difficulté de la question.
  * @returns {string} - Le caractère associé à la difficulté.
  */
-function gererCoulDifficulte(difficulte) {
-    switch (difficulte) {
+function gererCoulDifficulte(difficulte) 
+{
+    switch (difficulte) 
+    {
         case 'tres-facile': return 'TF';
         case 'facile':      return 'F';
         case 'moyen':       return 'M'; 
@@ -866,7 +1015,8 @@ function gererCoulDifficulte(difficulte) {
  * Met à jour l'état du bouton de validation en fonction de la réponse de l'utilisateur.
  * @param {number} questionIndex - L'index de la question.
  */
-function aRepondu(questionIndex) {
+function aRepondu(questionIndex) 
+{
     const repondu = etatReponses[questionIndex]?.repondu;
     document.getElementById('btn-valider').style.cssText = repondu ? 'pointer-events: none; opacity: 0.5;' 
                                                                     : 'pointer-events: auto; opacity: 1;';
@@ -880,7 +1030,8 @@ function aRepondu(questionIndex) {
  * @param {number} questionIndex - L'index de la question actuelle.
  * @param {number} totalQuestions - Le nombre total de questions.
  */
-function mettreAJourBarreDeProgression(questionIndex, totalQuestions) {
+function mettreAJourBarreDeProgression(questionIndex, totalQuestions) 
+{
     const pourcentage = Math.round(((questionIndex + 1) / totalQuestions) * 100);
 
     const barreProgression = document.getElementById('progress-bar');
@@ -893,16 +1044,19 @@ function mettreAJourBarreDeProgression(questionIndex, totalQuestions) {
 /**
  * Démarre le chrono pour une question chronométrée.
  */
-function demarrerChrono() {
+function demarrerChrono() 
+{
     const contentTemps = document.getElementById('question-time');
     const question = questions[questionIndex]; 
     let tempsRestant = question.temps;
 
-    if (!gererChrono()) {
+    if (!gererChrono()) 
+    {
         return;
     }
 
-    if (intervalId) {
+    if (intervalId) 
+    {
         clearInterval(intervalId);
         intervalId = null;
     }
@@ -912,14 +1066,16 @@ function demarrerChrono() {
     contentTemps.innerText = `Chrono : ${tempsRestant} secondes`;
 
     // Démarre un nouveau chrono
-    intervalId = setInterval(() => {
+    intervalId = setInterval(() => 
+    {
         tempsRestant--;
 
         // Met à jour l'affichage
         contentTemps.innerText = `Chrono : ${tempsRestant} secondes`;
 
         // Quand le temps est écoulé
-        if (tempsRestant <= 0) {
+        if (tempsRestant <= 0) 
+        {
             clearInterval(intervalId); // Stoppe l'intervalle
             intervalId = null; // Réinitialise la variable globale
             alert("Temps écoulé pour cette question !");
