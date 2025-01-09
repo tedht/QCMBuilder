@@ -257,7 +257,8 @@ public class Questionnaire
 							<button id="btn-feedback">Fermer</button>
 						</div>
 					</div>
-
+					
+					<script src="questions.js"></script>
 					<script src="main.js" defer></script>
 				</body>
 				</html>
@@ -285,7 +286,7 @@ public class Questionnaire
 
 			// genererDossierComplementaire(filePath);
 
-			genererQuestionnaireAvecJson(filePath, lstQuestions);
+			genererQuestionnaireEnJs(filePath, lstQuestions);
 
 			for (Question q : lstQuestions) 
 				if(q.getPieceJointe() != null) copyToFichiersComplementaires(filePath, q);
@@ -314,33 +315,30 @@ public class Questionnaire
 	 * @param lstQuestions la liste des questions à inclure dans le fichier JSON.
 	 * @return la chaîne JSON générée.
 	 */
-	private String genererQuestionsEnJson(List<Question> lstQuestions) 
-	{
-		StringBuilder jsonBuilder;
-
+	private String genererQuestionsEnJs(List<Question> lstQuestions) {
+		StringBuilder jsBuilder;
+	
 		Question question;
 		String jsonQuestion;
-
-
-		jsonBuilder = new StringBuilder();
-		jsonBuilder.append("[");
 	
-		for (int i = 0; i < lstQuestions.size(); i++) 
-		{
+		jsBuilder = new StringBuilder();
+		jsBuilder.append("const questions = [");
+	
+		for (int i = 0; i < lstQuestions.size(); i++) {
 			question = lstQuestions.get(i);
-
-			jsonQuestion = convertirQuestionEnJson(question, i+1);
-
-			jsonBuilder.append(jsonQuestion);
-
+	
+			jsonQuestion = convertirQuestionEnJson(question, i + 1);
+	
+			jsBuilder.append(jsonQuestion);
+	
 			if (i < lstQuestions.size() - 1) 
-				jsonBuilder.append(",");
+				jsBuilder.append(",");
 		}
 	
-		jsonBuilder.append("]");
-
-		return jsonBuilder.toString();
+		jsBuilder.append("];"); // Fermer la déclaration JS
+		return jsBuilder.toString();
 	}
+	
 
 	/**
 	 * Génère un fichier JSON contenant les questions du Questionnaire.
@@ -349,31 +347,27 @@ public class Questionnaire
 	 * @param lstQuestions la liste des questions à inclure dans le fichier JSON.
 	 * @return true si le fichier JSON a été généré avec succès, false sinon.
 	 */
-	public boolean genererQuestionnaireAvecJson(String filePath, List<Question> lstQuestions) throws IllegalArgumentException
-	{
-		String lstQuestionsJson;
-		String jsonFilePath;
-
-
+	public boolean genererQuestionnaireEnJs(String filePath, List<Question> lstQuestions) throws IllegalArgumentException {
+		String lstQuestionsJs;
+		String jsFilePath;
+	
 		if (filePath == null) 
 			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
 	
-		lstQuestionsJson = genererQuestionsEnJson(lstQuestions);
+		lstQuestionsJs = genererQuestionsEnJs(lstQuestions);
 	
-		// Générer le fichier JSON
-		jsonFilePath = filePath + "/questions.json";
-		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(jsonFilePath), StandardCharsets.UTF_8))) 
-		{
-			writer.print(lstQuestionsJson);
-			System.out.println("Fichier JSON généré avec succès à l'emplacement : " + jsonFilePath);
+		// Générer le fichier JS
+		jsFilePath = filePath + "/questions.js";
+		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(jsFilePath), StandardCharsets.UTF_8))) {
+			writer.print(lstQuestionsJs);
+			System.out.println("Fichier JS généré avec succès à l'emplacement : " + jsFilePath);
 			return true;
-		}
-		catch (IOException e) 
-		{
-			System.err.println("Erreur lors de la génération du fichier JSON : " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la génération du fichier JS : " + e.getMessage());
 			return false;
 		}
 	}
+	
 
 	/**
 	 * Copie un fichier source vers un fichier de destination.
@@ -404,44 +398,44 @@ public class Questionnaire
 	 */
 	private String convertirQuestionEnJson(Question question, int idQuestion) 
 	{
-		StringBuilder jsonBuilder;
+		StringBuilder jsBuilder;
 
 
-		jsonBuilder = new StringBuilder();
-		jsonBuilder.append("\n\t{\n");
+		jsBuilder = new StringBuilder();
+		jsBuilder.append("\n\t{\n");
 	
-		appendBasicInfo(jsonBuilder, question, idQuestion);
-		appendQuestion (jsonBuilder, question            );
-		appendFinalInfo(jsonBuilder, question            );
+		appendBasicInfo(jsBuilder, question, idQuestion);
+		appendQuestion (jsBuilder, question            );
+		appendFinalInfo(jsBuilder, question            );
 
-		jsonBuilder.append("\n\t}");
+		jsBuilder.append("\n\t}");
 
-		return jsonBuilder.toString();
+		return jsBuilder.toString();
 	}
 
 	/**
 	 * Ajoute les informations de base d'une question au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question à convertir en JSON.
 	 * @param idQuestion  l'identifiant de la question.
 	 */
-	private void appendBasicInfo(StringBuilder jsonBuilder, Question question, int idQuestion) 
+	private void appendBasicInfo(StringBuilder jsBuilder, Question question, int idQuestion) 
 	{
 		String type;
 		String difficulte, difficulteAffichee;
 
 
-		jsonBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
+		jsBuilder.append(String.format("\t\t\"id\": %d,\n", idQuestion));
 
 		type = "" + question.getType();
 		if ("QCM".equalsIgnoreCase(type)) 
 			if(((QCM) question).estUnique()) 
 				type = "choix-unique";
 
-		jsonBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
+		jsBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
 		
-		jsonBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));
+		jsBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));
 
 		// Gestion de la difficulté
 		difficulte = "" + question.getDifficulte();
@@ -454,33 +448,33 @@ public class Questionnaire
 			case "D"  -> { difficulteAffichee = "difficile";   }
 			default   -> { difficulteAffichee = "inconnue";    } // En cas de valeur non valide
 		}
-		jsonBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
+		jsBuilder.append(String.format("\t\t\"difficulte\": \"%s\",\n", difficulteAffichee));
 	}
 
 	/**
 	 * Ajoute les informations spécifiques d'une question au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question à convertir en JSON.
 	 */
-	private void appendQuestion(StringBuilder jsonBuilder, Question question) 
+	private void appendQuestion(StringBuilder jsBuilder, Question question) 
 	{
 		if ("Association".equalsIgnoreCase(question.getType().toString())) 
-			this.appendAssociation(jsonBuilder, (Association) question);
+			this.appendAssociation(jsBuilder, (Association) question);
 		else
 			if ("Elimination".equalsIgnoreCase(question.getType().toString())) 
-				this.appendElimination(jsonBuilder, (Elimination) question);
+				this.appendElimination(jsBuilder, (Elimination) question);
 		else
-			this.appendQCM(jsonBuilder, question);
+			this.appendQCM(jsBuilder, question);
 	}
 
 	/**
 	 * Ajoute les informations spécifiques d'une question de type Elimination au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question de type Elimination à convertir en JSON.
 	 */
-	private void appendElimination(StringBuilder jsonBuilder, Elimination question) 
+	private void appendElimination(StringBuilder jsBuilder, Elimination question) 
 	{
 		List<String> propositionsList;
 		List<String> eliminationList ;
@@ -514,33 +508,33 @@ public class Questionnaire
 		}
 	
 		// Ajouter les propositions
-		jsonBuilder.append("\t\t\"propositions\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", propositionsList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"propositions\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", propositionsList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	
 		// Ajouter les réponses
-		jsonBuilder.append("\t\t\"reponses\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"reponses\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	
 		// Ajouter les éliminations
-		jsonBuilder.append("\t\t\"elimination\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", eliminationList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"elimination\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", eliminationList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	
 		// Ajouter les points perdus
-		jsonBuilder.append("\t\t\"pointsPerdus\": [\n");
-		jsonBuilder.append("\t\t\t" + ptsPerdusList.stream().map(String::valueOf).collect(Collectors.joining(",\n\t\t\t")) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"pointsPerdus\": [\n");
+		jsBuilder.append("\t\t\t" + ptsPerdusList.stream().map(String::valueOf).collect(Collectors.joining(",\n\t\t\t")) + "\n");
+		jsBuilder.append("\t\t],\n");
 	}
 
 	/**
 	 * Ajoute les informations spécifiques d'une question de type Association au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question de type Association à convertir en JSON.
 	 */
-	private void appendAssociation(StringBuilder jsonBuilder, Association question)
+	private void appendAssociation(StringBuilder jsBuilder, Association question)
 	{
 		List<String> gaucheList  ;
 		List<String> droiteList  ;
@@ -569,27 +563,27 @@ public class Questionnaire
 		}
 	
 		// Ajouter les propositions gauche et droite
-		jsonBuilder.append("\t\t\"propositionsGauche\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", gaucheList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"propositionsGauche\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", gaucheList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	
-		jsonBuilder.append("\t\t\"propositionsDroite\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", droiteList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"propositionsDroite\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", droiteList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	
 		// Ajouter les réponses sous forme de tableau de tableaux
-		jsonBuilder.append("\t\t\"reponses\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t\"reponses\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList) + "\n");
+		jsBuilder.append("\t\t],\n");
 	}
 
 	/**
 	 * Ajoute les informations finales d'une question de type QCM au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question de type QCM à convertir en JSON.
 	 */
-	private void appendQCM(StringBuilder jsonBuilder, Question question) 
+	private void appendQCM(StringBuilder jsBuilder, Question question) 
 	{
 		PropositionQCM prop;
 
@@ -597,19 +591,19 @@ public class Questionnaire
 
 
 		// Ajouter les propositions
-		jsonBuilder.append("\t\t\"propositions\": [\n");
+		jsBuilder.append("\t\t\"propositions\": [\n");
 		for (int i = 0; i < question.getPropositions().size(); i++) 
 		{
 			prop = (PropositionQCM) question.getPropositions().get(i);
 
-			jsonBuilder.append("\t\t\t\"" + prop.getText() + "\"");
+			jsBuilder.append("\t\t\t\"" + prop.getText() + "\"");
 
 			if (i < question.getPropositions().size() - 1)
-				jsonBuilder.append(",");
+				jsBuilder.append(",");
 
-			jsonBuilder.append("\n");
+			jsBuilder.append("\n");
 		}
-		jsonBuilder.append("\t\t],\n");
+		jsBuilder.append("\t\t],\n");
 
 		// Ajouter les réponses
 		reponsesList = new ArrayList<String>();
@@ -621,28 +615,28 @@ public class Questionnaire
 				reponsesList.add("\"" + prop.getText() + "\"");
 		}
 
-		jsonBuilder.append("\t\t\"reponses\": [\n");
-		jsonBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList));
-		jsonBuilder.append("\n\t\t],\n");
+		jsBuilder.append("\t\t\"reponses\": [\n");
+		jsBuilder.append("\t\t\t" + String.join(",\n\t\t\t", reponsesList));
+		jsBuilder.append("\n\t\t],\n");
 	}
 
 	/**
 	 * Ajoute les informations finales d'une question au JSON.
 	 * 
-	 * @param jsonBuilder le StringBuilder contenant le JSON.
+	 * @param jsBuilder le StringBuilder contenant le JSON.
 	 * @param question    la question à convertir en JSON.
 	 */
-	private void appendFinalInfo(StringBuilder jsonBuilder, Question question)
+	private void appendFinalInfo(StringBuilder jsBuilder, Question question)
 	{
 		String      fichier;
 		PieceJointe PJ;
 
 
-		jsonBuilder.append(String.format(          "\t\t\"temps\": %d,\n"       , question.getTemps      ()));
-		jsonBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n"        , question.getNote       ()));
-		jsonBuilder.append(String.format(          "\t\t\"feedback\": \"%s\",\n", question.getExplication()));
+		jsBuilder.append(String.format(          "\t\t\"temps\": %d,\n"       , question.getTemps      ()));
+		jsBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n"        , question.getNote       ()));
+		jsBuilder.append(String.format(          "\t\t\"feedback\": \"%s\",\n", question.getExplication()));
 	
-		jsonBuilder.append(String.format("\t\t\"notion\": \"%s\",\n"  , this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
+		jsBuilder.append(String.format("\t\t\"notion\": \"%s\",\n"  , this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
 
 		fichier = "";
 		if(question.getPieceJointe() != null)
@@ -651,7 +645,7 @@ public class Questionnaire
 			fichier = PJ      .getNomPieceJointe() + "." + PJ.getExtension(); 
 		}
 
-		jsonBuilder.append(String.format("\t\t\"fichierComplementaire\": \"%s\"\n", fichier));
+		jsBuilder.append(String.format("\t\t\"fichierComplementaire\": \"%s\"\n", fichier));
 
 	}
 
@@ -722,67 +716,4 @@ public class Questionnaire
 				"   lstQuestions : " + this.lstQuestions + "\n" +
 				" chronometre : "    + this.chronometre  + "\n"   ;
 	}
-
-	/*
-	public static void main(String[] args) 
-	{
-		Ressource     r1, r2;
-		Notion        n1, n2, n3;
-		List<Notion>  l1;
-
-		QCM q1;
-		Association q2;
-		Elimination q3;
-
-		BanqueQuestions banqueQuestions;
-		Questionnaire quest1;
-
-
-		r1 = new Ressource("R1.01","Init_Dev");
-		r2 = new Ressource("R1.05","BDD");
-
-		n1 = new Notion("Algorithmique",1,"R1.01");
-		n2 = new Notion("Programmation",2,"R1.01");
-		n3 = new Notion("SQL",3,"R1.05");
-
-		q1 = new QCM(r1.getCode(), n1.getIdNot(), 1, 0.5, 20, Difficulte.DIFFICILE);
-		q2 = new Association(r1.getCode(), n2.getIdNot(), 2, 1.0, 30, Difficulte.MOYEN);
-		q3 = new Elimination(r2.getCode(), n3.getIdNot(), 3, 4, 40, Difficulte.TRES_FACILE);
-
-		q1.setUnique(true);
-		q1.setIntitule("bah choisis la bonne réponse");
-		q1.setExplication("bien joué frérot");
-		q1.ajouterProposition(new PropositionQCM("prop1", false));
-		q1.ajouterProposition(new PropositionQCM("prop2", true));
-		q1.ajouterProposition(new PropositionQCM("prop3", false));
-		q1.setPieceJointe(new PieceJointe("data/oceans.pdf", "./test"));
-
-		q2.ajouterProposition(new PropositionAssociation("prop1", "prop1"));
-		q2.ajouterProposition(new PropositionAssociation("prop2", "prop2"));
-		q2.setPieceJointe(new PieceJointe("data/portugal.png", "./test"));
-
-		q3.ajouterProposition(new PropositionElimination("prop1", true, 0, 0));
-		q3.ajouterProposition(new PropositionElimination("prop2",false, 1, 1.0));
-		q3.ajouterProposition(new PropositionElimination("prop3",false, 2, 1.5));
-
-		l1 = new ArrayList<Notion>();
-		l1.add(n1);
-		l1.add(n2);
-
-		banqueQuestions = new BanqueQuestions();
-
-		banqueQuestions.ajouterQuestion(q1);
-		banqueQuestions.ajouterQuestion(q2);
-		banqueQuestions.ajouterQuestion(q3);
-
-	// quest1 = new Questionnaire(banqueQuestions, r1, l1, false);
-
-		//quest1.ajouterNotion(n3);
-
-		quest1.ajouterQuestions(n1, Difficulte.DIFFICILE, 2);
-		quest1.ajouterQuestions(n2, Difficulte.MOYEN, 1);
-		quest1.ajouterQuestions(n3, Difficulte.TRES_FACILE, 1);
-
-		quest1.genererQuestionnaire("./test");
-	}*/
 }
