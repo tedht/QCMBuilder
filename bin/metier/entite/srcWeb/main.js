@@ -68,7 +68,20 @@ function afficherNbQuestions()
 
     questionNombres.innerText = `${totalQuestions} questions dont ${details}`;
 }
- 
+
+/**
+ * Affiche les notions présentes dans les questions sur la page d'accueil.
+ */
+function afficherNotions() 
+{
+    const notionQuestion = questions.reduce((acc, q) =>
+			acc.includes(q.notion) ? acc : acc.concat(q.notion),
+		[]);
+    notions = notionQuestion.join(', ');
+    const contentNotion = document.getElementById('notions');
+
+    contentNotion.innerText = notions;  
+}
 
 /**
  * Affiche le temps total en minutes et secondes sur la page d'accueil.
@@ -89,21 +102,6 @@ function afficherTempsAccueil()
     secondes = temps % 60;
 
     tempsTotal.innerHTML = `${minutes}:${secondes < 10 ? '0' : ''}${secondes} minutes`;
-}
-
-
-/**
- * Affiche les notions présentes dans les questions sur la page d'accueil.
- */
-function afficherNotions() 
-{
-    const notionQuestion = questions.reduce((acc, q) =>
-			acc.includes(q.notion) ? acc : acc.concat(q.notion),
-		[]);
-    notions = notionQuestion.join(', ');
-    const contentNotion = document.getElementById('notions');
-
-    contentNotion.innerText = notions;  
 }
 
 /**
@@ -239,21 +237,6 @@ function stringAfficherReponses(reponse, type)
 }
 
 /**
- * Mélange les éléments d'un tableau de manière aléatoire.
- * @param {Array} tableau - Le tableau à mélanger.
- * @returns {Array} - Le tableau mélangé.
- */
-function melangerTableau(tableau) 
-{
-    for (let i = tableau.length - 1; i > 0; i--) 
-    {
-        const j = Math.floor(Math.random() * (i + 1)); // Index aléatoire entre 0 et i
-        [tableau[i], tableau[j]] = [tableau[j], tableau[i]]; // Échange des éléments
-    }
-    return tableau;
-}
-
-/**
  * Affiche les réponses pour une question donnée.
  * @param {number} index - L'index de la question.
  * @returns {string} - La chaîne HTML pour afficher les réponses.
@@ -325,234 +308,6 @@ function afficherReponses(index)
     return corpsQuestions;
 }
 
-
-/**
- * Ajoute les listeners pour gérer les associations dans les questions de type Association.
- */
-function ajouterListenersAssociation() 
-{
-    const gaucheItems = document.querySelectorAll('.gauche-item');
-    const droiteItems = document.querySelectorAll('.droite-item');
-
-    // Ajouter l'événement click sur les éléments de gauche
-    gaucheItems.forEach(itemGauche => 
-    {
-        itemGauche.addEventListener('click', () => 
-        {
-            // Gestion de la sélection
-            deselectionnerTous('.gauche-item');
-            itemGauche.classList.add('selected');
-            verifierEtAssocier(); // Vérifie si une association est possible
-        });
-    });
-
-    // Ajouter l'événement click sur les éléments de droite
-    droiteItems.forEach(itemDroite => 
-    {
-        itemDroite.addEventListener('click', () => 
-        {
-            // Gestion de la sélection
-            deselectionnerTous('.droite-item');
-            itemDroite.classList.add('selected');
-            verifierEtAssocier(); // Vérifie si une association est possible
-        });
-    });
-}
-
-/**
- * Dessine un trait entre deux éléments pour les associer visuellement.
- * @param {HTMLElement} itemGauche - L'élément de gauche.
- * @param {HTMLElement} itemDroite - L'élément de droite.
- */
-function dessinerTrait(itemGauche, itemDroite) 
-{
-    if (!itemGauche || !itemDroite) 
-    {
-        console.error("Un des éléments est manquant !");
-        return;
-    }
-
-    let svg = document.querySelector('#svg-traits');
-    if (!svg) 
-    {
-        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("id", "svg-traits");
-        svg.style.position = "absolute";
-        svg.style.top = "0";
-        svg.style.left = "0";
-        svg.style.width = "100%";
-        svg.style.height = "100%";
-        svg.style.pointerEvents = "none";
-        document.body.appendChild(svg);
-    }
-
-    const rectGauche = itemGauche.getBoundingClientRect();
-    const rectDroite = itemDroite.getBoundingClientRect();
-
-    const x1 = rectGauche.right;
-    const y1 = rectGauche.top + rectGauche.height / 2;
-    const x2 = rectDroite.left;
-    const y2 = rectDroite.top + rectDroite.height / 2;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", x1);
-    line.setAttribute("y1", y1);
-    line.setAttribute("x2", x2);
-    line.setAttribute("y2", y2);
-    line.setAttribute("stroke", "black");
-    line.setAttribute("stroke-width", "2");
-
-    svg.appendChild(line);
-}
-
-/**
- * Vérifie si une association est possible et l'effectue si c'est le cas.
- */
-function verifierEtAssocier() 
-{
-    const itemGauche = document.querySelector('.gauche-item.selected');
-    const itemDroite = document.querySelector('.droite-item.selected');
-
-    if (itemGauche && itemDroite) 
-    {
-        // Enregistre l'association
-        const association = 
-        {
-            gauche: itemGauche.innerText,
-            droite: itemDroite.innerText
-        };
-        associations.push(association);
-
-        dessinerTrait(itemGauche, itemDroite);
-
-        // Désactive les items associés pour éviter de les réutiliser
-        itemGauche.classList.add('disabled');
-        itemDroite.classList.add('disabled');
-
-        // Réinitialise la sélection
-        itemGauche.classList.remove('selected');
-        itemDroite.classList.remove('selected');
-    }
-}
-
-
-/**
- * Désélectionne tous les éléments d'une colonne.
- * @param {string} selector - Le sélecteur des éléments à désélectionner.
- */
-function deselectionnerTous(selector)
-{
-    const items = document.querySelectorAll(selector);
-    items.forEach(item => item.classList.remove('selected'));
-}
-
-/**
- * Réinitialise toutes les associations
- */
-function reinitialiserVariableAssociations() 
-{
-    associations = [];
-}
-
-/**
- * Supprime les lignes dessinées.
- */
-function reinitialiserSvg() 
-{
-    const svg = document.getElementById('svg-traits');
-    if (svg) 
-        {
-        svg.remove();
-    }
-}
-
-/**
- * Réinitialise les associations et le SVG.
- */
-function reinitialiserAssociationsEtSvg() 
-{
-    reinitialiserVariableAssociations();
-    reinitialiserSvg();
-
-    const itemsGauche = document.querySelectorAll('.gauche-item.disabled');
-    const itemsDroite = document.querySelectorAll('.droite-item.disabled');
-
-    itemsGauche.forEach(item => 
-    {
-        item.classList.remove('disabled');
-    });
-
-    // Supprime la classe 'disabled' pour tous les éléments de droite
-    itemsDroite.forEach(item =>
-    {
-        item.classList.remove('disabled');
-    });
-}
-
-/**
- * Convertit les réponses en objets pour les questions de type Association.
- * @param {Object} question - La question contenant les réponses.
- * @returns {Array} - Un tableau d'objets représentant les associations.
- */
-function convertirReponsesEnObjets(question) 
-{
-    const listeArrays = question.reponses;
-
-    return listeArrays.map(array => (
-    {
-        gauche: array[0], 
-        droite: array[1] 
-    }));
-}
-
-/**
- * Élimine une réponse pour une question de type Elimination.
- * @param {number} questionIndex - L'index de la question.
- */
-function eliminerReponse(questionIndex)
-{
-    const question = questions[questionIndex];
-
-    if (!question.elimination || question.elimination.length === 0)
-    {
-        console.warn("Aucune réponse à éliminer.");
-        return;
-    }
-
-    const reponseAEliminer = question.elimination.shift();
-    const pointsPerdus = question.pointsPerdus.shift() || 0;
-
-    const inputs = document.querySelectorAll(`#qcm-form input[type="radio"]`);
-
-    inputs.forEach(input =>
-    {
-        if (input.value === reponseAEliminer && !input.classList.contains('eliminee'))
-        {
-            input.parentElement.classList.add('eliminee');
-            input.disabled = true;
-            input.parentElement.appendChild(document.createTextNode(` - Points perdus : ${pointsPerdus}`));
-
-            let scoreMax = 0;
-            questions.forEach(q =>
-            {
-                scoreMax += q.note;
-            });
-            score -= pointsPerdus;
-            document.getElementById('score-total').innerText = ` ${score}/${scoreMax}`;
-        }
-    });
-
-    if (question.elimination.length === 0)
-    {
-        const button = document.getElementById('eliminer-btn');
-        if (button)
-        {
-            button.disabled = true;
-        }
-    }
-}
-
-
 /**
  * Récupère les réponses sélectionnées par l'utilisateur pour une question donnée.
  * @param {number} index - L'index de la question.
@@ -597,7 +352,6 @@ function recupererReponses(index)
 
     return { reponsesSelectionnees };
 }
-
 
 /**
  * Valide les réponses de l'utilisateur pour une question donnée.
@@ -725,7 +479,6 @@ async function validerReponses(index)
     }
 }
 
-
 /**
  * Affiche un feedback après la validation d'une réponse.
  * @param {boolean} bonneReponse - Indique si la réponse est correcte.
@@ -779,7 +532,6 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur)
     });
 }
 
-
 /**
  * Initialise l'état des réponses pour toutes les questions.
  */
@@ -790,6 +542,14 @@ function initialiserEtatReponses()
         corrige: false,
         optionSelectionnee: []
     }));
+}
+
+/**
+ * Réinitialise l'état des réponses.
+ */
+function reinitialiserEtatReponses() 
+{
+    etatReponses = []; 
 }
 
 /**
@@ -875,7 +635,6 @@ function rechargerReponses(question)
     }
 }
 
-
 /**
  * Colore une réponse en fonction de sa correction.
  * @param {HTMLElement} element - L'élément de la réponse.
@@ -895,140 +654,228 @@ function colorierReponse(element, estCorrecte)
 }
 
 /**
- * Réinitialise l'état des réponses.
+ * Élimine une réponse pour une question de type Elimination.
+ * @param {number} questionIndex - L'index de la question.
  */
-function reinitialiserEtatReponses() 
+function eliminerReponse(questionIndex)
 {
-    etatReponses = []; 
-}
+    const question = questions[questionIndex];
 
-/**
- * Gère l'affichage des fichiers complémentaires pour une question.
- */
-function gererBtnInfo() 
-{
-    // Récupérer la question actuelle via questionIndex
-    const questionActuelle = questions[questionIndex];
-
-    if (questionActuelle && questionActuelle.fichierComplementaire) 
+    if (!question.elimination || question.elimination.length === 0)
     {
-        const fichier = questionActuelle.fichierComplementaire;
+        console.warn("Aucune réponse à éliminer.");
+        return;
+    }
 
-        // Construire le chemin complet basé sur le dossier "fichiersComplementaires"
-        const cheminComplet = `./fichiersComplementaires/${fichier}`;
+    const reponseAEliminer = question.elimination.shift();
+    const pointsPerdus = question.pointsPerdus.shift() || 0;
 
-        // Créer un lien pour afficher le fichier
-        const lien = document.createElement("a");
-        lien.href = cheminComplet;
-        lien.target = "_blank"; // Ouvrir dans un nouvel onglet
-        lien.click(); // Simuler un clic pour ouvrir la page
-    } 
-    else 
+    const inputs = document.querySelectorAll(`#qcm-form input[type="radio"]`);
+
+    inputs.forEach(input =>
     {
-        alert("Aucun fichier complémentaire disponible pour cette question.");
+        if (input.value === reponseAEliminer && !input.classList.contains('eliminee'))
+        {
+            input.parentElement.classList.add('eliminee');
+            input.disabled = true;
+            input.parentElement.appendChild(document.createTextNode(` - Points perdus : ${pointsPerdus}`));
+
+            let scoreMax = 0;
+            questions.forEach(q =>
+            {
+                scoreMax += q.note;
+            });
+            score -= pointsPerdus;
+            document.getElementById('score-total').innerText = ` ${score}/${scoreMax}`;
+        }
+    });
+
+    if (question.elimination.length === 0)
+    {
+        const button = document.getElementById('eliminer-btn');
+        if (button)
+        {
+            button.disabled = true;
+        }
     }
 }
 
 /**
- * Gère les boutons suivant et précédent en fonction du chrono.
+ * Ajoute les listeners pour gérer les associations dans les questions de type Association.
  */
-function gererBoutons()
-{   
-    const btnPrecedent = document.getElementById('btn-precedent');
-    if (gererChrono())  
-    {
-        btnPrecedent.style.pointerEvents = 'none'; 
-        btnPrecedent.style.opacity = '0.5';  
-    } 
-    else 
-    {
-        btnPrecedent.addEventListener('click', () => 
-        {
-            if (questionIndex <= questions.length - 1 && questionIndex > 0) 
-            {
-                questionIndex--;
-                reinitialiserAssociationsEtSvg();
-                afficherQuestion(questionIndex);
-            }
-        })
-    }
+function ajouterListenersAssociation() 
+{
+    const gaucheItems = document.querySelectorAll('.gauche-item');
+    const droiteItems = document.querySelectorAll('.droite-item');
 
-    const btnSuivant = document.getElementById('btn-suivant');
-    btnSuivant.addEventListener('click', () => 
+    // Ajouter l'événement click sur les éléments de gauche
+    gaucheItems.forEach(itemGauche => 
     {
-        if (questionIndex < questions.length - 1) 
+        itemGauche.addEventListener('click', () => 
         {
-            questionIndex++;
-            reinitialiserAssociationsEtSvg();
-            afficherQuestion(questionIndex);
-            if (gererChrono()) 
-            {
-                demarrerChrono();
-            }
-        }
-        else 
+            // Gestion de la sélection
+            deselectionnerTous('.gauche-item');
+            itemGauche.classList.add('selected');
+            verifierEtAssocier(); // Vérifie si une association est possible
+        });
+    });
+
+    // Ajouter l'événement click sur les éléments de droite
+    droiteItems.forEach(itemDroite => 
+    {
+        itemDroite.addEventListener('click', () => 
         {
-            afficherFin();
-        }
+            // Gestion de la sélection
+            deselectionnerTous('.droite-item');
+            itemDroite.classList.add('selected');
+            verifierEtAssocier(); // Vérifie si une association est possible
+        });
     });
 }
 
-
 /**
- * Vérifie si l'évaluation est chronométrée.
- * @returns {boolean} - True si l'évaluation est chronométrée, false sinon.
+ * Dessine un trait entre deux éléments pour les associer visuellement.
+ * @param {HTMLElement} itemGauche - L'élément de gauche.
+ * @param {HTMLElement} itemDroite - L'élément de droite.
  */
-function gererChrono() 
+function dessinerTrait(itemGauche, itemDroite) 
 {
-    const appli = document.getElementById('appli');
-    return appli.getAttribute("data-chrono") === 'true';
+    if (!itemGauche || !itemDroite) 
+    {
+        console.error("Un des éléments est manquant !");
+        return;
+    }
+
+    let svg = document.querySelector('#svg-traits');
+    if (!svg) 
+    {
+        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("id", "svg-traits");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+        svg.style.width = "100%";
+        svg.style.height = "100%";
+        svg.style.pointerEvents = "none";
+        document.body.appendChild(svg);
+    }
+
+    const rectGauche = itemGauche.getBoundingClientRect();
+    const rectDroite = itemDroite.getBoundingClientRect();
+
+    const x1 = rectGauche.right;
+    const y1 = rectGauche.top + rectGauche.height / 2;
+    const x2 = rectDroite.left;
+    const y2 = rectDroite.top + rectDroite.height / 2;
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", "2");
+
+    svg.appendChild(line);
 }
 
 /**
- * Retourne le caractère associé à une difficulté.
- * @param {string} difficulte - La difficulté de la question.
- * @returns {string} - Le caractère associé à la difficulté.
+ * Vérifie si une association est possible et l'effectue si c'est le cas.
  */
-function gererCoulDifficulte(difficulte) 
+function verifierEtAssocier() 
 {
-    switch (difficulte) 
+    const itemGauche = document.querySelector('.gauche-item.selected');
+    const itemDroite = document.querySelector('.droite-item.selected');
+
+    if (itemGauche && itemDroite) 
     {
-        case 'tres-facile': return 'TF';
-        case 'facile':      return 'F';
-        case 'moyen':       return 'M'; 
-        case 'difficile':   return 'D';
-        default:            return 'Inconnue';
+        // Enregistre l'association
+        const association = 
+        {
+            gauche: itemGauche.innerText,
+            droite: itemDroite.innerText
+        };
+        associations.push(association);
+
+        dessinerTrait(itemGauche, itemDroite);
+
+        // Désactive les items associés pour éviter de les réutiliser
+        itemGauche.classList.add('disabled');
+        itemDroite.classList.add('disabled');
+
+        // Réinitialise la sélection
+        itemGauche.classList.remove('selected');
+        itemDroite.classList.remove('selected');
     }
 }
 
 /**
- * Met à jour l'état du bouton de validation en fonction de la réponse de l'utilisateur.
- * @param {number} questionIndex - L'index de la question.
+ * Désélectionne tous les éléments d'une colonne.
+ * @param {string} selector - Le sélecteur des éléments à désélectionner.
  */
-function aRepondu(questionIndex) 
+function deselectionnerTous(selector)
 {
-    const repondu = etatReponses[questionIndex]?.repondu;
-    document.getElementById('btn-valider').style.cssText = repondu ? 'pointer-events: none; opacity: 0.5;' 
-                                                                    : 'pointer-events: auto; opacity: 1;';
-
-    document.getElementById('btn-feedback').style.cssText = repondu ? 'pointer-events: auto; opacity: 1;' 
-                                                                    : 'pointer-events: none; opacity: 0.5;';
+    const items = document.querySelectorAll(selector);
+    items.forEach(item => item.classList.remove('selected'));
 }
 
 /**
- * Met à jour la barre de progression en fonction de la question actuelle.
- * @param {number} questionIndex - L'index de la question actuelle.
- * @param {number} totalQuestions - Le nombre total de questions.
+ * Réinitialise toutes les associations
  */
-function mettreAJourBarreDeProgression(questionIndex, totalQuestions) 
+function reinitialiserVariableAssociations() 
 {
-    const pourcentage = Math.round(((questionIndex + 1) / totalQuestions) * 100);
+    associations = [];
+}
 
-    const barreProgression = document.getElementById('progress-bar');
-    barreProgression.style.width = pourcentage + '%';
+/**
+ * Supprime les lignes dessinées.
+ */
+function reinitialiserSvg() 
+{
+    const svg = document.getElementById('svg-traits');
+    if (svg) 
+        {
+        svg.remove();
+    }
+}
 
-    const texteProgression = document.getElementById('progress-text');
-    texteProgression.textContent = `Question ${questionIndex + 1} sur ${totalQuestions} (${pourcentage}%)`;
+/**
+ * Réinitialise les associations et le SVG.
+ */
+function reinitialiserAssociationsEtSvg() 
+{
+    reinitialiserVariableAssociations();
+    reinitialiserSvg();
+
+    const itemsGauche = document.querySelectorAll('.gauche-item.disabled');
+    const itemsDroite = document.querySelectorAll('.droite-item.disabled');
+
+    itemsGauche.forEach(item => 
+    {
+        item.classList.remove('disabled');
+    });
+
+    // Supprime la classe 'disabled' pour tous les éléments de droite
+    itemsDroite.forEach(item =>
+    {
+        item.classList.remove('disabled');
+    });
+}
+
+/**
+ * Convertit les réponses en objets pour les questions de type Association.
+ * @param {Object} question - La question contenant les réponses.
+ * @returns {Array} - Un tableau d'objets représentant les associations.
+ */
+function convertirReponsesEnObjets(question) 
+{
+    const listeArrays = question.reponses;
+
+    return listeArrays.map(array => (
+    {
+        gauche: array[0], 
+        droite: array[1] 
+    }));
 }
 
 /**
@@ -1091,9 +938,155 @@ function demarrerChrono()
     }, 1000); // Décrémentation toutes les secondes
 }
 
+/**
+ * Stoppe le chrono pour une question chronométrée.
+ */
 function stopperChrono() {
     if (intervalId) { // Assure-toi qu'intervalId est la variable utilisée pour gérer le chrono
         clearInterval(intervalId);
         intervalId = null; // Réinitialise l'identifiant
     }
+}
+
+/**
+ * Gère les boutons suivant et précédent en fonction du chrono.
+ */
+function gererBoutons()
+{   
+    const btnPrecedent = document.getElementById('btn-precedent');
+    if (gererChrono())  
+    {
+        btnPrecedent.style.pointerEvents = 'none'; 
+        btnPrecedent.style.opacity = '0.5';  
+    } 
+    else 
+    {
+        btnPrecedent.addEventListener('click', () => 
+        {
+            if (questionIndex <= questions.length - 1 && questionIndex > 0) 
+            {
+                questionIndex--;
+                reinitialiserAssociationsEtSvg();
+                afficherQuestion(questionIndex);
+            }
+        })
+    }
+
+    const btnSuivant = document.getElementById('btn-suivant');
+    btnSuivant.addEventListener('click', () => 
+    {
+        if (questionIndex < questions.length - 1) 
+        {
+            questionIndex++;
+            reinitialiserAssociationsEtSvg();
+            afficherQuestion(questionIndex);
+            if (gererChrono()) 
+            {
+                demarrerChrono();
+            }
+        }
+        else 
+        {
+            afficherFin();
+        }
+    });
+}
+
+/**
+ * Vérifie si l'évaluation est chronométrée.
+ * @returns {boolean} - True si l'évaluation est chronométrée, false sinon.
+ */
+function gererChrono() 
+{
+    const appli = document.getElementById('appli');
+    return appli.getAttribute("data-chrono") === 'true';
+}
+
+/**
+ * Met à jour la barre de progression en fonction de la question actuelle.
+ * @param {number} questionIndex - L'index de la question actuelle.
+ * @param {number} totalQuestions - Le nombre total de questions.
+ */
+function mettreAJourBarreDeProgression(questionIndex, totalQuestions) 
+{
+    const pourcentage = Math.round(((questionIndex + 1) / totalQuestions) * 100);
+
+    const barreProgression = document.getElementById('progress-bar');
+    barreProgression.style.width = pourcentage + '%';
+
+    const texteProgression = document.getElementById('progress-text');
+    texteProgression.textContent = `Question ${questionIndex + 1} sur ${totalQuestions} (${pourcentage}%)`;
+}
+
+/**
+ * Retourne le caractère associé à une difficulté.
+ * @param {string} difficulte - La difficulté de la question.
+ * @returns {string} - Le caractère associé à la difficulté.
+ */
+function gererCoulDifficulte(difficulte) 
+{
+    switch (difficulte) 
+    {
+        case 'tres-facile': return 'TF';
+        case 'facile':      return 'F';
+        case 'moyen':       return 'M'; 
+        case 'difficile':   return 'D';
+        default:            return 'Inconnue';
+    }
+}
+
+/**
+ * Met à jour l'état du bouton de validation en fonction de la réponse de l'utilisateur.
+ * @param {number} questionIndex - L'index de la question.
+ */
+function aRepondu(questionIndex) 
+{
+    const repondu = etatReponses[questionIndex]?.repondu;
+    document.getElementById('btn-valider').style.cssText = repondu ? 'pointer-events: none; opacity: 0.5;' 
+                                                                    : 'pointer-events: auto; opacity: 1;';
+
+    document.getElementById('btn-feedback').style.cssText = repondu ? 'pointer-events: auto; opacity: 1;' 
+                                                                    : 'pointer-events: none; opacity: 0.5;';
+}
+
+/**
+ * Gère l'affichage des fichiers complémentaires pour une question.
+ */
+function gererBtnInfo() 
+{
+    // Récupérer la question actuelle via questionIndex
+    const questionActuelle = questions[questionIndex];
+
+    if (questionActuelle && questionActuelle.fichierComplementaire) 
+    {
+        const fichier = questionActuelle.fichierComplementaire;
+
+        // Construire le chemin complet basé sur le dossier "fichiersComplementaires"
+        const cheminComplet = `./fichiersComplementaires/${fichier}`;
+
+        // Créer un lien pour afficher le fichier
+        const lien = document.createElement("a");
+        lien.href = cheminComplet;
+        lien.target = "_blank"; // Ouvrir dans un nouvel onglet
+        lien.click(); // Simuler un clic pour ouvrir la page
+    } 
+    else 
+    {
+        alert("Aucun fichier complémentaire disponible pour cette question.");
+    }
+}
+
+/**
+ * Mélange les éléments d'un tableau de manière aléatoire.
+ * @param {Array} tableau - Le tableau à mélanger.
+ * @returns {Array} - Le tableau mélangé.
+ */
+function melangerTableau(tableau) 
+{
+    for (let i = tableau.length - 1; i > 0; i--) 
+    {
+        const j = Math.floor(Math.random() * (i + 1)); // Index aléatoire entre 0 et i
+        [tableau[i], tableau[j]] = [tableau[j], tableau[i]]; // Échange des éléments
+    }
+    return tableau;
 }
