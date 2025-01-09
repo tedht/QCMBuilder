@@ -310,10 +310,10 @@ public class Questionnaire
 	}
 	
 	/**
-	 * Génère un fichier JSON contenant les questions du Questionnaire.
+	 * Génère un fichier JS contenant les questions du Questionnaire.
 	 * 
-	 * @param lstQuestions la liste des questions à inclure dans le fichier JSON.
-	 * @return la chaîne JSON générée.
+	 * @param lstQuestions la liste des questions à inclure dans le fichier JS.
+	 * @return la chaîne JS générée.
 	 */
 	private String genererQuestionsEnJs(List<Question> lstQuestions) {
 		StringBuilder jsBuilder;
@@ -341,11 +341,11 @@ public class Questionnaire
 	
 
 	/**
-	 * Génère un fichier JSON contenant les questions du Questionnaire.
+	 * Génère un fichier JS contenant les questions du Questionnaire.
 	 * 
-	 * @param filePath le chemin du dossier où le fichier JSON sera créé.
-	 * @param lstQuestions la liste des questions à inclure dans le fichier JSON.
-	 * @return true si le fichier JSON a été généré avec succès, false sinon.
+	 * @param filePath le chemin du dossier où le fichier JS sera créé.
+	 * @param lstQuestions la liste des questions à inclure dans le fichier JS.
+	 * @return true si le fichier JS a été généré avec succès, false sinon.
 	 */
 	public boolean genererQuestionnaireEnJs(String filePath, List<Question> lstQuestions) throws IllegalArgumentException {
 		String lstQuestionsJs;
@@ -390,11 +390,11 @@ public class Questionnaire
 	}
 
 	/**
-	 * Génère un fichier JSON contenant une question.
+	 * Génère un fichier JS contenant une question.
 	 * 
-	 * @param question   la question à convertir en JSON.
+	 * @param question   la question à convertir en JS.
 	 * @param idQuestion l'identifiant de la question.
-	 * @return           la chaîne JSON générée.
+	 * @return           la chaîne JS générée.
 	 */
 	private String convertirQuestionEnJson(Question question, int idQuestion) 
 	{
@@ -414,10 +414,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations de base d'une question au JSON.
+	 * Ajoute les informations de base d'une question au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question à convertir en JS.
 	 * @param idQuestion  l'identifiant de la question.
 	 */
 	private void appendBasicInfo(StringBuilder jsBuilder, Question question, int idQuestion) 
@@ -452,10 +452,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations spécifiques d'une question au JSON.
+	 * Ajoute les informations spécifiques d'une question au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question à convertir en JS.
 	 */
 	private void appendQuestion(StringBuilder jsBuilder, Question question) 
 	{
@@ -469,10 +469,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations spécifiques d'une question de type Elimination au JSON.
+	 * Ajoute les informations spécifiques d'une question de type Elimination au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type Elimination à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question de type Elimination à convertir en JS.
 	 */
 	private void appendElimination(StringBuilder jsBuilder, Elimination question) 
 	{
@@ -529,10 +529,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations spécifiques d'une question de type Association au JSON.
+	 * Ajoute les informations spécifiques d'une question de type Association au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type Association à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question de type Association à convertir en JS.
 	 */
 	private void appendAssociation(StringBuilder jsBuilder, Association question)
 	{
@@ -578,10 +578,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations finales d'une question de type QCM au JSON.
+	 * Ajoute les informations finales d'une question de type QCM au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question de type QCM à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question de type QCM à convertir en JS.
 	 */
 	private void appendQCM(StringBuilder jsBuilder, Question question) 
 	{
@@ -621,10 +621,10 @@ public class Questionnaire
 	}
 
 	/**
-	 * Ajoute les informations finales d'une question au JSON.
+	 * Ajoute les informations finales d'une question au JS.
 	 * 
-	 * @param jsBuilder le StringBuilder contenant le JSON.
-	 * @param question    la question à convertir en JSON.
+	 * @param jsBuilder le StringBuilder contenant le JS.
+	 * @param question    la question à convertir en JS.
 	 */
 	private void appendFinalInfo(StringBuilder jsBuilder, Question question)
 	{
