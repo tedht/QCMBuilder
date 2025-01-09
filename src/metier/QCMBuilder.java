@@ -423,10 +423,19 @@ public class QCMBuilder
 	{
 		Ressource ressource;
 
-
 		ressource = this.banqueRessources.getRessource(code);
 		ressource.setCode(nouveauCode);
 		ressource.setNom (nouveauNom);
+
+		for(Notion notion : this.banqueNotions.getNotions(code))
+		{
+			notion.setCodeRes(nouveauCode);
+		}
+
+		for(Question question : this.banqueQuestions.getQuestions(code))
+		{
+			question.setCodeRes(nouveauCode);
+		}
 
 		this.banqueRessources.sauvegarder();
 	}
@@ -440,7 +449,6 @@ public class QCMBuilder
 	public void modifierNotion(int idNot, String nouveauNom) 
 	{
 		Notion notion;
-
 
 		notion = this.banqueNotions.getNotion(idNot);
 		notion.setNom(nouveauNom);

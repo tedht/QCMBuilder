@@ -19,6 +19,12 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Question;
 
+/**
+ * Classe JPanel dédiée à la gestion des questionss.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
+ */
 public class PanelGestionQuestion extends PanelGestion implements ItemListener
 {
 	private JComboBox<Ressource> ddlstRessource;
@@ -26,6 +32,12 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 
 	private JPanel panelAucuneQuestion;
 
+	/**
+	 * Constructeur de la classe PanelGestionNotion
+	 * 
+	 * @param ctrl  Le contrôleur.
+	 * @param ihm   Le gestionnaire des fenêtres de l'application.
+	 */
 	public PanelGestionQuestion(Controleur ctrl, IHM ihm)
 	{
 		super(ctrl, ihm);
@@ -53,7 +65,6 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		/*-------------------------------*/
 		/* positionnement des composants */
 		/*-------------------------------*/
-
 		this.panelEntete   .add(panelDdlst, BorderLayout.CENTER);
 
 		panelDdlst         .add(panelDdlstRessource);
@@ -73,6 +84,11 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.afficher();
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{

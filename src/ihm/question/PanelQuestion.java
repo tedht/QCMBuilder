@@ -51,6 +51,11 @@ public class PanelQuestion extends PanelEntite
 		this.btnSupprimer.addActionListener(this);
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -66,6 +71,9 @@ public class PanelQuestion extends PanelEntite
 		}
 	}
 
+	/**
+     * Classe interne pour gérer les interactions avec la souris sur le panel.
+     */
 	private class GereSourisQuestion extends MouseAdapter
 	{
 		

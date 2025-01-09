@@ -37,7 +37,7 @@ public class PanelExport extends PanelEditNom
 	private JButton     btnNavig;
 	
 	/**
-	 * Constructeur de la classe PanelEditRessource.
+	 * Constructeur de la classe PaneleditRessource().
 	 *
 	 * @param ctrl Le contrôleur
 	 */

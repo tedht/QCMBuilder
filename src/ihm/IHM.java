@@ -84,10 +84,10 @@ public class IHM
 		this.ctrl = ctrl;
 
 		// Crée les différentes fenêtres
-		this.frameQCMBuilder           = new FrameQCMBuilder          (this);
-		this.frameGestionRessource     = new FrameGestionRessource    (this.ctrl, this);
-		this.frameGestionNotion        = new FrameGestionNotion       (this.ctrl, this);
-		this.frameGestionQuestion      = new FrameGestionQuestion     (this.ctrl, this);
+		this.frameQCMBuilder            = new FrameQCMBuilder          (this);
+		this.frameGestionRessource      = new FrameGestionRessource    (this.ctrl, this);
+		this.frameGestionNotion         = new FrameGestionNotion       (this.ctrl, this);
+		this.frameGestionQuestion       = new FrameGestionQuestion     (this.ctrl, this);
 		this.frameCreationQuestionnaire = new FrameCreationQuestionnaire(this.ctrl, this);
 
 		 // Positionne et affiche la fenêtre principale
@@ -133,9 +133,9 @@ public class IHM
 	/**
 	 * Affiche une fenêtre donnée à une position spécifique
 	 * 
-	 * @param frame la fenêtre qu'on souhaite afficher.
-	 * @param posX  la position horizontale (en pixels) où la fenêtre frame sera affichée.
-	 * @param posY  la position verticale (en pixels) où la fenêtre frame sera affichée.
+	 * @param frame La fenêtre qu'on souhaite afficher.
+	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée.
+	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée.
 	 */
 	private void afficher(JFrame frame, int posX, int posY)
 	{
@@ -445,7 +445,9 @@ public class IHM
 			svgIcon.setScaleToFit(true); // setScaleToFit est deprecated
 
 			svgIcon.setAntiAlias(true);
-		} catch (URISyntaxException e) {
+		} 
+		catch (URISyntaxException e) 
+		{
 			e.printStackTrace();
 		}
 

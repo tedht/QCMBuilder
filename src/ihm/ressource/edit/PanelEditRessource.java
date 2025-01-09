@@ -23,7 +23,7 @@ public abstract class PanelEditRessource extends PanelEditNom
 	private JPanel     panelInfoCode;
 	
 	/**
-	 * Constructeur de la classe PanelEditRessource.
+	 * Constructeur de la classe PaneleditRessource().
 	 *
 	 * @param ctrl Le contrôleur
 	 */

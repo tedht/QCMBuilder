@@ -13,7 +13,7 @@ import ihm.shared.PanelEditNom;
 public abstract class PanelEditNotion extends PanelEditNom
 {
 	/**
-	 * Constructeur de la classe PanelEditRessource.
+	 * Constructeur de la classe PaneleditRessource().
 	 *
 	 * @param ctrl Le contrôleur
 	 */

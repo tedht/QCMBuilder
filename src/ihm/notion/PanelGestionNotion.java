@@ -28,7 +28,7 @@ public class PanelGestionNotion extends PanelGestion
 	 * 
 	 * @param ctrl  Le contrôleur.
 	 * @param ihm   Le gestionnaire des fenêtres de l'application.
-	 * @param frame La fenêtre de gestion des notionss.
+	 * @param frame La fenêtre de gestion des notions.
 	 */
 	public PanelGestionNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame) 
 	{
