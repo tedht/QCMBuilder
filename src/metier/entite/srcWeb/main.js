@@ -701,9 +701,10 @@ async function validerReponses(index)
                 const indexElimination = question.elimination.indexOf(reponseEliminee);
                 if (indexElimination !== -1)
                 {
-                    question.note -= question.pointsPerdus[indexElimination];
+                    pointsPerdus += question.pointsPerdus[indexElimination];
                 }
             });
+            question.note = Math.max(0, question.note - pointsPerdus);
         }
     }
 
