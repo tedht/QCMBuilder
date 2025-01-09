@@ -30,11 +30,11 @@ const titreChrono = document.getElementById('titre-chrono');
 if (gererChrono())
 {
     titreChrono.style.color = 'red';
-    titreChrono.innerText = 'chronométré';
+    titreChrono.innerText = 'chronométrée';
 }
 else
 {
-    titreChrono.innerText = 'non-chronométré';
+    titreChrono.innerText = 'non-chronométrée';
 }
 
 const startEval = document.getElementById('start-button').addEventListener('click', () =>
@@ -436,11 +436,12 @@ async function validerReponses(index)
         {
             reponsesEliminees.forEach((reponseEliminee) => 
             {
-                const indexElimination = question.elimination.indexOf(reponseEliminee);
-                console.log("je suis là");
-                pointsPerdus += question.pointsPerdus[indexElimination];
+                const index = question.elimination.indexOf(reponseEliminee);
+                if (index !== -1) { 
+                    pointsPerdus += question.pointsPerdus[index];
+                }
             });
-            question.note = Math.max(0, question.note - pointsPerdus);
+            if(pointsPerdus < 0) { pointsPerdus *= -1; }
         }
     }
 
@@ -449,7 +450,9 @@ async function validerReponses(index)
 
     if (bonneReponse)
     {
-        score += question.note;
+        let scoreQuestion = question.note;
+        scoreQuestion = Math.max(0, scoreQuestion - pointsPerdus); 
+        score += scoreQuestion;
     }
 
     // Mise à jour de l'état de la réponse
@@ -665,8 +668,10 @@ function eliminerReponse(questionIndex)
         return;
     }
 
-    const reponseAEliminer = question.elimination.shift();
-    const pointsPerdus = question.pointsPerdus.shift() || 0;
+    // Utilisation d'un index pour suivre l'élément en cours
+    let indexEliminer = question.eliminationIndex || 0;  // Récupère l'index ou initialise à 0
+    const reponseAEliminer = question.elimination[indexEliminer];
+    const pointsPerdus = question.pointsPerdus[indexEliminer] || 0;
 
     const inputs = document.querySelectorAll(`#qcm-form input[type="radio"]`);
 
@@ -680,15 +685,22 @@ function eliminerReponse(questionIndex)
         }
     });
 
-    if (question.elimination.length === 0)
+    // Passer à l'élément suivant en incrémentant l'index
+    indexEliminer++;
+    question.eliminationIndex = indexEliminer;  // Stocker l'index pour la prochaine élimination
+
+    // Vérifier si toutes les réponses ont été éliminées
+    if (indexEliminer >= question.elimination.length) 
     {
         const button = document.getElementById('eliminer-btn');
         if (button)
         {
-            button.disabled = true;
+            button.style.pointerEvents = 'none';
+            button.style.opacity = '0.5';
         }
     }
 }
+
 
 /**
  * Ajoute les listeners pour gérer les associations dans les questions de type Association.
