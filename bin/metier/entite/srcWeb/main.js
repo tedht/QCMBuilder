@@ -437,10 +437,8 @@ async function validerReponses(index)
             reponsesEliminees.forEach((reponseEliminee) => 
             {
                 const indexElimination = question.elimination.indexOf(reponseEliminee);
-                if (indexElimination !== -1)
-                {
-                    pointsPerdus += question.pointsPerdus[indexElimination];
-                }
+                console.log("je suis là");
+                pointsPerdus += question.pointsPerdus[indexElimination];
             });
             question.note = Math.max(0, question.note - pointsPerdus);
         }
@@ -679,14 +677,6 @@ function eliminerReponse(questionIndex)
             input.parentElement.classList.add('eliminee');
             input.disabled = true;
             input.parentElement.appendChild(document.createTextNode(` - Points perdus : ${pointsPerdus}`));
-
-            let scoreMax = 0;
-            questions.forEach(q =>
-            {
-                scoreMax += q.note;
-            });
-            score -= pointsPerdus;
-            document.getElementById('score-total').innerText = ` ${score}/${scoreMax}`;
         }
     });
 
