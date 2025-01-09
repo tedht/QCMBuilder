@@ -206,6 +206,8 @@ function afficherQuestion(index)
  */
 function afficherFin() 
 {
+    stopperChrono();
+    
     const contentQuestionnaire = document.getElementById('questionnaire');
     const page = document.getElementById('accueil');
 
@@ -1100,7 +1102,6 @@ function demarrerChrono()
                 } 
                 else 
                 {
-                    stopperChrono();
                     afficherFin();
                 }
             });
