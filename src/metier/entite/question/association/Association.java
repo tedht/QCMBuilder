@@ -14,6 +14,9 @@ import  metier.entite.question.TypeQuestion;
  */
 public class Association extends Question
 {
+
+
+
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
@@ -34,6 +37,7 @@ public class Association extends Question
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
+
 
 
 	/*---------*/
@@ -58,7 +62,6 @@ public class Association extends Question
 
 
 
-
 	/*---------*/
 	/* Setters */
 	/*---------*/
@@ -73,6 +76,7 @@ public class Association extends Question
 	public boolean setProposition(int i, PropositionAssociation prop) { return super.setProposition(i, prop); }
 
 
+	
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

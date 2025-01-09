@@ -17,11 +17,13 @@ public enum Difficulte
 	DIFFICILE  (3);
 
 
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
 	private final int valeur;
+
 
 
 	/*--------------*/
@@ -38,6 +40,7 @@ public enum Difficulte
 		this.valeur = valeur;
 	}
 
+	
 
 	/*---------*/
 	/* Getters */

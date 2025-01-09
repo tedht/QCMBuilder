@@ -12,21 +12,26 @@ import java.util.ArrayList;
  */
 public abstract class Question
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
-	private String      codeRes;
-	private int         idNot;
-	private int         idQst;
-	private Difficulte  difficulte;
-	private int         temps;
-	private double      note;
-	private String      intitule;
-	private String      explication;
-	private PieceJointe pieceJointe;
+	private   String            codeRes;
+	private   int               idNot;
+	private   int               idQst;
+	private   Difficulte        difficulte;
+	private   int               temps;
+	private   double            note;
+	private   String            intitule;
+	private   String            explication;
+	private   PieceJointe       pieceJointe;
 
 	protected List<Proposition> lstPropositions;
+
+
 
 	/*--------------*/
 	/* Constructeur */
@@ -56,6 +61,7 @@ public abstract class Question
 		this.pieceJointe = null;
 		this.lstPropositions = new ArrayList<Proposition>();
 	}
+
 
 
 	/*---------*/
@@ -130,21 +136,33 @@ public abstract class Question
 	/**
 	 * Retourne une proposition de la question en fonction de son indice dans la liste.
 	 * 
-	 * @param i l'indice de la proposition dans la liste.
-	 * @return  la proposition correspondante, ou null si elle n'existe pas.
+	 * @param  i l'indice de la proposition dans la liste.
+	 * @return   la proposition correspondante, ou null si elle n'existe pas.
 	 */
 	protected Proposition getProposition(int i) { return this.lstPropositions.get(i); }
 
 	/**
 	 * Retourne l'indice d'une proposition dans la liste des propositions de la question.
 	 * 
-	 * @param prop la proposition dont on veut l'indice.
-	 * @return     l'indice de la proposition, ou -1 si elle n'existe pas.
+	 * @param  prop la proposition dont on veut l'indice.
+	 * @return      l'indice de la proposition, ou -1 si elle n'existe pas.
 	 */
 	public int getPropositionId(Proposition prop) { return this.lstPropositions.indexOf(prop); }
 
+	/**
+	 * Retourne l'intitulé d'une proposition.
+	 * 
+	 * @return l'intitulé.
+	 */
 	public String getIntitule   () { return this.intitule;    }
+
+	/**
+	 * Retourne l'explication d'une proposition.
+	 * 
+	 * @return l'explication.
+	 */
 	public String getExplication() { return this.explication; }
+
 
 
 	/*---------*/
@@ -156,27 +174,36 @@ public abstract class Question
 	 * 
 	 * @param codeRes le nouveau code de la ressource.
 	 */
-	public void setCodeRes(String codeRes) { this.codeRes = codeRes; }
+	public void setCodeRes(String codeRes)
+	{
+		this.codeRes = codeRes;
+	}
 
 	/**
 	 * Modifie l'id de la notion associée à la question.
 	 * 
 	 * @param idNot le nouvel id de la notion.
 	 */
-	public void setIdNot(int idNot) { this.idNot = idNot; }
+	public void setIdNot(int idNot)
+	{
+		this.idNot = idNot;
+	}
 
 	/**
 	 * Modifie l'id de la question.
 	 * 
 	 * @param idQst le nouvel id de la question.
 	 */
-	public void setIdQst(int idQst) { this.idQst = idQst; }
+	public void setIdQst(int idQst)
+	{
+		this.idQst = idQst;
+	}
 
 	/**
 	 * Modifie la difficulté de la question.
 	 * 
-	 * @param difficulte la nouvelle difficulté.
-	 * @return           true si la difficulté à été modifiée, false sinon.
+	 * @param  difficulte la nouvelle difficulté.
+	 * @return            true si la difficulté à été modifiée, false sinon.
 	 */
 	public boolean setDifficulte(Difficulte difficulte)
 	{
@@ -189,8 +216,8 @@ public abstract class Question
 	/**
 	 * Modifie le temps de réponse à la question.
 	 * 
-	 * @param temps le nouveau temps de réponse.
-	 * @return      true si le temps à été modifié, false sinon.
+	 * @param  temps le nouveau temps de réponse.
+	 * @return       true si le temps à été modifié, false sinon.
 	 */
 	public boolean setTemps(int temps)
 	{
@@ -203,8 +230,8 @@ public abstract class Question
 	/**
 	 * Modifie la note de la question.
 	 * 
-	 * @param note la nouvelle note.
-	 * @return     true si la note à été modifiée, false sinon.
+	 * @param  note la nouvelle note.
+	 * @return      true si la note à été modifiée, false sinon.
 	 */
 	public boolean setNote(double note)
 	{
@@ -219,21 +246,27 @@ public abstract class Question
 	 * 
 	 * @param intitule le nouvel intitulé.
 	 */
-	public void setIntitule(String intitule) { this.intitule = intitule; }
+	public void setIntitule(String intitule)
+	{
+		this.intitule = intitule;
+	}
 
 	/**
 	 * Modifie l'explication de la question.
 	 * 
 	 * @param explication la nouvelle explication.
 	 */
-	public void setExplication(String explication) { this.explication = explication; }
+	public void setExplication(String explication)
+	{
+		this.explication = explication;
+	}
 
 	/**
 	 * Modifie une proposition dans la liste des propositions associées à la question.
 	 * 
-	 * @param i    l'index de la proposition à modifier.
-	 * @param prop la nouvelle proposition.
-	 * @return     true si la modification a été effectuée, false sinon.
+	 * @param  i    l'index de la proposition à modifier.
+	 * @param  prop la nouvelle proposition.
+	 * @return      true si la modification a été effectuée, false sinon.
 	 */
 	protected boolean setProposition(int i, Proposition prop)
 	{
@@ -250,11 +283,46 @@ public abstract class Question
 	 * 
 	 * @param pieceJointe la pièce jointe à ajouter.
 	 */
-	public void setPieceJointe(PieceJointe pieceJointe) { this.pieceJointe = pieceJointe; }
+	public void setPieceJointe(PieceJointe pieceJointe)
+	{
+		this.pieceJointe = pieceJointe;
+	}
+
+
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
+
+	/**
+	 * Ajoute une proposition à la liste des propositions de la question.
+	 * 
+	 * @param  prop la proposition à ajouter.
+	 * @return      true si la proposition a été ajoutée, false sinon.
+	 */
+	protected boolean ajouterProposition(Proposition prop)
+	{
+		if(this.lstPropositions.contains(prop)) return false; // Si la proposition éxiste déjà -> renvoie faux
+
+		this.lstPropositions.add(prop); // Ajoute la proposition
+		return true;
+	}
+
+
+	/**
+	 * Supprime une proposition de la liste des propositions de la question.
+	 * 
+	 * @param  i l'index de la proposition à supprimer.
+	 * @return   true si la proposition a été supprimée, false sinon.
+	 */
+	public boolean supprimerProposition(int i)
+	{
+		if(i < 0 || i >= this.lstPropositions.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
+		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
+
+		this.lstPropositions.remove(i); // Supprime la proposition
+		return true;
+	}
 
 	/**
 	 * Supprime la pièce jointe de la question.
@@ -268,86 +336,12 @@ public abstract class Question
 		this.pieceJointe = null; // Supprime la pièce jointe
 		return true;
 	}
-	
-	/**
-	 * Ajoute une proposition à la liste des propositions de la question.
-	 * 
-	 * @param prop la proposition à ajouter.
-	 * @return true si la proposition a été ajoutée, false sinon.
-	 */
-	protected boolean ajouterProposition(Proposition prop)
-	{
-		if(this.lstPropositions.contains(prop)) return false; // Si la proposition éxiste déjà -> renvoie faux
-
-		this.lstPropositions.add(prop); // Ajoute la proposition
-		return true;
-	}
-
-	/**
-	 * Supprime une proposition de la liste des propositions de la question.
-	 * 
-	 * @param i l'index de la proposition à supprimer.
-	 * @return true si la proposition a été supprimée, false sinon.
-	 */
-	public boolean supprimerProposition(int i)
-	{
-		if(i < 0 || i >= this.lstPropositions.size()) return false; // Si l'indice est en dehors de la liste -> renvoie faux
-		if(this.lstPropositions.isEmpty())            return false; // Si la liste est vide                  -> renvoie faux
-
-		this.lstPropositions.remove(i); // Supprime la proposition
-		return true;
-	}
 
 	/**
 	 * Supprime toutes les propositions de la question.
 	 */
-	public void clearPropositions() { this.lstPropositions.clear(); }
-
-	/*
-	public String toString()
+	public void clearPropositions()
 	{
-		String sRet;
-
-
-		if (this.ressource == null || this.notion == null) return "";
-		sRet =  "Question :\n" +
-		        "\t   intitulé : " + this.intitule              + "\n" +
-		        "\texplication : " + this.explication           + "\n" +
-		        "\t difficulte : " + this.difficulte            + "\n";
-
-		if (this.ressource == null) sRet += "\t  ressource : Ne possède pas de ressource\n";
-		else                        sRet += "\t  ressource : " + this.ressource.getNom() + "\n";
-		if (this.notion == null)    sRet += "\t     notion : Ne possède pas de notion\n";
-		else                        sRet += "\t     notion : " + this.notion    + "\n";
-		
-		sRet += "\t      temps : " + this.temps + " seconde(s)" + "\n" +
-		        "\t       note : " + this.note                  + "\n"   ;
-
-		for (int cpt = 0 ; cpt < this.piecesJointes.size() ; cpt++)
-			sRet += this.piecesJointes.get(cpt) + "\n";
-
-		return sRet;
-	}*/
-
-	
-	/**
-	 * Main de la classe Question
-	 * 
-	 * @param args les arguments de la ligne de commande
-	 */
-	/*
-	public static void main(String[] args)
-	{
-		Question q1, q2, q3;
-
-
-		q1 = new QCM(new Ressource("R1.01", "Init dev"               ), new Notion("Encapsulation", 0, "R1.01"), Difficulte.TRES_FACILE,  0, 2, true);
-		q2 = new QCM(new Ressource("R1.05","Init bd"                 ), new Notion("Jointure"     , 1, "R1.05"), Difficulte.DIFFICILE  , 30, 2, true);
-		q3 = new QCM(new Ressource("R3.06","Architecture des réseaux"), new Notion("Modele OSI"   , 2, "R3.06"), Difficulte.MOYEN      , 50, 2, true);
-
-
-		System.out.println(q1);
-		System.out.println(q2);
-		System.out.println(q3);
-	}*/
+		this.lstPropositions.clear();
+	}
 }

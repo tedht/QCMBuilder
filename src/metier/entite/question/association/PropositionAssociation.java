@@ -11,12 +11,15 @@ import  metier.entite.question.Proposition;
  */
 public class PropositionAssociation implements Proposition
 {
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
 	private String textGauche;
 	private String textDroite;
+
 
 
 	/*--------------*/
@@ -38,6 +41,7 @@ public class PropositionAssociation implements Proposition
 	}
 
 
+
 	/*---------*/
 	/* Getters */
 	/*---------*/
@@ -55,6 +59,7 @@ public class PropositionAssociation implements Proposition
 	 * @return le texte de la proposition de droite
 	 */
 	public String getTextDroite() { return textDroite; }
+
 
 
 	/*---------*/
@@ -75,6 +80,7 @@ public class PropositionAssociation implements Proposition
 	 */
 	public void setTextDroite(String textDroite) { this.textDroite = textDroite; }
 
+	
 
 	/*-----------------*/
 	/* Autres méthodes */

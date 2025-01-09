@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
  */
 public class MaxFileFinder extends SimpleFileVisitor<Path>
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
@@ -22,6 +25,7 @@ public class MaxFileFinder extends SimpleFileVisitor<Path>
 
 	// Regex pour matcher "fic00001", "fic00002", etc.
 	private final Pattern pattern = Pattern.compile("fic(\\d+)(\\.\\w+)?");
+
 
 
 	/*--------------*/
@@ -58,6 +62,7 @@ public class MaxFileFinder extends SimpleFileVisitor<Path>
 	public int getMaxNb() { return maxNb; }
 
 
+	
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
