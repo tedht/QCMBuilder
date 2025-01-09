@@ -23,11 +23,11 @@ public class PanelGestionRessource extends PanelGestion
 		this.frame = frame;
 		
 		this.lblTitre  .setText("Ressources :");
-		this.btnAjouter.setText("Nouvelle Ressource");
+		this.btnAjouter.setText("Nouvelle ressource");
 
 
 		this.panelInstruction = new JPanel();
-		this.panelInstruction.add(new JLabel("Cliquez sur le bouton \"Nouvelle Ressource\" pour créer une ressource"));
+		this.panelInstruction.add(new JLabel("Cliquez sur le bouton \"Nouvelle ressource\" pour créer une ressource"));
 
 		this.afficher();
 	}

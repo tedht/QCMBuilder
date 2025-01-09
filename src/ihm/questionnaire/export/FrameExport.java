@@ -24,7 +24,7 @@ public class FrameExport extends JFrame
 	 */
 	public FrameExport(Controleur ctrl, IHM ihm)
 	{
-		this.setTitle("Générer une Evaluation");
+		this.setTitle("Générer une évaluation");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 

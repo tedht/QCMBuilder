@@ -37,9 +37,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		/* Création des composants */
 		/*-------------------------*/
 
-		this.btnRessourceNotion = new JButton("Gérer les Ressource/Notions");
-		this.btnQuestion        = new JButton("Gérer les Question");
-		this.btnQuestionnaire   = new JButton("Générer un Questionnaire");
+		this.btnRessourceNotion = new JButton("Gérer les ressources/notions");
+		this.btnQuestion        = new JButton("Gérer les questions");
+		this.btnQuestionnaire   = new JButton("Générer un questionnaire");
 		this.btnQuitter         = new JButton("Quitter");
 		
 		/*-------------------------------*/

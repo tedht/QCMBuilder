@@ -112,7 +112,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.btnAjouterProp = new JButton(IHM.getImgIconSVG("res/Ajouter.svg", 16, 16));
 		this.btnAjouterProp.setPreferredSize(new Dimension(24, 24));
 
-		this.btnActiverExpli = new JToggleButton("Ajouter une Explication");
+		this.btnActiverExpli = new JToggleButton("Ajouter une explication");
 
 		this.btnActiverPJ = new JToggleButton(IHM.getImgIconSVG("res/AjouterPJ.svg", 16, 16));
 		this.btnActiverPJ.setPreferredSize(new Dimension(24, 24));
@@ -154,7 +154,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		panelInfoExpli     .add(new JLabel("Explication :"), BorderLayout.NORTH);
 		panelInfoExpli     .add(this.txtExpli, BorderLayout.CENTER);
 
-		panelInfoPJ        .add(new JLabel("Sélectionner une Pièce Jointe :"), BorderLayout.NORTH);
+		panelInfoPJ        .add(new JLabel("Sélectionner une pièce jointe :"), BorderLayout.NORTH);
 		panelInfoPJ        .add(this.lblPJ, BorderLayout.CENTER);
 		panelInfoPJ        .add(panelBtnAjouterPJ, BorderLayout.WEST); 
 		panelBtnAjouterPJ  .add(this.btnAjouterPJ);

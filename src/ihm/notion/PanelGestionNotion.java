@@ -24,7 +24,7 @@ public class PanelGestionNotion extends PanelGestion
 		this.frame = frame;
 		
 		this.lblTitre  .setText("Notions :");
-		this.btnAjouter.setText("Nouvelle Notion");
+		this.btnAjouter.setText("Nouvelle notion");
 		this.btnAjouter.setEnabled(false);
 
 		this.panelInstruction = new JPanel();

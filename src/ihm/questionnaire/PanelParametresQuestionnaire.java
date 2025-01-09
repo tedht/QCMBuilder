@@ -205,5 +205,10 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 	public void reinitRbChronometre()
 	{
 		btgChronometre.clearSelection();
+		for(JRadioButton rb : this.tabRbChronometre)
+		{
+			rb.setEnabled(false);
+		}
+		this.btnSuivant.setEnabled(false);
 	}
 }

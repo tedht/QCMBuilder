@@ -20,7 +20,7 @@ public class FrameGestionRessource  extends JFrame
 		this.ctrl = ctrl;
 		this.ihm  = ihm;
 
-		this.setTitle("Gestion Ressource");
+		this.setTitle("Gestion ressource");
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.setResizable(false);
 

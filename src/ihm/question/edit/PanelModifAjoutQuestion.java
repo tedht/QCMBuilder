@@ -91,10 +91,10 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 
 				PropositionElimination propElim = elim.getProposition(i);
 
-				panelPropElim.setText         (propElim.getText   ());
-				panelPropElim.setReponse      (propElim.estReponse());
-				panelPropElim.setOrdreElim    ((propElim.getOrdreElim  () == -1  ? "" : ""+propElim.getOrdreElim  ()));
-				panelPropElim.setPointsPerdus((propElim.getNbPtsPerdus() == 0.0 ? "" : ""+propElim.getNbPtsPerdus()));
+				panelPropElim.setText        ( propElim.getText       ());
+				panelPropElim.setReponse     ( propElim.estReponse    ());
+				panelPropElim.setOrdreElim   ((propElim.getOrdreElim  () == -1  ? "" : "" + propElim.getOrdreElim  ()));
+				panelPropElim.setPointsPerdus((propElim.getNbPtsPerdus() == 0.0 ? "" : "" + propElim.getNbPtsPerdus()));
 			}
 		}
 	}

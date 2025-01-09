@@ -45,7 +45,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.ddlstRessource = new JComboBox<Ressource>();
 		this.ddlstNotion    = new JComboBox<Notion>();
 
-		this.btnAjouter.setText("Nouvelle Question");
+		this.btnAjouter.setText("Nouvelle question");
 
 		this.panelAucuneQuestion = new JPanel();
 		this.panelAucuneQuestion.add(new JLabel("Aucune question n'a été trouvée."));

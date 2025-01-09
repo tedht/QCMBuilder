@@ -106,10 +106,10 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 		// Type de Question 
 		this.ddlstTypeQuestion = new JComboBox<String>();
-		this.ddlstTypeQuestion.addItem("Question à Choix Multiple à Réponse Unique");
-		this.ddlstTypeQuestion.addItem("Question à Choix Multiple à Réponse Multiple");
-		this.ddlstTypeQuestion.addItem("Question à Association d'Eléments");
-		this.ddlstTypeQuestion.addItem("Question avec Elimination de Propositions de Réponses");
+		this.ddlstTypeQuestion.addItem("Question à choix multiple à réponse unique");
+		this.ddlstTypeQuestion.addItem("Question à choix multiple à réponse multiple");
+		this.ddlstTypeQuestion.addItem("Question à association d'éléments");
+		this.ddlstTypeQuestion.addItem("Question avec élimination de propositions de réponses");
 		this.ddlstTypeQuestion.setEnabled(false);
 		this.ddlstTypeQuestion.setSelectedIndex(-1);
 
@@ -151,14 +151,14 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		// Points
 		gbc.gridy = 0; gbc.gridx = 0; // (0,0)
 		panelInfo      .add(panelInfoPoints, gbc);
-		panelInfoPoints.add(new JLabel("Nombre de Points :"), BorderLayout.NORTH);
+		panelInfoPoints.add(new JLabel("Nombre de points :"), BorderLayout.NORTH);
 		panelInfoPoints.add(panelPoints, BorderLayout.CENTER);
 		panelPoints    .add(this.txtPoints);
 
 		// Temps
 		gbc.gridy = 0; gbc.gridx = 1; // (0,1)
 		panelInfo     .add(panelInfoTemps, gbc);
-		panelInfoTemps.add(new JLabel("Temps de Réponse (min:sec) :"), BorderLayout.NORTH);
+		panelInfoTemps.add(new JLabel("Temps de réponse (min:sec) :"), BorderLayout.NORTH);
 		panelInfoTemps.add(panelTemps, BorderLayout.CENTER);
 		panelTemps    .add(this.txtTemps);
 
@@ -181,7 +181,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		// Niveau
 		gbc.gridy = 1; gbc.gridx = 2; // (1,2)
 		panelInfo      .add(panelInfoNiveau, gbc);
-		panelInfoNiveau.add(new JLabel("Nombre de Niveau :"), BorderLayout.NORTH);
+		panelInfoNiveau.add(new JLabel("Niveau :"), BorderLayout.NORTH);
 		panelInfoNiveau.add(panelNiveau, BorderLayout.CENTER);
 		for(JRadioButton rb : tabRbDifficulte)
 			panelNiveau.add(rb);
@@ -191,7 +191,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		gbc.gridy = 2; gbc.gridx = 0; // (2,2)
 		gbc.gridwidth = 3;
 		panelInfo       .add(panelInfoTypeQuestion, gbc);
-		panelInfoTypeQuestion.add(new JLabel("Type de Question :"), BorderLayout.NORTH);
+		panelInfoTypeQuestion.add(new JLabel("Type de question :"), BorderLayout.NORTH);
 		panelInfoTypeQuestion.add(this.ddlstTypeQuestion, BorderLayout.CENTER);
 
 		/* ACTION */
