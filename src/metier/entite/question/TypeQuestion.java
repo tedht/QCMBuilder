@@ -15,11 +15,13 @@ public enum TypeQuestion
 	ELIMINATION(2);
 
 
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
 	private final int valeur;
+
 
 
 	/*--------------*/
@@ -37,6 +39,7 @@ public enum TypeQuestion
 	}
 
 
+
 	/*---------*/
 	/* Getters */
 	/*---------*/
@@ -49,6 +52,7 @@ public enum TypeQuestion
 	public int getValeur() { return this.valeur; }
 
 
+	
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

@@ -13,6 +13,8 @@ import  metier.entite.question.TypeQuestion;
  */
 public class Elimination extends Question
 {
+
+
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/
@@ -33,6 +35,7 @@ public class Elimination extends Question
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 	}
+
 
 
 	/*---------*/
@@ -57,6 +60,7 @@ public class Elimination extends Question
 	public PropositionElimination getProposition(int i) { return (PropositionElimination) super.getProposition(i); }
 
 
+
 	/*---------*/
 	/* Setters */
 	/*---------*/
@@ -76,6 +80,7 @@ public class Elimination extends Question
 	}
 
 
+	
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

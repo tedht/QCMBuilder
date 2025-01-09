@@ -11,11 +11,15 @@ import metier.entite.question.TypeQuestion;
  */
 public class QCM extends Question
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 	
 	private boolean unique;
+
 
 
 	/*--------------*/
@@ -32,13 +36,14 @@ public class QCM extends Question
 	 * @param temps      le temps associée à la question.
 	 * @param difficulte la difficultée.
 	 * 
-	 * @see Question la classe Question parente de QCM.
+	 * @see   Question la classe Question parente de QCM.
 	 */
 	public QCM(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{
 		super(codeRes, idNot, idQst, note, temps, difficulte);
 		this.unique = false;
 	}
+
 
 
 	/*---------*/
@@ -92,6 +97,7 @@ public class QCM extends Question
 	public boolean setProposition(int i, PropositionQCM prop) { return super.setProposition(i, prop); }
 
 
+	
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

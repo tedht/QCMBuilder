@@ -11,6 +11,9 @@ import metier.entite.question.Proposition;
  */
 public class PropositionElimination implements Proposition
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
@@ -19,6 +22,7 @@ public class PropositionElimination implements Proposition
 	private boolean reponse;
 	private int     ordreElim;
 	private double  nbPtsPerdus;
+
 
 
 	/*--------------*/
@@ -33,7 +37,7 @@ public class PropositionElimination implements Proposition
 	 * @param ordreElim   l'ordre dans lequel éliminer la proposition.
 	 * @param nbPtsPerdus le nombre de points perdus.
 	 * 
-	 * @see Elimination la classe Elimination.
+	 * @see   Elimination la classe Elimination.
 	 */
 	public PropositionElimination(String text, boolean reponse, int ordreElim, double nbPtsPerdus)
 	{
@@ -77,6 +81,7 @@ public class PropositionElimination implements Proposition
 	 * @return le nombre de points perdus.
 	 */
 	public double getNbPtsPerdus() { return this.nbPtsPerdus; }
+
 
 
 	/*---------*/
