@@ -136,6 +136,7 @@ function afficherQuestions()
     const btnValider = document.getElementById('btn-valider');
     btnValider.addEventListener('click', function() 
     {
+        stopperChrono();
         validerReponses(questionIndex);
     });
 
@@ -658,7 +659,7 @@ async function validerReponses(index)
             corrige: bonneReponse,
             optionSelectionnee: reponsesAssocieesUtilisateur
         };
-        reinitialiserSvg();
+        reinitialiserAssociationsEtSvg();
         
         // Affichage du feedback
         await afficherFeedback(bonneReponse, question, reponsesUtilisateur);
@@ -700,9 +701,10 @@ async function validerReponses(index)
                 const indexElimination = question.elimination.indexOf(reponseEliminee);
                 if (indexElimination !== -1)
                 {
-                    question.note -= question.pointsPerdus[indexElimination];
+                    pointsPerdus += question.pointsPerdus[indexElimination];
                 }
             });
+            question.note = Math.max(0, question.note - pointsPerdus);
         }
     }
 
@@ -762,7 +764,7 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur)
         const reponseMessage = bonneReponse ? "Bonne réponse !" : "Mauvaise réponse.";
         const styleRep = bonneReponse ? 'green' : 'red';
 
-        const feedbackMessage = bonneReponse ? question.feedback : `Essayez encore ! ${question.feedback}`;
+        const feedbackMessage = bonneReponse ? question.feedback : `${question.feedback}`;
 
         let scoreMax = 0;
         questions.forEach(q => 
@@ -980,6 +982,10 @@ function gererBoutons()
                 demarrerChrono();
             }
         }
+        else 
+        {
+            afficherFin();
+        }
     });
 }
 
@@ -1078,7 +1084,33 @@ function demarrerChrono()
         {
             clearInterval(intervalId); // Stoppe l'intervalle
             intervalId = null; // Réinitialise la variable globale
+
             alert("Temps écoulé pour cette question !");
+
+            // Affiche le feedback
+            afficherFeedback(false, question, []).then(() => 
+            {
+                // Passer à la question suivante automatiquement
+                if (questionIndex < questions.length - 1) 
+                {
+                    questionIndex++;
+                    reinitialiserAssociationsEtSvg();
+                    afficherQuestion(questionIndex);
+                    demarrerChrono(); // Redémarre le chrono pour la nouvelle question
+                } 
+                else 
+                {
+                    stopperChrono();
+                    afficherFin();
+                }
+            });
         }
     }, 1000); // Décrémentation toutes les secondes
+}
+
+function stopperChrono() {
+    if (intervalId) { // Assure-toi qu'intervalId est la variable utilisée pour gérer le chrono
+        clearInterval(intervalId);
+        intervalId = null; // Réinitialise l'identifiant
+    }
 }
