@@ -12,16 +12,21 @@ import java.nio.file.*;
  */
 public class PieceJointe
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
-	private static int numPieceJointe;
+	private static int    numPieceJointe;
 
-	private String  cheminFicOrig;
-	private String  cheminFic;
-	private String  nomPieceJointe;
-	private String  extension;
+	private        String cheminFicOrig;
+	private        String cheminFic;
+	private        String nomPieceJointe;
+	private        String extension;
+
+
 
 	/*--------------*/
 	/* Constructeur */
@@ -46,9 +51,12 @@ public class PieceJointe
 		this.extension      = this.cheminFic.substring(cheminFic.lastIndexOf('.') + 1);
 	} 
 
+
+
 	/*---------*/
 	/* Getters */
 	/*---------*/
+
 	/**
 	 * Retourne le nom de la pièce jointe.
 	 * 
@@ -123,6 +131,8 @@ public class PieceJointe
 		return visiteur.getMaxNb();
 	}
 
+
+
 	/*---------*/
 	/* Setters */
 	/*---------*/
@@ -148,6 +158,8 @@ public class PieceJointe
 		this.cheminFic = cheminFic;
 		return true;
 	}
+
+
 
 	/*-----------------*/
 	/* Autres méthodes */
@@ -184,28 +196,4 @@ public class PieceJointe
 	{
 		return this.cheminFic;
 	}
-
-
-	/**
-	 * Main de la classe PieceJointe.
-	 * 
-	 * @param args les arguments de la ligne de commande.
-	 */
-
-	 /*
-	public static void main(String[] args)
-	{
-		PieceJointe pj1, pj2, pj3;
-
-
-		pj1 = new PieceJointe("data/test1.txt", "data/ressources/R1.01 Initiation au développement/Abstraction/");
-		pj2 = new PieceJointe("data/test2.csv", "data/ressources/R1.02 Développement interfaces Web/CSS/");
-		pj3 = new PieceJointe("data/test3.pdf", "data/ressources/R3.06 Architecture des réseaux/Sockets/");
-
-		System.out.println(pj1);
-		System.out.println(pj2);
-		System.out.println(pj3);
-
-		System.out.println(PieceJointe.getNumPieceJointe());
-	}*/
 }

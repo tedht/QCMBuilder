@@ -11,12 +11,16 @@ import metier.entite.question.Proposition;
  */
 public class PropositionQCM implements Proposition
 {
+
+
+
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
 	private String  text;
 	private boolean reponse;
+
 
 
 	/*--------------*/
@@ -38,6 +42,7 @@ public class PropositionQCM implements Proposition
 	}
 
 
+
 	/*---------*/
 	/* Getters */
 	/*---------*/
@@ -57,6 +62,7 @@ public class PropositionQCM implements Proposition
 	public boolean estReponse() { return this.reponse; }
 
 
+	
 	/*---------*/
 	/* Setters */
 	/*---------*/
