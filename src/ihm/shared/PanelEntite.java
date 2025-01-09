@@ -28,8 +28,8 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 	/**
 	 * Constructeur qui crée une instance de PanelEntite sans texte.
 	 *
-	 * @param ctrl      Le contrôleur.
-	 * @param ihm       Le gestionnaire des fenêtres de l'application.
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelEntite(Controleur ctrl, IHM ihm)
 	{
@@ -39,10 +39,10 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 	/**
 	 * Constructeur de la classe PanelEntite.
 	 *
-	 * @param ctrl      Le contrôleur.
-	 * @param ihm       Le gestionnaire des fenêtres de l'application.
-	 * @param titre     Le titre.
-	 * @param sousTitre Le sous-titre.
+	 * @param ctrl      le contrôleur.
+	 * @param ihm       le gestionnaire des fenêtres de l'application.
+	 * @param titre     le titre.
+	 * @param sousTitre le sous-titre.
 	 */
 	public PanelEntite(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{

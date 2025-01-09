@@ -133,9 +133,9 @@ public class IHM
 	/**
 	 * Affiche une fenêtre donnée à une position spécifique
 	 * 
-	 * @param frame La fenêtre qu'on souhaite afficher.
-	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée.
-	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée.
+	 * @param frame la fenêtre qu'on souhaite afficher.
+	 * @param posX  la position horizontale (en pixels) où la fenêtre frame sera affichée.
+	 * @param posY  la position verticale (en pixels) où la fenêtre frame sera affichée.
 	 */
 	private void afficher(JFrame frame, int posX, int posY)
 	{

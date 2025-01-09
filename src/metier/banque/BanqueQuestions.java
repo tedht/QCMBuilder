@@ -189,40 +189,38 @@ public class BanqueQuestions extends Banque
 	*/
 	private void lireQuestions(String cheminFicCSV)
 	{
-		Scanner scEnreg, scDonnees, scIntitule, scExplication, scProp, scElim;
+		Scanner scEnreg, scDonnees, scFicTxt;
 
-		String       cheminDirQst;
-		int          cpt;
+		String        cheminDirQst;
+		int           cpt;
 
-		String       codeRes;
-		int          idNot;
-		int          idQst;
-		Difficulte   difficulte;
-		TypeQuestion typeQuestion;
-		int          temps;
-		double       note;
-		Question     question;
+		String        codeRes;
+		int           idNot;
+		int           idQst;
+		Difficulte    difficulte;
+		TypeQuestion  typeQuestion;
+		int           temps;
+		double        note;
+		Question      question;
 
-		String       intitule;
-		String       explication;
+		String        intitule;
+		String        explication;
 
-		String       ficComp;
-		PieceJointe  pj;
+		String        ficComp;
+		PieceJointe   pj;
 
-		int          nbProp;
-		String       detailsProp;
-		String       textProp;
+		int           nbProp;
+		String        textProp;
 
-		String       textGauche, textDroite;
+		String        textGauche, textDroite;
 
-		int          ordreElim;
-		double       nbPtsPerdus;
+		int           ordreElim;
+		double        nbPtsPerdus;
 
-		boolean      estReponse;
-		int          cptReponse;
+		boolean       estReponse;
+		int           cptReponse;
 
-		intitule    = "";
-		explication = "";
+		StringBuilder stringBuilder = new StringBuilder();
 		
 		pj = null;
 
@@ -246,7 +244,7 @@ public class BanqueQuestions extends Banque
 				codeRes	     = scDonnees.next();
 				idNot        = scDonnees.nextInt();
 				idQst        = scDonnees.nextInt();
-				difficulte   = Difficulte  .fromInt(scDonnees.nextInt());
+				difficulte   = Difficulte.fromInt(scDonnees.nextInt());
 				typeQuestion = TypeQuestion.fromInt(scDonnees.nextInt());
 				temps        = scDonnees.nextInt();
 				note         = Double.parseDouble(scDonnees.next());
@@ -256,23 +254,28 @@ public class BanqueQuestions extends Banque
 				cheminDirQst = "data/ressources/" + codeRes + "/notion" + idNot + "/question" + idQst;
 
 				// Scanner pour lire le fichier TXT de l'intitulé (intitule.txt)
-				scIntitule    = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
+				scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 
 				// Récupération de l'intitulé
-				if(scIntitule.hasNextLine())
-					intitule = scIntitule.nextLine();
-
-				scIntitule.close();
-
+				stringBuilder.setLength(0);
+				while(scFicTxt.hasNextLine())
+				{
+					stringBuilder.append(scFicTxt.nextLine()).append('\n');
+				}
+				intitule = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+				scFicTxt.close();
 
 				// Scanner pour lire le fichier TXT de l'explication (explication.txt)
-				scExplication = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
+				scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/explication.txt"), "UTF8");
 
 				// Récupération de l'explication
-				if(scExplication.hasNextLine())
-					explication = scExplication.nextLine();
-
-				scExplication.close();
+				stringBuilder.setLength(0);
+				while(scFicTxt.hasNextLine())
+				{
+					stringBuilder.append(scFicTxt.nextLine()).append('\n');
+				}
+				explication = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+				scFicTxt.close();
 
 
 				while(cpt < idQst)
@@ -291,19 +294,24 @@ public class BanqueQuestions extends Banque
 						for(int i = 1; i <= nbProp; i++)
 						{
 							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
-							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-							if(scProp.hasNextLine())
+							scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+
+							// Récupération de la proposition
+							estReponse = scFicTxt.nextLine().charAt(0) == 'V';
+
+							if(estReponse)
+								cptReponse++;
+
+							stringBuilder.setLength(0);
+							while(scFicTxt.hasNextLine())
 							{
-								detailsProp = scProp.nextLine();
-
-								estReponse = detailsProp.charAt(0) == 'V';
-								if(estReponse) cptReponse++;
-								
-								textProp = detailsProp.substring(2);
-
-								((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
+								stringBuilder.append(scFicTxt.nextLine()).append('\n');
 							}
-							scProp.close();
+							textProp = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+
+							((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
+
+							scFicTxt.close();
 						}
 						((QCM) question).setUnique(cptReponse == 1);
 					}
@@ -313,16 +321,31 @@ public class BanqueQuestions extends Banque
 						
 						for(int i = 1; i <= nbProp; i++)
 						{
-							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
-							scProp     = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
-							if(scProp.hasNextLine())
-							{
-								textGauche = scProp.nextLine();
-								textDroite = scProp.nextLine();
+							// Scanner pour lire le fichier TXT de la proposition de gauche (propGX.txt)
+							scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/propositions/propG"+i+".txt"), "UTF8");
 
-								((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+							// Récupération de la proposition de gauche
+							stringBuilder.setLength(0);
+							while(scFicTxt.hasNextLine())
+							{
+								stringBuilder.append(scFicTxt.nextLine()).append('\n');
 							}
-							scProp.close();
+							textGauche = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+
+							// Scanner pour lire le fichier TXT de la proposition de droite (propDX.txt)
+							scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/propositions/propD"+i+".txt"), "UTF8");
+
+							// Récupération de la proposition de droite
+							stringBuilder.setLength(0);
+							while(scFicTxt.hasNextLine())
+							{
+								stringBuilder.append(scFicTxt.nextLine()).append('\n');
+							}
+							textDroite = stringBuilder.toString().substring(0, stringBuilder.length()-1);
+
+							((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
+
+							scFicTxt.close();
 						}
 					}
 					case ELIMINATION ->
@@ -332,26 +355,25 @@ public class BanqueQuestions extends Banque
 						for(int i = 1 ; i <= nbProp ; i++)
 						{
 							// Scanner pour lire le fichier TXT de la proposition (propX.txt)
-							scProp = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
+							scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/propositions/prop"+i+".txt"), "UTF8");
 
-							if(scProp.hasNextLine())
+							// Récupération de la proposition
+							if(scFicTxt.hasNextLine())
 							{
-								detailsProp = scProp.nextLine();
+								estReponse  = scFicTxt.nextLine().charAt(0) == 'V'; 
+								ordreElim   = scFicTxt.nextInt(); scFicTxt.nextLine();
+								nbPtsPerdus = Double.parseDouble(scFicTxt.nextLine());
 
-								scElim = new Scanner(detailsProp);
-								scElim.useDelimiter(":");
-		
-								estReponse  = scElim.next().charAt(0) == 'V';
-								ordreElim   = scElim.nextInt();
-								nbPtsPerdus = Double.parseDouble(scElim.next());
-
-								textProp = scElim.next();
+								stringBuilder.setLength(0);
+								while(scFicTxt.hasNextLine())
+								{
+									stringBuilder.append(scFicTxt.nextLine()).append('\n');
+								}
+								textProp = stringBuilder.toString().substring(0, stringBuilder.length()-1);
 
 								((Elimination) question).ajouterProposition(new PropositionElimination(textProp, estReponse, ordreElim, nbPtsPerdus));
-
-								scElim.close();
 							}
-							scProp.close();
+							scFicTxt.close();
 						}
 					}
 					default ->
@@ -459,12 +481,12 @@ public class BanqueQuestions extends Banque
 
 				// PrintWriter appliqué sur le fichier TXT de l'intitulé (intitule.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/intitule.txt"), "UTF8"));
-				pwTxt     .println(question.getIntitule());
+				pwTxt.println(question.getIntitule());
 				pwTxt.close();
 
 				// PrintWriter appliqué sur le fichier TXT de l'explication (explication.txt)
 				pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/explication.txt"), "UTF8"));
-				pwTxt     .println(question.getExplication());
+				pwTxt.println(question.getExplication());
 				pwTxt.close();
 
 				BanqueQuestions.supprimerDossier(dirProp);
@@ -483,9 +505,9 @@ public class BanqueQuestions extends Banque
 							propQCM = qQCM.getProposition(i);
 							
 							if (propQCM.estReponse()) 
-								pwTxt.print("V:");
+								pwTxt.println("V");
 							else
-								pwTxt.print("F:");
+								pwTxt.println("F");
 
 							pwTxt.println(propQCM.getText());
 
@@ -498,13 +520,16 @@ public class BanqueQuestions extends Banque
 
 						for (int i = 0; i < qAsso.getPropositions().size(); i++) 
 						{
-							// PrintWriter appliqué sur le fichier TXT de la proposition (propX.txt)
-							pwTxt    = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/prop"+(i+1)+".txt"), "UTF8"));
+							// PrintWriter appliqué sur le fichier TXT de la proposition de gauche (propGX.txt)
 							propAsso = qAsso.getProposition(i);
 
+							pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/propG"+(i+1)+".txt"), "UTF8"));
 							pwTxt.println(propAsso.getTextGauche());
-							pwTxt.println(propAsso.getTextDroite());
+							pwTxt.close();
 
+							// PrintWriter appliqué sur le fichier TXT de la proposition de droite (propDX.txt)
+							pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/propD"+(i+1)+".txt"), "UTF8"));
+							pwTxt.println(propAsso.getTextDroite());
 							pwTxt.close();
 						}
 					}
@@ -519,13 +544,13 @@ public class BanqueQuestions extends Banque
 							propElim = qElim.getProposition(i);
 
 							if (propElim.estReponse()) 
-								pwTxt.print("V:");
+								pwTxt.println("V");
 							else 
-								pwTxt.print("F:");
+								pwTxt.println("F");
 
-							pwTxt.print  (propElim.getOrdreElim  () + ":" );
-							pwTxt.print  (propElim.getNbPtsPerdus() + ":" );
-							pwTxt.println(propElim.getText       ()       );
+							pwTxt.println(propElim.getOrdreElim  ());
+							pwTxt.println(propElim.getNbPtsPerdus());
+							pwTxt.println(propElim.getText       ());
 
 							pwTxt.close();
 						}
@@ -559,17 +584,8 @@ public class BanqueQuestions extends Banque
 	public static boolean creerDossier(File dossier) 
 	{
 		if (!dossier.exists()) 
-		{
-			if (dossier.mkdirs()) 
-			{
-				//System.out.println("Le dossier " + dossier.getPath() + " a été créé avec succès.");
-				return true;
-			} 
-			else 
-			{
-				//System.out.println("Échec de la création du dossier " + dossier.getPath());
-				return false;
-			}
+		{	
+			return dossier.mkdirs(); 
 		}
 		return true;
 	}
@@ -796,7 +812,6 @@ public class BanqueQuestions extends Banque
 	{
 		BanqueQuestions bq;
 		Question q1, q2, q3;
-
 
 		new Ressource("R1", "Ressource 1");
 		new Ressource("R2", "Ressource 2");

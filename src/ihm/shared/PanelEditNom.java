@@ -34,8 +34,8 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	/**
 	 * Constructeur e la classe PanelEditNom.
 	 *
-	 * @param ctrl Le contrôleur
-	 * @param ihm  Le gestionnaire des fenêtres de l'application.
+	 * @param ctrl le contrôleur
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelEditNom(Controleur ctrl, IHM ihm)
 	{
@@ -87,7 +87,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	/**
 	 * Méthode qui gère les actions des boutons.
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -109,7 +109,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	 * Méthode abstraite à définir dans les classes filles. Définit le comprtement 
 	 * lorsqu'on clique sur le bouton "Enregistrer".
 	 * 
-	 * @return vrai l'enregistrement a réussi, false sinon
+	 * @return true si l'enregistrement a réussi, false sinon
 	 */
 	public abstract boolean enregistrer();
 }

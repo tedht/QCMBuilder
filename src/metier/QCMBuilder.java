@@ -512,17 +512,6 @@ public class QCMBuilder
 	}
 
 	/**
-	 * Crée une pièce jointe et l'associe à la question.
-	 * 
-	 * @param cheminFichier le chemin du fichier.
-	 * @param question      la question.
-	 */
-	/*public void creerPieceJointe(String cheminFichier, Question question)
-	{
-		this.banqueQuestions.creerPieceJointe(cheminFichier, question);
-	}*/
-
-	/**
 	 * Génère un questionnaire.
 	 * 
 	 * @param codeRes        le code de la ressource.

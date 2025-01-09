@@ -24,7 +24,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	/** 
 	 * Constructeur de la classe PanelQCMBuilder
 	 * 
-	 * @param ihm Le gestionnaire des fenêtres de l'application.
+	 * @param ihm le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelQCMBuilder(IHM ihm) 
 	{
@@ -67,7 +67,7 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	/**
 	 * Méthode qui gère les actions des boutons.
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 

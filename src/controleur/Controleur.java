@@ -230,19 +230,6 @@ public class Controleur
 	}
 
 	/**
-	 * Creer une pièce jointe dans la partie metier et l'associe à la question.
-	 * 
-	 * @param cheminFichier le chemin du fichier à associer.
-	 * @param question      la question à laquelle associer la pièce jointe.
-	 */
-	/*public void creerPieceJointe(String cheminFichier, Question question)
-	{
-		this.metier.creerPieceJointe(cheminFichier, question);
-	}*/
-
-
-
-	/**
 	 * Modifie une ressource à partir de son code.
 	 * 
 	 * @param code        le code de la ressource à modifier.

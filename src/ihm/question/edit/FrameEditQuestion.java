@@ -251,7 +251,10 @@ public class FrameEditQuestion extends JFrame
 	
 							try 
 							{
-								Double.parseDouble(panelPropElim.getPointsPerdus());
+								if(!"".equals(panelPropElim.getOrdreElim()))
+								{
+									Double.parseDouble(panelPropElim.getPointsPerdus());
+								}
 							} 
 							catch (Exception e) 
 							{
