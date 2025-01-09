@@ -532,31 +532,20 @@ public class QCMBuilder
 	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions)
 	{
 		List<Question> lstQuestions;
+		List<Notion>   lstNotions;
 		Question       question;
 		int            nbQuestions;
 
 		this.questionnaire = new Questionnaire(this, this.banqueRessources.getRessource(codeRes), chronometre);
 
+		lstNotions = this.banqueNotions.getNotions(codeRes);
+
 		// Ajout des questions au questionnaire
 		for(int i = 0; i < tabNbQuestions.length; i++)
 		{
-			System.out.println("NOTION : " + this.banqueNotions.getNotions().get(i).getNom());
 			for(int j = 0; j < 4; j++)
 			{
-				lstQuestions = new ArrayList<Question>(this.banqueQuestions.getQuestions(codeRes, this.banqueNotions.getNotions().get(i).getIdNot(), Difficulte.fromInt(j)));
-				
-				System.out.println(Difficulte.fromInt(j).toString() + " : ");
-				if(lstQuestions.size() > 0)
-				{
-					for(Question q : lstQuestions)
-					{
-						System.out.println("   " + q.getIntitule());
-					}
-				}
-				else
-				{
-					System.out.println("   " + "vide");
-				}
+				lstQuestions = new ArrayList<Question>(this.banqueQuestions.getQuestions(codeRes, lstNotions.get(i).getIdNot(), Difficulte.fromInt(j)));
 
 				nbQuestions = tabNbQuestions[i][j];
 				for(int k = 0; k < nbQuestions; k++)
@@ -570,13 +559,6 @@ public class QCMBuilder
 
 		// Mélange les questions
 		this.questionnaire.shuffleQuestions();
-
-		lstQuestions = questionnaire.getQuestions();
-		System.out.println("QUESTIONNAIRE :");
-		for(Question q : lstQuestions)
-		{
-			System.out.println("\t" + q.getIntitule());
-		}
 	}
 
 	/**
