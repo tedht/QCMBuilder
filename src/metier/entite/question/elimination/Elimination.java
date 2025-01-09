@@ -102,7 +102,6 @@ public class Elimination extends Question
 		String                 result;
 		PropositionElimination prop;
 
-
 		result = "";
 		for(int i = 0; i < this.lstPropositions.size(); i++)
 		{

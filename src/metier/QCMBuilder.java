@@ -273,16 +273,24 @@ public class QCMBuilder
 		type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
 		temps      = this.enSeconde(sTemps);
 
-
-		question = null;
+		question   = null;
+		
 		if(idQst != null)
 		{
-			question = this.banqueQuestions.getQuestion(idQst);
-			question.setCodeRes   (codeRes);
-			question.setIdNot     (idNot);
-			question.setDifficulte(difficulte);
-			question.setTemps     (temps);
-			question.setNote      (note);
+			if(this.banqueQuestions.getQuestion(idQst).getType() != type)
+			{
+				this.banqueQuestions.supprimerQuestion(idQst);
+				idQst = null;
+			}
+			else
+			{
+				question = this.banqueQuestions.getQuestion(idQst);
+				question.setCodeRes   (codeRes);
+				question.setIdNot     (idNot);
+				question.setDifficulte(difficulte);
+				question.setTemps     (temps);
+				question.setNote      (note);
+			}
 		}
 	
 		switch (type) 
