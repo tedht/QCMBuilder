@@ -37,7 +37,8 @@ import ihm.question.edit.proposition.PanelPropQCM;
 import ihm.question.edit.proposition.PanelPropQRM;
 
 
-/** Classe JPanel pour saisir les paramètres intitiales d'une question
+/** 
+ * Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une nouvelle question.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -57,6 +58,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 	protected JButton           btnPrecedent, btnEnregistrer;
 
+	/**
+	 * Constructeur de la classe PanelAjoutQuestion.
+	 * @param frame le frame d'édition de questions.
+	 */
 	public PanelAjoutQuestion(FrameEditQuestion frame) 
 	{
 		JPanel panelInfo, panelAction;
@@ -184,6 +189,11 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.btnPrecedent  .addActionListener(this);
 	}
 
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -193,6 +203,11 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		if(e.getSource() == this.btnAjouterPJ)   { this.ajouterPJ  (); }
 	}
 
+	/**
+	 * Gère les changements d'état des éléments interactifs
+	 * 
+	 * @param e l'événement qui déclenche l'appel à cette méthode.
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
@@ -214,11 +229,18 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		}
 	}
 
+
+	/**
+     * Méthode pour enregistrer une nouvelle question.
+     */
 	public void enregistrer()
 	{
 		this.frame.enregistrer();
 	}
 
+	/**
+	 * Ajoute un panel de proposition en fonction du type de question choisi.
+	 */
 	public void ajouterProposition()
 	{
 		PanelProp panelProp = null;
@@ -250,6 +272,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		}
 	}
 
+	/**
+	 * Supprime un panel de proposition
+	 * @param panelProp le panel de proposition qu'on veut supprimer
+	 */
 	public void supprimerProposition(PanelProp panelProp)
 	{
 		this.lstPanelProp.remove(panelProp);
@@ -257,6 +283,9 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.afficher();
 	}
 
+	/**
+	 * Permet de choisir et ajouter une pièce jointe
+	 */
 	public void ajouterPJ()
 	{
 		JFileChooser fileChooser = new JFileChooser();
@@ -296,6 +325,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 	}
 
+    /**
+     * Méthode qui gère l'affichage d'une question, c'est-à-dire l'intitulé, l'explication,
+	 * la pièce jointe et les propositions
+     */
 	public void afficher()
 	{
 		this.panelInfoScroll.removeAll();
@@ -340,45 +373,88 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.repaint();
 	}
 
+	/**
+	 * Ajoute un bouton radio au ButtonGroupe qui gère les réponses correctes.
+	 * Cette méthode est utilisée lorsqu'on s'occupe de questons QCM et élimination.
+	 * @param rbReponse le bouton radio qu'on veut ajouter.
+	 */
 	public void ajouterRbResponse(JRadioButton rbReponse)
 	{
 		this.btgReponse.add(rbReponse);
 	}
+	/**
+	 * Supprime un bouton radio au ButtonGroupe qui gère les réponses correctes.
+	 * Cette méthode est utilisée lorsqu'on s'occupe de questons QCM et élimination.
+	 * @param rbReponse le bouton radio qu'on veut supprimer.
+	 */
 	public void supprimerRbResponse(JRadioButton rbReponse) 
 	{
 		this.btgReponse.remove(rbReponse);
 	}
 
+	/**
+	 * Récupère l'intitulé.
+	 * 
+	 * @return l'intitulé
+	 */
 	public String getIntitule() 
 	{
 		return this.txtIntitule.getText();
 	}
 
+	/**
+	 * Vérifie l'option pour saisir une explication est sélectionnée
+	 * 
+	 * @return true si l'option est sélectionnée, false sinon
+	 */
 	public boolean explicationSelected()
 	{
 		return this.btnActiverExpli.isSelected();
 	}
 
+	/**
+	 * Récupère l'explication.
+	 * 
+	 * @return l'explication
+	 */
 	public String getExplication() 
 	{
 		return this.txtExpli.getText();
 	}
 
-	public boolean PieceJointeSelected()
+	/**
+	 * Vérifie l'option pour saisir une explication est sélectionnée
+	 * 
+	 * @return true si l'option est sélectionnée, false sinon
+	 */
+	public boolean pieceJointeSelected()
 	{
 		return this.btnActiverPJ.isSelected();
 	}
 
+	/**
+	 * Récupère le chemin de la pièce jointe.
+	 * 
+	 * @return le chemin de la pièce jointe.
+	 */
 	public String getPieceJointe()
 	{
 		return this.lblPJ.getText();
 	}
 
+	/**
+	 * Récupère la liste des panels de proposition
+	 * 
+	 * @return la liste des panels de proposition
+	 */
 	public List<PanelProp> getPanelProps() 
 	{
 		return this.lstPanelProp;
 	}
 
+	/**
+	 * Supprime toutes les panels de proposition.
+	 */
 	public void clearPanelProp() 
 	{
 		this.lstPanelProp.clear();

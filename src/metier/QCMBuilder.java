@@ -269,7 +269,6 @@ public class QCMBuilder
 
 		scDetails.close();
 
-
 		difficulte = Difficulte.fromInt(valDiff);
 		type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
 		temps      = this.enSeconde(sTemps);

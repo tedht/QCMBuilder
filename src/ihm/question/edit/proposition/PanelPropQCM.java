@@ -10,6 +10,7 @@ import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
+ * Classe JPanel représentant une proposition de réponse d'une question QCM
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -20,9 +21,13 @@ public class PanelPropQCM extends PanelProp
 	private JButton      btnSupprimer;
 	private JRadioButton rbReponse;
 
-	public PanelPropQCM(PanelAjoutQuestion panelEditQuestion)
+	/**
+	 * Constructeur de la classe PanelPropQCM.
+	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
+	 */
+	public PanelPropQCM(PanelAjoutQuestion panelAjoutQuestion)
 	{
-		super(panelEditQuestion);
+		super(panelAjoutQuestion);
 
 		JPanel panelBtnSupprimer;
 
@@ -68,19 +73,60 @@ public class PanelPropQCM extends PanelProp
 	/* Getters */
 	/*---------*/
 
-	public String  getText   () { return this.txtProposition.getText   (); }
-	public boolean estReponse() { return this.rbReponse     .isSelected(); }
+
+    /**
+     * Retourne le texte de la proposition.
+     * 
+     * @return le texte de la proposition.
+     */
+	public String  getText() 
+	{ 
+		return this.txtProposition.getText(); 
+	}
+
+	/**
+     * Indique si la proposition est marquée comme réponse correcte.
+     * 
+     * @return true si c'est une réponse correcte, false sinon.
+     */
+	public boolean estReponse() 
+	{ 
+		return this.rbReponse.isSelected(); 
+	}
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
 
-	public void setText   (String  text)    { this.txtProposition.setText    (text);    }
-	public void setReponse(boolean reponse) { this.rbReponse     .setSelected(reponse); }
+	/**
+     * Définit le texte de la proposition.
+     * 
+     * @param text le texte à afficher dans la zone de texte.
+     */
+	public void setText(String  text)    
+	{ 
+		this.txtProposition.setText    (text);    
+	}
+
+	/**
+     * Définit si la proposition est une réponse correcte.
+     * 
+     * @param reponse true si c'est une réponse correcte, false sinon.
+     */
+	public void setReponse(boolean reponse) 
+	{ 
+		this.rbReponse.setSelected(reponse); 
+	}
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
+
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

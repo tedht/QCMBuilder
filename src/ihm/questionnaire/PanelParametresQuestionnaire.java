@@ -21,11 +21,10 @@ import controleur.Controleur;
 import metier.entite.Ressource;
 
 /**
- * Classe représentant la fenêtre de création d'une évaluation
+ * Classe JPanel dédièe à la saisie des paramètres généraux d'un questionnaire.
  * 
- * @author Ted Herambert
- * @date 2024/12/16
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-16 Norme ISO-8601
  */
 public class PanelParametresQuestionnaire extends JPanel implements ActionListener, ItemListener
 {
@@ -41,6 +40,12 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 
 	private JButton                   btnAnnuler, btnSuivant;
 
+	/**
+	 * Constructeur de la classe PanelParametresQuestionnaire
+	 * 
+	 * @param ctrl  le contrôleur
+	 * @param frame la fenêtre de création d'une évaluation
+	 */
 	public PanelParametresQuestionnaire(Controleur ctrl, FrameCreationQuestionnaire frame) 
 	{
 		JPanel panelInfoRessource, panelInfoChronometre;
@@ -141,7 +146,12 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		this.btnSuivant.addActionListener(this);
 
 	}
-
+	
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -158,6 +168,11 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		}
 	}
 
+	/**
+	 * Gère les changements d'état des éléments interactifs
+	 * 
+	 * @param e l'événement qui déclenche l'appel à cette méthode.
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
@@ -173,11 +188,21 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		}
 	}
 
+	/**
+	 * Récupère la ressource sélectionnée
+	 * 
+	 * @return la ressource sélectionnée
+	 */
 	public Ressource getRessource() 
 	{
 		return (Ressource)this.ddlstRessource.getSelectedItem();
 	}
 
+	/**
+	 * Récupère le code de la ressource sélectionnée
+	 * 
+	 * @return le code de la ressource sélectionnée
+	 */
 	public String getCodeRes()
 	{
 		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
@@ -185,11 +210,19 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		return ressource != null ? ressource.getCode() : "";
 	}
 
-	public boolean estChronometree() 
+	/**
+	 * Vérifie si le questionnare aura un chronomètre en fonction de l'état du bouton radio.
+	 *
+	 * @return true si le premier bouton radio (oui) est sélectionné, sinon (non) false.
+	 */
+	public boolean estChronometre() 
 	{ 
 		return this.tabRbChronometre[0].isSelected();         
 	}
 
+	/**
+	 * Reinitialise la liste déroulantes des ressources
+	 */
 	public void reinitDdlstRessources()
 	{
 		this.ddlstRessource.removeAllItems();
@@ -202,6 +235,9 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("",String.format("%70s"," ")));
 	}
 
+	/**
+	 * Désactive les boutons radio.
+	 */
 	public void reinitRbChronometre()
 	{
 		btgChronometre.clearSelection();

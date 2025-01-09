@@ -77,7 +77,7 @@ public class IHM
      * Initialise l'interface graphique, crée les fenêtres et gère le 
 	 * positionnement de la fenêtre principale.
      * 
-     * @param ctrl Le contrôleur.
+     * @param ctrl le contrôleur.
      */
 	public IHM(Controleur ctrl)
 	{
@@ -133,9 +133,9 @@ public class IHM
 	/**
 	 * Affiche une fenêtre donnée à une position spécifique
 	 * 
-	 * @param frame La fenêtre qu'on souhaite afficher.
-	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée.
-	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée.
+	 * @param frame la fenêtre qu'on souhaite afficher.
+	 * @param posX  la position horizontale (en pixels) où la fenêtre frame sera affichée.
+	 * @param posY  la position verticale (en pixels) où la fenêtre frame sera affichée.
 	 */
 	private void afficher(JFrame frame, int posX, int posY)
 	{
@@ -239,7 +239,7 @@ public class IHM
 	 * Affiche la fenêtre d'édition de ressources. Cette méthode est appelée lorqu'on cherche 
 	 * à créer ou modifier une ressource.
 	 * 
-	 * @param code Le code de la ressource. Si code est null, on crée une nouvelle ressource, sinon
+	 * @param code le code de la ressource. Si code est null, on crée une nouvelle ressource, sinon
 	 *             on modifie une ressource existente.
 	 */
 	public void editRessource(String code) 
@@ -290,7 +290,7 @@ public class IHM
 	 * Affiche la fenêtre d'édition de notions. Cette méthode est appelée lorqu'on cherche 
 	 * à créer ou modifier une notion.
 	 * 
-	 * @param idNot L'id de la notion. Si idNot est null, on crée une nouvelle notion, sinon
+	 * @param idNot l'id de la notion. Si idNot est null, on crée une nouvelle notion, sinon
 	 *              on modifie une notion existente.
 	 */
 	public void editNotion(Integer idNot) 
@@ -341,7 +341,7 @@ public class IHM
 	 * Affiche la fenêtre d'édition de questions. Cette méthode est appelée lorqu'on cherche 
 	 * à créer ou modifier une question.
 	 * 
-	 * @param idQst L'id de la question. Si idQst est null, on crée une nouvelle question, sinon
+	 * @param idQst l'id de la question. Si idQst est null, on crée une nouvelle question, sinon
 	 *              on modifie une question existente.
 	 */
 	public void editQuestion(Integer idQst) 

@@ -7,20 +7,20 @@ import controleur.Controleur;
 import ihm.IHM;
 
 /**
- * Classe
+ * Classe représentant la fenêtre qui permet d'exporter un questionnaire.
  * 
- * @author Ted Herambert
- * @date 2024/12/18
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-18 Norme ISO-8601
  */
 public class FrameExport extends JFrame
 {
 	private PanelExport panelExport;
 
 	/**
-	 * Constructeur
+	 * Constructeur de la classe FrameExport.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public FrameExport(Controleur ctrl, IHM ihm)
 	{

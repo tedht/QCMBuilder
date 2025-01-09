@@ -83,7 +83,7 @@ public class Questionnaire
 	 * 
 	 * @return true si le chronométre est activé, false sinon.
 	 */
-	public boolean estChronometree() { return this.chronometre; }
+	public boolean estChronometre() { return this.chronometre; }
 
 	/**
 	 * Retourne la liste des lstQuestions associée au Questionnaire.

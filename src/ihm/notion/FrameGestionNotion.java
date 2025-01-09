@@ -45,7 +45,7 @@ public class FrameGestionNotion  extends JFrame
 	}
 
 	/**
-     * Réinitialise l'affichage du panel de gestion des ressources.
+     * Réinitialise l'affichage du panel de gestion des notions.
      */
 	public void reinitAffichage() 
 	{

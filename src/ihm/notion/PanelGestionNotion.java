@@ -50,9 +50,9 @@ public class PanelGestionNotion extends PanelGestion
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -64,11 +64,10 @@ public class PanelGestionNotion extends PanelGestion
 	}
 
 	/**
-     * Méthode qui gère l'affichage des notions.
+     * Gère l'affichage des notions.
      * 
-     * Cette méthode est responsable de l'affichage des notions disponibles dans l'application,
-     * ainsi que de l'ajout de panels pour chaque notion. Si aucune notion n'est disponible,
-     * un panel d'instruction est affiché.
+     * Cette méthode est responsable de l'affichage des notions. S'il n'y a pas de notions,
+     * un panel avec un texte d'instruction est affiché.
      */
 	@Override
 	public void afficher() 
@@ -80,7 +79,7 @@ public class PanelGestionNotion extends PanelGestion
 		PanelNotion panelNotion;
 		if(this.ctrl.getRessources().isEmpty())
 		{
-			// Si aucune ressource n'est disponible, afficher des panels vides
+			// S'il n'y a pas de ressources, afficher des panels vides
 			for(int i = 10; i > 0; i--)
 			{
 				panelNotion = new PanelNotion();
@@ -127,7 +126,7 @@ public class PanelGestionNotion extends PanelGestion
 				this.panelContenu.add(panelNotion);
 			}
 
-			// Ajouter des panels vides si nécessaire pour combler l'espace restant
+			// Ajoute des panels vides si nécessaire pour combler l'espace restant
 			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size(); i > 0; i--)
 			{
 				panelNotion = new PanelNotion();
@@ -136,7 +135,7 @@ public class PanelGestionNotion extends PanelGestion
 			}
 		}
 
-		// Redessiner le panel après modification
+		// Redessine le panel après modification
 		this.revalidate();
 		this.repaint();
 	}

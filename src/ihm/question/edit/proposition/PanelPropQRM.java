@@ -10,6 +10,7 @@ import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
+ * Classe JPanel représentant une proposition de réponse d'une question QRM
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -20,6 +21,10 @@ public class PanelPropQRM extends PanelProp
 	private JButton   btnSupprimer;
 	private JCheckBox cbReponse;
 
+	/**
+	 * Constructeur de la classe PanelPropQRM.
+	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
+	 */
 	public PanelPropQRM(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
@@ -66,20 +71,59 @@ public class PanelPropQRM extends PanelProp
 	/* Getters */
 	/*---------*/
 
-	public String  getText   () { return this.txtProposition.getText   (); }
-	public boolean estReponse() { return this.cbReponse     .isSelected(); }
+	/**
+     * Retourne le texte de la proposition.
+     * 
+     * @return le texte de la proposition.
+     */
+	public String getText() 
+	{ 
+		return this.txtProposition.getText(); 
+	}
+
+	/**
+     * Indique si la proposition est marquée comme réponse correcte.
+     * 
+     * @return true si c'est une réponse correcte, false sinon.
+     */
+	public boolean estReponse() 
+	{ 
+		return this.cbReponse.isSelected(); 
+	}
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
 
-	public void setText   (String  text)    { this.txtProposition.setText    (text);    }
-	public void setReponse(boolean reponse) { this.cbReponse     .setSelected(reponse); }
+	/**
+     * Définit le texte de la proposition.
+     * 
+     * @param text le texte à afficher dans la zone de texte.
+     */
+	public void setText(String text)    
+	{ 
+		this.txtProposition.setText(text);
+	}
+
+	/**
+     * Définit si la proposition est une réponse correcte.
+     * 
+     * @param reponse true si c'est une réponse correcte, false sinon.
+     */
+	public void setReponse(boolean reponse) 
+	{ 
+		this.cbReponse.setSelected(reponse); 
+	}
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
 
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

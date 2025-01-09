@@ -49,23 +49,20 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 		this.add(this.btnRessourceNotion);
 		this.add(this.btnQuestion);
 		this.add(this.btnQuestionnaire);
-		this.add(new JLabel(" "));
+		this.add(new JLabel(""));
 		this.add(this.btnQuitter);
 
 		/*---------------------------*/
 		/* Activation des composants */
 		/*---------------------------*/
-
 		this.btnRessourceNotion.addActionListener(this); 
 		this.btnQuestion       .addActionListener(this); 
 		this.btnQuestionnaire  .addActionListener(this); 
 		this.btnQuitter        .addActionListener(this); 
-
-
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
 	 * @param e l'événement qui a déclenché l'action.
 	 */

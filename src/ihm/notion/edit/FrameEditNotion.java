@@ -16,9 +16,10 @@ public class FrameEditNotion extends JFrame
 	private PanelEditNotion panelEditNotion;
 
 	/**
-	 * Constructeur de la classe PaneleditRessource() utilisé lorsqu'on veut créer une notion.
+	 * Constructeur de la classe FrameEditNotion utilisé lorsqu'on veut créer une notion.
 	 *
 	 * @param ctrl Le contrôleur
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public FrameEditNotion(Controleur ctrl, IHM ihm)
 	{
@@ -33,9 +34,11 @@ public class FrameEditNotion extends JFrame
 	}
 
 	/**
-	 * Constructeur de la classe PaneleditRessource() utilisé lorsqu'on veut modifier une notion.
+	 * Constructeur de la classe FrameEditNotion utilisé lorsqu'on veut modifier une notion.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
+	 * @param code le code de la ressource qu'on veut modifier.
 	 */
 	public FrameEditNotion(Controleur ctrl, IHM ihm, Integer idNot) 
 	{

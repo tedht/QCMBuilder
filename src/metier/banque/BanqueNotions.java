@@ -27,8 +27,6 @@ import metier.entite.Notion;
 public class BanqueNotions extends Banque
 {
 
-
-
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
@@ -37,8 +35,6 @@ public class BanqueNotions extends Banque
 	private Queue<Integer> fileIdUtilisable;
 
 	private String         cheminFic;
-	
-
 
 	/*--------------*/
 	/* Constructeur */

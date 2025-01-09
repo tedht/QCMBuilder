@@ -21,11 +21,10 @@ import ihm.IHM;
 import ihm.shared.PanelEditNom;
 
 /**
- * Classe JPanel de la fenêtre d'édition d'une notion
+ * Classe JPanel dédiée à l'exportation de questionnaire
  * 
- * @author Ted Herambert
- * @date 2024/12/18
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-18 Norme ISO-8601
  */
 public class PanelExport extends PanelEditNom
 {
@@ -37,9 +36,11 @@ public class PanelExport extends PanelEditNom
 	private JButton     btnNavig;
 	
 	/**
-	 * Constructeur de la classe PaneleditRessource().
+	 * Constructeur de la classe PanelExport.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl  le contrôleur.
+	 * @param ihm   le gestionnaire des fenêtres de l'application.
+	 * @param frame la fenêtre qui permet d'exporter un questionnaire.
 	 */
 	public PanelExport(Controleur ctrl, IHM ihm, FrameExport frame)
 	{
@@ -89,12 +90,19 @@ public class PanelExport extends PanelEditNom
 		this.btnNavig.addActionListener(this);
 	}
 
+	/**
+	 * Méthode appelée lorsqu'on clique sur le bouton "Enregistrer". 
+	 */
 	public boolean enregistrer()
 	{
 		String nomEval = this.txtNom   .getText();
 		String chemin  = this.lblChemin.getText();
 
 		List<String> lstErreurs = new ArrayList<String>();
+
+		/*--------------------------*/
+		/* Vérification des erreurs */
+		/*--------------------------*/
 
 		// Vérification des champs vides
 		if (nomEval.isEmpty())
@@ -118,12 +126,23 @@ public class PanelExport extends PanelEditNom
 			return false;
 		}
 
+		/*------------*/
+		/* Traitement */
+		/*------------*/
+
+		// On ferme la fenêtre de création de questionnaire
 		this.ihm.fermerCreationQuestionnaire();
+		// On exporte le questionnaire au format web
 		this.ctrl.exporterQuestionnaire(chemin+"/"+nomEval);
 
 		return true;
 	}
 
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

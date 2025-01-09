@@ -12,11 +12,25 @@ import metier.entite.question.elimination.Elimination;
 import metier.entite.question.elimination.PropositionElimination;
 import metier.entite.question.qcm.QCM;
 
+/** 
+ * Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une question existente.
+ * Cette classe hérite de PanelAjoutQuestion et ne fait que ajouter les données de la question
+ * qu'on veut modifier aux champs correspondants.
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 {
 	private Controleur ctrl;
 	private int        idQst;
 
+	/**
+	 * Constructeur de la classe PanelModifAjoutQuestion
+	 * @param ctrl  le contrôleur.
+	 * @param frame le frame d'édition de questions.
+	 * @param idQst l'id de la question qu'on veut modifier.
+	 */
 	public PanelModifAjoutQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(frame);
@@ -99,6 +113,9 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 		}
 	}
 	
+	/**
+     * Méthode pour enregistrer les modifications effectuées sur une question existente.
+     */
 	public void enregistrer()
 	{
 		this.frame.enregistrer(this.idQst);

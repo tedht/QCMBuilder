@@ -85,9 +85,9 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -98,7 +98,11 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		}
 	}
 
-
+	/**
+	 * Gère les changements d'état des éléments interactifs
+	 * 
+	 * @param e l'événement qui déclenche l'appel à cette méthode.
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
@@ -123,33 +127,46 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		}
 	}
 
+	/**
+     * Méthode qui gère l'affichage des questions.
+     * 
+     * Cette méthode est responsable de l'affichage des questions. S'il n'y a pas de questions,
+     * un panel avec un texte d'instruction est affiché.
+     */
 	public void afficher()
 	{
+		// Suppression de tous les composants existants pour redessiner
 		this.panelContenu.removeAll();
 
+		// Récupère les éléments sélectionnés
 		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
 		Notion    notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
 
+		// Récupère la liste des questions à afficher
 		List<Question> lstQuestions;
 		if(ressource == null)
 		{
-			lstQuestions = this.ctrl.getQuestions();
+			// Toutes les questions
+			lstQuestions = this.ctrl.getQuestions(); 
 		}
 		else if(notion == null)
 		{
+			// Toutes les questions associées à une ressource
 			lstQuestions = this.ctrl.getQuestions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode());
 		}
 		else
 		{
+			// Toutes les questions associées à une ressource et une notion
 			lstQuestions = this.ctrl.getQuestions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode(), notion.getIdNot());
 		}
 
 		PanelQuestion panelCarte;
-
 		if(lstQuestions.isEmpty())
 		{
+			// Affiche un message si aucune question n'est trouvée
 			this.panelContenu.add(this.panelAucuneQuestion);
 
+			// Ajouter des panels vides pour combler l'espace
 			for(int i = 9 - lstQuestions.size(); i > 0; i--)
 			{
 				panelCarte = new PanelQuestion();
@@ -159,6 +176,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		}
 		else
 		{
+			// Affiche les questions
 			for(Question question : lstQuestions)
 			{
 				if(question != null)
@@ -178,6 +196,7 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 				}
 			}
 	
+			// Ajoute des panels vides si nécessaire pour combler l'espace restant
 			for(int i = 8 - lstQuestions.size(); i > 0; i--)
 			{
 				panelCarte = new PanelQuestion();
@@ -186,12 +205,17 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 			}
 		}
 
+		// Redessiner le panel après modification
 		this.revalidate();
 		this.repaint();
 	}
 
+	/**
+     * Réinitialise les listes déroulantes des ressources et notions.
+     */
 	public void reinitDdlsts()
 	{
+		// Réinitialise le menu déroulant des ressources
 		this.ddlstRessource.removeAllItems();
 		this.ddlstRessource.addItem(null);
 		for(Ressource ressource : this.ctrl.getRessources())
@@ -201,11 +225,13 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 		this.ddlstRessource.setFocusable(false);
 		this.ddlstRessource.setPrototypeDisplayValue(new Ressource("", String.format("%70s", " ")));
 		
+		// Réinitialise le menu déroulant des notions
 		this.ddlstNotion.removeAllItems();
 		this.ddlstNotion.setEnabled(false);
 		this.ddlstNotion.setFocusable(false);
 		this.ddlstNotion.setPrototypeDisplayValue(new Notion("", 0, String.format("%70s", " ")));
 
+		// Aucune ressource sélectionnée par défaut
 		this.ddlstRessource.setSelectedIndex(-1);
 	}
 	

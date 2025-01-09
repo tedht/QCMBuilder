@@ -26,7 +26,8 @@ import metier.entite.Notion;
 import metier.entite.Ressource;
 import metier.entite.question.Difficulte;
 
-/** Classe JPanel pour ajouter des éléments (intitulé, propositions...) à une question
+/** 
+ * Classe JPanel pour saisir les paramètres intitiales lorsqu'on crée une question.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -46,6 +47,11 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	protected JButton              btnAnnuler, btnSuivant;
 
+	/**
+	 * Constructeur de la classe PanelInitQuestion.
+	 * @param ctrl  le contrôleur.
+	 * @param frame le frame d'édition de questions.
+	 */
 	public PanelInitQuestion(Controleur ctrl, FrameEditQuestion frame) 
 	{
 		JPanel panelInfo, panelAction;
@@ -216,6 +222,11 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		this.btnSuivant.addActionListener(this);
 	}
 
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -223,6 +234,11 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		if(e.getSource() == this.btnSuivant) { this.frame.pageSuivante(); }
 	}
 
+	/**
+	 * Gère les changements d'état des éléments interactifs
+	 * 
+	 * @param e l'événement qui déclenche l'appel à cette méthode.
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
@@ -255,21 +271,37 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		}
 	}
 
+	/**
+	 * Récupère l'index du type de question choisi dans la liste déroulante.
+	 * @return l'index du type de question choisi dans la liste déroulante.
+	 */
 	public int getIndexTypeQuestion() 
 	{
 		return this.ddlstTypeQuestion.getSelectedIndex();
 	}
 
+	/**
+	 * Récupère la ressource sélectionnée.
+	 * @return la ressource sélectionnée.
+	 */
 	public Ressource getRessource() 
 	{
 		return (Ressource)this.ddlstRessource.getSelectedItem();
 	}
 
+	/**
+	 * Récupère la notion sélectionnée.
+	 * @return la notion sélectionnée.
+	 */
 	public Notion getNotion() 
 	{
 		return (Notion)this.ddlstNotion.getSelectedItem();
 	}
 
+	/**
+	 * Récupère la difficultée sélectionnée.
+	 * @return la difficultée sélectionnée.
+	 */
 	public int getDifficulte() 
 	{
 		for(int i = 0; i < this.tabRbDifficulte.length; i++)
@@ -279,11 +311,19 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		return -1;
 	}
 
+	/**
+	 * Récupère le temps saisi.
+	 * @return le temps saisi.
+	 */
 	public String getTemps() 
 	{
 		return this.txtTemps.getText();
 	}
 
+	/**
+	 * Récupère le nombre de points saisi.
+	 * @return le nombre de points saisi.
+	 */
 	public String getPoints() 
 	{
 		return this.txtPoints.getText();

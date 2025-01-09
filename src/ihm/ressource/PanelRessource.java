@@ -17,7 +17,7 @@ import ihm.shared.PanelEntite;
  * Classe JPanel pour afficher une Ressource.
  * 
  * @author  Equipe 03
- * @version 1.0 du 2024-12-10 Norme ISO-8601
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class PanelRessource extends PanelEntite
 {
@@ -37,10 +37,10 @@ public class PanelRessource extends PanelEntite
 	/**
 	 * Constructeur de la classe PanelRessource.
 	 *
-	 * @param ctrl  Le contrôleur
-     * @param ihm   Le gestionnaire des fenêtres de l'application.
-     * @param frame La fenêtre de gestion des ressources
-     * @param code  Le code de la ressource
+	 * @param ctrl  le contrôleur
+     * @param ihm   le gestionnaire des fenêtres de l'application.
+     * @param frame la fenêtre de gestion des ressources
+     * @param code  le code de la ressource
 	 */
 	public PanelRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame, String code)
 	{
@@ -73,9 +73,9 @@ public class PanelRessource extends PanelEntite
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -112,7 +112,7 @@ public class PanelRessource extends PanelEntite
          * Action déclenchée lorsque la souris entre dans le panel.
          * Modifie l'apparence pour signaler un survol.
          * 
-         * @param e L'événement de survol.
+         * @param e l'événement de survol.
          */
 		@Override
 		public void mouseEntered(MouseEvent e) 
@@ -125,7 +125,7 @@ public class PanelRessource extends PanelEntite
          * Action déclenchée lorsque la souris quitte le panel.
          * Réinitialise l'apparence en fonction de l'état de sélection.
          * 
-         * @param e L'événement de sortie.
+         * @param e l'événement de sortie.
          */
 		@Override
 		public void mouseExited(MouseEvent e) 
@@ -146,7 +146,7 @@ public class PanelRessource extends PanelEntite
          * Action déclenchée lors d'un clic de souris.
          * Permet de sélectionner ou désélectionner une ressource par un double-clic gauche.
          * 
-         * @param e L'événement de clic.
+         * @param e l'événement de clic.
          */
 		@Override
 		public void mouseClicked(MouseEvent e) 
@@ -168,7 +168,7 @@ public class PanelRessource extends PanelEntite
 
 			// Réinitialise les affichages liés aux ressources et aux notions.
 			PanelRessource.this.ihm.reinitAffichageRessource();
-			PanelRessource.this.ihm.reinitAffichageNotion(); 
+			PanelRessource.this.ihm.reinitAffichageNotion   (); 
 		}
 	}
 }

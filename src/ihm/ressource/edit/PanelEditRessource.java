@@ -11,7 +11,8 @@ import ihm.IHM;
 import ihm.shared.PanelEditNom;
 
 
-/** Classe JPanel de la fenêtre d'édition d'une ressource.
+/** 
+ * Classe JPanel générique dédiée à l'édition (création ou modification) d'une ressource.
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -23,9 +24,10 @@ public abstract class PanelEditRessource extends PanelEditNom
 	private JPanel     panelInfoCode;
 	
 	/**
-	 * Constructeur de la classe PaneleditRessource().
+	 * Constructeur de la classe PanelEditRessource.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelEditRessource(Controleur ctrl, IHM ihm)
 	{
@@ -50,10 +52,8 @@ public abstract class PanelEditRessource extends PanelEditNom
 		this.panelInfoCode.add(this.txtCode, BorderLayout.CENTER);
 	}
 
-	public String getType()
-	{
-		return "Ressource";
-	}
-
+	/**
+	 * Méthode abstraite pour définir ce qu'on fait lorsqu'on clique sur le bouton "Enregistrer".
+	 */
 	public abstract boolean enregistrer();
 }

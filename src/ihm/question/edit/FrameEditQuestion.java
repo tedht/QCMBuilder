@@ -28,14 +28,15 @@ public class FrameEditQuestion extends JFrame
 	private PanelAjoutQuestion panelAjoutQuestion;
 	
 	/**
-	 * Constructeur de la classe FrameEditQuestion.
+	 * Constructeur de la classe FrameEditQuestion utilisé lorsqu'on veut créer une question.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public FrameEditQuestion(Controleur ctrl, IHM ihm) 
 	{
 		this.ctrl = ctrl;
-		this.ihm = ihm;
+		this.ihm  = ihm;
 		
 		this.setTitle("Créer une Question");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -47,6 +48,13 @@ public class FrameEditQuestion extends JFrame
 		this.pagePrecedente();
 	}
 	
+	/**
+	 * Constructeur de la classe FrameEditQuestion utilisé lorsqu'on veut modifier une question.
+	 *
+	 * @param ctrl  le contrôleur.
+	 * @param ihm   le gestionnaire des fenêtres de l'application.
+	 * @param idQst l'id de la question qu'on veut modifier
+	 */
 	public FrameEditQuestion(Controleur ctrl, IHM ihm, Integer idQst) 
 	{
 		this.ctrl = ctrl;
@@ -62,15 +70,22 @@ public class FrameEditQuestion extends JFrame
 		this.pagePrecedente();
 	}
 
+	/**
+     * Affiche la première page d'édition de la question (paramètres généraux).
+     */
 	public void pagePrecedente()
 	{
 		this.remove    (this.panelAjoutQuestion); 
 		this.setSize   (IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
 		this.add       (this.panelParametresQuestion);
+
 		this.revalidate();
 		this.repaint   ();
 	}
 
+	/**
+     * Affiche la seconde page de création du questionnaire (ajout de questions).
+     */
 	public void pageSuivante()
 	{
 		this.remove    (this.panelParametresQuestion); 
@@ -83,13 +98,24 @@ public class FrameEditQuestion extends JFrame
 		this.repaint   ();
 	}
 
+	/**
+     * Méthode pour enregistrer une nouvelle question.
+     * 
+     * @return true si la qustion a été créée avec succès, false sinon.
+     */
 	public boolean enregistrer()
 	{
 		return this.enregistrer(null);
 	}
 
+	/**
+     * Méthode pour enregistrer les modifications effectuées sur une question existente.
+     * 
+     * @return true si la qustion a été créée avec succès, false sinon.
+     */
 	public boolean enregistrer(Integer idQst) 
 	{
+		// Récupération des valeurs saisies par l'utilisateur.
 		String codeRes     = this.panelParametresQuestion.getRessource        ().getCode();
 		int    idNot       = this.panelParametresQuestion.getNotion           ().getIdNot();
 		int    valDiff     = this.panelParametresQuestion.getDifficulte       (); 
@@ -103,8 +129,13 @@ public class FrameEditQuestion extends JFrame
 		String explication = this.panelAjoutQuestion     .getExplication      ();  
 		String pieceJointe = this.panelAjoutQuestion     .getPieceJointe      (); 
 		
+		/*--------------------------*/
+		/* Vérification des Erreurs */
+		/*--------------------------*/
+
 		List<String> lstErreurs = new ArrayList<String>();
 
+		// Vérification du champ "Points".
 		if(sPoints.isEmpty())
 		{
 			lstErreurs.add("Le champ 'Points' est vide");
@@ -124,6 +155,7 @@ public class FrameEditQuestion extends JFrame
 			}
 		}
 
+		// Vérification du champ "Temps".
 		if(sTemps.isEmpty())
 		{
 			lstErreurs.add("Le champ 'Temps' est vide");
@@ -144,17 +176,20 @@ public class FrameEditQuestion extends JFrame
 			}
 		}		
 
+		// Vérification de l'intitulé.
 		if(intitule.isEmpty()) 
 			lstErreurs.add("L'intitulé est vide");
 
+		// Vérification de l'explication.
 		if(this.panelAjoutQuestion.explicationSelected() && explication.isEmpty())
 			lstErreurs.add("L'explication est vide");
 
-		if(this.panelAjoutQuestion.PieceJointeSelected() && pieceJointe.isEmpty())
+		// Vérification de la pièce jointe.
+		if(this.panelAjoutQuestion.pieceJointeSelected() && pieceJointe.isEmpty())
 			lstErreurs.add("Aucune pièce jointe a été sélectionnée");
 
+		// Vérification des propositions
 		List<PanelProp> lstPanelProp = this.panelAjoutQuestion.getPanelProps();
-
 		if(lstPanelProp.size() == 0)
 		{
 			lstErreurs.add("Aucune proposition de réponse a été ajouté");
@@ -270,6 +305,7 @@ public class FrameEditQuestion extends JFrame
 			}
 		}
 
+		// Si des erreurs ont été détectées, affichage d'un message d'erreur.
 		if(lstErreurs.size() != 0)
 		{
 			String message = "La question n'a pas " + (idQst == null ? "été enregistrée" : "pu être modifiée") + " pour les raisons suivantes :\n";
@@ -284,7 +320,10 @@ public class FrameEditQuestion extends JFrame
 			);
 			return false;
 		}
-		
+
+		/*------------*/
+		/* Traitement */
+		/*------------*/
 		String       detailsQuestion = "";
 		String       detailsProp     = "";
 		List<String> lstDetailsProp  = new ArrayList<String>();
@@ -295,6 +334,7 @@ public class FrameEditQuestion extends JFrame
 		{
 			case 0  -> // Question à Choix Multiple à Réponse Unique
 			{
+				detailsQuestion += "true\t";
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
@@ -305,6 +345,7 @@ public class FrameEditQuestion extends JFrame
 			} 
 			case 1  -> // Question à Choix Multiple à Réponse Multiple
 			{
+				detailsQuestion += "false\t";
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropQRM panelPropQCM = (PanelPropQRM) panelProp;
@@ -356,11 +397,18 @@ public class FrameEditQuestion extends JFrame
 		return true;
 	}
 
+	/**
+	 * Récupère l'index du type de question choisi dans la liste déroulante.
+	 * @return l'index du type de question choisi dans la liste déroulante.
+	 */
 	public int getIndexTypeQuestion() 
 	{
 		return this.panelParametresQuestion.getIndexTypeQuestion();
 	}
 
+	/**
+	 * Supprime toutes les propositions du panle d'ajout de propositions.
+	 */
 	public void clearPanelProps() 
 	{
 		if(this.panelAjoutQuestion != null)

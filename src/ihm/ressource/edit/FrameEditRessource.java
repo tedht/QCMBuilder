@@ -10,16 +10,17 @@ import ihm.IHM;
 /** Classe représentant la fenêtre d'édition (création ou modification) d'une ressource.
  * 
  * @author Equipe 03
- * @version 1.0 du 2024-12-09 Norme ISO-8601
+ * @version 1.0 du 2024-12-11 Norme ISO-8601
  */
 public class FrameEditRessource extends JFrame
 {
 	private PanelEditRessource panelEditRessource;
 
 	/**
-	 * Constructeur de la classe PanelEditRessource utilisé lorsqu'on veut créer une ressource.
+	 * Constructeur de la classe FrameEditRessource utilisé lorsqu'on veut créer une ressource.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public FrameEditRessource(Controleur ctrl, IHM ihm)
 	{
@@ -33,6 +34,13 @@ public class FrameEditRessource extends JFrame
 		this.pack();
 	}
 
+	/**
+	 * Constructeur de la classe FrameEditRessource utilisé lorsqu'on veut modifier une ressource.
+	 *
+	 * @param ctrl le contrôleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
+	 * @param code le code de la ressource qu'on veut modifier.
+	 */
 	public FrameEditRessource(Controleur ctrl, IHM ihm, String code) 
 	{
 		this.setTitle("Modifier une Ressource");

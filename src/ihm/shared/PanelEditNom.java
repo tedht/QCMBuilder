@@ -85,7 +85,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
 	 * @param e l'événement qui a déclenché l'action.
 	 */

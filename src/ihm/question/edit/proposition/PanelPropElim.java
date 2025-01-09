@@ -14,6 +14,7 @@ import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
+ * Classe JPanel représentant une proposition de réponse d'une question QRM
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -26,6 +27,10 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	private JLabel       lblOrdreElim, lblPointsPerdus;
 	private JTextField   txtOrdreElim, txtPointsPerdus;
 
+	/**
+	 * Constructeur de la classe PanelPropElim.
+	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
+	 */
 	public PanelPropElim(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
@@ -99,23 +104,94 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	/*---------*/
 	/* Getters */
 	/*---------*/
-	public String  getText         () { return this.txtProposition  .getText   (); }
-	public boolean estReponse      () { return this.rbReponse       .isSelected(); }
-	public String  getOrdreElim    () { return this.txtOrdreElim    .getText   (); }
+
+	/**
+     * Retourne le texte de la proposition.
+     * 
+     * @return le texte de la proposition.
+     */
+	public String  getText() 
+	{ 
+		return this.txtProposition.getText(); 
+	}
+
+	/**
+     * Indique si la proposition est marquée comme réponse correcte.
+     * 
+     * @return true si c'est une réponse correcte, false sinon.
+     */
+	public boolean estReponse() 
+	{ 
+		return this.rbReponse.isSelected();
+	}
+
+	/**
+     * Retourne l'ordre d'élimination sous forme de chaine de caractères.
+     * 
+     * @return l'ordre d'élimination sous forme de chaine de caractères.
+     */
+	public String getOrdreElim() 
+	{ 
+		return this.txtOrdreElim.getText(); 
+	}
+
+	/**
+     * Retourne le nombre de points perdus sous forme de chaine de caractères.
+     * 
+     * @return le nombre de points perdus sous forme de chaine de caractères.
+     */
 	public String  getPointsPerdus() { return this.txtPointsPerdus.getText   (); }
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
-	public void setText         (String  text)       { this.txtProposition  .setText    (text);       }
-	public void setReponse      (boolean reponse)    { this.rbReponse       .setSelected(reponse);    }
-	public void setOrdreElim    (String  ordreElim)  { this.txtOrdreElim    .setText    (ordreElim);  }
-	public void setPointsPerdus(String  ptsPerdus) { this.txtPointsPerdus.setText    (ptsPerdus); }
+
+	/**
+     * Définit le texte de la proposition.
+     * 
+     * @param text le texte à afficher dans la zone de texte.
+     */
+	public void setText(String  text)       
+	{ 
+		this.txtProposition.setText(text);       
+	}
+
+	/**
+     * Définit si la proposition est une réponse correcte.
+     * 
+     * @param reponse true si c'est une réponse correcte, false sinon.
+     */
+	public void setReponse(boolean reponse)
+	{ 
+		this.rbReponse.setSelected(reponse);
+	}
+
+	/**
+     * Définit l'ordre délimination.
+     * 
+     * @param ordreElim l'ordre délimination.
+     */
+	public void setOrdreElim(String ordreElim) 
+	{ 
+		this.txtOrdreElim.setText(ordreElim);  
+	}
+
+	/**
+     * Définit le nombre de points perdus.
+     * 
+     * @param ptsPerdus le nombre de points perdus.
+     */
+	public void setPointsPerdus(String  ptsPerdus) { this.txtPointsPerdus.setText(ptsPerdus); }
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
 	
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -126,11 +202,17 @@ public class PanelPropElim extends PanelProp implements ItemListener
 		}
 	}
 
+	/**
+	 * Gère les changements d'état des éléments interactifs
+	 * 
+	 * @param e l'événement qui déclenche l'appel à cette méthode.
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e) 
 	{
 		if(e.getSource() == this.rbReponse)
 		{
+			// Si c'est une réponse, désactive les champs "Ordre" et "Pts perdus"
 			if(e.getStateChange() == ItemEvent.SELECTED)
 			{
 				this.lblOrdreElim    .setForeground(Color.GRAY);
@@ -141,7 +223,7 @@ public class PanelPropElim extends PanelProp implements ItemListener
 				this.txtPointsPerdus.setEnabled(false);
 				this.txtPointsPerdus.setText("");
 			}
-			else
+			else // Sinon réactive les champs "Ordre" et "Pts perdus"
 			{
 				this.lblOrdreElim    .setForeground(Color.BLACK);
 				this.txtOrdreElim    .setEnabled(true);
@@ -156,11 +238,20 @@ public class PanelPropElim extends PanelProp implements ItemListener
 		}
 	}
 
+	/**
+     * Classe interne pour gérer ce qui se passe lorsqu'on modifie le texte.
+     */
 	private class GereText implements DocumentListener 
 	{
+		/**
+		 * Action déclenchée lorsqu'on insère une caractère dans le champs "Ordre"
+		 * ou "Pts perdus".
+		 */
 		@Override
 		public void insertUpdate(DocumentEvent e) 
 		{
+			// Si un des champs n'est pas vide, on désactive le bouton radio pour sélectionner
+			// la proposition en tant que réponse correcte.
 			if(   !"".equals(PanelPropElim.this.txtOrdreElim    .getText()) 
 			   || !"".equals(PanelPropElim.this.txtPointsPerdus.getText()))
 			{
@@ -168,9 +259,15 @@ public class PanelPropElim extends PanelProp implements ItemListener
 			}
 		}
 
+		/**
+		 * Action déclenchée lorsqu'on upprime une caractère du champs "Ordre"
+		 * ou "Pts perdus".
+		 */
 		@Override
 		public void removeUpdate(DocumentEvent e) 
 		{
+			// Si les deux champs sont vides, on réactive le bouton radio pour sélectionner
+			// la proposition en tant que réponse correcte.
 			if(   "".equals(PanelPropElim.this.txtOrdreElim    .getText()) 
 			   && "".equals(PanelPropElim.this.txtPointsPerdus.getText()))
 			{
@@ -178,6 +275,9 @@ public class PanelPropElim extends PanelProp implements ItemListener
 			}
 		}
 
+		/**
+		 * Méthode inutilisée
+		 */
 		@Override
 		public void changedUpdate(DocumentEvent e) {}
 	}

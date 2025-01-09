@@ -5,10 +5,24 @@ import metier.entite.question.Question;
 import metier.entite.question.TypeQuestion;
 import metier.entite.question.qcm.QCM;
 
+/** 
+ * Classe JPanel pour saisir les paramètres intitiales lorsqu'on mdoifie une question existente.
+ * Cette classe hérite de PanelInitQuestion et ne fait que ajouter les données de la question
+ * qu'on veut modifier aux champs correspondants.
+ * 
+ * @author Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public class PanelModifInitQuestion extends PanelInitQuestion
 {	
 	private int idQst;
 
+	/**
+	 * Constructeur de la classe PanelModifInitQuestion
+	 * @param ctrl  le contrôleur.
+	 * @param frame le frame d'édition de questions.
+	 * @param idQst l'id de la question qu'on veut modifier.
+	 */
 	public PanelModifInitQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(ctrl, frame);

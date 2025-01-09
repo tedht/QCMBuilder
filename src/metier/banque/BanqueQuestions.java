@@ -141,8 +141,8 @@ public class BanqueQuestions extends Banque
 		for(Question question : this.lstQuestions)
 		{
 			if(   question != null 
-			   && question.getCodeRes().equals(codeRes) 
-			   && question.getIdNot()      == idNot
+			   && question.getCodeRes   ().equals(codeRes) 
+			   && question.getIdNot     () == idNot
 			   && question.getDifficulte() == diff)
 			{
 				lstQuestions.add(question);

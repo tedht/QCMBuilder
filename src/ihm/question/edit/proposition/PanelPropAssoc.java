@@ -10,6 +10,7 @@ import ihm.IHM;
 import ihm.question.edit.PanelAjoutQuestion;
 
 /** 
+ * Classe JPanel représentant une proposition de réponse d'une question Association
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -19,6 +20,10 @@ public class PanelPropAssoc extends PanelProp
 	private JTextArea[] tabTxtProposition;
 	private JButton  [] tabBtnSupprimer;
 	
+	/**
+	 * Constructeur de la classe PanelPropAssoc.
+	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
+	 */
 	public PanelPropAssoc(PanelAjoutQuestion panelEditQuestion)
 	{
 		super(panelEditQuestion);
@@ -78,18 +83,60 @@ public class PanelPropAssoc extends PanelProp
 	/*---------*/
 	/* Getters */
 	/*---------*/
-	public String getTextGauche() { return this.tabTxtProposition[0].getText(); }
-	public String getTextDroite() { return this.tabTxtProposition[1].getText(); }
+
+	/**
+     * Retourne le texte gauche.
+     * 
+     * @return le texte gauche.
+     */
+	public String getTextGauche() 
+	{ 
+		return this.tabTxtProposition[0].getText(); 
+	}
+
+	/**
+     * Retourne le texte droite.
+     * 
+     * @return le texte droite.
+     */
+	public String getTextDroite() 
+	{ 
+		return this.tabTxtProposition[1].getText(); 
+	}
 
 	/*---------*/
 	/* Setters */
 	/*---------*/
-	public void setTextGauche(String text) { this.tabTxtProposition[0].setText(text); }
-	public void setTextDroite(String text) { this.tabTxtProposition[1].setText(text); }
+
+	/**
+     * Définit le texte gauche de la proposition.
+     * 
+     * @param text le texte à afficher dans la zone de texte gauche.
+     */
+	public void setTextGauche(String text) 
+	{ 
+		this.tabTxtProposition[0].setText(text); 
+	}
+		
+	/**
+     * Définit le texte droite de la proposition.
+     * 
+     * @param text le texte à afficher dans la zone de texte droite.
+     */
+	public void setTextDroite(String text) 
+	{ 
+		this.tabTxtProposition[1].setText(text); 
+	}
 
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/
+
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

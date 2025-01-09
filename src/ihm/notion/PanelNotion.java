@@ -60,9 +60,9 @@ public class PanelNotion extends PanelEntite
 
 	
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Gère les actions des boutons
 	 * 
-	 * @param e L'événement qui a déclenché l'action.
+	 * @param e l'événement qui a déclenché l'action.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 

@@ -17,11 +17,11 @@ import ihm.questionnaire.tableau.GrilleNotionsModel;
 import ihm.questionnaire.tableau.GrilleNotionsRenderer;
 
 /**
- * Classe représentant la fenêtre de création d'une évaluation
+ * Classe représentant dédiée à la saisie du nombre de questions à générer par notion
+ * et par difficulté d'une évaluation.
  * 
- * @author Ted Herambert
- * @date 2024/12/16
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-16 Norme ISO-8601
  */
 public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 {
@@ -34,6 +34,12 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 	private JScrollPane        spGrilleNotions;
 	private JButton            btnPrecedent, btnGenerer;
 
+	/**
+	 * Constructeur de la classe PanelAjoutQuestionnaire
+	 * 
+	 * @param ctrl  le contrôleur
+	 * @param frame la fenêtre de création d'une évaluation
+	 */
 	public PanelAjoutQuestionnaire(Controleur ctrl, FrameCreationQuestionnaire frame) 
 	{
 		this.ctrl  = ctrl;
@@ -86,6 +92,11 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 
 	}
 
+	/**
+	 * Gère les actions des boutons
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -100,6 +111,11 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		}
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e l'événement qui a déclenché l'action.
+	 */
 	public void majTabNbQuestions(String codeRes) 
 	{
 		// Création d'une nouvelle Instance de tblGrilleNotions
@@ -130,10 +146,12 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		this.tblGrilleNotions.setShowGrid(true);
 
 		// Gestion de la taille des cellules
+		// Première colonne
 		this.tblGrilleNotions.getColumnModel()
 		                     .getColumn(0)
 							 .setPreferredWidth(200);
 
+		// Autres colonnes
 		for (int i = 1; i < this.tblGrilleNotions.getColumnModel().getColumnCount()-1; i++) 
 		{
     		this.tblGrilleNotions.getColumnModel()
@@ -141,12 +159,15 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 								 .setPreferredWidth(40);
 		}
 
+		// Dernière colonne
 		this.tblGrilleNotions.getColumnModel()
 		                     .getColumn(this.tblGrilleNotions.getColumnModel().getColumnCount()-1)
 							 .setPreferredWidth(60);
 		
+		// Barre de déroulement
 		this.spGrilleNotions  = new JScrollPane(this.tblGrilleNotions);
 
+		// Remplace le contenu de panelInfo avec le nouveau panel
 		this.panelInfo.removeAll();
 		this.panelInfo.add(this.spGrilleNotions);
 
@@ -154,11 +175,22 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		this.panelInfo.repaint();
 	}
 
+	/**
+	 * Active ou désactive le bouton "Générer" en fonction de l'état passé en paramètre.
+	 * 
+	 * @param b Si true, le bouton est activé; si false, il est désactivé.
+	 */
 	public void setBtnGenererEnabled(boolean b) 
 	{
 		this.btnGenerer.setEnabled(b);
 	}
 
+	/**
+	 * Récupère un tableau 2D contenant le nombre de questions à générer en fonction de la notion (la ligne)
+	 * et de la difficutlé (la colonne).
+	 * 
+	 * @return Un tableau 2D d'entiers représentant le nombre de questions à générer.
+	 */
 	public int[][] getTabNbQuestions()
 	{
 		return this.grilleNotionsModel.getTabNbQuestions();

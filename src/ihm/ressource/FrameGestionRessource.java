@@ -12,7 +12,7 @@ import ihm.IHM;
  *  Classe représentant la fenêtre de gestion des ressources.
  * 
  * @author  Equipe 03
- * @version 1.0 du 2024-12-10 Norme ISO-8601
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class FrameGestionRessource extends JFrame
 {
@@ -24,8 +24,8 @@ public class FrameGestionRessource extends JFrame
 	/**
 	 * Constructeur de la classe FrameGestionRessource.
 	 * 
-	 * @param ctrl Le controleur.
-	 * @param ihm  Le gestionnaire des fenêtres de l'application.
+	 * @param ctrl le controleur.
+	 * @param ihm  le gestionnaire des fenêtres de l'application.
 	 */
 	public FrameGestionRessource(Controleur ctrl, IHM ihm) 
 	{
