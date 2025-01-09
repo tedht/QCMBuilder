@@ -2,6 +2,7 @@ package metier;
 
 
 import java.util.List;
+import java.io.File;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -436,6 +437,8 @@ public class QCMBuilder
 		{
 			question.setCodeRes(nouveauCode);
 		}
+
+		new File("data/ressources/"+code).renameTo(new File("data/ressources/"+nouveauCode));
 
 		this.banqueRessources.sauvegarder();
 	}
