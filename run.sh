@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Compilation
-javac @compile.list -d bin
+javac -cp %CLASSPATH% @compile.list -d bin -encoding UTF-8
 
 # Execution
 cd bin
-java controleur/Controleur
+java -cp %CLASSPATH% controleur.Controleur
 
 read -p "Press any key to continue..."
