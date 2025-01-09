@@ -659,7 +659,7 @@ async function validerReponses(index)
             corrige: bonneReponse,
             optionSelectionnee: reponsesAssocieesUtilisateur
         };
-        reinitialiserSvg();
+        reinitialiserAssociationsEtSvg();
         
         // Affichage du feedback
         await afficherFeedback(bonneReponse, question, reponsesUtilisateur);

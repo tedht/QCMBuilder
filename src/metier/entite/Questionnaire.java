@@ -213,7 +213,7 @@ public class Questionnaire
 									<p><strong>Ressource :</strong> %s</p>
 									<p><strong>Notion(s) : </strong><span id="notions"></span></p>
 									
-									<p><strong>Nombre de lstQuestions : </strong><span id="question-nombre"></span></p>
+									<p><strong>Nombre de questions : </strong><span id="question-nombre"></span></p>
 									<p id="p-temps"><strong>Durée totale prévue : </strong><span id="temps-total"></span></p>
 									<p id="p-score"style="display: none;">
 										<strong>Score total : </strong> <span id="score-total"></span>
