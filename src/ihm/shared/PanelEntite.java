@@ -26,9 +26,23 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 	protected JButton btnModifier, btnSupprimer;
 
 	/**
-	 * Constructeur e la classe PanelEntited.
+	 * Constructeur qui crée une instance de PanelEntite sans texte.
 	 *
-	 * @param ctrl  Le contrôleur
+	 * @param ctrl      Le contrôleur.
+	 * @param ihm       Le gestionnaire des fenêtres de l'application.
+	 */
+	public PanelEntite(Controleur ctrl, IHM ihm)
+	{
+		this(ctrl, ihm, "", "");
+	}
+
+	/**
+	 * Constructeur de la classe PanelEntite.
+	 *
+	 * @param ctrl      Le contrôleur.
+	 * @param ihm       Le gestionnaire des fenêtres de l'application.
+	 * @param titre     Le titre.
+	 * @param sousTitre Le sous-titre.
 	 */
 	public PanelEntite(Controleur ctrl, IHM ihm, String titre, String sousTitre)
 	{

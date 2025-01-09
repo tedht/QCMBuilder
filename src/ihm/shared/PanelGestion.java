@@ -31,8 +31,8 @@ public abstract class PanelGestion extends JPanel implements ActionListener
 	/**
 	 * Constructeur de la classe PanelGestion.
 	 * 
-	 * @param ctrl Le controleur
-	 * @param ihm  L'IHM
+	 * @param ctrl Le controleur.
+	 * @param ihm  Le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelGestion(Controleur ctrl, IHM ihm)
 	{

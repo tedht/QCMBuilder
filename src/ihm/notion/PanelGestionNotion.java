@@ -10,6 +10,12 @@ import ihm.IHM;
 import ihm.shared.PanelGestion;
 import metier.entite.Notion;
 
+/**
+ * Classe JPanel dédiée à la gestion des notions.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
+ */
 public class PanelGestionNotion extends PanelGestion
 {
 	private FrameGestionNotion frame;
@@ -17,6 +23,13 @@ public class PanelGestionNotion extends PanelGestion
 	private JPanel panelInstruction;
 	private JPanel panelAucuneNotion;
 
+	/**
+	 * Constructeur de la classe PanelGestionNotion
+	 * 
+	 * @param ctrl  Le contrôleur.
+	 * @param ihm   Le gestionnaire des fenêtres de l'application.
+	 * @param frame La fenêtre de gestion des notionss.
+	 */
 	public PanelGestionNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame) 
 	{
 		super(ctrl, ihm);
@@ -36,6 +49,11 @@ public class PanelGestionNotion extends PanelGestion
 		this.afficher();
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -45,66 +63,80 @@ public class PanelGestionNotion extends PanelGestion
 		}
 	}
 
+	/**
+     * Méthode qui gère l'affichage des notions.
+     * 
+     * Cette méthode est responsable de l'affichage des notions disponibles dans l'application,
+     * ainsi que de l'ajout de panels pour chaque notion. Si aucune notion n'est disponible,
+     * un panel d'instruction est affiché.
+     */
 	@Override
 	public void afficher() 
 	{
+		// Suppression de tous les composants existants pour redessiner
 		this.panelContenu.removeAll();
 
-		PanelNotion panelCarte;
-
+		// Création du panel pour chaque notion
+		PanelNotion panelNotion;
 		if(this.ctrl.getRessources().isEmpty())
 		{
+			// Si aucune ressource n'est disponible, afficher des panels vides
 			for(int i = 10; i > 0; i--)
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
-				panelCarte.setVisible(false);
-				this.panelContenu.add(panelCarte);
+				panelNotion = new PanelNotion();
+				panelNotion.setVisible(false);
+				this.panelContenu.add(panelNotion);
 			}
 		}
 		else if(this.ctrl.getRessourceSelectionnee() == null)
 		{
+			// Si aucune ressource n'est sélectionnée, afficher les instructions
 			this.btnAjouter.setEnabled(false);
-			
 			this.panelContenu.add(this.panelInstruction);
 
+			// Ajouter des panels vides pour combler l'espace
 			for(int i = 9; i > 0; i--)
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
-				panelCarte.setVisible(false);
-				this.panelContenu.add(panelCarte);
+				panelNotion = new PanelNotion();
+				panelNotion.setVisible(false);
+				this.panelContenu.add(panelNotion);
 			}
 		}
 		else if(this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size() == 0)
 		{
+			// Si la ressource sélectionnée n'a pas de notions, afficher un message et activer le bouton d'ajout
 			this.btnAjouter.setEnabled(true);
-			
 			this.panelContenu.add(this.panelAucuneNotion);
 
+			// Ajouter des panels vides pour combler l'espace
 			for(int i = 9; i > 0; i--)
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
-				panelCarte.setVisible(false);
-				this.panelContenu.add(panelCarte);
+				panelNotion = new PanelNotion();
+				panelNotion.setVisible(false);
+				this.panelContenu.add(panelNotion);
 			}
 		}
 		else
 		{
+			// Si des notions sont disponibles, afficher chaque notion
 			this.btnAjouter.setEnabled(true);
 			
 			for(Notion notion : this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()))
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, notion.getIdNot(), notion.getNom());
-				this.panelContenu.add(panelCarte);
+				panelNotion = new PanelNotion(this.ctrl, this.ihm, this.frame, notion.getIdNot());
+				this.panelContenu.add(panelNotion);
 			}
 
+			// Ajouter des panels vides si nécessaire pour combler l'espace restant
 			for(int i = 10 - this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size(); i > 0; i--)
 			{
-				panelCarte = new PanelNotion(this.ctrl, this.ihm, this.frame, 0, "");
-				panelCarte.setVisible(false);
-				this.panelContenu.add(panelCarte);
+				panelNotion = new PanelNotion();
+				panelNotion.setVisible(false);
+				this.panelContenu.add(panelNotion);
 			}
 		}
 
+		// Redessiner le panel après modification
 		this.revalidate();
 		this.repaint();
 	}

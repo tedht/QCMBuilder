@@ -8,13 +8,25 @@ import javax.swing.WindowConstants;
 import controleur.Controleur;
 import ihm.IHM;
 
-public class FrameGestionRessource  extends JFrame
+/**
+ *  Classe représentant la fenêtre de gestion des ressources.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
+ */
+public class FrameGestionRessource extends JFrame
 {
 	private Controleur ctrl;
 	private IHM        ihm;
 
 	private PanelGestionRessource panelGestionRessource;
 
+	/**
+	 * Constructeur de la classe FrameGestionRessource.
+	 * 
+	 * @param ctrl Le controleur.
+	 * @param ihm  Le gestionnaire des fenêtres de l'application.
+	 */
 	public FrameGestionRessource(Controleur ctrl, IHM ihm) 
 	{
 		this.ctrl = ctrl;
@@ -32,6 +44,9 @@ public class FrameGestionRessource  extends JFrame
         this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
 	}
 
+	/**
+     * Réinitialise l'affichage du panel de gestion des ressources.
+     */
 	public void reinitAffichage() 
 	{
 		this.panelGestionRessource.afficher();

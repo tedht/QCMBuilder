@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 /**
- * Classe PanelQCMBuilder qui gère l'interface de gestion des QCM.
+ * Classe JPanel associée à la fenêtre principale de l'application
  * 
  * @author  Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
@@ -22,9 +22,9 @@ public class PanelQCMBuilder extends JPanel implements ActionListener
 	private JButton    btnRessourceNotion, btnQuestion, btnQuestionnaire, btnQuitter;
 
 	/** 
-	 * Constructeur du panel de gestion des QCM.
+	 * Constructeur de la classe PanelQCMBuilder
 	 * 
-	 * @param ihm L'interface homme-machine.
+	 * @param ihm Le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelQCMBuilder(IHM ihm) 
 	{

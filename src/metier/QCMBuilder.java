@@ -136,7 +136,10 @@ public class QCMBuilder
 	 * @param  idNot   l'id de la notion.
 	 * @return         la liste des questions associées.
 	 */
-	public List<Question> getQuestions(String codeRes, int idNot) { return this.banqueQuestions.getQuestions(codeRes, idNot); }
+	public List<Question> getQuestions(String codeRes, int idNot) 
+	{ 
+		return this.banqueQuestions.getQuestions(codeRes, idNot); 
+	}
 	
 	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff)
 	{

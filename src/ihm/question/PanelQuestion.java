@@ -10,11 +10,10 @@ import ihm.IHM;
 import ihm.shared.PanelEntite;
 
 /**
- * Classe JPanel pour afficher une Notion.
+ * Classe JPanel pour afficher une Question.
  * 
- * @author Ted Herambert
- * @date 2024/12/10
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
  */
 public class PanelQuestion extends PanelEntite
 {

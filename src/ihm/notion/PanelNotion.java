@@ -16,9 +16,8 @@ import ihm.shared.PanelEntite;
 /**
  * Classe JPanel pour afficher une Notion.
  * 
- * @author Ted Herambert
- * @date 2024/12/10
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
  */
 public class PanelNotion extends PanelEntite
 {	
@@ -27,26 +26,44 @@ public class PanelNotion extends PanelEntite
 	private int id;
 
 	/**
+	 * Constructeur sans paramètre qui crée une instance de PanelNotion vide.
+	 */
+	public PanelNotion()
+	{
+		super(null, null, "", "");
+		this.id = -1;
+	}
+
+	/**
 	 * Constructeur de la classe PanelNotion.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl  Le contrôleur
+     * @param ihm   Le gestionnaire des fenêtres de l'application.
+     * @param frame La fenêtre de gestion des notions
+     * @param id    L'id de la notion
 	 */
-	public PanelNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame, int id, String nom)
+	public PanelNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame, int id)
 	{
-		super(ctrl, ihm, nom, " ");
+		super(ctrl, ihm);
+
+		if(id != -1)
+			this.lblTitre.setText(ctrl.getNotion(id).getNom());
 
 		this.frame = frame;
+		this.id    = id;
 
-		this.id = id;
-
-		/*---------------------------*/
-		/* Activation des composants */
-		/*---------------------------*/
-		this.btnModifier.addActionListener(this);
+		// Activation des composants
+		this.btnModifier .addActionListener(this);
 		this.btnSupprimer.addActionListener(this);
 		this.addMouseListener(new GereSourisNotion());
 	}
 
+	
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -72,8 +89,17 @@ public class PanelNotion extends PanelEntite
 		}
 	}
 
+	/**
+     * Classe interne pour gérer les interactions avec la souris sur le panel.
+     */
 	private class GereSourisNotion extends MouseAdapter
 	{
+		/**
+         * Action déclenchée lorsque la souris entre dans le panel.
+         * Change la couleur de fond et ajoute une bordure pour signaler un survol.
+         * 
+         * @param e L'événement de survol.
+         */
 		@Override
 		public void mouseEntered(MouseEvent e) 
 		{
@@ -81,6 +107,12 @@ public class PanelNotion extends PanelEntite
 			PanelNotion.this.setBackground(Color.LIGHT_GRAY);
 		}
 
+		/**
+         * Action déclenchée lorsque la souris quitte le panel.
+         * Réinitialise l'apparence du panel à son état initial.
+         * 
+         * @param e L'événement de sortie.
+         */
 		@Override
 		public void mouseExited(MouseEvent e) 
 		{

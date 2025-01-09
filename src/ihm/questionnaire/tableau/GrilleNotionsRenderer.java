@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import metier.entite.Notion;
 import metier.entite.question.Difficulte;
 
 public class GrilleNotionsRenderer extends DefaultTableCellRenderer 
@@ -77,6 +78,14 @@ public class GrilleNotionsRenderer extends DefaultTableCellRenderer
 
 			this.txt.setBackground(table.getBackground());
 			this.txt.setForeground(table.getForeground()); 
+
+			return this.txt;
+		}
+
+		if (value instanceof Notion) 
+		{
+			this.txt.setText(((Notion)value).toString());
+			this.txt.setBorder(null);
 
 			return this.txt;
 		}

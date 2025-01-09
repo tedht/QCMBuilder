@@ -25,9 +25,7 @@ import ihm.questionnaire.export.FrameExport;
 
 
 /**
- * Classe représentant l'interface graphique de l'application.
- * Cette classe gère l'affichage des différentes fenêtres
- * et les interactions avec l'utilisateur.
+ * Classe qui gère l'affichage des fenêtres différentes.
  * 
  * @author  Equipe 03
  * @version 1.0 du 2024-12-06 Norme ISO-8601
@@ -135,9 +133,9 @@ public class IHM
 	/**
 	 * Affiche une fenêtre donnée à une position spécifique
 	 * 
-	 * @param frame La fenêtre qu'on souhaite afficher
-	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée
-	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée
+	 * @param frame La fenêtre qu'on souhaite afficher.
+	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée.
+	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée.
 	 */
 	private void afficher(JFrame frame, int posX, int posY)
 	{
@@ -430,11 +428,11 @@ public class IHM
 	 * Méthode statique pour récupérer une image au format svg, utilisé pour 
 	 * afficher les icônes des boutons.
 	 * 
-	 * @param chemin  Le chemin de l'image svg
-	 * @param largeur La largeur souhaitée
-	 * @param hauteur La hauteur souhaitée
+	 * @param chemin  Le chemin de l'image svg.
+	 * @param largeur La largeur souhaitée.
+	 * @param hauteur La hauteur souhaitée.
 	 * 
-	 * @return L'image sous forme de SVGIcon
+	 * @return L'image sous forme de SVGIcon.
 	 */
 	@SuppressWarnings("deprecation")
 	public static SVGIcon getImgIconSVG(String chemin, int largeur, int hauteur)

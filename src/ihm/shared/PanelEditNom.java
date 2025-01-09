@@ -35,6 +35,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	 * Constructeur e la classe PanelEditNom.
 	 *
 	 * @param ctrl Le contrôleur
+	 * @param ihm  Le gestionnaire des fenêtres de l'application.
 	 */
 	public PanelEditNom(Controleur ctrl, IHM ihm)
 	{
@@ -82,6 +83,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		this.btnAnnuler.addActionListener(this);
 		this.btnEnregistrer.addActionListener(this);
 	}
+
 	/**
 	 * Méthode qui gère les actions des boutons.
 	 * 

@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import ihm.questionnaire.PanelAjoutQuestionnaire;
 import metier.entite.Notion;
+import metier.entite.question.Difficulte;
 
 /**
  * Classe représentant la fenêtre de création d'une évaluation
@@ -21,40 +22,37 @@ public class GrilleNotionsModel extends AbstractTableModel
 	private Controleur              ctrl;
 	private PanelAjoutQuestionnaire panel;
 
-	private String[]                tabEntetes;
-	private Object[][]              tabDonnees;
+	private String[]   tabEntetes;
+	private Object[][] tabDonnees;
 
-	private int[]                   tabNbQuestionsDiff;
+	private int[] tabNbQuestionsDiff;
 
 	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, String codeRes)
 	{
 		this.ctrl    = ctrl;
 		this.panel   = panel;
-
+		
 		this.tabNbQuestionsDiff = new int[4];
 
-		String nomNotion;
 		List<Notion> lstNotions =   this.ctrl.getNotions(codeRes) != null 
 		                          ? this.ctrl.getNotions(codeRes)
 								  : new ArrayList<Notion>();
 
-		tabDonnees = new Object[lstNotions.size()+2][7];
+		this.tabDonnees = new Object[lstNotions.size()+2][7];
 
 		for ( int lig = 0; lig < lstNotions.size(); lig++)
 		{
-			nomNotion = lstNotions.get(lig).getNom();
-
-			tabDonnees[lig][0] = nomNotion;
-			tabDonnees[lig][1] = false;
-			tabDonnees[lig][2] = null;
-			tabDonnees[lig][3] = null;
-			tabDonnees[lig][4] = null;
-			tabDonnees[lig][5] = null;
-			tabDonnees[lig][6] = null;
+			this.tabDonnees[lig][0] = lstNotions.get(lig);
+			this.tabDonnees[lig][1] = false;
+			this.tabDonnees[lig][2] = null;
+			this.tabDonnees[lig][3] = null;
+			this.tabDonnees[lig][4] = null;
+			this.tabDonnees[lig][5] = null;
+			this.tabDonnees[lig][6] = null;
 		}
 
-		tabDonnees[tabDonnees.length-2] = new Object[]{ null, null , null, null, null, null, null };
-		tabDonnees[tabDonnees.length-1] = new Object[]{ null, null , 0, 0, 0, 0, "Σ = 0" };
+		this.tabDonnees[this.tabDonnees.length-2] = new Object[]{ null, null , null, null, null, null, null };
+		this.tabDonnees[this.tabDonnees.length-1] = new Object[]{ null, null , 0, 0, 0, 0, "Σ = 0" };
 
 		this.tabEntetes = new String[]{ "Notion", " " , "TF", "F", "M", "D", " " };
 
@@ -106,6 +104,20 @@ public class GrilleNotionsModel extends AbstractTableModel
 			{
 				Integer oldVal = (Integer)this.tabDonnees[lig][col];
 				Integer newVal = (Integer)value;
+
+				if(this.tabDonnees[lig][0] != null)
+				{
+					String codeRes = ((Notion)this.tabDonnees[lig][0]).getCodeRes(); 
+					int    idNot   = ((Notion)this.tabDonnees[lig][0]).getIdNot();
+					int    nbQst   = this.ctrl.getQuestions(codeRes, idNot, Difficulte.fromInt(col-2)).size();
+					
+					if(newVal > nbQst)
+						newVal = nbQst;
+				}
+				else
+				{
+					newVal = 0;
+				}
 
 				this.tabDonnees[lig][col] = newVal;
 				this.fireTableCellUpdated(lig, col);

@@ -5,26 +5,22 @@ import java.util.List;
 import metier.QCMBuilder;
 import metier.entite.Notion;
 import metier.entite.Ressource;
+import metier.entite.question.Difficulte;
 import metier.entite.question.Question;
 
 /**
- * Classe Controleur qui gère les interactions entre l'IHM et le métier.
+ * Classe Controleur qui gère les interactions entre Le gestionnaire des fenêtres de l'application. et le métier.
  * 
  * @author  Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
  */
 public class Controleur
 {
-
-
-
 	/*-----------*/
 	/* Attributs */
 	/*-----------*/
 
 	private QCMBuilder metier;
-
-
 
 	/*--------------*/
 	/* Constructeur */
@@ -38,8 +34,6 @@ public class Controleur
 		this.metier = new QCMBuilder();
 		new IHM(this);
 	}
-
-
 
 	/*---------*/
 	/* Getters */
@@ -152,6 +146,19 @@ public class Controleur
 	public Question getQuestion(int idQst)
 	{
 		return this.metier.getQuestion(idQst);
+	}
+
+	/**
+	 * Retourne la liste des questions associées à une ressource à partir de son code, de l'id de la notion et d'une difficulté donnée.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param idNot   l'id de la notion.
+	 * @param diff    la difficulté de la question.
+	 * @return        la liste des questions associées.
+	 */
+	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff)
+	{
+		return this.metier.getQuestions(codeRes, idNot, diff);
 	}
 
 	/**

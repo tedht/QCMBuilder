@@ -17,8 +17,8 @@ public class FrameQCMBuilder extends JFrame
 	/**
      * Constructeur de la classe FrameQCMBuilder.
      * 
-     * @param ctrl Le contrôleur
-	 * @param ihm  L'ihm
+     * @param ctrl Le contrôleur.
+	 * @param ihm  Le gestionnaire des fenêtres de l'application.
      */
 	public FrameQCMBuilder(IHM ihm)
 	{

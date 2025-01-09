@@ -14,11 +14,10 @@ import ihm.IHM;
 import ihm.shared.PanelEntite;
 
 /**
- * Classe JPanel pour afficher une Notion.
+ * Classe JPanel pour afficher une Ressource.
  * 
- * @author Ted Herambert
- * @date 2024/12/10
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
  */
 public class PanelRessource extends PanelEntite
 {
@@ -26,21 +25,35 @@ public class PanelRessource extends PanelEntite
 
 	private String  code;
 	private boolean select;
+
+	/**
+	 * Constructeur sans paramètre qui crée une instance de PanelRessource vide.
+	 */
+	public PanelRessource()
+	{
+		this(null, null, null, "");
+	}
 	
 	/**
 	 * Constructeur de la classe PanelRessource.
 	 *
-	 * @param ctrl Le contrôleur
+	 * @param ctrl  Le contrôleur
+     * @param ihm   Le gestionnaire des fenêtres de l'application.
+     * @param frame La fenêtre de gestion des ressources
+     * @param code  Le code de la ressource
 	 */
-	public PanelRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame, String code, String nom)
+	public PanelRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame, String code)
 	{
-		super(ctrl, ihm, code + " " + nom, " ");
+		super(ctrl, ihm);
+
+		if(!"".equals(code))
+			this.lblTitre.setText(code + " " + ctrl.getRessource(code).getNom());
 		
 		this.frame = frame;
+		this.code  = code; 
 
-		this.code   = code;
-		this.select = this.ctrl.getRessourceSelectionnee() == this.ctrl.getRessource(this.code);
-
+		// Détermine si cette ressource est sélectionnée et applique le style correspondant.
+		this.select = this.ctrl != null && this.ctrl.getRessourceSelectionnee() == this.ctrl.getRessource(this.code);
 		if(this.select)
 		{
 			this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
@@ -52,14 +65,18 @@ public class PanelRessource extends PanelEntite
 			this.setBackground(Color.WHITE);
 		}
 
-		/*---------------------------*/
-		/* Activation des composants */
-		/*---------------------------*/
-		this.addMouseListener(new GereSourisRessource());
-		this.btnModifier.addActionListener(this);
+		// Activation des composants
+		this.btnModifier .addActionListener(this);
 		this.btnSupprimer.addActionListener(this);
+		this.addMouseListener(new GereSourisRessource());
+		
 	}
 
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -86,9 +103,17 @@ public class PanelRessource extends PanelEntite
 		}
 	}
 
-
+    /**
+     * Classe interne pour gérer les interactions avec la souris sur le panel.
+     */
 	private class GereSourisRessource extends MouseAdapter
 	{
+		/**
+         * Action déclenchée lorsque la souris entre dans le panel.
+         * Modifie l'apparence pour signaler un survol.
+         * 
+         * @param e L'événement de survol.
+         */
 		@Override
 		public void mouseEntered(MouseEvent e) 
 		{
@@ -96,6 +121,12 @@ public class PanelRessource extends PanelEntite
 			PanelRessource.this.setBackground(Color.LIGHT_GRAY);
 		}
 
+		/**
+         * Action déclenchée lorsque la souris quitte le panel.
+         * Réinitialise l'apparence en fonction de l'état de sélection.
+         * 
+         * @param e L'événement de sortie.
+         */
 		@Override
 		public void mouseExited(MouseEvent e) 
 		{
@@ -111,11 +142,19 @@ public class PanelRessource extends PanelEntite
 			}
 		}
 		
+		/**
+         * Action déclenchée lors d'un clic de souris.
+         * Permet de sélectionner ou désélectionner une ressource par un double-clic gauche.
+         * 
+         * @param e L'événement de clic.
+         */
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
+			 // Vérifie si un double-clic gauche a été effectué.
 			if (!(e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e))) return;
 			
+			// Gère la sélection ou désélection de la ressource.
 			if(PanelRessource.this.select)
 			{
 				PanelRessource.this.ctrl.setRessourceSelectionnee(null);	
@@ -127,6 +166,7 @@ public class PanelRessource extends PanelEntite
 				);	
 			}
 
+			// Réinitialise les affichages liés aux ressources et aux notions.
 			PanelRessource.this.ihm.reinitAffichageRessource();
 			PanelRessource.this.ihm.reinitAffichageNotion(); 
 		}
