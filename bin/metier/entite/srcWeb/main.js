@@ -136,6 +136,7 @@ function afficherQuestions()
     const btnValider = document.getElementById('btn-valider');
     btnValider.addEventListener('click', function() 
     {
+        stopperChrono();
         validerReponses(questionIndex);
     });
 
@@ -1098,9 +1099,17 @@ function demarrerChrono()
                 } 
                 else 
                 {
+                    stopperChrono();
                     afficherFin();
                 }
             });
         }
     }, 1000); // Décrémentation toutes les secondes
+}
+
+function stopperChrono() {
+    if (intervalId) { // Assure-toi qu'intervalId est la variable utilisée pour gérer le chrono
+        clearInterval(intervalId);
+        intervalId = null; // Réinitialise l'identifiant
+    }
 }
