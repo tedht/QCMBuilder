@@ -762,7 +762,7 @@ function afficherFeedback(bonneReponse, question, reponsesUtilisateur)
         const reponseMessage = bonneReponse ? "Bonne réponse !" : "Mauvaise réponse.";
         const styleRep = bonneReponse ? 'green' : 'red';
 
-        const feedbackMessage = bonneReponse ? question.feedback : `Essayez encore ! ${question.feedback}`;
+        const feedbackMessage = bonneReponse ? question.feedback : `${question.feedback}`;
 
         let scoreMax = 0;
         questions.forEach(q => 
@@ -980,6 +980,10 @@ function gererBoutons()
                 demarrerChrono();
             }
         }
+        else 
+        {
+            afficherFin();
+        }
     });
 }
 
@@ -1078,7 +1082,25 @@ function demarrerChrono()
         {
             clearInterval(intervalId); // Stoppe l'intervalle
             intervalId = null; // Réinitialise la variable globale
+
             alert("Temps écoulé pour cette question !");
+
+            // Affiche le feedback
+            afficherFeedback(false, question, []).then(() => 
+            {
+                // Passer à la question suivante automatiquement
+                if (questionIndex < questions.length - 1) 
+                {
+                    questionIndex++;
+                    reinitialiserAssociationsEtSvg();
+                    afficherQuestion(questionIndex);
+                    demarrerChrono(); // Redémarre le chrono pour la nouvelle question
+                } 
+                else 
+                {
+                    afficherFin();
+                }
+            });
         }
     }, 1000); // Décrémentation toutes les secondes
 }
