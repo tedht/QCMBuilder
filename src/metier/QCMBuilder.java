@@ -561,7 +561,7 @@ public class QCMBuilder
 				nbQuestions = tabNbQuestions[i][j];
 				for(int k = 0; k < nbQuestions; k++)
 				{
-					question = lstQuestions.get((int)(Math.random() * lstQuestions.size()));
+					question = lstQuestions.get((int)(Math.random() * lstQuestions.size()-1));
 					this.questionnaire.ajouterQuestion(question);
 					lstQuestions.remove(question);
 				}
