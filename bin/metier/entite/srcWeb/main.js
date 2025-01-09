@@ -1,4 +1,3 @@
-let questions = [];
 let questionIndex = 0;
 let score = 0;
 // utilisé pour stocker les réponses et leur état
@@ -12,29 +11,14 @@ let intervalId = null; // Stocke l'identifiant de l'intervalle du chrono
  * Charge le tableau questions depuis le fichier questions.json.
  * Affiche le nombre de questions, les notions et le temps d'accueil.
  */
-async function chargerQuestions()
-{
-    fetch('questions.json')
-        .then(response =>
-        {
-            if (!response.ok)
-            {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data =>
-        {
-            questions = data;
-
-            afficherNbQuestions();
-            afficherNotions();
-            afficherTempsAccueil();
-        })
-        .catch(error =>
-        {
-            console.error("Erreur lors de la lecture du JSON :", error);
-        });
+async function chargerQuestions() {
+    try {
+        afficherNbQuestions();
+        afficherNotions();
+        afficherTempsAccueil();
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation des questions :", error);
+    }
 }
 
 chargerQuestions();
@@ -59,8 +43,6 @@ const startEval = document.getElementById('start-button').addEventListener('clic
     reinitialiserEtatReponses();
     afficherQuestions();
 });
-
-
 
 /**
  * Affiche le nombre de questions sur la page d'accueil.
