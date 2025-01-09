@@ -2,43 +2,27 @@ package ihm;
 
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
-/*
-import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.transcoder.SVGAbstractTranscoder;
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.TranscodingHints;
-import org.apache.batik.transcoder.XMLAbstractTranscoder;
-import org.apache.batik.transcoder.image.ImageTranscoder;
-import org.apache.batik.transcoder.image.JPEGTranscoder;
-import org.apache.batik.transcoder.image.PNGTranscoder;
-import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
-import org.apache.batik.util.SVGConstants;*/
 
 import com.kitfox.svg.app.beans.SVGIcon;
 
 import controleur.Controleur;
+
 import ihm.ressource.FrameGestionRessource;
 import ihm.ressource.edit.FrameEditRessource;
+
 import ihm.notion.FrameGestionNotion;
 import ihm.notion.edit.FrameEditNotion;
+
 import ihm.question.FrameGestionQuestion;
 import ihm.question.edit.FrameEditQuestion;
-import ihm.questionnaire.FrameGestionQuestionnaire  ;
+
+import ihm.questionnaire.FrameCreationQuestionnaire;
 import ihm.questionnaire.export.FrameExport;
+
 
 /**
  * Classe représentant l'interface graphique de l'application.
@@ -70,6 +54,7 @@ public class IHM
 	/* Attributs */
 	private Controleur                ctrl;
 
+	// Fenêtre principale
 	private FrameQCMBuilder           frameQCMBuilder;
 
 	// Ressource/Notion
@@ -83,53 +68,77 @@ public class IHM
 	private FrameEditQuestion         frameEditQuestion;
 
 	// Questionnaire
-	private FrameGestionQuestionnaire frameGestionQuestionnaire;
-	private FrameExport               frameExport; 
+	private FrameCreationQuestionnaire frameCreationQuestionnaire;
+	private FrameExport                frameExport; 
 	
-	// Coordonnées par défaut des fén^tres à part la fenêtre principale
+	// Coordonnées par défaut des fénêtres à part la fenêtre principale ()
 	private int defaultX, defaultY;
 	
+	/**
+     * Constructeur de la classe IHM.
+     * Initialise l'interface graphique, crée les fenêtres et gère le 
+	 * positionnement de la fenêtre principale.
+     * 
+     * @param ctrl Le contrôleur.
+     */
 	public IHM(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
+		// Crée les différentes fenêtres
 		this.frameQCMBuilder           = new FrameQCMBuilder          (this);
 		this.frameGestionRessource     = new FrameGestionRessource    (this.ctrl, this);
 		this.frameGestionNotion        = new FrameGestionNotion       (this.ctrl, this);
 		this.frameGestionQuestion      = new FrameGestionQuestion     (this.ctrl, this);
-		this.frameGestionQuestionnaire = new FrameGestionQuestionnaire(this.ctrl, this);
+		this.frameCreationQuestionnaire = new FrameCreationQuestionnaire(this.ctrl, this);
 
+		 // Positionne et affiche la fenêtre principale
 		this.frameQCMBuilder.setLocation(IHM.MARGE, IHM.MARGE);
 		this.frameQCMBuilder.setVisible (true);
 
+		// Définit les coordonnées par défaut pour les autres fenêtres
 		this.defaultX = this.frameQCMBuilder.getX() + this.frameQCMBuilder.getWidth () + IHM.MARGE;
 		this.defaultY = this.frameQCMBuilder.getY();
 
+		// Ajoute les comportements pour fermer correctement la fenêtres de gestion des ressources 
 		this.frameGestionNotion.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) 
 			{
+				// On ferme aussi la fenêtre de gestion des notions
                 IHM.this.frameGestionRessource.setVisible(false);
             }
         });
 
+		// Ajoute les comportements pour fermer correctement la fenêtres de gestion des notions
 		this.frameGestionRessource.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) 
 			{
+				// On ferme aussi la fenêtre de gestion des ressources
                 IHM.this.frameGestionNotion.setVisible(false);
             }
         });
 	}
 
+	/**
+	 * Réinitialise la visibilité des fenêtres de gestion
+	 */
 	private void resetVisible()
 	{
 		if(this.frameGestionRessource     != null) this.frameGestionRessource    .setVisible(false);
 		if(this.frameGestionNotion        != null) this.frameGestionNotion       .setVisible(false);
 		if(this.frameGestionQuestion      != null) this.frameGestionQuestion     .setVisible(false);
-		if(this.frameGestionQuestionnaire != null) this.frameGestionQuestionnaire.setVisible(false);
+		if(this.frameCreationQuestionnaire != null) this.frameCreationQuestionnaire.setVisible(false);
 	}
 
+	/**
+	 * Affiche une fenêtre donnée à une position spécifique
+	 * 
+	 * @param frame La fenêtre qu'on souhaite afficher
+	 * @param posX La position horizontale (en pixels) où la fenêtre frame sera affichée
+	 * @param posY La position verticale (en pixels) où la fenêtre frame sera affichée
+	 */
 	private void afficher(JFrame frame, int posX, int posY)
 	{
 		if(frame == null) return;
@@ -141,12 +150,17 @@ public class IHM
 		}
 		else
 		{
+			// Met la fenêtre au premier plan si elle est déjà visible
 			frame.toFront();
 		}
 
+		// Assure que la fenêtre principale reste au premier plan
 		this.frameQCMBuilder.toFront();
 	}
 
+	/**
+	 * Affiche les fenêtres de gestion des ressources et des notions côte à côte
+	 */
 	public void afficherRessourceNotion() 
 	{ 
 		this.resetVisible();
@@ -155,31 +169,81 @@ public class IHM
 		              this.defaultX + IHM.LARGEUR_GESTION + IHM.MARGE, 
 					  this.defaultY); 
 	}
+
+	/**
+	 * Affiche la fenêtre de gestion des questions
+	 */
 	public void afficherQuestion() 
 	{ 
 		this.resetVisible();
 		this.frameGestionQuestion.reinitAffichage();
 		this.afficher(this.frameGestionQuestion, this.defaultX, this.defaultY);        
 	}
+	
+	/**
+	 * Afficher la fenêtre de création de questionnaires
+	 */
 	public void afficherQuestionnaire () 
 	{ 
 		this.resetVisible();
-		this.frameGestionQuestionnaire.reinitAffichage();
-		this.frameGestionQuestionnaire.pagePrecedente();
-		this.afficher(this.frameGestionQuestionnaire, this.defaultX, this.defaultY);   
+		this.frameCreationQuestionnaire.reinitAffichage();
+		this.frameCreationQuestionnaire.pagePrecedente();
+		this.afficher(this.frameCreationQuestionnaire, this.defaultX, this.defaultY);   
 	}
+
+	/**
+	 * Quitter l'application
+	 */
 	public void quitter() { System.exit(0); }
 
-	public void reinitAffichageRessource    () { this.frameGestionRessource    .reinitAffichage(); }
-	public void reinitAffichageNotion       () { this.frameGestionNotion       .reinitAffichage(); }
-	public void reinitAffichageQuestion     () { this.frameGestionQuestion     .reinitAffichage(); }
-	public void reinitAffichageQuestionnaire() { this.frameGestionQuestionnaire.reinitAffichage(); }
+	/**
+	 * Réinitialiser l'affichage de la fenêtre de gestion des ressources
+	 */
+	public void reinitAffichageRessource() 
+	{ 
+		this.frameGestionRessource.reinitAffichage(); 
+	}
 
+	/**
+	 * Réinitialiser l'affichage de la fenêtre de gestion des notions
+	 */
+	public void reinitAffichageNotion() 
+	{ 
+		this.frameGestionNotion.reinitAffichage(); 
+	}
+
+	/**
+	 * Réinitialise l'affichage de la fenêtre de gestion des questions
+	 */
+	public void reinitAffichageQuestion() 
+	{ 
+		this.frameGestionQuestion.reinitAffichage(); 
+	}
+
+	/**
+	 * Réinitialise l'affichage de la fenêtre de création de questionnaires
+	 */
+	public void reinitAffichageQuestionnaire() 
+	{ 
+		this.frameCreationQuestionnaire.reinitAffichage();
+	}
+
+	/**
+	 * Affiche la fenêtre d'édition de ressources. Cette méthode est appelée lorqu'on cherche 
+	 * uniquement à créer une nouvelle ressource.
+	 */
 	public void editRessource()
 	{
 		this.editRessource(null);
 	}
 
+	/**
+	 * Affiche la fenêtre d'édition de ressources. Cette méthode est appelée lorqu'on cherche 
+	 * à créer ou modifier une ressource.
+	 * 
+	 * @param code Le code de la ressource. Si code est null, on crée une nouvelle ressource, sinon
+	 *             on modifie une ressource existente.
+	 */
 	public void editRessource(String code) 
 	{
 		if(this.frameEditRessource == null)
@@ -215,11 +279,22 @@ public class IHM
 		}
 	}
 
+	/**
+	 * Affiche la fenêtre d'édition de notions. Cette méthode est appelée lorqu'on cherche 
+	 * uniquement à créer une nouvelle notion.
+	 */
 	public void editNotion()
 	{
 		this.editNotion(null);
 	}
 
+	/**
+	 * Affiche la fenêtre d'édition de notions. Cette méthode est appelée lorqu'on cherche 
+	 * à créer ou modifier une notion.
+	 * 
+	 * @param idNot L'id de la notion. Si idNot est null, on crée une nouvelle notion, sinon
+	 *              on modifie une notion existente.
+	 */
 	public void editNotion(Integer idNot) 
 	{
 		if(this.frameEditNotion == null)
@@ -255,11 +330,22 @@ public class IHM
 		}
 	}
 
+	/**
+	 * Affiche la fenêtre d'édition de questions. Cette méthode est appelée lorqu'on cherche 
+	 * uniquement à créer une nouvelle question.
+	 */
 	public void editQuestion()
 	{
 		this.editQuestion(null);
 	}
 
+	/**
+	 * Affiche la fenêtre d'édition de questions. Cette méthode est appelée lorqu'on cherche 
+	 * à créer ou modifier une question.
+	 * 
+	 * @param idQst L'id de la question. Si idQst est null, on crée une nouvelle question, sinon
+	 *              on modifie une question existente.
+	 */
 	public void editQuestion(Integer idQst) 
 	{
 		if(this.frameEditQuestion == null)
@@ -294,6 +380,9 @@ public class IHM
 		}
 	}
 
+	/**
+	 * Affiche la fenêtre pour exporter la questionnaire générée.
+	 */
 	public void exporterQuestionnaire() 
 	{
 		if(this.frameExport == null)
@@ -303,8 +392,8 @@ public class IHM
 
 			// Positionne frameExport au centre de la fenêtre principale
 			this.frameExport.setLocation(
-				this.frameGestionQuestionnaire.getX() + this.frameGestionQuestionnaire.getWidth () / 2 - this.frameExport.getWidth () / 2,
-				this.frameGestionQuestionnaire.getY() + this.frameGestionQuestionnaire.getHeight() / 2 - this.frameExport.getHeight() / 2
+				this.frameCreationQuestionnaire.getX() + this.frameCreationQuestionnaire.getWidth () / 2 - this.frameExport.getWidth () / 2,
+				this.frameCreationQuestionnaire.getY() + this.frameCreationQuestionnaire.getHeight() / 2 - this.frameExport.getHeight() / 2
 			);
 
 			// Rend la fenêtre visible
@@ -326,77 +415,42 @@ public class IHM
 		}
 	}
 
-	public void fermerFrameGestionQuestionnaire()
+	/**
+	 * Ferme la fenêtre de création de fenêtre.
+	 */
+	public void fermerCreationQuestionnaire()
 	{
-		if(this.frameGestionQuestionnaire != null)
+		if(this.frameCreationQuestionnaire != null)
 		{
-			this.frameGestionQuestionnaire.dispose();;
+			this.frameCreationQuestionnaire.dispose();;
 		}
 	}
 
+	/**
+	 * Méthode statique pour récupérer une image au format svg, utilisé pour 
+	 * afficher les icônes des boutons.
+	 * 
+	 * @param chemin  Le chemin de l'image svg
+	 * @param largeur La largeur souhaitée
+	 * @param hauteur La hauteur souhaitée
+	 * 
+	 * @return L'image sous forme de SVGIcon
+	 */
+	@SuppressWarnings("deprecation")
 	public static SVGIcon getImgIconSVG(String chemin, int largeur, int hauteur)
 	{
-        SVGIcon svgIcon = new SVGIcon();
-        try {
-            svgIcon.setSvgURI(new URI("file:" + chemin));
-            svgIcon.setPreferredSize(new Dimension(largeur, hauteur));
-			svgIcon.setScaleToFit(true);
-            svgIcon.setAntiAlias(true);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+		SVGIcon svgIcon = new SVGIcon();
+		try {
+			svgIcon.setSvgURI(new URI("file:" + chemin));
+			svgIcon.setPreferredSize(new Dimension(largeur, hauteur));
 
-        return  svgIcon;
-	}
+			svgIcon.setScaleToFit(true); // setScaleToFit est deprecated
 
-	/*
-	public static Icon getImgIconSVG(String chemin, int largeur, int hauteur)
-	{
-		SvgTranscoder t = new SvgTranscoder();
-		t.setTranscodingHints(IHM.getHints((float)largeur, (float)hauteur));
-
-		try 
-		{
-			TranscoderInput input = new TranscoderInput(new File(chemin).toURI().toString());
-			t.transcode(input, null);
-		} 
-		catch (TranscoderException e) 
-		{
+			svgIcon.setAntiAlias(true);
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 
-		return new ImageIcon(t.getImage());
+		return svgIcon;
 	}
-
-	private static TranscodingHints getHints(float largeur, float hauteur) 
-	{
-		TranscodingHints hints = new TranscodingHints();
-		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, SVGDOMImplementation.getDOMImplementation());
-		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, SVGConstants.SVG_NAMESPACE_URI);
-		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, SVGConstants.SVG_SVG_TAG);
-
-		hints.put(SVGAbstractTranscoder.KEY_WIDTH, largeur);
-		hints.put(SVGAbstractTranscoder.KEY_HEIGHT, hauteur);
-		return hints;
-	}
-
-	private static class SvgTranscoder extends ImageTranscoder 
-	{
-		private BufferedImage image = null;
-	
-		@Override
-		public BufferedImage createImage(int width, int height) 
-		{
-		  	image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		  	return image;
-		}
-	
-		@Override
-		public void writeImage(BufferedImage img, TranscoderOutput out) {}
-	
-		BufferedImage getImage() 
-		{
-		  	return image;
-		}
-	}*/
 }

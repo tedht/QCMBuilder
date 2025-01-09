@@ -113,7 +113,10 @@ public class FrameEditQuestion extends JFrame
 		{
 			try 
 			{
-				Double.parseDouble(sPoints);
+				double pts = Double.parseDouble(sPoints);
+
+				if(pts < 0)
+					lstErreurs.add("Valeur invalide pour le champ 'Points'");
 			} 
 			catch (Exception e) 
 			{
@@ -218,46 +221,42 @@ public class FrameEditQuestion extends JFrame
 					for(PanelProp panelProp : lstPanelProp)
 					{
 						PanelPropElim panelPropElim = (PanelPropElim) panelProp;
-						if(panelPropElim.estReponse()) 
-						{
-							reponse = true;
-						}
-	
+						
 						if(panelPropElim.getText().isEmpty())
 						{
 							lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
 							reponse = true;
 							break;
 						}
-
-						try 
+						if(panelPropElim.estReponse()) 
 						{
-							if(!"".equals(panelPropElim.getOrdreElim()))
-							{
-								int ordre = Integer.parseInt(panelPropElim.getOrdreElim());
-
-								if(ordre <= 0)
-									lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
-							}
-						} 
-						catch (Exception e) 
-						{
-							lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
+							reponse = true;
 						}
-
-						try 
+						else 
 						{
-							if(!"".equals(panelPropElim.getPointsEnMoins()))
+							try 
 							{
-								double nbPointsEnMoins = Double.parseDouble(panelPropElim.getPointsEnMoins());
-
-								if(nbPointsEnMoins >= 0.0)
-									lstErreurs.add("Valeur invalide pour au moins un des champs 'Pts perdus'");
+								if(!"".equals(panelPropElim.getOrdreElim()))
+								{
+									int ordre = Integer.parseInt(panelPropElim.getOrdreElim());
+	
+									if(ordre <= 0)
+										lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
+								}
+							} 
+							catch (Exception e) 
+							{
+								lstErreurs.add("Valeur invalide pour au moins un des champs 'Ordre'");
 							}
-						} 
-						catch (Exception e) 
-						{
-							lstErreurs.add("Valeur invalide pour au moins un des champs 'Pts perdus'");
+	
+							try 
+							{
+								Double.parseDouble(panelPropElim.getPointsPerdus());
+							} 
+							catch (Exception e) 
+							{
+								lstErreurs.add("Valeur invalide pour au moins un des champs 'Pts perdus'");
+							}
 						}
 					}
 	
@@ -325,10 +324,19 @@ public class FrameEditQuestion extends JFrame
 				for(PanelProp panelProp : lstPanelProp)
 				{
 					PanelPropElim panelPropElim = (PanelPropElim) panelProp;
-					detailsProp = panelPropElim.estReponse() ? "V:" : "F:";
-					detailsProp += ("".equals(panelPropElim.getOrdreElim    ()) ? "-1:"  : panelPropElim.getOrdreElim    () + ":");
-					detailsProp += ("".equals(panelPropElim.getPointsEnMoins()) ? "0.0:" : panelPropElim.getPointsEnMoins() + ":");
-					detailsProp += panelPropElim.getText();
+					
+					String sReponse   = panelPropElim.estReponse      () ? "V:" : "F:";
+					String sOrdre     = panelPropElim.getOrdreElim    ();
+					String sPtsPerdus = panelPropElim.getPointsPerdus();
+					String text       = panelPropElim.getText         ();
+
+					sOrdre     = "".equals(sOrdre)     ? "-1:"  : sOrdre     + ":";
+					sPtsPerdus = "".equals(sPtsPerdus) ? "0.0:" : sPtsPerdus + ":";
+					sPtsPerdus =   sPtsPerdus.charAt(0) != '-' 
+								  ? "-" + sPtsPerdus 
+								  : sPtsPerdus;
+
+					detailsProp = sReponse + sOrdre + sPtsPerdus + text;
 					lstDetailsProp.add(detailsProp);
 				}
 			} 

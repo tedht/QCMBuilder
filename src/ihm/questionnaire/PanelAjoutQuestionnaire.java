@@ -26,7 +26,7 @@ import ihm.questionnaire.tableau.GrilleNotionsRenderer;
 public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 {
 	private Controleur                ctrl;
-	private FrameGestionQuestionnaire frame;
+	private FrameCreationQuestionnaire frame;
 
 	private JPanel             panelInfo, panelAction;
 	private GrilleNotionsModel grilleNotionsModel;
@@ -34,7 +34,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 	private JScrollPane        spGrilleNotions;
 	private JButton            btnPrecedent, btnGenerer;
 
-	public PanelAjoutQuestionnaire(Controleur ctrl, FrameGestionQuestionnaire frame) 
+	public PanelAjoutQuestionnaire(Controleur ctrl, FrameCreationQuestionnaire frame) 
 	{
 		this.ctrl  = ctrl;
 		this.frame = frame;

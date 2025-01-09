@@ -94,7 +94,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 				panelPropElim.setText         (propElim.getText   ());
 				panelPropElim.setReponse      (propElim.estReponse());
 				panelPropElim.setOrdreElim    ((propElim.getOrdreElim  () == -1  ? "" : ""+propElim.getOrdreElim  ()));
-				panelPropElim.setPointsEnMoins((propElim.getNbPtsPerdus() == 0.0 ? "" : ""+propElim.getNbPtsPerdus()));
+				panelPropElim.setPointsPerdus((propElim.getNbPtsPerdus() == 0.0 ? "" : ""+propElim.getNbPtsPerdus()));
 			}
 		}
 	}

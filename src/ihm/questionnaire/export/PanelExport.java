@@ -118,7 +118,7 @@ public class PanelExport extends PanelEditNom
 			return false;
 		}
 
-		this.ihm.fermerFrameGestionQuestionnaire();
+		this.ihm.fermerCreationQuestionnaire();
 		this.ctrl.exporterQuestionnaire(chemin+"/"+nomEval);
 
 		return true;

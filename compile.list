@@ -22,7 +22,7 @@ src/ihm/question/edit/proposition/PanelPropAssoc.java
 src/ihm/question/edit/proposition/PanelPropElim.java
 src/ihm/question/edit/proposition/PanelPropQCM.java
 src/ihm/question/edit/proposition/PanelPropQRM.java
-src/ihm/questionnaire/FrameGestionQuestionnaire.java
+src/ihm/questionnaire/FrameCreationQuestionnaire.java
 src/ihm/questionnaire/PanelAjoutQuestionnaire.java
 src/ihm/questionnaire/PanelParametresQuestionnaire.java
 src/ihm/questionnaire/export/FrameExport.java

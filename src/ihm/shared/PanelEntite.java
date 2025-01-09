@@ -10,9 +10,8 @@ import ihm.IHM;
 /**
  * Classe JPanel générique pour afficher une entité (ressource/notion/question).
  * 
- * @author Ted Herambert
- * @date 2024/12/10
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-10 Norme ISO-8601
  */
 public abstract class PanelEntite extends JPanel implements ActionListener
 {
@@ -27,7 +26,7 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 	protected JButton btnModifier, btnSupprimer;
 
 	/**
-	 * Constructeur de la classe PanelEntite.
+	 * Constructeur e la classe PanelEntited.
 	 *
 	 * @param ctrl  Le contrôleur
 	 */
@@ -49,11 +48,13 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 		this.panelInfo.setLayout(new BoxLayout(this.panelInfo, BoxLayout.Y_AXIS));
 		this.panelInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+		// Gestion de la longueur du titre (troncature si nécessaire)
 		if(titre.length() >= 40) titre = titre.substring(0, 40) + "...";
 		this.lblTitre = new JLabel(titre);
 		this.lblTitre.setOpaque(false);
 		this.lblTitre.setFont(new Font("Arial", Font.BOLD, 16));
 
+		// Gestion de la longueur du sous-titre (troncature si nécessaire)
 		if(sousTitre.length() >= 40) sousTitre = sousTitre.substring(0, 40) + "...";
 		this.lblSousTitre = new JLabel(sousTitre);
 		this.lblSousTitre.setFont(new Font("Arial", Font.BOLD, 12));
@@ -67,7 +68,7 @@ public abstract class PanelEntite extends JPanel implements ActionListener
 		this.btnSupprimer.setPreferredSize(new Dimension(24, 24));
 
 		/*-------------------------------*/
-		/* positionnement des composants */
+		/* Positionnement des composants */
 		/*-------------------------------*/
 		this.panelInfo.add(this.lblTitre);
 		this.panelInfo.add(this.lblSousTitre);

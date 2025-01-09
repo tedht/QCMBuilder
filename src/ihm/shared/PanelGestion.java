@@ -14,6 +14,12 @@ import javax.swing.border.EmptyBorder;
 import controleur.Controleur;
 import ihm.IHM;
 
+/**
+ * Classe JPanel générique utilisée par les fenêtre de gestion.
+ * 
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-09 Norme ISO-8601
+ */
 public abstract class PanelGestion extends JPanel implements ActionListener
 {
 	protected Controleur ctrl;
@@ -22,6 +28,12 @@ public abstract class PanelGestion extends JPanel implements ActionListener
 	protected JButton    btnAjouter;
 	protected JPanel     panelEntete, panelContenu, panelAction;
 
+	/**
+	 * Constructeur de la classe PanelGestion.
+	 * 
+	 * @param ctrl Le controleur
+	 * @param ihm  L'IHM
+	 */
 	public PanelGestion(Controleur ctrl, IHM ihm)
 	{
 		JScrollPane spContenu;
@@ -73,6 +85,11 @@ public abstract class PanelGestion extends JPanel implements ActionListener
 		this.btnAjouter.addActionListener(this);
 	}
 
+
+	/**
+	 * Méthode abstraite à définir dans les classes filles. Pemet d'afficher le
+	 * contenu du panel.
+	 */
 	public abstract void afficher();
 	
 }

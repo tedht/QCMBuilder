@@ -30,7 +30,7 @@ import metier.entite.Ressource;
 public class PanelParametresQuestionnaire extends JPanel implements ActionListener, ItemListener
 {
 	private Controleur                ctrl;
-	private FrameGestionQuestionnaire frame;
+	private FrameCreationQuestionnaire frame;
 
 	private JPanel                    panelInfo, panelAction;
 
@@ -41,7 +41,7 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 
 	private JButton                   btnAnnuler, btnSuivant;
 
-	public PanelParametresQuestionnaire(Controleur ctrl, FrameGestionQuestionnaire frame) 
+	public PanelParametresQuestionnaire(Controleur ctrl, FrameCreationQuestionnaire frame) 
 	{
 		JPanel panelInfoRessource, panelInfoChronometre;
 		JPanel panelChronometre;

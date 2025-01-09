@@ -13,12 +13,10 @@ import controleur.Controleur;
 import ihm.IHM;
 
 /**
- * Classe JPanel générique utilisé par la frames d'édition de ressource et la frames d'édition de notion
+ * Classe JPanel générique utilisée par les fenêtres d'édition.
  * 
- * 
- * @author Ted Herambert
- * @date 2024/12/06
- * @version 1.0
+ * @author  Equipe 03
+ * @version 1.0 du 2024-12-06 Norme ISO-8601
  */
 public abstract class PanelEditNom extends JPanel implements ActionListener
 {
@@ -34,7 +32,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	protected JTextField    txtNom;
 
 	/**
-	 * Constructeur de la classe PanelEditEntite.
+	 * Constructeur e la classe PanelEditNom.
 	 *
 	 * @param ctrl Le contrôleur
 	 */
@@ -84,7 +82,11 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		this.btnAnnuler.addActionListener(this);
 		this.btnEnregistrer.addActionListener(this);
 	}
-
+	/**
+	 * Méthode qui gère les actions des boutons.
+	 * 
+	 * @param e L'événement qui a déclenché l'action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -101,5 +103,11 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 		}
 	}
 
+	/**
+	 * Méthode abstraite à définir dans les classes filles. Définit le comprtement 
+	 * lorsqu'on clique sur le bouton "Enregistrer".
+	 * 
+	 * @return vrai l'enregistrement a réussi, false sinon
+	 */
 	public abstract boolean enregistrer();
 }
