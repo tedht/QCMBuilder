@@ -100,24 +100,22 @@ public class GrilleNotionsModel extends AbstractTableModel
 		}
 		if (2 <= col && col <= 5)
 		{
-			if (value instanceof Integer && 0 <= (Integer)value && (Integer)value <= 99)
+			if (value instanceof Integer)
 			{
 				Integer oldVal = (Integer)this.tabDonnees[lig][col];
 				Integer newVal = (Integer)value;
 
-				if(this.tabDonnees[lig][0] != null)
-				{
-					String codeRes = ((Notion)this.tabDonnees[lig][0]).getCodeRes(); 
-					int    idNot   = ((Notion)this.tabDonnees[lig][0]).getIdNot();
-					int    nbQst   = this.ctrl.getQuestions(codeRes, idNot, Difficulte.fromInt(col-2)).size();
+				String codeRes = ((Notion)this.tabDonnees[lig][0]).getCodeRes(); 
+				int    idNot   = ((Notion)this.tabDonnees[lig][0]).getIdNot();
+				int    nbQst   = this.ctrl.getQuestions(codeRes, idNot, Difficulte.fromInt(col-2)).size();
 					
-					if(newVal > nbQst)
-						newVal = nbQst;
-				}
-				else
-				{
+				if(newVal > nbQst)
+					newVal = nbQst;
+				
+				if(newVal > 99)
+					newVal = 99;
+				else if(newVal < 0)
 					newVal = 0;
-				}
 
 				this.tabDonnees[lig][col] = newVal;
 				this.fireTableCellUpdated(lig, col);

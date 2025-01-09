@@ -670,6 +670,43 @@ public class BanqueQuestions extends Banque
 	}
 
 	/**
+	 * Modiie le type d'une question en la remplaçant avec un nouvel objet Question du type 
+	 * correspondant.
+	 * 
+	 * @param idQst l'id de la question à modifier.
+	 * @param type  le nouveau type.
+	 */
+	public void modifierType(int idQst, TypeQuestion type)
+	{
+		if(this.lstQuestions.get(idQst) != null)
+		{
+			Question   oldQuestion = this.lstQuestions.get(idQst);
+
+			String     codeRes     = oldQuestion.getCodeRes   ();
+			int        idNot       = oldQuestion.getIdNot     ();
+			double     note        = oldQuestion.getNote      ();
+			int        temps       = oldQuestion.getTemps     ();
+			Difficulte diff        = oldQuestion.getDifficulte();
+
+			Question   newQuestion = switch (type) {
+				case    QCM         -> new QCM        (codeRes, idNot, idQst, note, temps, diff);
+				case    ASSOCIATION -> new Association(codeRes, idNot, idQst, note, temps, diff);
+				case    ELIMINATION -> new Elimination(codeRes, idNot, idQst, note, temps, diff);
+				default             -> null;
+			};
+
+			if(newQuestion != null)
+			{
+				newQuestion.setIntitule   (oldQuestion.getIntitule   ());
+				newQuestion.setExplication(oldQuestion.getExplication());
+				newQuestion.setPieceJointe(oldQuestion.getPieceJointe());
+
+				this.lstQuestions.set(idQst, newQuestion);
+			}
+		}
+	}
+
+	/**
 	 * Supprime une question de la banque de questions grâce à son identifiant.
 	 * 
 	 * @param id l'identifiant de la question à supprimer.

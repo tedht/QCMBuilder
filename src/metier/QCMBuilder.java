@@ -279,8 +279,7 @@ public class QCMBuilder
 		{
 			if(this.banqueQuestions.getQuestion(idQst).getType() != type)
 			{
-				this.banqueQuestions.supprimerQuestion(idQst);
-				idQst = null;
+				  this.banqueQuestions.modifierType(idQst, type);
 			}
 			else
 			{
@@ -541,20 +540,43 @@ public class QCMBuilder
 		// Ajout des questions au questionnaire
 		for(int i = 0; i < tabNbQuestions.length; i++)
 		{
+			System.out.println("NOTION : " + this.banqueNotions.getNotions().get(i).getNom());
 			for(int j = 0; j < 4; j++)
 			{
-				lstQuestions = new ArrayList<Question>(this.banqueQuestions.getQuestions(codeRes, i, Difficulte.fromInt(j)));
-				nbQuestions = tabNbQuestions[i][j] > lstQuestions.size() ? lstQuestions.size() : tabNbQuestions[i][j];
+				lstQuestions = new ArrayList<Question>(this.banqueQuestions.getQuestions(codeRes, this.banqueNotions.getNotions().get(i).getIdNot(), Difficulte.fromInt(j)));
+				
+				System.out.println(Difficulte.fromInt(j).toString() + " : ");
+				if(lstQuestions.size() > 0)
+				{
+					for(Question q : lstQuestions)
+					{
+						System.out.println("   " + q.getIntitule());
+					}
+				}
+				else
+				{
+					System.out.println("   " + "vide");
+				}
+
+				nbQuestions = tabNbQuestions[i][j];
 				for(int k = 0; k < nbQuestions; k++)
 				{
-					question = this.banqueQuestions.getQuestions(codeRes, i).get((int)(Math.random() * lstQuestions.size()));
+					question = lstQuestions.get((int)(Math.random() * lstQuestions.size()));
 					this.questionnaire.ajouterQuestion(question);
+					lstQuestions.remove(question);
 				}
 			}
 		}
 
 		// Mélange les questions
 		this.questionnaire.shuffleQuestions();
+
+		lstQuestions = questionnaire.getQuestions();
+		System.out.println("QUESTIONNAIRE :");
+		for(Question q : lstQuestions)
+		{
+			System.out.println("\t" + q.getIntitule());
+		}
 	}
 
 	/**
