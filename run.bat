@@ -19,7 +19,7 @@ echo Compilation terminee.
 
 REM Execution
 echo Execution en cours...
-java -cp "%CLASSPATH%" controleur.Controleur
+java -cp "%CLASSPATH%" QCMBuilder.controleur.Controleur
 if %ERRORLEVEL% NEQ 0 (
 	echo Erreur lors de l'execution.
 	goto end
