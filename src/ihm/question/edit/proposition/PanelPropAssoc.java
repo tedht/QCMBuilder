@@ -85,20 +85,20 @@ public class PanelPropAssoc extends PanelProp
 	/*---------*/
 
 	/**
-     * Retourne le texte gauche.
-     * 
-     * @return le texte gauche.
-     */
+	 * Retourne le texte gauche.
+	 * 
+	 * @return le texte gauche.
+	 */
 	public String getTextGauche() 
 	{ 
 		return this.tabTxtProposition[0].getText(); 
 	}
 
 	/**
-     * Retourne le texte droite.
-     * 
-     * @return le texte droite.
-     */
+	 * Retourne le texte droite.
+	 * 
+	 * @return le texte droite.
+	 */
 	public String getTextDroite() 
 	{ 
 		return this.tabTxtProposition[1].getText(); 
@@ -109,20 +109,20 @@ public class PanelPropAssoc extends PanelProp
 	/*---------*/
 
 	/**
-     * Définit le texte gauche de la proposition.
-     * 
-     * @param text le texte à afficher dans la zone de texte gauche.
-     */
+	 * Définit le texte gauche de la proposition.
+	 * 
+	 * @param text le texte à afficher dans la zone de texte gauche.
+	 */
 	public void setTextGauche(String text) 
 	{ 
 		this.tabTxtProposition[0].setText(text); 
 	}
 		
 	/**
-     * Définit le texte droite de la proposition.
-     * 
-     * @param text le texte à afficher dans la zone de texte droite.
-     */
+	 * Définit le texte droite de la proposition.
+	 * 
+	 * @param text le texte à afficher dans la zone de texte droite.
+	 */
 	public void setTextDroite(String text) 
 	{ 
 		this.tabTxtProposition[1].setText(text); 

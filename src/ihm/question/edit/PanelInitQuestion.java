@@ -58,7 +58,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		JPanel panelInfo, panelAction;
 
 		JPanel panelInfoPoints, panelInfoTemps, panelInfoRessource, 
-		       panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion;
+			   panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion;
 
  		JPanel panelPoints, panelTemps, panelNiveau;
 		
@@ -151,8 +151,8 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 10, 5);
 		gbc.anchor  = GridBagConstraints.WEST;
-	    gbc.fill    = GridBagConstraints.NONE;
-	    gbc.weightx = 1.0;
+		gbc.fill    = GridBagConstraints.NONE;
+		gbc.weightx = 1.0;
 
 		/* Ligne 0 */
 		// Points

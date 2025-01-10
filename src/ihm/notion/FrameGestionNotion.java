@@ -33,20 +33,20 @@ public class FrameGestionNotion  extends JFrame
 		this.ihm  = ihm;
 
 		this.setTitle("Gestion Notion");
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		this.setResizable(false);
 
-        // Création et ajout du panneau de menu.
-        this.panelGestionNotion = new PanelGestionNotion(this.ctrl, this.ihm, this);
-        this.add(this.panelGestionNotion);
+		// Création et ajout du panneau de menu.
+		this.panelGestionNotion = new PanelGestionNotion(this.ctrl, this.ihm, this);
+		this.add(this.panelGestionNotion);
 
-        // Définition des dimensions.
-        this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
+		// Définition des dimensions.
+		this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
 	}
 
 	/**
-     * Réinitialise l'affichage du panel de gestion des notions.
-     */
+	 * Réinitialise l'affichage du panel de gestion des notions.
+	 */
 	public void reinitAffichage() 
 	{
 		this.panelGestionNotion.afficher();

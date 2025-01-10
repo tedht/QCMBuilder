@@ -71,7 +71,7 @@ public class PanelExport extends PanelEditNom
 		gbc.insets  = new Insets(5, 5, 5, 5);
 		gbc.gridx   = 1;
 		gbc.anchor  = GridBagConstraints.NORTH;
-	    gbc.fill    = GridBagConstraints.HORIZONTAL;
+		gbc.fill    = GridBagConstraints.HORIZONTAL;
 
 		gbc.gridy = 0;
 		this.panelInfo.add(this.panelInfoNom, gbc);

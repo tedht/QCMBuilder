@@ -1,14 +1,12 @@
 package ihm.ressource.edit;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import controleur.Controleur;
 import ihm.IHM;
 import ihm.shared.PanelEditNom;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 /** 

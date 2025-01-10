@@ -107,8 +107,8 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 10, 5);
 		gbc.anchor  = GridBagConstraints.WEST;
-	    gbc.fill    = GridBagConstraints.NONE;
-	    gbc.weightx = 1.0;
+		gbc.fill    = GridBagConstraints.NONE;
+		gbc.weightx = 1.0;
 
 		/* Ligne 0 */
 		// Resources

@@ -115,8 +115,8 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 	}
 	
 	/**
-     * Méthode pour enregistrer les modifications effectuées sur une question existente.
-     */
+	 * Méthode pour enregistrer les modifications effectuées sur une question existente.
+	 */
 	public void enregistrer()
 	{
 		this.frame.enregistrer(this.idQst);

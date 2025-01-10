@@ -74,21 +74,21 @@ public class PanelPropQCM extends PanelProp
 	/*---------*/
 
 
-    /**
-     * Retourne le texte de la proposition.
-     * 
-     * @return le texte de la proposition.
-     */
+	/**
+	 * Retourne le texte de la proposition.
+	 * 
+	 * @return le texte de la proposition.
+	 */
 	public String  getText() 
 	{ 
 		return this.txtProposition.getText(); 
 	}
 
 	/**
-     * Indique si la proposition est marquée comme réponse correcte.
-     * 
-     * @return true si c'est une réponse correcte, false sinon.
-     */
+	 * Indique si la proposition est marquée comme réponse correcte.
+	 * 
+	 * @return true si c'est une réponse correcte, false sinon.
+	 */
 	public boolean estReponse() 
 	{ 
 		return this.rbReponse.isSelected(); 
@@ -99,20 +99,20 @@ public class PanelPropQCM extends PanelProp
 	/*---------*/
 
 	/**
-     * Définit le texte de la proposition.
-     * 
-     * @param text le texte à afficher dans la zone de texte.
-     */
-	public void setText(String  text)    
+	 * Définit le texte de la proposition.
+	 * 
+	 * @param text le texte à afficher dans la zone de texte.
+	 */
+	public void setText(String  text)
 	{ 
-		this.txtProposition.setText    (text);    
+		this.txtProposition.setText(text);
 	}
 
 	/**
-     * Définit si la proposition est une réponse correcte.
-     * 
-     * @param reponse true si c'est une réponse correcte, false sinon.
-     */
+	 * Définit si la proposition est une réponse correcte.
+	 * 
+	 * @param reponse true si c'est une réponse correcte, false sinon.
+	 */
 	public void setReponse(boolean reponse) 
 	{ 
 		this.rbReponse.setSelected(reponse); 

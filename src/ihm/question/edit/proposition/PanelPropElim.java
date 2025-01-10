@@ -87,7 +87,7 @@ public class PanelPropElim extends PanelProp implements ItemListener
 		panelElim            .add(panelTxtPointsPerdus);
 		panelTxtPointsPerdus.add(this.lblPointsPerdus, BorderLayout.NORTH);
 		panelTxtPointsPerdus.add(this.txtPointsPerdus, BorderLayout.CENTER);
-   
+
 		this.panelAjoutQuestion.ajouterRbResponse(this.rbReponse);
 
 		/*---------------------------*/
@@ -106,40 +106,40 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	/*---------*/
 
 	/**
-     * Retourne le texte de la proposition.
-     * 
-     * @return le texte de la proposition.
-     */
+	 * Retourne le texte de la proposition.
+	 * 
+	 * @return le texte de la proposition.
+	 */
 	public String  getText() 
 	{ 
 		return this.txtProposition.getText(); 
 	}
 
 	/**
-     * Indique si la proposition est marquée comme réponse correcte.
-     * 
-     * @return true si c'est une réponse correcte, false sinon.
-     */
+	 * Indique si la proposition est marquée comme réponse correcte.
+	 * 
+	 * @return true si c'est une réponse correcte, false sinon.
+	 */
 	public boolean estReponse() 
 	{ 
 		return this.rbReponse.isSelected();
 	}
 
 	/**
-     * Retourne l'ordre d'élimination sous forme de chaine de caractères.
-     * 
-     * @return l'ordre d'élimination sous forme de chaine de caractères.
-     */
+	 * Retourne l'ordre d'élimination sous forme de chaine de caractères.
+	 * 
+	 * @return l'ordre d'élimination sous forme de chaine de caractères.
+	 */
 	public String getOrdreElim() 
 	{ 
 		return this.txtOrdreElim.getText(); 
 	}
 
 	/**
-     * Retourne le nombre de points perdus sous forme de chaine de caractères.
-     * 
-     * @return le nombre de points perdus sous forme de chaine de caractères.
-     */
+	 * Retourne le nombre de points perdus sous forme de chaine de caractères.
+	 * 
+	 * @return le nombre de points perdus sous forme de chaine de caractères.
+	 */
 	public String  getPointsPerdus() 
 	{ 
 		return this.txtPointsPerdus.getText(); 
@@ -150,40 +150,40 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	/*---------*/
 
 	/**
-     * Définit le texte de la proposition.
-     * 
-     * @param text le texte à afficher dans la zone de texte.
-     */
+	 * Définit le texte de la proposition.
+	 * 
+	 * @param text le texte à afficher dans la zone de texte.
+	 */
 	public void setText(String  text)       
 	{ 
 		this.txtProposition.setText(text);       
 	}
 
 	/**
-     * Définit si la proposition est une réponse correcte.
-     * 
-     * @param reponse true si c'est une réponse correcte, false sinon.
-     */
+	 * Définit si la proposition est une réponse correcte.
+	 * 
+	 * @param reponse true si c'est une réponse correcte, false sinon.
+	 */
 	public void setReponse(boolean reponse)
 	{ 
 		this.rbReponse.setSelected(reponse);
 	}
 
 	/**
-     * Définit l'ordre délimination.
-     * 
-     * @param ordreElim l'ordre délimination.
-     */
+	 * Définit l'ordre délimination.
+	 * 
+	 * @param ordreElim l'ordre délimination.
+	 */
 	public void setOrdreElim(String ordreElim) 
 	{ 
 		this.txtOrdreElim.setText(ordreElim);  
 	}
 
 	/**
-     * Définit le nombre de points perdus.
-     * 
-     * @param ptsPerdus le nombre de points perdus.
-     */
+	 * Définit le nombre de points perdus.
+	 * 
+	 * @param ptsPerdus le nombre de points perdus.
+	 */
 	public void setPointsPerdus(String  ptsPerdus) { this.txtPointsPerdus.setText(ptsPerdus); }
 
 	/*-----------------*/
@@ -242,8 +242,8 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	}
 
 	/**
-     * Classe interne pour gérer ce qui se passe lorsqu'on modifie le texte.
-     */
+	 * Classe interne pour gérer ce qui se passe lorsqu'on modifie le texte.
+	 */
 	private class GereText implements DocumentListener 
 	{
 		/**

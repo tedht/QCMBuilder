@@ -30,10 +30,10 @@ public class PanelCreationRessource extends PanelEditRessource
 	}
 
 	/**
-     * Méthode pour enregistrer une nouvelle ressource.
-     * 
-     * @return true si la ressource a été créée avec succès, false sinon.
-     */
+	 * Méthode pour enregistrer une nouvelle ressource.
+	 * 
+	 * @return true si la ressource a été créée avec succès, false sinon.
+	 */
 	@Override
 	public boolean enregistrer() 
 	{
