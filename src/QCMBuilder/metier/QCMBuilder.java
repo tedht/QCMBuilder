@@ -252,6 +252,10 @@ public class QCMBuilder
 		double   nbPtsPerdus;
 		String   text;
 
+		PieceJointe pj;
+		String cheminPJ;
+		String extension;
+
 
 		// Scanner appliqué aux détails de la question utilisant le délimiteur "\t"
 		scDetails = new Scanner(detailsQuestion);
@@ -369,15 +373,15 @@ public class QCMBuilder
 		}
 		else
 		{
-			PieceJointe pj = question.getPieceJointe();
+			pj = question.getPieceJointe();
 			
-			String cheminPJ = "data/ressources/" 
+			cheminPJ = "data/ressources/"
 			                  + question.getCodeRes()
 			                  + "/notion" + question.getIdNot()
 			                  + "/question" + question.getIdQst()
 			                  + "/complément/";
 
-			String extension = cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1);
+			extension = cheminPJOrig.substring(cheminPJOrig.lastIndexOf('.')+1);
 			
 			if(pj == null)
 				cheminPJ += PieceJointe.nouveauNomFic(extension);
@@ -419,6 +423,7 @@ public class QCMBuilder
 	{
 		Ressource ressource;
 
+
 		ressource = this.banqueRessources.getRessource(code);
 		ressource.setCode(nouveauCode);
 		ressource.setNom (nouveauNom);
@@ -447,6 +452,7 @@ public class QCMBuilder
 	public void modifierNotion(int idNot, String nouveauNom) 
 	{
 		Notion notion;
+
 
 		notion = this.banqueNotions.getNotion(idNot);
 		notion.setNom(nouveauNom);
@@ -530,6 +536,7 @@ public class QCMBuilder
 		List<Notion>   lstNotions;
 		Question       question;
 		int            nbQuestions;
+
 
 		this.questionnaire = new Questionnaire(this, this.banqueRessources.getRessource(codeRes), chronometre);
 

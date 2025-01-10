@@ -299,7 +299,8 @@ public class Questionnaire
 	
 		Question question;
 		String jsQuestion;
-	
+
+
 		jsBuilder = new StringBuilder();
 		jsBuilder.append("const questions = [");
 	
@@ -329,7 +330,8 @@ public class Questionnaire
 	public boolean genererQuestionnaireEnJs(String filePath, List<Question> lstQuestions) throws IllegalArgumentException {
 		String lstQuestionsJs;
 		String jsFilePath;
-	
+
+
 		if (filePath == null) 
 			throw new IllegalArgumentException("Le chemin du fichier ne peut pas être null.");
 	
@@ -394,20 +396,20 @@ public class Questionnaire
 
 
 	/**
-     * Formate une chaîne pour JavaScript en supprimant les sauts de ligne (\n)
-     * et en échappant les guillemets (").
-     *
-     * @param input La chaîne d'entrée à formater.
-     * @return La chaîne formatée.
-     */
-    public static String formatForJavaScript(String input) {
-        if (input == null) {
-            return "";
-        }
-        return input
-                .replace("\n", " ")        // Remplace les sauts de ligne par un espace
-                .replace("\"", "\\\"");    // Échappe les guillemets
-    }
+	 * Formate une chaîne pour JavaScript en supprimant les sauts de ligne (\n)
+	 * et en échappant les guillemets (").
+	 *
+	 * @param input La chaîne d'entrée à formater.
+	 * @return La chaîne formatée.
+	 */
+	public static String formatForJavaScript(String input) {
+		if (input == null) {
+			return "";
+		}
+		return input
+				.replace("\n", " ")        // Remplace les sauts de ligne par un espace
+				.replace("\"", "\\\"");    // Échappe les guillemets
+	}
 
 	/**
 	 * Ajoute les informations de base d'une question au JS.
@@ -653,8 +655,8 @@ public class Questionnaire
 	 */
 	private static void copyToFichiersComplementaires(String filePath, Question question) 
 	{
-		String cheminFichierSource, cheminDossierCible;
-		File fichierSource, dossierCible, fichierCible;
+		String  cheminFichierSource, cheminDossierCible;
+		File    fichierSource, dossierCible, fichierCible;
 		boolean dossierCree;
 
 

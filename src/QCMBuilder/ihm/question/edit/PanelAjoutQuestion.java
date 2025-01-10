@@ -68,7 +68,8 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		JPanel panelInfo, panelAction;
 		JPanel panelAjout;
 		JPanel panelBtnAjouterPJ;
-		
+
+
 		this.frame = frame;
 
 		this.setLayout(new BorderLayout());
@@ -244,7 +245,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	 */
 	public void ajouterProposition()
 	{
-		PanelProp panelProp = null;
+		PanelProp panelProp;
+
+
+		panelProp = null;
 
 		switch (this.frame.getIndexTypeQuestion()) {
 			case 0  -> // Question à Choix Multiple à Réponse Unique
@@ -289,7 +293,14 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	 */
 	public void ajouterPJ()
 	{
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser;
+
+		int result;
+
+		File PJ;
+
+
+		fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Choisissez une pièce Jointe");
 		fileChooser.setFileFilter(new FileFilter() {
 			@Override
@@ -317,10 +328,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 			}
 		});
 
-		int result = fileChooser.showOpenDialog(frame);
+		result = fileChooser.showOpenDialog(frame);
 
 		if (result == JFileChooser.APPROVE_OPTION) {
-			File PJ = fileChooser.getSelectedFile();
+			PJ = fileChooser.getSelectedFile();
 			this.lblPJ.setText(PJ.getAbsolutePath());
 		}
 
@@ -332,9 +343,14 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	 */
 	public void afficher()
 	{
+		GridBagConstraints gbc;
+
+		int cpt;
+
+
 		this.panelInfoScroll.removeAll();
 		
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 5, 25);
 		gbc.gridx   = 0;
 		gbc.anchor  = GridBagConstraints.NORTH;
@@ -342,7 +358,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		gbc.weightx = 1.0;
 		gbc.weighty = 0.0;
 
-		int cpt   = 0;
+		cpt   = 0;
 		gbc.gridy = cpt++;
 		this.panelInfoScroll.add(this.panelInfoQuestion, gbc);
 

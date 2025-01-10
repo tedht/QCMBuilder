@@ -62,7 +62,12 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 			   panelInfoNotion, panelInfoNiveau, panelInfoTypeQuestion;
 
  		JPanel panelPoints, panelTemps, panelNiveau;
-		
+
+		Difficulte diff;
+
+		GridBagConstraints gbc;
+
+
 		this.ctrl  = ctrl;
 		this.frame = frame;
 
@@ -126,7 +131,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		tabRbDifficulte = new JRadioButton[4];
 		for(int i = 0; i < 4; i++)
 		{
-			Difficulte diff = Difficulte.fromInt(i);
+			diff = Difficulte.fromInt(i);
 			
 			tabRbDifficulte[i] = new JRadioButton(diff.toString());
 			tabRbDifficulte[i].setForeground(diff.getCouleur());
@@ -149,7 +154,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 		/* INFO */
 		this.add(panelInfo, BorderLayout.CENTER);
 
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 		gbc.insets  = new Insets(0, 5, 10, 5);
 		gbc.anchor  = GridBagConstraints.WEST;
 		gbc.fill    = GridBagConstraints.NONE;

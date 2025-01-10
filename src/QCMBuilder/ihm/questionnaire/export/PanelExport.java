@@ -46,10 +46,13 @@ public class PanelExport extends PanelEditNom
 	public PanelExport(Controleur ctrl, IHM ihm, FrameExport frame)
 	{
 		super(ctrl, ihm);
-		this.frame = frame;
 
 		JPanel panelBtnNavig;
 
+		GridBagConstraints gbc;
+
+
+		this.frame = frame;
 		this.panelInfo.setLayout(new GridBagLayout());
 
 		/*-------------------------*/
@@ -68,7 +71,7 @@ public class PanelExport extends PanelEditNom
 		/* positionnement des composants */
 		/*-------------------------------*/
 
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc         = new GridBagConstraints();
 		gbc.insets  = new Insets(5, 5, 5, 5);
 		gbc.gridx   = 1;
 		gbc.anchor  = GridBagConstraints.NORTH;
@@ -96,10 +99,18 @@ public class PanelExport extends PanelEditNom
 	 */
 	public boolean enregistrer()
 	{
-		String nomEval = this.txtNom   .getText();
-		String chemin  = this.lblChemin.getText();
+		String nomEval;
+		String chemin ;
 
-		List<String> lstErreurs = new ArrayList<String>();
+		List<String> lstErreurs;
+
+		String message;
+
+
+		nomEval = this.txtNom   .getText();
+		chemin  = this.lblChemin.getText();
+
+		lstErreurs = new ArrayList<String>();
 
 		/*--------------------------*/
 		/* Vérification des erreurs */
@@ -114,7 +125,7 @@ public class PanelExport extends PanelEditNom
 
 		if(lstErreurs.size() != 0)
 		{
-			String message = "L'évaluation n'a pas pu être générée pour les raisons suivantes :\n";
+			message = "L'évaluation n'a pas pu être générée pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	
@@ -149,18 +160,24 @@ public class PanelExport extends PanelEditNom
 	{
 		super.actionPerformed(e);
 
+		JFileChooser fileChooser;
+		int result;
+
+		File dir;
+
+
 		if(e.getSource() == this.btnNavig)
 		{
-			JFileChooser fileChooser = new JFileChooser();
+			fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Choisissez l'emplacement de sauvegarde de votre évaluation.");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setAcceptAllFileFilterUsed(false);
 	
-			int result = fileChooser.showSaveDialog(frame);
+			result = fileChooser.showSaveDialog(frame);
 	
 			if (result == JFileChooser.APPROVE_OPTION) 
 			{
-				File dir = fileChooser.getSelectedFile();
+				dir = fileChooser.getSelectedFile();
 				this.lblChemin.setText(dir.getAbsolutePath());
 			}
 		}

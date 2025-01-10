@@ -44,6 +44,9 @@ public class GrilleNotionsRenderer extends DefaultTableCellRenderer
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int lig, int col)
 	{
+		Boolean notionSelect;
+
+
 		// Rendu pour les valeurs booléennes avec une case à cocher.
 		if (value instanceof Boolean) 
 		{
@@ -62,7 +65,7 @@ public class GrilleNotionsRenderer extends DefaultTableCellRenderer
 			this.txt.setBorder(null);
 
 			// Vérifie si la notion correspondante est sélectionnée.
-			Boolean notionSelect = (Boolean) table.getValueAt(lig, 1);
+			notionSelect = (Boolean) table.getValueAt(lig, 1);
 			if(Boolean.TRUE.equals(notionSelect))
 			{
 				// Applique la couleur de fond associée à la difficulté (colonne).

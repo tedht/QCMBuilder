@@ -32,6 +32,7 @@ public class PanelPropQCM extends PanelProp
 
 		JPanel panelBtnSupprimer;
 
+		
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/

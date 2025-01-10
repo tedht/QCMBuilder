@@ -36,8 +36,6 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 	public PanelModifAjoutQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(frame);
-		this.ctrl  = ctrl;
-		this.idQst = idQst;
 
 		Question question; 
 		
@@ -45,6 +43,11 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 		Association assoc; PanelPropAssoc panelPropAssoc;
 		Elimination elim;  PanelPropElim  panelPropElim;
 
+		PropositionElimination propElim;
+
+
+		this.ctrl  = ctrl;
+		this.idQst = idQst;
 		question = this.ctrl.getQuestion(this.idQst);
 
 		this.txtIntitule.setText(question.getIntitule());
@@ -105,7 +108,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 				this.ajouterProposition();
 				panelPropElim = (PanelPropElim)this.lstPanelProp.get(i);
 
-				PropositionElimination propElim = elim.getProposition(i);
+				propElim = elim.getProposition(i);
 
 				panelPropElim.setText        ( propElim.getText       ());
 				panelPropElim.setReponse     ( propElim.estReponse    ());

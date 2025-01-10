@@ -180,10 +180,11 @@ public class PieceJointe
 
 	public void copierFichier()
 	{
-		File fichier = new File(this.cheminFic);
+		File fichier;
 		
 		try
 		{
+			fichier = new File(this.cheminFic);
 			Files.copy(Paths.get(this.cheminFicOrig), fichier.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			this.cheminFicOrig = this.cheminFic;
 		}

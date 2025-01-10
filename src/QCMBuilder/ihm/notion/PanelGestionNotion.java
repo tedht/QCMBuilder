@@ -74,11 +74,13 @@ public class PanelGestionNotion extends PanelGestion
 	@Override
 	public void afficher() 
 	{
+		PanelNotion panelNotion;
+
+
 		// Suppression de tous les composants existants pour redessiner
 		this.panelContenu.removeAll();
 
 		// Création du panel pour chaque notion
-		PanelNotion panelNotion;
 		if(this.ctrl.getRessources().isEmpty())
 		{
 			// S'il n'y a pas de ressources, afficher des panels vides

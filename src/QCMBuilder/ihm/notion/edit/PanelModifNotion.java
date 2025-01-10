@@ -43,8 +43,12 @@ public class PanelModifNotion extends PanelEditNotion
 	@Override
 	public boolean enregistrer() 
 	{
+		String nouveauNom;
+		String message;
+
+
 		// Récupération des valeurs saisies par l'utilisateur.
-		String nouveauNom = this.txtNom.getText();
+		nouveauNom = this.txtNom.getText();
 
 		/*--------------------------*/
 		/* Vérification des Erreurs */
@@ -61,7 +65,7 @@ public class PanelModifNotion extends PanelEditNotion
 		// Si des erreurs ont été détectées, affichage d'un message d'erreur.
 		if(lstErreurs.size() != 0)
 		{
-			String message = "La notion n'a pas été enregistrée pour les raisons suivantes :\n";
+			message = "La notion n'a pas été enregistrée pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	

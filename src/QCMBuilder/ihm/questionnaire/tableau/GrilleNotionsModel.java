@@ -37,14 +37,17 @@ public class GrilleNotionsModel extends AbstractTableModel
 	 */
 	public GrilleNotionsModel(Controleur ctrl, PanelAjoutQuestionnaire panel, String codeRes)
 	{
+		List<Notion> lstNotions;
+
+
 		this.ctrl    = ctrl;
 		this.panel   = panel;
 		
 		this.tabNbQuestionsDiff = new int[4];
 
-		List<Notion> lstNotions =   this.ctrl.getNotions(codeRes) != null 
-								  ? this.ctrl.getNotions(codeRes)
-								  : new ArrayList<Notion>();
+		lstNotions =   this.ctrl.getNotions(codeRes) != null 
+		             ? this.ctrl.getNotions(codeRes)
+		             : new ArrayList<Notion>();
 
 		this.tabDonnees = new Object[lstNotions.size()+2][7];
 
@@ -118,9 +121,12 @@ public class GrilleNotionsModel extends AbstractTableModel
 	 * @return la classe de la colonne.
 	 */
 	@Override
-	public Class<?> getColumnClass(int col)            
-	{  
-		Object value = getValueAt(0, col);
+	public Class<?> getColumnClass(int col)
+	{
+		Object value;
+
+
+		value = getValueAt(0, col);
 		return (value != null) ? value.getClass() : Object.class; 
 	}
 
@@ -142,6 +148,16 @@ public class GrilleNotionsModel extends AbstractTableModel
 	@Override
 	public void setValueAt(Object value, int lig, int col)
 	{
+		Integer oldVal;
+		Integer newVal;
+
+		String codeRes;
+		int    idNot  ;
+		int    nbQst  ;
+
+		int nbQuestionsTotales;
+
+
 		if (col == 1) // Colonne de sélection
 		{
 			this.tabDonnees[lig][col] = value;
@@ -169,13 +185,13 @@ public class GrilleNotionsModel extends AbstractTableModel
 		{
 			if (value instanceof Integer)
 			{
-				Integer oldVal = (Integer)this.tabDonnees[lig][col];
-				Integer newVal = (Integer)value;
+				oldVal = (Integer)this.tabDonnees[lig][col];
+				newVal = (Integer)value;
 
 				// Récupération du nombre maximum de questions disponibles pour cette difficulté
-				String codeRes = ((Notion)this.tabDonnees[lig][0]).getCodeRes(); 
-				int    idNot   = ((Notion)this.tabDonnees[lig][0]).getIdNot();
-				int    nbQst   = this.ctrl.getQuestions(codeRes, idNot, Difficulte.fromInt(col-2)).size();
+				codeRes = ((Notion)this.tabDonnees[lig][0]).getCodeRes(); 
+				idNot   = ((Notion)this.tabDonnees[lig][0]).getIdNot();
+				nbQst   = this.ctrl.getQuestions(codeRes, idNot, Difficulte.fromInt(col-2)).size();
 					
 				// Si la nouvelle valeur est supérieure au nombre de questions disponibles, on utilise
 				// le nombre de question
@@ -194,7 +210,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 				this.tabDonnees[this.getRowCount()-1][col] = this.tabNbQuestionsDiff[col-2];
 				this.fireTableCellUpdated(this.getRowCount()-1, col);
 
-				int nbQuestionsTotales = this.getNbQuestionsTotales();
+				nbQuestionsTotales = this.getNbQuestionsTotales();
 
 				// Met à jour du total général
 				this.tabDonnees[this.getRowCount()-1][this.getColumnCount()-1] = "Σ = " + nbQuestionsTotales;
@@ -227,7 +243,10 @@ public class GrilleNotionsModel extends AbstractTableModel
 	 */
 	public int[][] getTabNbQuestions()
 	{
-		int[][] tabNbQuestions = new int[this.getRowCount()-2][4];
+		int[][] tabNbQuestions;
+
+
+		tabNbQuestions = new int[this.getRowCount()-2][4];
 		
 		for(int i = 0; i < this.getRowCount()-2; i++)
 		{

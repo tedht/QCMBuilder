@@ -69,6 +69,9 @@ public class PanelNotion extends PanelEntite
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		int choix;
+
+
 		if(e.getSource() == this.btnModifier)
 		{
 			this.ihm.editNotion(this.id);
@@ -76,14 +79,14 @@ public class PanelNotion extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			int choix = JOptionPane.showConfirmDialog(
+			choix = JOptionPane.showConfirmDialog(
 				this.frame,
 				"Voulez-vous vraiment supprimer la notion \"" + this.lblTitre.getText() + "\" ?",
 				"Confirmation de suppression",
 				JOptionPane.YES_NO_OPTION
 			);
 
-			if (choix == JOptionPane.YES_OPTION) 
+			if (choix == JOptionPane.YES_OPTION)
 			{
 				this.ctrl.supprimerNotion(this.id);
 				this.ihm.reinitAffichageNotion();

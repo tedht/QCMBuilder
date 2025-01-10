@@ -136,15 +136,26 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	 */
 	public void afficher()
 	{
+		Ressource ressource;
+		Notion    notion   ;
+
+		List<Question> lstQuestions;
+		PanelQuestion panelCarte;
+
+		double note;
+		int    tps ;
+
+		String info;
+
+
 		// Suppression de tous les composants existants pour redessiner
 		this.panelContenu.removeAll();
 
 		// Récupère les éléments sélectionnés
-		Ressource ressource = (Ressource)this.ddlstRessource.getSelectedItem();
-		Notion    notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
+		ressource = (Ressource)this.ddlstRessource.getSelectedItem();
+		notion    = (Notion)   this.ddlstNotion   .getSelectedItem();
 
 		// Récupère la liste des questions à afficher
-		List<Question> lstQuestions;
 		if(ressource == null)
 		{
 			// Toutes les questions
@@ -161,7 +172,6 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 			lstQuestions = this.ctrl.getQuestions(((Ressource)this.ddlstRessource.getSelectedItem()).getCode(), notion.getIdNot());
 		}
 
-		PanelQuestion panelCarte;
 		if(lstQuestions.isEmpty())
 		{
 			// Affiche un message si aucune question n'est trouvée
@@ -182,17 +192,17 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 			{
 				if(question != null)
 				{
-					double note = question.getNote ();
-					int    tps  = question.getTemps();
+					note = question.getNote ();
+					tps  = question.getTemps();
 
-					String info =   note + " point" + (note == 1.0 ? ", " : "s, ")
-								  + Math.round(tps / 60) + "min "
-								  + (tps % 60 == 0 ? "" : tps % 60 + "s");
+					info =   note + " point" + (note == 1.0 ? ", " : "s, ")
+					              + Math.round(tps / 60) + "min "
+					              + (tps % 60 == 0 ? "" : tps % 60 + "s");
 
 					panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
-												   question.getIntitule(), 
-												   info,
-												   question.getIdQst());
+					                               question.getIntitule(), 
+					                               info,
+					                               question.getIdQst());
 					this.panelContenu.add(panelCarte);
 				}
 			}

@@ -33,6 +33,7 @@ public class PanelPropQRM extends PanelProp
 
 		JPanel panelBtnSupprimer;
 
+
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/

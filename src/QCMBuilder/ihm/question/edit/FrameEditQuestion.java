@@ -116,25 +116,59 @@ public class FrameEditQuestion extends JFrame
 	 */
 	public boolean enregistrer(Integer idQst) 
 	{
+		String codeRes    ;
+
+		int    idNot      ;
+		int    valDiff    ;
+		int    indexType  ;
+
+		String sTemps     ;
+		String sPoints    ;
+		String intitule   ;
+		String explication;
+		String pieceJointe;
+
+		List<String> lstErreurs;
+		
+		double pts;
+
+		int m;
+		int s;
+
+		List<PanelProp> lstPanelProp;
+
+		boolean reponse;
+
+		PanelPropQCM   panelPropQCM;
+		PanelPropQRM   panelPropQRM;
+		PanelPropAssoc panelPropAssoc;
+		PanelPropElim  panelPropElim;
+
+		String sReponse  ;
+		String sOrdre    ;
+		String sPtsPerdus;
+		String text      ;
+
+
 		// Récupération des valeurs saisies par l'utilisateur.
-		String codeRes     = this.panelInitQuestion.getRessource        ().getCode();
-		int    idNot       = this.panelInitQuestion.getNotion           ().getIdNot();
-		int    valDiff     = this.panelInitQuestion.getDifficulte       (); 
-			  
-		int    indexType   = this.panelInitQuestion.getIndexTypeQuestion();
+		codeRes     = this.panelInitQuestion.getRessource        ().getCode();
+		idNot       = this.panelInitQuestion.getNotion           ().getIdNot();
+		valDiff     = this.panelInitQuestion.getDifficulte       (); 
+		
+		indexType   = this.panelInitQuestion.getIndexTypeQuestion();
 
-		String sTemps      = this.panelInitQuestion.getTemps            ();          
-		String sPoints     = this.panelInitQuestion.getPoints           ();  
+		sTemps      = this.panelInitQuestion.getTemps            ();          
+		sPoints     = this.panelInitQuestion.getPoints           ();  
 
-		String intitule    = this.panelAjoutQuestion     .getIntitule         ();          
-		String explication = this.panelAjoutQuestion     .getExplication      ();  
-		String pieceJointe = this.panelAjoutQuestion     .getPieceJointe      (); 
+		intitule    = this.panelAjoutQuestion     .getIntitule         ();          
+		explication = this.panelAjoutQuestion     .getExplication      ();  
+		pieceJointe = this.panelAjoutQuestion     .getPieceJointe      (); 
 		
 		/*--------------------------*/
 		/* Vérification des Erreurs */
 		/*--------------------------*/
 
-		List<String> lstErreurs = new ArrayList<String>();
+		lstErreurs = new ArrayList<String>();
 
 		// Vérification du champ "Points".
 		if(sPoints.isEmpty())
@@ -145,7 +179,7 @@ public class FrameEditQuestion extends JFrame
 		{
 			try 
 			{
-				double pts = Double.parseDouble(sPoints);
+				pts = Double.parseDouble(sPoints);
 
 				if(pts < 0)
 					lstErreurs.add("Valeur invalide pour le champ 'Points'");
@@ -165,8 +199,8 @@ public class FrameEditQuestion extends JFrame
 		{
 			try 
 			{
-				int m = Integer.parseInt(sTemps.substring(0,sTemps.indexOf(':')));
-				int s = Integer.parseInt(sTemps.substring(sTemps.indexOf(':') + 1));
+				m = Integer.parseInt(sTemps.substring(0,sTemps.indexOf(':')));
+				s = Integer.parseInt(sTemps.substring(sTemps.indexOf(':') + 1));
 				
 				if(m < 0 || m >= 60 || s < 0 || s >= 60) // durée max -> 59:59
 					lstErreurs.add("Valeur invalide pour le champ 'Temps'");
@@ -190,21 +224,21 @@ public class FrameEditQuestion extends JFrame
 			lstErreurs.add("Aucune pièce jointe a été sélectionnée");
 
 		// Vérification des propositions
-		List<PanelProp> lstPanelProp = this.panelAjoutQuestion.getPanelProps();
+		lstPanelProp = this.panelAjoutQuestion.getPanelProps();
 		if(lstPanelProp.size() == 0)
 		{
 			lstErreurs.add("Aucune proposition de réponse a été ajouté");
 		}
 		else
 		{
-			boolean reponse = false;
+			reponse = false;
 			switch (this.panelInitQuestion.getIndexTypeQuestion()) 
 			{
 				case 0  -> // Question à Choix Multiple à Réponse Unique
 				{
 					for(PanelProp panelProp : lstPanelProp)
 					{
-						PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
+						panelPropQCM = (PanelPropQCM) panelProp;
 						
 						if(panelPropQCM.estReponse()) 
 							reponse = true;
@@ -224,7 +258,7 @@ public class FrameEditQuestion extends JFrame
 				{
 					for(PanelProp panelProp : lstPanelProp)
 					{
-						PanelPropQRM panelPropQRM = (PanelPropQRM) panelProp;
+						panelPropQRM = (PanelPropQRM) panelProp;
 						
 						if(panelPropQRM.estReponse()) 
 							reponse = true;
@@ -244,7 +278,7 @@ public class FrameEditQuestion extends JFrame
 				{
 					for(PanelProp panelProp : lstPanelProp)
 					{
-						PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
+						panelPropAssoc = (PanelPropAssoc) panelProp;
 						if(panelPropAssoc.getTextGauche().isEmpty() || panelPropAssoc.getTextDroite().isEmpty())
 						{
 							lstErreurs.add("Il y a du texte manquant dans au moins une proposition.");
@@ -256,7 +290,7 @@ public class FrameEditQuestion extends JFrame
 				{
 					for(PanelProp panelProp : lstPanelProp)
 					{
-						PanelPropElim panelPropElim = (PanelPropElim) panelProp;
+						panelPropElim = (PanelPropElim) panelProp;
 						
 						if(panelPropElim.getText().isEmpty())
 						{
@@ -338,7 +372,7 @@ public class FrameEditQuestion extends JFrame
 				detailsQuestion += "true\t";
 				for(PanelProp panelProp : lstPanelProp)
 				{
-					PanelPropQCM panelPropQCM = (PanelPropQCM) panelProp;
+					panelPropQCM = (PanelPropQCM) panelProp;
 					detailsProp =  panelPropQCM.estReponse() ? "V:" : "F:";
 					detailsProp += panelPropQCM.getText();
 					lstDetailsProp.add(detailsProp);
@@ -349,9 +383,9 @@ public class FrameEditQuestion extends JFrame
 				detailsQuestion += "false\t";
 				for(PanelProp panelProp : lstPanelProp)
 				{
-					PanelPropQRM panelPropQCM = (PanelPropQRM) panelProp;
-					detailsProp =  panelPropQCM.estReponse() ? "V:" : "F:";
-					detailsProp += panelPropQCM.getText();
+					panelPropQRM = (PanelPropQRM) panelProp;
+					detailsProp =  panelPropQRM.estReponse() ? "V:" : "F:";
+					detailsProp += panelPropQRM.getText();
 					lstDetailsProp.add(detailsProp);
 				}
 			} 
@@ -359,7 +393,7 @@ public class FrameEditQuestion extends JFrame
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
-					PanelPropAssoc panelPropAssoc = (PanelPropAssoc) panelProp;
+					panelPropAssoc = (PanelPropAssoc) panelProp;
 					lstDetailsProp.add(panelPropAssoc.getTextGauche());
 					lstDetailsProp.add(panelPropAssoc.getTextDroite());
 				}
@@ -368,12 +402,12 @@ public class FrameEditQuestion extends JFrame
 			{
 				for(PanelProp panelProp : lstPanelProp)
 				{
-					PanelPropElim panelPropElim = (PanelPropElim) panelProp;
+					panelPropElim = (PanelPropElim) panelProp;
 					
-					String sReponse   = panelPropElim.estReponse      () ? "V:" : "F:";
-					String sOrdre     = panelPropElim.getOrdreElim    ();
-					String sPtsPerdus = panelPropElim.getPointsPerdus();
-					String text       = panelPropElim.getText         ();
+					sReponse   = panelPropElim.estReponse      () ? "V:" : "F:";
+					sOrdre     = panelPropElim.getOrdreElim    ();
+					sPtsPerdus = panelPropElim.getPointsPerdus();
+					text       = panelPropElim.getText         ();
 
 					sOrdre     = "".equals(sOrdre)     ? "-1:"  : sOrdre     + ":";
 					sPtsPerdus = "".equals(sPtsPerdus) ? "0.0:" : sPtsPerdus + ":";

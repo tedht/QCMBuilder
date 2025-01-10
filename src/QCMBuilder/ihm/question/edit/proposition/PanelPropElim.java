@@ -38,6 +38,7 @@ public class PanelPropElim extends PanelProp implements ItemListener
 
 		JPanel panelBtnSupprimer, panelElim, panelTxtOrdreElim, panelCbReponse, panelTxtPointsPerdus;
 
+
 		/*-------------------------*/
 		/* Création des composants */
 		/*-------------------------*/

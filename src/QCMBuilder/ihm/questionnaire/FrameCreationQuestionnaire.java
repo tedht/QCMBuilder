@@ -75,10 +75,15 @@ public class FrameCreationQuestionnaire extends JFrame
 	 */
 	public void creerQuestionnaire()
 	{
+		String  codeRes       ;
+		boolean chronometre   ;
+		int[][] tabNbQuestions;
+
+
 		// Récupération des valeurs saisies par l'utilisateur.
-		String  codeRes        = this.panelParametresQuestionnaire.getCodeRes       ();
-		boolean chronometre    = this.panelParametresQuestionnaire.estChronometre   ();
-		int[][] tabNbQuestions = this.panelAjoutQuestionnaire     .getTabNbQuestions();
+		codeRes        = this.panelParametresQuestionnaire.getCodeRes       ();
+		chronometre    = this.panelParametresQuestionnaire.estChronometre   ();
+		tabNbQuestions = this.panelAjoutQuestionnaire     .getTabNbQuestions();
 		
 		// Traitement
 		this.ctrl.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);

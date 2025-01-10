@@ -52,6 +52,7 @@ public class PanelParametresQuestionnaire extends JPanel implements ActionListen
 		JPanel panelInfoRessource, panelInfoChronometre;
 		JPanel panelChronometre;
 
+
 		this.ctrl  = ctrl;
 		this.frame = frame;
 

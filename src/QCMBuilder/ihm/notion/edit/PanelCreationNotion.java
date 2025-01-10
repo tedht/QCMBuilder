@@ -38,13 +38,19 @@ public class PanelCreationNotion extends PanelEditNotion
 	@Override
 	public boolean enregistrer() 
 	{
+		String nom;
+
+		List<String> lstErreurs;
+		String message;
+
+
 		// Récupération des valeurs saisies par l'utilisateur.
-		String nom = this.txtNom.getText();
+		nom = this.txtNom.getText();
 
 		/*--------------------------*/
 		/* Vérification des Erreurs */
 		/*--------------------------*/
-		List<String> lstErreurs = new ArrayList<String>();
+		lstErreurs = new ArrayList<String>();
 
 		// Vérification du champ "nom".
 		if(nom.isEmpty()) 
@@ -55,7 +61,7 @@ public class PanelCreationNotion extends PanelEditNotion
 		// Si des erreurs ont été détectées, affichage d'un message d'erreur.
 		if(lstErreurs.size() != 0)
 		{
-			String message = "La notion n'a pas été enregistrée pour les raisons suivantes :\n";
+			message = "La notion n'a pas été enregistrée pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	

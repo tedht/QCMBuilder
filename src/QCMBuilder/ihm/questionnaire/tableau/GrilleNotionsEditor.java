@@ -39,7 +39,11 @@ public class GrilleNotionsEditor extends DefaultCellEditor
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int lig, int col) 
 	{
-		Component editor = super.getTableCellEditorComponent(table, value, isSelected, lig, col);
+		Component editor;
+		Boolean notionSelect;
+
+
+		editor = super.getTableCellEditorComponent(table, value, isSelected, lig, col);
 
 		// Vérifie si la valeur est un entier pour configurer correctement le champ de texte.
 		if (value instanceof Integer) 
@@ -50,7 +54,7 @@ public class GrilleNotionsEditor extends DefaultCellEditor
 			txt.setCaretPosition(txt.getText().length());
 
 			// Vérifie si la notion correspondante est sélectionnée.
-			Boolean notionSelect = (Boolean) table.getValueAt(lig, 1);
+			notionSelect = (Boolean) table.getValueAt(lig, 1);
 			if(Boolean.TRUE.equals(notionSelect))
 			{
 				// Applique la couleur de fond associée à la difficulté (colonne).

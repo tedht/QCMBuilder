@@ -27,14 +27,21 @@ public class PanelModifInitQuestion extends PanelInitQuestion
 	public PanelModifInitQuestion(Controleur ctrl, FrameEditQuestion frame, int idQst) 
 	{
 		super(ctrl, frame);
+
+		Question question;
+
+		int m;
+		int s;
+
+
 		this.idQst = idQst;
 
-		Question question = this.ctrl.getQuestion(this.idQst);
+		question = this.ctrl.getQuestion(this.idQst);
 
 		this.txtPoints.setText(Double.toString(question.getNote()));
 
-		int m = question.getTemps() / 60;
-		int s = question.getTemps() % 60;
+		m = question.getTemps() / 60;
+		s = question.getTemps() % 60;
 		this.txtTemps.setText(String.format("%02d", m) + ":" + String.format("%02d", s));
 
 		for(int i = 0; i < this.ddlstRessource.getItemCount(); i++)

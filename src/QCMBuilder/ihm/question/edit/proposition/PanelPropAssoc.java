@@ -33,6 +33,7 @@ public class PanelPropAssoc extends PanelProp
 		
 		JPanel panelTxt;
 
+
 		this.tabTxtProposition = new JTextArea[2];
 		this.tabBtnSupprimer   = new JButton  [2];
 		tabPanelBtnSupprimer   = new JPanel   [2];
