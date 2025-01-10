@@ -24,8 +24,8 @@ public class FrameEditNotion extends JFrame
 	public FrameEditNotion(Controleur ctrl, IHM ihm)
 	{
 		this.setTitle("Créer une Notion");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelEditNotion = new PanelCreationNotion(ctrl, ihm);
 		this.add(this.panelEditNotion);
@@ -43,8 +43,8 @@ public class FrameEditNotion extends JFrame
 	public FrameEditNotion(Controleur ctrl, IHM ihm, Integer idNot) 
 	{
 		this.setTitle("Modifier une Notion");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelEditNotion = new PanelModifNotion(ctrl, ihm, idNot);
 		this.add(this.panelEditNotion);

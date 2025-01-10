@@ -30,10 +30,10 @@ public class PanelCreationNotion extends PanelEditNotion
 	}
 
 	/**
-     * Méthode pour enregistrer une nouvelle notion.
-     * 
-     * @return true si la notion a été créée avec succès, false sinon.
-     */
+	* Méthode pour enregistrer une nouvelle notion.
+	* 
+	* @return true si la notion a été créée avec succès, false sinon.
+	 */
 	@Override
 	public boolean enregistrer() 
 	{

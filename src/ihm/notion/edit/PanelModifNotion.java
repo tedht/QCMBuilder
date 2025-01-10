@@ -35,10 +35,10 @@ public class PanelModifNotion extends PanelEditNotion
 	}
 
 	/**
-     * Méthode pour enregistrer les modifications effectuées sur une notion existente.
-     * 
-     * @return true si la modification a réussi, false sinon.
-     */
+	 * Méthode pour enregistrer les modifications effectuées sur une notion existente.
+	 * 
+	 * @return true si la modification a réussi, false sinon.
+	 */
 	@Override
 	public boolean enregistrer() 
 	{
@@ -77,10 +77,10 @@ public class PanelModifNotion extends PanelEditNotion
 		/* Traitement */
 		/*------------*/
 		this.ctrl.modiferNotion(this.idNot, nouveauNom);
-		
+
 		this.ihm.reinitAffichageRessource();	
 		this.ihm.reinitAffichageNotion();
-		
+
 		return true;
 	}
 }

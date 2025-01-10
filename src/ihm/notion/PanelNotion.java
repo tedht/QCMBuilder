@@ -1,17 +1,14 @@
 package ihm.notion;
 
+import controleur.Controleur;
+import ihm.IHM;
+import ihm.shared.PanelEntite;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-
-import controleur.Controleur;
-import ihm.IHM;
-import ihm.notion.PanelNotion;
-import ihm.shared.PanelEntite;
 
 /**
  * Classe JPanel pour afficher une Notion.
@@ -38,9 +35,9 @@ public class PanelNotion extends PanelEntite
 	 * Constructeur de la classe PanelNotion.
 	 *
 	 * @param ctrl  Le contrôleur
-     * @param ihm   Le gestionnaire des fenêtres de l'application.
-     * @param frame La fenêtre de gestion des notions
-     * @param id    L'id de la notion
+	 * @param ihm   Le gestionnaire des fenêtres de l'application.
+	 * @param frame La fenêtre de gestion des notions
+	 * @param id    L'id de la notion
 	 */
 	public PanelNotion(Controleur ctrl, IHM ihm, FrameGestionNotion frame, int id)
 	{
@@ -75,10 +72,10 @@ public class PanelNotion extends PanelEntite
 		if(e.getSource() == this.btnSupprimer)
 		{
 			int choix = JOptionPane.showConfirmDialog(
-                this.frame,
-                "Voulez-vous vraiment supprimer la notion \"" + this.lblTitre.getText() + "\" ?",
-                "Confirmation de suppression",
-                JOptionPane.YES_NO_OPTION
+				this.frame,
+				"Voulez-vous vraiment supprimer la notion \"" + this.lblTitre.getText() + "\" ?",
+				"Confirmation de suppression",
+				JOptionPane.YES_NO_OPTION
 			);
 
 			if (choix == JOptionPane.YES_OPTION) 
@@ -90,16 +87,16 @@ public class PanelNotion extends PanelEntite
 	}
 
 	/**
-     * Classe interne pour gérer les interactions avec la souris sur le panel.
-     */
+	 * Classe interne pour gérer les interactions avec la souris sur le panel.
+	 */
 	private class GereSourisNotion extends MouseAdapter
 	{
 		/**
-         * Action déclenchée lorsque la souris entre dans le panel.
-         * Change la couleur de fond et ajoute une bordure pour signaler un survol.
-         * 
-         * @param e L'événement de survol.
-         */
+		 * Action déclenchée lorsque la souris entre dans le panel.
+		 * Change la couleur de fond et ajoute une bordure pour signaler un survol.
+		 * 
+		 * @param e L'événement de survol.
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) 
 		{
@@ -108,11 +105,11 @@ public class PanelNotion extends PanelEntite
 		}
 
 		/**
-         * Action déclenchée lorsque la souris quitte le panel.
-         * Réinitialise l'apparence du panel à son état initial.
-         * 
-         * @param e L'événement de sortie.
-         */
+		 * Action déclenchée lorsque la souris quitte le panel.
+		 * Réinitialise l'apparence du panel à son état initial.
+		 * 
+		 * @param e L'événement de sortie.
+		 */
 		@Override
 		public void mouseExited(MouseEvent e) 
 		{
