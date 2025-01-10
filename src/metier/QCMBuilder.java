@@ -245,7 +245,6 @@ public class QCMBuilder
 		Question question;
 
 		boolean  estReponse;
-		int      cptReponse;
 
 		String   textGauche, textDroite;
 
@@ -266,8 +265,6 @@ public class QCMBuilder
 		sTemps       = scDetails.next();
 		note         = Double.parseDouble(scDetails.next());
 		cheminPJOrig = scDetails.next();
-
-		scDetails.close();
 
 		difficulte = Difficulte.fromInt(valDiff);
 		type       = TypeQuestion.fromInt(indexType == 0 ? 0 : indexType-1);
@@ -302,16 +299,14 @@ public class QCMBuilder
 
 				// Ajout des propositions
 				question.clearPropositions();
-				cptReponse = 0;
 				for(String detailsProp : lstDetailsProp)
 				{
 					estReponse = detailsProp.charAt(0) == 'V';
-					if(estReponse) cptReponse++;
 					((QCM)question).ajouterProposition(new PropositionQCM(detailsProp.substring(2), estReponse));
 				}
 
 				// Définition de l'unicité
-				((QCM)question).setUnique(cptReponse == 1);
+				((QCM)question).setUnique(scDetails.nextBoolean());
 
 				question.setIntitule   (intitule);
 				question.setExplication(explication);
@@ -392,6 +387,7 @@ public class QCMBuilder
 			question.setPieceJointe(new PieceJointe(cheminPJOrig, cheminPJ));
 		}
 
+		scDetails.close();
 
 		this.banqueQuestions.sauvegarder();
 	}

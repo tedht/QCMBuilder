@@ -310,10 +310,19 @@ public class BanqueQuestions extends Banque
 							textProp = stringBuilder.toString().substring(0, stringBuilder.length()-1);
 
 							((QCM) question).ajouterProposition(new PropositionQCM(textProp, estReponse));
-
 							scFicTxt.close();
 						}
-						((QCM) question).setUnique(cptReponse == 1);
+
+						if(new File(cheminDirQst+"/propositions/unique.txt").exists())
+						{
+							scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/propositions/unique.txt"), "UTF8");
+							((QCM) question).setUnique(scFicTxt.nextBoolean());
+							scFicTxt.close();
+						}
+						else
+						{
+							((QCM) question).setUnique(cptReponse == 1);
+						}
 					}
 					case ASSOCIATION ->
 					{
@@ -344,9 +353,8 @@ public class BanqueQuestions extends Banque
 							textDroite = stringBuilder.toString().substring(0, stringBuilder.length()-1);
 
 							((Association) question).ajouterProposition(new PropositionAssociation(textGauche, textDroite));
-
-							scFicTxt.close();
 						}
+						scFicTxt.close();
 					}
 					case ELIMINATION ->
 					{
@@ -513,6 +521,10 @@ public class BanqueQuestions extends Banque
 
 							pwTxt.close();
 						}
+						
+						pwTxt = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminDirQst+"/propositions/unique.txt"), "UTF8"));
+						pwTxt.println(qQCM.estUnique());
+						pwTxt.close();
 					}
 					case ASSOCIATION -> 
 					{
