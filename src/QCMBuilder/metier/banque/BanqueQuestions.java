@@ -226,7 +226,7 @@ public class BanqueQuestions extends Banque
 		boolean       estReponse;
 		int           cptReponse;
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder;
 		
 		pj = null;
 
@@ -263,7 +263,7 @@ public class BanqueQuestions extends Banque
 				scFicTxt = new Scanner(new FileInputStream(cheminDirQst+"/intitule.txt"), "UTF8");
 
 				// Récupération de l'intitulé
-				stringBuilder.setLength(0);
+				stringBuilder = new StringBuilder();
 				while(scFicTxt.hasNextLine())
 				{
 					stringBuilder.append(scFicTxt.nextLine()).append('\n');
