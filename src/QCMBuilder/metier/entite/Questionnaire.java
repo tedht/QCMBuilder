@@ -256,8 +256,8 @@ public class Questionnaire
 			System.out.println("Répertoire créé à l'emplacement : " + filePath);
 
 			// Définir les chemins complets en combinant le répertoire actuel et les sous-dossiers
-			jsPath  = currentDir + "/src/metier/entite/srcWeb/main.js";
-			cssPath = currentDir + "/src/metier/entite/srcWeb/style.css";
+			jsPath  = currentDir + "/src/QCMBuilder/metier/entite/srcWeb/main.js";
+			cssPath = currentDir + "/src/QCMBuilder/metier/entite/srcWeb/style.css";
 
 			// Copier les fichiers JavaScript et CSS avec les nouveaux chemins
 			copyFile(jsPath , filePath + "/main.js"  );
