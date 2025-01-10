@@ -140,24 +140,6 @@ public class Questionnaire
 	public void shuffleQuestions() { Collections.shuffle(this.lstQuestions); }
 
 	/**
-	 * Ajout de lstQuestions à la liste des lstQuestions associées au Questionnaire.
-	 * 
-	 * @param  notion	    la notion.
-	 * @param  difficulte   la difficultée.
-	 * @param  nbrQuestions le nombre de lstQuestions.
-	 * @return              true ........, false sinon.
-	 */
-	public boolean ajouterQuestions(Notion notion, Difficulte difficulte, int nbrQuestions)
-	{
-		for (int i = 0; i < nbrQuestions; i++) 
-		{
-			//trop de trucs avec fichier rtf
-		}
-
-		return true;
-	}
-
-	/**
 	 * Génère un fichier HTML contenant une structure de base pour un Questionnaire.
 	 * Le fichier est créé dans le chemin spécifié, dans un dossier approprié si nécessaire.
 	 *
@@ -319,7 +301,7 @@ public class Questionnaire
 		StringBuilder jsBuilder;
 	
 		Question question;
-		String jsonQuestion;
+		String jsQuestion;
 	
 		jsBuilder = new StringBuilder();
 		jsBuilder.append("const questions = [");
@@ -327,9 +309,9 @@ public class Questionnaire
 		for (int i = 0; i < lstQuestions.size(); i++) {
 			question = lstQuestions.get(i);
 	
-			jsonQuestion = convertirQuestionEnJson(question, i + 1);
+			jsQuestion = convertirQuestionEnJs(question, i + 1);
 	
-			jsBuilder.append(jsonQuestion);
+			jsBuilder.append(jsQuestion);
 	
 			if (i < lstQuestions.size() - 1) 
 				jsBuilder.append(",");
@@ -396,7 +378,7 @@ public class Questionnaire
 	 * @param idQuestion l'identifiant de la question.
 	 * @return           la chaîne JS générée.
 	 */
-	private String convertirQuestionEnJson(Question question, int idQuestion) 
+	private String convertirQuestionEnJs(Question question, int idQuestion) 
 	{
 		StringBuilder jsBuilder;
 
