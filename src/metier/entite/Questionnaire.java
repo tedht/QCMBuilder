@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import metier.QCMBuilder;
 
-import metier.entite.question.Difficulte;
 import metier.entite.question.PieceJointe;
 import metier.entite.question.Question;
 
