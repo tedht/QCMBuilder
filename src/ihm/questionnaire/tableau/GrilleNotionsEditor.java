@@ -16,44 +16,44 @@ import metier.entite.question.Difficulte;
  */
 public class GrilleNotionsEditor extends DefaultCellEditor 
 {
-    private final JTextField txt;
+	private final JTextField txt;
 
 	/**
 	 * Constructeur de la classe GrilleNotionsEditor
 	 */
-    public GrilleNotionsEditor() 
+	public GrilleNotionsEditor() 
 	{
-        super(new JTextField());
-        this.txt = (JTextField) getComponent();
-    }
+		super(new JTextField());
+		this.txt = (JTextField) getComponent();
+	}
 
 	/**
-     * Retourne le composant utilisé pour éditer une cellule.
-     * 
-     * @param table      la JTable contenant la cellule.
-     * @param value      la valeur actuelle de la cellule.
-     * @param isSelected indique si la cellule est sélectionnée.
-     * @param lig        la ligne de la cellule.
-     * @param col        la clonne de la cellule.
-     * @return le composant configuré pour éditer la cellule.
-     */
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int lig, int col) 
+	 * Retourne le composant utilisé pour éditer une cellule.
+	 * 
+	 * @param table      la JTable contenant la cellule.
+	 * @param value      la valeur actuelle de la cellule.
+	 * @param isSelected indique si la cellule est sélectionnée.
+	 * @param lig        la ligne de la cellule.
+	 * @param col        la clonne de la cellule.
+	 * @return le composant configuré pour éditer la cellule.
+	 */
+	@Override
+	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int lig, int col) 
 	{
-        Component editor = super.getTableCellEditorComponent(table, value, isSelected, lig, col);
+		Component editor = super.getTableCellEditorComponent(table, value, isSelected, lig, col);
 
 		// Vérifie si la valeur est un entier pour configurer correctement le champ de texte.
 		if (value instanceof Integer) 
-        {
-            this.txt.setText(Integer.toString((Integer)value));
-            this.txt.setHorizontalAlignment(SwingConstants.CENTER);
-            this.txt.setBorder(null);
+		{
+			this.txt.setText(Integer.toString((Integer)value));
+			this.txt.setHorizontalAlignment(SwingConstants.CENTER);
+			this.txt.setBorder(null);
 			txt.setCaretPosition(txt.getText().length());
 
 			// Vérifie si la notion correspondante est sélectionnée.
 			Boolean notionSelect = (Boolean) table.getValueAt(lig, 1);
 			if(Boolean.TRUE.equals(notionSelect))
-            {
+			{
 				// Applique la couleur de fond associée à la difficulté (colonne).
 				switch (col) 
 				{
@@ -63,27 +63,27 @@ public class GrilleNotionsEditor extends DefaultCellEditor
 					case 5  -> this.txt.setBackground(Difficulte.DIFFICILE  .getCouleur());
 					default -> this.txt.setBackground(table.getBackground());
 				}
-                this.txt.setForeground(Color.BLACK);
-            } 
-            else 
-            {
+				this.txt.setForeground(Color.BLACK);
+			} 
+			else 
+			{
 				// Applique les couleurs par défaut si la notion n'est pas sélectionnée.
-                this.txt.setBackground(table.getBackground());
-                this.txt.setForeground(table.getForeground()); 
-            }
+				this.txt.setBackground(table.getBackground());
+				this.txt.setForeground(table.getForeground()); 
+			}
 
 			// Configure la couleur du curseur.
 			this.txt.setCaretColor(this.txt.getForeground());
 		}
 
-        return editor;
-    }
+		return editor;
+	}
 
 	/**
-     * Récupère la valeur actuelle du champ de texte en entieren le convertissant en Integer.
-     * 
-     * @return La valeur entière de la cellule ou 0 en cas d'erreur.
-     */
+	 * Récupère la valeur actuelle du champ de texte en entieren le convertissant en Integer.
+	 * 
+	 * @return La valeur entière de la cellule ou 0 en cas d'erreur.
+	 */
 	@Override
 	public Object getCellEditorValue() 
 	{

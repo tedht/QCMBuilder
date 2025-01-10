@@ -32,8 +32,8 @@ public class FrameCreationQuestionnaire extends JFrame
 		this.ihm  = ihm;
 		
 		this.setTitle("Nouvelle Évaluation");
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelParametresQuestionnaire = new PanelParametresQuestionnaire(this.ctrl, this);
 		this.panelAjoutQuestionnaire      = new PanelAjoutQuestionnaire     (this.ctrl, this);
@@ -42,8 +42,8 @@ public class FrameCreationQuestionnaire extends JFrame
 	}
 
 	/**
-     * Affiche la première page de création du questionnaire (paramètres généraux).
-     */
+	 * Affiche la première page de création du questionnaire (paramètres généraux).
+	 */
 	public void pagePrecedente()
 	{
 		this.remove    (this.panelAjoutQuestionnaire); 
@@ -55,8 +55,8 @@ public class FrameCreationQuestionnaire extends JFrame
 	}
 	
 	/**
-     * Affiche la seconde page de création du questionnaire (ajout de questions).
-     */
+	 * Affiche la seconde page de création du questionnaire (ajout de questions).
+	 */
 	public void pageSuivante()
 	{
 		// Reinitialise le tableau
@@ -71,8 +71,8 @@ public class FrameCreationQuestionnaire extends JFrame
 	}
 
 	/**
-     * Crée le questionnaire en récupérant les informations saisies par l'utilisateur.
-     */
+	 * Crée le questionnaire en récupérant les informations saisies par l'utilisateur.
+	 */
 	public void creerQuestionnaire()
 	{
 		// Récupération des valeurs saisies par l'utilisateur.
@@ -86,18 +86,18 @@ public class FrameCreationQuestionnaire extends JFrame
 	}
 
 	/**
-     * Récupère le code de la ressource sélectionnée dans la page des paramètres.
-     * 
-     * @return Le code de la ressource ou une chaîne vide si le panneau n'est pas initialisé
-     */
+	 * Récupère le code de la ressource sélectionnée dans la page des paramètres.
+	 * 
+	 * @return Le code de la ressource ou une chaîne vide si le panneau n'est pas initialisé
+	 */
 	public String getCodeRes()
 	{
 		return this.panelParametresQuestionnaire.getCodeRes();
 	}
 
 	/**
-     * Réinitialise la liste déroulante des ressources et désactive les boutons radio.
-     */
+	 * Réinitialise la liste déroulante des ressources et désactive les boutons radio.
+	 */
 	public void reinitAffichage()
 	{
 		this.panelParametresQuestionnaire.reinitDdlstRessources();
