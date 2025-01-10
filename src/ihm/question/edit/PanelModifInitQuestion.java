@@ -19,6 +19,7 @@ public class PanelModifInitQuestion extends PanelInitQuestion
 
 	/**
 	 * Constructeur de la classe PanelModifInitQuestion
+	 * 
 	 * @param ctrl  le contrôleur.
 	 * @param frame le frame d'édition de questions.
 	 * @param idQst l'id de la question qu'on veut modifier.
