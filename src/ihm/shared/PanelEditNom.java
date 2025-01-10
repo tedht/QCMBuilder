@@ -23,13 +23,13 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	protected Controleur ctrl;
 	protected IHM        ihm;
 
-	protected JPanel        panelInfo, panelAction;
+	protected JPanel     panelInfo, panelAction;
 
-	protected JPanel        panelInfoNom;
+	protected JPanel     panelInfoNom;
 
-	protected JButton       btnAnnuler, btnEnregistrer;
-	protected JLabel        lblNom;
-	protected JTextField    txtNom;
+	protected JButton    btnAnnuler, btnEnregistrer;
+	protected JLabel     lblNom;
+	protected JTextField txtNom;
 
 	/**
 	 * Constructeur e la classe PanelEditNom.

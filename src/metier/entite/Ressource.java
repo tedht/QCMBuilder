@@ -16,7 +16,6 @@ public class Ressource
 	private String code;
 	private String nom;
 
-
 	/*--------------*/
 	/* Constructeur */
 	/*--------------*/

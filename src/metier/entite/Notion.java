@@ -87,7 +87,6 @@ public class Notion
 	 */
 	public void setNom(String nom) { this.nom = nom; }
 
-
 	/*-----------------*/
 	/* Autres méthodes */
 	/*-----------------*/

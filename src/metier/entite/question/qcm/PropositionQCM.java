@@ -41,8 +41,6 @@ public class PropositionQCM implements Proposition
 		this.reponse = reponse;
 	}
 
-
-
 	/*---------*/
 	/* Getters */
 	/*---------*/
