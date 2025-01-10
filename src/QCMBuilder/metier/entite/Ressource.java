@@ -23,9 +23,8 @@ public class Ressource
 	/**
 	 * Constructeur de la classe Ressource.
 	 * 
-	 * @param  idRes L'id de la ressource.
-	 * @param  code  Le code de la ressource.
-	 * @param  nom   Le nom de la Ressource.
+	 * @param code le code de la Ressource.
+	 * @param nom  le nom de la Ressource.
 	 */
 	public Ressource(String code,String nom)
 	{

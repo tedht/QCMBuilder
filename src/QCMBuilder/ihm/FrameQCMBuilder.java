@@ -16,22 +16,21 @@ public class FrameQCMBuilder extends JFrame
 	private PanelQCMBuilder panelQCMBuilder;
 
 	/**
-     * Constructeur de la classe FrameQCMBuilder.
-     * 
-     * @param ctrl le contrôleur.
-	 * @param ihm  le gestionnaire des fenêtres de l'application.
-     */
+	 * Constructeur de la classe FrameQCMBuilder.
+	 * 
+	 * @param ihm le gestionnaire des fenêtres de l'application.
+	 */
 	public FrameQCMBuilder(IHM ihm)
 	{
 		this.ihm  = ihm;
 
 		this.setTitle("QCMBuilder");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setResizable(false);
 
-        // Création et ajout du panneau de menu.
-        this.panelQCMBuilder = new PanelQCMBuilder(this.ihm);
-        this.add(this.panelQCMBuilder);
+		// Création et ajout du panneau de menu.
+		this.panelQCMBuilder = new PanelQCMBuilder(this.ihm);
+		this.add(this.panelQCMBuilder);
 		this.pack();
 	}
 }

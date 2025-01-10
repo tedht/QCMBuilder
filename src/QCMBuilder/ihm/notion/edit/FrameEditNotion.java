@@ -37,9 +37,9 @@ public class FrameEditNotion extends JFrame
 	/**
 	 * Constructeur de la classe FrameEditNotion utilisé lorsqu'on veut modifier une notion.
 	 *
-	 * @param ctrl le contrôleur.
-	 * @param ihm  le gestionnaire des fenêtres de l'application.
-	 * @param code le code de la ressource qu'on veut modifier.
+	 * @param ctrl  Le contrôleur
+	 * @param ihm   le gestionnaire des fenêtres de l'application.
+	 * @param idNot l'identifiant de la notion à modifier.
 	 */
 	public FrameEditNotion(Controleur ctrl, IHM ihm, Integer idNot) 
 	{

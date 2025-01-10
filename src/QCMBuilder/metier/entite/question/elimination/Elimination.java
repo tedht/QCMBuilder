@@ -55,7 +55,6 @@ public class Elimination extends Question
 	 * 
 	 * @param  i l'indice de la proposition.
 	 * @return la proposition.
-	 * @see    super#{@link #getProposition(int)}.
 	 */
 	public PropositionElimination getProposition(int i) { return (PropositionElimination) super.getProposition(i); }
 
@@ -72,7 +71,6 @@ public class Elimination extends Question
 	 * @param  prop la nouvelle proposition.
 	 * 
 	 * @return      true si la proposition à été modifiée, false sinon.
-	 * @see         super#{@link #setProposition(int, PropositionElimination)}.
 	 */
 	public boolean setProposition(int i, PropositionElimination prop)
 	{
@@ -90,7 +88,6 @@ public class Elimination extends Question
 	 * 
 	 * @param  prop la proposition à ajouter.
 	 * @return      true si la proposition à été ajouter, false sinon.
-	 * @see         super#{@link #ajouterProposition(PropositionElimination)}.
 	 */
 	public boolean ajouterProposition(PropositionElimination prop)
 	{

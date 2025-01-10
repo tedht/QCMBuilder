@@ -33,16 +33,22 @@ public class PieceJointe
 	/* Constructeur */
 	/*--------------*/
 
+	/**
+	 * Constructeur de la classe PieceJointe.
+	 * 
+	 * @param cheminFic le chemin du fichier.
+	 */
 	public PieceJointe(String cheminFic)
 	{
 		this(cheminFic, cheminFic);
 	}
 
+
 	/**
 	 * Constructeur de la classe PieceJointe.
 	 * 
-	 * @param cheminFichierOrig le chemin du fichier original.
-	 * @param cheminFichier     le chemin du fichier.
+	 * @param cheminFicOrig le chemin du fichier d'origine.
+	 * @param cheminFic     le chemin du fichier.
 	 */
 	public PieceJointe(String cheminFicOrig, String cheminFic)
 	{
@@ -138,6 +144,12 @@ public class PieceJointe
 	/* Setters */
 	/*---------*/
 
+	/**
+	 * Modifier le chemin original
+	 * 
+	 * @param  cheminFicOrig le nouveau chemin original.
+	 * @return               true si le chemin original est modifié, false sinon.
+	 */
 	public boolean setCheminFicOrig(String cheminFicOrig)
 	{
 		if (cheminFicOrig == null) return false;
@@ -149,8 +161,8 @@ public class PieceJointe
 	/**
 	 * Modifier le chemin du fichier.
 	 * 
-	 * @param cheminFichier le nouveau chemin du fichier.
-	 * @return              true si le chemin du fichier est modifié, false sinon.
+	 * @param cheminFic le nouveau chemin du fichier.
+	 * @return          true si le chemin du fichier est modifié, false sinon.
 	 */
 	public boolean setCheminFic(String cheminFic)
 	{

@@ -113,9 +113,9 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 	}
 
 	/**
-	 * Méthode qui gère les actions des boutons.
+	 * Met à jour le tableau de la grille des notions en fonction du code de la ressource.
 	 * 
-	 * @param e l'événement qui a déclenché l'action.
+	 * @param codeRes le code de la ressource.
 	 */
 	public void majTabNbQuestions(String codeRes) 
 	{

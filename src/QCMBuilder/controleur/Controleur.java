@@ -304,17 +304,23 @@ public class Controleur
 	}
 
 
-	
 	/**
-	 * Génére une évaluation.
+	 * Creer un questionnaire.
 	 * 
-	 * @param cheminFichier le chemin du fichier à générer.
+	 * @param codeRes        le code de la ressource.
+	 * @param chronometre    le chronomètre.
+	 * @param tabNbQuestions le tableau du nombre de questions par notion.
 	 */
 	public void creerQuestionnaire(String codeRes, boolean chronometre, int[][] tabNbQuestions) 
 	{
 		this.metier.creerQuestionnaire(codeRes, chronometre, tabNbQuestions);
 	}
 
+	/**
+	 * Exporter le questionnaire.
+	 * 
+	 * @param dossierSauvegarde le dossier de sauvegarde.
+	 */
 	public void exporterQuestionnaire(String dossierSauvegarde)
 	{
 		this.metier.exporterQuestionnaire(dossierSauvegarde);

@@ -24,7 +24,8 @@ public class PanelPropQRM extends PanelProp
 
 	/**
 	 * Constructeur de la classe PanelPropQRM.
-	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
+	 * 
+	 * @param panelEditQuestion le panneau d'édition de la question.
 	 */
 	public PanelPropQRM(PanelAjoutQuestion panelEditQuestion)
 	{
