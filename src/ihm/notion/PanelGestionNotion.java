@@ -1,11 +1,13 @@
 package ihm.notion;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import controleur.Controleur;
 import ihm.IHM;
 import ihm.shared.PanelGestion;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import metier.entite.Notion;
 
 /**
@@ -62,11 +64,11 @@ public class PanelGestionNotion extends PanelGestion
 	}
 
 	/**
-	 * Gère l'affichage des notions.
-	 * 
-	 * Cette méthode est responsable de l'affichage des notions. S'il n'y a pas de notions,
-	 * un panel avec un texte d'instruction est affiché.
-	 */
+     * Gère l'affichage des notions.
+     * 
+     * Cette méthode est responsable de l'affichage des notions. S'il n'y a pas de notions,
+     * un panel avec un texte d'instruction est affiché.
+     */
 	@Override
 	public void afficher() 
 	{
@@ -99,7 +101,7 @@ public class PanelGestionNotion extends PanelGestion
 				this.panelContenu.add(panelNotion);
 			}
 		}
-		else if(this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).isEmpty())
+		else if(this.ctrl.getNotions(this.ctrl.getRessourceSelectionnee().getCode()).size() == 0)
 		{
 			// Si la ressource sélectionnée n'a pas de notions, afficher un message et activer le bouton d'ajout
 			this.btnAjouter.setEnabled(true);
