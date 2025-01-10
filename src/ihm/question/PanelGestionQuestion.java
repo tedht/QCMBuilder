@@ -128,11 +128,11 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	}
 
 	/**
-     * Méthode qui gère l'affichage des questions.
-     * 
-     * Cette méthode est responsable de l'affichage des questions. S'il n'y a pas de questions,
-     * un panel avec un texte d'instruction est affiché.
-     */
+	 * Méthode qui gère l'affichage des questions.
+	 * 
+	 * Cette méthode est responsable de l'affichage des questions. S'il n'y a pas de questions,
+	 * un panel avec un texte d'instruction est affiché.
+	 */
 	public void afficher()
 	{
 		// Suppression de tous les composants existants pour redessiner
@@ -185,13 +185,13 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 					int    tps  = question.getTemps();
 
 					String info =   note + " point" + (note == 1.0 ? ", " : "s, ")
-					              + Math.round(tps / 60) + "min "
+								  + Math.round(tps / 60) + "min "
 								  + (tps % 60 == 0 ? "" : tps % 60 + "s");
 
 					panelCarte = new PanelQuestion(this.ctrl, this.ihm, 
-					                               question.getIntitule(), 
-					                               info,
-					                               question.getIdQst());
+												   question.getIntitule(), 
+												   info,
+												   question.getIdQst());
 					this.panelContenu.add(panelCarte);
 				}
 			}
@@ -211,8 +211,8 @@ public class PanelGestionQuestion extends PanelGestion implements ItemListener
 	}
 
 	/**
-     * Réinitialise les listes déroulantes des ressources et notions.
-     */
+	 * Réinitialise les listes déroulantes des ressources et notions.
+	 */
 	public void reinitDdlsts()
 	{
 		// Réinitialise le menu déroulant des ressources

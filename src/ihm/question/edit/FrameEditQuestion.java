@@ -39,8 +39,8 @@ public class FrameEditQuestion extends JFrame
 		this.ihm  = ihm;
 		
 		this.setTitle("Créer une Question");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelInitQuestion  = new PanelInitQuestion(ctrl, this);
 		this.panelAjoutQuestion = new PanelAjoutQuestion     (this);
@@ -61,8 +61,8 @@ public class FrameEditQuestion extends JFrame
 		this.ihm  = ihm;
 		
 		this.setTitle("Modifier une Question");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelInitQuestion = new PanelModifInitQuestion(ctrl, this, idQst);
 		this.panelAjoutQuestion      = new PanelModifAjoutQuestion     (ctrl, this, idQst);
@@ -71,8 +71,8 @@ public class FrameEditQuestion extends JFrame
 	}
 
 	/**
-     * Affiche la première page d'édition de la question (paramètres généraux).
-     */
+	 * Affiche la première page d'édition de la question (paramètres généraux).
+	 */
 	public void pagePrecedente()
 	{
 		this.remove    (this.panelAjoutQuestion); 
@@ -84,8 +84,8 @@ public class FrameEditQuestion extends JFrame
 	}
 
 	/**
-     * Affiche la seconde page de création du questionnaire (ajout de questions).
-     */
+	 * Affiche la seconde page de création du questionnaire (ajout de questions).
+	 */
 	public void pageSuivante()
 	{
 		this.remove    (this.panelInitQuestion); 
@@ -99,27 +99,27 @@ public class FrameEditQuestion extends JFrame
 	}
 
 	/**
-     * Méthode pour enregistrer une nouvelle question.
-     * 
-     * @return true si la qustion a été créée avec succès, false sinon.
-     */
+	 * Méthode pour enregistrer une nouvelle question.
+	 * 
+	 * @return true si la qustion a été créée avec succès, false sinon.
+	 */
 	public boolean enregistrer()
 	{
 		return this.enregistrer(null);
 	}
 
 	/**
-     * Méthode pour enregistrer les modifications effectuées sur une question existente.
-     * 
-     * @return true si la qustion a été créée avec succès, false sinon.
-     */
+	 * Méthode pour enregistrer les modifications effectuées sur une question existente.
+	 * 
+	 * @return true si la qustion a été créée avec succès, false sinon.
+	 */
 	public boolean enregistrer(Integer idQst) 
 	{
 		// Récupération des valeurs saisies par l'utilisateur.
 		String codeRes     = this.panelInitQuestion.getRessource        ().getCode();
 		int    idNot       = this.panelInitQuestion.getNotion           ().getIdNot();
 		int    valDiff     = this.panelInitQuestion.getDifficulte       (); 
-		      
+			  
 		int    indexType   = this.panelInitQuestion.getIndexTypeQuestion();
 
 		String sTemps      = this.panelInitQuestion.getTemps            ();          

@@ -72,8 +72,8 @@ public class PanelQuestion extends PanelEntite
 	}
 
 	/**
-     * Classe interne pour gérer les interactions avec la souris sur le panel.
-     */
+	 * Classe interne pour gérer les interactions avec la souris sur le panel.
+	 */
 	private class GereSourisQuestion extends MouseAdapter
 	{
 		

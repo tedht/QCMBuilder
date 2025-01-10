@@ -33,20 +33,20 @@ public class FrameGestionQuestion extends JFrame
 		this.ihm  = ihm;
 
 		this.setTitle("Gestion Question");
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		this.setResizable(false);
 
-        // Création et ajout du panneau de menu.
-        this.panelGestionQuestion = new PanelGestionQuestion(this.ctrl, this.ihm);
-        this.add(this.panelGestionQuestion);
+		// Création et ajout du panneau de menu.
+		this.panelGestionQuestion = new PanelGestionQuestion(this.ctrl, this.ihm);
+		this.add(this.panelGestionQuestion);
 
-        // Définition des dimensions.
-        this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
+		// Définition des dimensions.
+		this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
 	}
 
 	/**
-     * Réinitialise l'affichage du panel de gestion des questions.
-     */
+	 * Réinitialise l'affichage du panel de gestion des questions.
+	 */
 	public void reinitAffichage() 
 	{
 		this.panelGestionQuestion.reinitDdlsts();	

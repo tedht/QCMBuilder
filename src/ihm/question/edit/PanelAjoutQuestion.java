@@ -129,7 +129,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 		this.panelInfoScroll = new JPanel(new GridBagLayout());
 		this.scrollPanelInfo = new JScrollPane(this.panelInfoScroll);
-        this.scrollPanelInfo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		this.scrollPanelInfo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.scrollPanelInfo.getVerticalScrollBar().setUnitIncrement(16);
 		this.scrollPanelInfo.getVerticalScrollBar().setBlockIncrement(32);
 		this.scrollPanelInfo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -231,8 +231,8 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 
 	/**
-     * Méthode pour enregistrer une nouvelle question.
-     */
+	 * Méthode pour enregistrer une nouvelle question.
+	 */
 	public void enregistrer()
 	{
 		this.frame.enregistrer();
@@ -301,12 +301,12 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 				String fileName = file.getName().toLowerCase();
 				return fileName.endsWith(".pdf")  ||
-				       fileName.endsWith(".mp3")  ||
-				       fileName.endsWith(".mp4")  ||
-				       fileName.endsWith(".jpg")  ||
-				       fileName.endsWith(".jpeg") ||
-				       fileName.endsWith(".png")  ||
-				       fileName.endsWith(".gif");
+					   fileName.endsWith(".mp3")  ||
+					   fileName.endsWith(".mp4")  ||
+					   fileName.endsWith(".jpg")  ||
+					   fileName.endsWith(".jpeg") ||
+					   fileName.endsWith(".png")  ||
+					   fileName.endsWith(".gif");
 			}
 
 			@Override
@@ -325,10 +325,10 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 
 	}
 
-    /**
-     * Méthode qui gère l'affichage d'une question, c'est-à-dire l'intitulé, l'explication,
+	/**
+	 * Méthode qui gère l'affichage d'une question, c'est-à-dire l'intitulé, l'explication,
 	 * la pièce jointe et les propositions
-     */
+	 */
 	public void afficher()
 	{
 		this.panelInfoScroll.removeAll();
@@ -337,8 +337,8 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		gbc.insets  = new Insets(0, 5, 5, 25);
 		gbc.gridx   = 0;
 		gbc.anchor  = GridBagConstraints.NORTH;
-	    gbc.fill    = GridBagConstraints.HORIZONTAL;
-	    gbc.weightx = 1.0;
+		gbc.fill    = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
 		gbc.weighty = 0.0;
 
 		int cpt   = 0;
