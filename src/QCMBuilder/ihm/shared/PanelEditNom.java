@@ -30,6 +30,7 @@ public abstract class PanelEditNom extends JPanel implements ActionListener
 	protected JLabel     lblNom;
 	protected JTextField txtNom;
 
+
 	/**
 	 * Constructeur e la classe PanelEditNom.
 	 *
