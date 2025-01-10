@@ -270,21 +270,4 @@ public class BanqueRessources extends Banque
 
 		return sRet;
 	}
-	
-
-	/**
-	 * Main de la classe BanqueRessources.
-	 */
-	public static void main(String[] args)
-	{
-		BanqueRessources bqr, bqr2;
-
-
-		bqr = new BanqueRessources();
-
-		bqr.sauvegarder("test.csv");
-		
-		bqr2 = new BanqueRessources();
-		System.out.println(bqr2);
-	}
 }
