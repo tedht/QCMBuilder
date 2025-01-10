@@ -20,7 +20,7 @@ echo "Compilation terminee."
 
 # Execution
 echo "Execution en cours..."
-java -cp "$CLASSPATH" controleur.Controleur
+java -cp "$CLASSPATH" QCMBuilder.controleur.Controleur
 if [ $? -ne 0 ]; then
 	echo "Erreur lors de l'execution."
 	exit 1
