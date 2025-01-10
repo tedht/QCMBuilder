@@ -1,12 +1,10 @@
 package ihm.ressource;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import controleur.Controleur;
 import ihm.IHM;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  *  Classe représentant la fenêtre de gestion des ressources.
@@ -33,20 +31,20 @@ public class FrameGestionRessource extends JFrame
 		this.ihm  = ihm;
 
 		this.setTitle("Gestion ressource");
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		this.setResizable(false);
 
-        // Création et ajout du panneau de menu.
-        this.panelGestionRessource = new PanelGestionRessource(this.ctrl, this.ihm, this);
-        this.add(this.panelGestionRessource);
+		// Création et ajout du panneau de menu.
+		this.panelGestionRessource = new PanelGestionRessource(this.ctrl, this.ihm, this);
+		this.add(this.panelGestionRessource);
 
-        // Définition des dimensions.
-        this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
+		// Définition des dimensions.
+		this.setSize(new Dimension(IHM.LARGEUR_GESTION, IHM.HAUTEUR_GESTION));
 	}
 
 	/**
-     * Réinitialise l'affichage du panel de gestion des ressources.
-     */
+	 * Réinitialise l'affichage du panel de gestion des ressources.
+	 */
 	public void reinitAffichage() 
 	{
 		this.panelGestionRessource.afficher();

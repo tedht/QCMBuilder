@@ -2,9 +2,7 @@ package ihm.questionnaire.tableau;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.*;
-
 import metier.entite.question.Difficulte;
 
 /**

@@ -36,10 +36,10 @@ public class PanelModifRessource extends PanelEditRessource
 	}
 
 	/**
-     * Méthode pour enregistrer les modifications effectuées sur une ressource existente.
-     * 
-     * @return true si la modification a réussi, false sinon.
-     */
+	 * Méthode pour enregistrer les modifications effectuées sur une ressource existente.
+	 * 
+	 * @return true si la modification a réussi, false sinon.
+	 */
 	@Override
 	public boolean enregistrer() 
 	{

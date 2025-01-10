@@ -1,13 +1,11 @@
 package ihm.ressource;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import controleur.Controleur;
 import ihm.IHM;
 import ihm.shared.PanelGestion;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import metier.entite.Ressource;
 
 /**
@@ -58,10 +56,10 @@ public class PanelGestionRessource extends PanelGestion
 		}
 	}
 
-    /**
-     * Méthode qui gère l'affichage  des ressources, S'il n'y a pas de ressources,
-     * un panel avec un texte d'instruction est affiché.
-     */
+	/**
+	 * Méthode qui gère l'affichage  des ressources, S'il n'y a pas de ressources,
+	 * un panel avec un texte d'instruction est affiché.
+	 */
 	@Override
 	public void afficher() 
 	{

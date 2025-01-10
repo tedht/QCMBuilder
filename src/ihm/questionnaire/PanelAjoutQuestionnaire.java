@@ -1,20 +1,18 @@
 package ihm.questionnaire;
 
+import controleur.Controleur;
+import ihm.questionnaire.tableau.GrilleNotionsEditor;
+import ihm.questionnaire.tableau.GrilleNotionsModel;
+import ihm.questionnaire.tableau.GrilleNotionsRenderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-
-import controleur.Controleur;
-import ihm.questionnaire.tableau.GrilleNotionsEditor;
-import ihm.questionnaire.tableau.GrilleNotionsModel;
-import ihm.questionnaire.tableau.GrilleNotionsRenderer;
 
 /**
  * Classe représentant dédiée à la saisie du nombre de questions à générer par notion
@@ -127,7 +125,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		for (int i = 0; i < this.tblGrilleNotions.getColumnModel().getColumnCount(); i++) 
 		{
 			this.tblGrilleNotions.getColumnModel()
-			                     .getColumn(i)
+								 .getColumn(i)
 								 .setResizable(false);
 
 			this.tblGrilleNotions.getColumnModel()
@@ -136,7 +134,7 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 			
 			if(i > 1)
 			this.tblGrilleNotions.getColumnModel()
-			                     .getColumn(i)
+								 .getColumn(i)
 								 .setCellEditor(new GrilleNotionsEditor());
 		}
 
@@ -148,20 +146,20 @@ public class PanelAjoutQuestionnaire extends JPanel implements ActionListener
 		// Gestion de la taille des cellules
 		// Première colonne
 		this.tblGrilleNotions.getColumnModel()
-		                     .getColumn(0)
+							 .getColumn(0)
 							 .setPreferredWidth(200);
 
 		// Autres colonnes
 		for (int i = 1; i < this.tblGrilleNotions.getColumnModel().getColumnCount()-1; i++) 
 		{
-    		this.tblGrilleNotions.getColumnModel()
-			                     .getColumn(i)
+			this.tblGrilleNotions.getColumnModel()
+								 .getColumn(i)
 								 .setPreferredWidth(40);
 		}
 
 		// Dernière colonne
 		this.tblGrilleNotions.getColumnModel()
-		                     .getColumn(this.tblGrilleNotions.getColumnModel().getColumnCount()-1)
+							 .getColumn(this.tblGrilleNotions.getColumnModel().getColumnCount()-1)
 							 .setPreferredWidth(60);
 		
 		// Barre de déroulement

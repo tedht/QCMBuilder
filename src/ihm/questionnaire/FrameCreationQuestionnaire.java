@@ -1,10 +1,9 @@
 package ihm.questionnaire;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import controleur.Controleur;
 import ihm.IHM;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  * Classe représentant la fenêtre de création d'une évaluation

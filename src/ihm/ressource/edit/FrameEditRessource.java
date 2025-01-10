@@ -1,10 +1,9 @@
 package ihm.ressource.edit;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import controleur.Controleur;
 import ihm.IHM;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 
 /** Classe représentant la fenêtre d'édition (création ou modification) d'une ressource.
@@ -25,8 +24,8 @@ public class FrameEditRessource extends JFrame
 	public FrameEditRessource(Controleur ctrl, IHM ihm)
 	{
 		this.setTitle("Créer une Ressource");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelEditRessource = new PanelCreationRessource(ctrl, ihm);
 		this.add(this.panelEditRessource);
@@ -44,8 +43,8 @@ public class FrameEditRessource extends JFrame
 	public FrameEditRessource(Controleur ctrl, IHM ihm, String code) 
 	{
 		this.setTitle("Modifier une Ressource");
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 
 		this.panelEditRessource = new PanelModifRessource(ctrl, ihm, code);
 		this.add(this.panelEditRessource);

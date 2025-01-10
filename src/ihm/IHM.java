@@ -73,12 +73,12 @@ public class IHM
 	private int defaultX, defaultY;
 	
 	/**
-     * Constructeur de la classe IHM.
-     * Initialise l'interface graphique, crée les fenêtres et gère le 
+	 * Constructeur de la classe IHM.
+	 * Initialise l'interface graphique, crée les fenêtres et gère le 
 	 * positionnement de la fenêtre principale.
-     * 
-     * @param ctrl le contrôleur.
-     */
+	 * 
+	 * @param ctrl le contrôleur.
+	 */
 	public IHM(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
@@ -100,23 +100,23 @@ public class IHM
 
 		// Ajoute les comportements pour fermer correctement la fenêtres de gestion des ressources 
 		this.frameGestionNotion.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) 
+			@Override
+			public void windowClosing(WindowEvent e) 
 			{
 				// On ferme aussi la fenêtre de gestion des notions
-                IHM.this.frameGestionRessource.setVisible(false);
-            }
-        });
+				IHM.this.frameGestionRessource.setVisible(false);
+			}
+		});
 
 		// Ajoute les comportements pour fermer correctement la fenêtres de gestion des notions
 		this.frameGestionRessource.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) 
+			@Override
+			public void windowClosing(WindowEvent e) 
 			{
 				// On ferme aussi la fenêtre de gestion des ressources
-                IHM.this.frameGestionNotion.setVisible(false);
-            }
-        });
+				IHM.this.frameGestionNotion.setVisible(false);
+			}
+		});
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class IHM
 		this.resetVisible();
 		this.afficher(this.frameGestionRessource, this.defaultX, this.defaultY); 
 		this.afficher(this.frameGestionNotion, 
-		              this.defaultX + IHM.LARGEUR_GESTION + IHM.MARGE, 
+					  this.defaultX + IHM.LARGEUR_GESTION + IHM.MARGE, 
 					  this.defaultY); 
 	}
 
@@ -263,12 +263,12 @@ public class IHM
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditRessource.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) 
+				@Override
+				public void windowClosed(WindowEvent e) 
 				{
-                    IHM.this.frameEditRessource = null;
-                }
-            });
+					IHM.this.frameEditRessource = null;
+				}
+			});
 		}
 		else
 		{
@@ -314,12 +314,12 @@ public class IHM
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditNotion.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) 
+				@Override
+				public void windowClosed(WindowEvent e) 
 				{
-                    IHM.this.frameEditNotion = null;
-                }
-            });
+					IHM.this.frameEditNotion = null;
+				}
+			});
 		}
 		else
 		{
@@ -365,11 +365,11 @@ public class IHM
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameEditQuestion.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    IHM.this.frameEditQuestion = null;
-                }
-            });
+				@Override
+				public void windowClosed(WindowEvent e) {
+					IHM.this.frameEditQuestion = null;
+				}
+			});
 		}
 		else
 		{
@@ -399,12 +399,12 @@ public class IHM
 
 			// Ajoute un WindowListener pour fermer la fenêtre correctement
 			this.frameExport.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) 
+				@Override
+				public void windowClosed(WindowEvent e) 
 				{
-                    IHM.this.frameExport = null;
-                }
-            });
+					IHM.this.frameExport = null;
+				}
+			});
 		}
 		else
 		{

@@ -42,7 +42,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 		this.tabNbQuestionsDiff = new int[4];
 
 		List<Notion> lstNotions =   this.ctrl.getNotions(codeRes) != null 
-		                          ? this.ctrl.getNotions(codeRes)
+								  ? this.ctrl.getNotions(codeRes)
 								  : new ArrayList<Notion>();
 
 		this.tabDonnees = new Object[lstNotions.size()+2][7];
@@ -132,7 +132,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 	public boolean isCellEditable(int lig, int col)
 	{
 		return (col == 1 || (2 <= col && col <= 5 && this.getValueAt(lig, 1) == Boolean.TRUE))
-		       && lig < tabDonnees.length-2;
+			   && lig < tabDonnees.length-2;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class GrilleNotionsModel extends AbstractTableModel
 					newVal = nbQst;
 				
 				// Validation et ajustement de la nouvelle valeur
-                newVal = Math.max(0, Math.min(newVal, Math.min(nbQst, 99)));
+				newVal = Math.max(0, Math.min(newVal, Math.min(nbQst, 99)));
 
 				// Met à jour de la cellule
 				this.tabDonnees[lig][col] = newVal;
@@ -206,10 +206,10 @@ public class GrilleNotionsModel extends AbstractTableModel
 	}
 
 	/**
-     * Calcule et retourne le nombre total de questions à générer.
-     * 
-     * @return Le nombre total de questions à générer.
-     */
+	 * Calcule et retourne le nombre total de questions à générer.
+	 * 
+	 * @return Le nombre total de questions à générer.
+	 */
 	public int getNbQuestionsTotales()
 	{
 		return   this.tabNbQuestionsDiff[0] 
@@ -219,11 +219,11 @@ public class GrilleNotionsModel extends AbstractTableModel
 	}
 
 	/**
-     * Récupère les données du tableau. Chaque cellule du tableau contient le nombre de questions
+	 * Récupère les données du tableau. Chaque cellule du tableau contient le nombre de questions
 	 * à générer associées à une notion (la ligne) et une difficulté (la colonne)
-     * 
-     * @return Un tableau 2D contenant le nombre de questions à générer.
-     */
+	 * 
+	 * @return Un tableau 2D contenant le nombre de questions à générer.
+	 */
 	public int[][] getTabNbQuestions()
 	{
 		int[][] tabNbQuestions = new int[this.getRowCount()-2][4];

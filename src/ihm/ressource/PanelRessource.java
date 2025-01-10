@@ -1,17 +1,15 @@
 package ihm.ressource;
 
+import controleur.Controleur;
+import ihm.IHM;
+import ihm.shared.PanelEntite;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
-import controleur.Controleur;
-import ihm.IHM;
-import ihm.shared.PanelEntite;
 
 /**
  * Classe JPanel pour afficher une Ressource.
@@ -38,9 +36,9 @@ public class PanelRessource extends PanelEntite
 	 * Constructeur de la classe PanelRessource.
 	 *
 	 * @param ctrl  le contrôleur
-     * @param ihm   le gestionnaire des fenêtres de l'application.
-     * @param frame la fenêtre de gestion des ressources
-     * @param code  le code de la ressource
+	 * @param ihm   le gestionnaire des fenêtres de l'application.
+	 * @param frame la fenêtre de gestion des ressources
+	 * @param code  le code de la ressource
 	 */
 	public PanelRessource(Controleur ctrl, IHM ihm, FrameGestionRessource frame, String code)
 	{
@@ -88,10 +86,10 @@ public class PanelRessource extends PanelEntite
 		if(e.getSource() == this.btnSupprimer)
 		{
 			int choix = JOptionPane.showConfirmDialog(
-                this.frame,
-                "Voulez-vous vraiment supprimer la ressource \"" + this.lblTitre.getText() + "\" ?",
-                "Confirmation de suppression",
-                JOptionPane.YES_NO_OPTION
+				this.frame,
+				"Voulez-vous vraiment supprimer la ressource \"" + this.lblTitre.getText() + "\" ?",
+				"Confirmation de suppression",
+				JOptionPane.YES_NO_OPTION
 			);
 
 			if (choix == JOptionPane.YES_OPTION) 
@@ -103,17 +101,17 @@ public class PanelRessource extends PanelEntite
 		}
 	}
 
-    /**
-     * Classe interne pour gérer les interactions avec la souris sur le panel.
-     */
+	/**
+	 * Classe interne pour gérer les interactions avec la souris sur le panel.
+	 */
 	private class GereSourisRessource extends MouseAdapter
 	{
 		/**
-         * Action déclenchée lorsque la souris entre dans le panel.
-         * Modifie l'apparence pour signaler un survol.
-         * 
-         * @param e l'événement de survol.
-         */
+		 * Action déclenchée lorsque la souris entre dans le panel.
+		 * Modifie l'apparence pour signaler un survol.
+		 * 
+		 * @param e l'événement de survol.
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) 
 		{
@@ -122,11 +120,11 @@ public class PanelRessource extends PanelEntite
 		}
 
 		/**
-         * Action déclenchée lorsque la souris quitte le panel.
-         * Réinitialise l'apparence en fonction de l'état de sélection.
-         * 
-         * @param e l'événement de sortie.
-         */
+		 * Action déclenchée lorsque la souris quitte le panel.
+		 * Réinitialise l'apparence en fonction de l'état de sélection.
+		 * 
+		 * @param e l'événement de sortie.
+		 */
 		@Override
 		public void mouseExited(MouseEvent e) 
 		{
@@ -143,11 +141,11 @@ public class PanelRessource extends PanelEntite
 		}
 		
 		/**
-         * Action déclenchée lors d'un clic de souris.
-         * Permet de sélectionner ou désélectionner une ressource par un double-clic gauche.
-         * 
-         * @param e l'événement de clic.
-         */
+		 * Action déclenchée lors d'un clic de souris.
+		 * Permet de sélectionner ou désélectionner une ressource par un double-clic gauche.
+		 * 
+		 * @param e l'événement de clic.
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) 
 		{
