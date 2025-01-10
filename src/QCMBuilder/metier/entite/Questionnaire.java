@@ -554,7 +554,7 @@ public class Questionnaire
 			droiteList.add("\"" + formatForJavaScript(prop.getTextDroite()) + "\"");  // Texte droite
 	
 			// Formater les réponses sous forme de tableau de tableaux [gauche, droite]
-			pair = String.format("[\"%s\", \"%s\"]", prop.getTextGauche(), prop.getTextDroite());
+			pair = String.format("[\"%s\", \"%s\"]", formatForJavaScript(prop.getTextGauche()), formatForJavaScript(prop.getTextDroite()));
 			reponsesList.add(pair);
 		}
 	
