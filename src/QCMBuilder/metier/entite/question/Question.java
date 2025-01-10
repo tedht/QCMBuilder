@@ -40,11 +40,12 @@ public abstract class Question
 	/**
 	 * Constructeur de la classe Question.
 	 * 
-	 * @param ressource  la ressource associée à la question.
-	 * @param notion     la notion associée à la question.
-	 * @param difficulte la difficulté de la question(TF,F,M,D).
-	 * @param temps      le temps de réponse à la question (en secondes).
-	 * @param note       la note de la question.
+	 * @param codeRes    l'identifiant de la ressource.
+	 * @param idNot      l'identifiant de la notion.
+	 * @param idQst      l'identifiant de la question.
+	 * @param note       la note.
+	 * @param temps      le temps associée à la question.
+	 * @param difficulte la difficultée.
 	 */
 	public Question(String codeRes, int idNot, int idQst, double note, int temps, Difficulte difficulte)
 	{

@@ -93,7 +93,6 @@ public class QCM extends Question
 	 * @param  prop la proposition qui va modifier l'ancienne.
 	 * 
 	 * @return      true si la modification a été effectuée, false sinon.
-	 * @see         super#{@link #setProposition(int, Proposition)}.
 	 */
 	public boolean setProposition(int i, PropositionQCM prop) { return super.setProposition(i, prop); }
 
@@ -108,8 +107,6 @@ public class QCM extends Question
 	 * 
 	 * @param  prop la proposition à ajouter.
 	 * @return      true si la proposition à été ajoutée, false sinon.
-	 * 
-	 * @see         super#{@link #ajouterProposition(PropositionQCM)}.
 	 */
 	public boolean ajouterProposition(PropositionQCM prop)
 	{
@@ -120,7 +117,6 @@ public class QCM extends Question
 	 * Retourne une représentation en chaîne de caractères d'une question QCM.
 	 * 
 	 * @return une représentation en chaîne de caractères d'une question QCM.
-	 * @see    super#{@link #toString()}.
 	 */
 	public String toString()
 	{

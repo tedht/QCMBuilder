@@ -130,6 +130,14 @@ public class BanqueQuestions extends Banque
 		return lstQuestions;
 	}
 
+	/**
+	 * Retourne la liste des questions d'une ressource, d'une notion et d'une difficulté à partir de son code, de son identifiant et de sa difficulté.
+	 * 
+	 * @param codeRes le code de la ressource.
+	 * @param idNot   l'identifiant de la notion.
+	 * @param diff    la difficulté de la question.
+	 * @return        la liste des questions de la ressource, de la notion et de la difficulté.
+	 */
 	public List<Question> getQuestions(String codeRes, int idNot, Difficulte diff) 
 	{
 		List<Question> lstQuestions;
@@ -591,6 +599,12 @@ public class BanqueQuestions extends Banque
 		}
 	}
 
+	/**
+	 * Creer un dossier
+	 * 
+	 * @param dossier le dossier à créer.
+	 * @return        true si le dossier a été créer, false sinon.
+	 */
 	public static boolean creerDossier(File dossier) 
 	{
 		if (!dossier.exists()) 

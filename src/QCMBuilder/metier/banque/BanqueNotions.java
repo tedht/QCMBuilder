@@ -116,8 +116,8 @@ public class BanqueNotions extends Banque
 	/**
 	 * Retourne la notion de la banque de notions à partir de son id.
 	 * 
-	 * @param id l'id de la notion.
-	 * @return   la notion.
+	 * @param idNot l'id de la notion.
+	 * @return      la notion.
 	 */
 	public Notion getNotion(int idNot)
 	{

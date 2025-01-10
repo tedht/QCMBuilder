@@ -52,10 +52,9 @@ public class Questionnaire
 	/**
 	 * Constructeur de la classe Questionnaire.
 	 * 
-	 * @param banqueQuestions la banque de questions dans laquelle seront puisées les questions.
-	 * @param ressource       la ressource associée au Questionnaire.
-	 * @param notions         la liste des notions associées au Questionnaire.
-	 * @param chronometre     chronometre indiquant si le Questionnaire est chronométré ou non.
+	 * @param qcmBuilder  le QCMBuilder.
+	 * @param ressource   la ressource associée au Questionnaire.
+	 * @param chronometre l'état du chronométre associé au Questionnaire.
 	 */
 	public Questionnaire(QCMBuilder qcmBuilder, Ressource ressource, boolean chronometre) 
 	{
@@ -146,7 +145,6 @@ public class Questionnaire
 	 * 
 	 * @return                          Un boolean renvoyant true si le contenu HTML est généré.
 	 * @throws IllegalArgumentException Si le chemin fourni est null.
-	 * @throws IOException              Si une erreur survient lors de la création ou de l'écriture dans le fichier.
 	 */
 	public boolean genererQuestionnaire(String filePath) throws IllegalArgumentException
 	{

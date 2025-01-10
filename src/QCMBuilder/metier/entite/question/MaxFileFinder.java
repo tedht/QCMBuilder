@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** 
- * Classe MaxFileFinder pour trouver le fichier ayant le plus grand numéro dans un répertoire (hérite de SimpleFileVisitor<Path>).
+ * Classe MaxFileFinder pour trouver le fichier ayant le plus grand numéro dans un répertoire (hérite de SimpleFileVisitor).
  * 
  * @author Equipe 03
  * @version 1.0 du 2024-12-09 Norme ISO-8601
