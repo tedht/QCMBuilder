@@ -44,14 +44,21 @@ public class PanelModifRessource extends PanelEditRessource
 	@Override
 	public boolean enregistrer() 
 	{
+		String nouveauCode;
+		String nouveauNom ;
+		
+		List<String> lstErreurs;
+
+		String message;
+
 		// Récupération des valeurs saisies par l'utilisateur.
-		String nouveauCode = this.txtCode.getText();
-		String nouveauNom  = this.txtNom .getText();
+		nouveauCode = this.txtCode.getText();
+		nouveauNom  = this.txtNom .getText();
 		
 		/*--------------------------*/
 		/* Vérification des Erreurs */
 		/*--------------------------*/
-		List<String> lstErreurs = new ArrayList<String>();
+		lstErreurs = new ArrayList<String>();
 
 		// Vérification du champ "code".
 		if (nouveauCode.isEmpty())
@@ -66,7 +73,7 @@ public class PanelModifRessource extends PanelEditRessource
 		// Si des erreurs ont été détectées, affichage d'un message d'erreur.
 		if(lstErreurs.size() != 0)
 		{
-			String message = "La ressource n'a pas été modifée pour les raisons suivantes :\n";
+			message = "La ressource n'a pas été modifée pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	

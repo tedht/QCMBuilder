@@ -38,15 +38,22 @@ public class PanelCreationRessource extends PanelEditRessource
 	@Override
 	public boolean enregistrer() 
 	{
+		String code;
+		String nom;
+
+		List<String> lstErreurs;
+
+		String message;
+		
 		// Récupération des valeurs saisies par l'utilisateur.
-		String code = this.txtCode.getText();
-		String nom  = this.txtNom .getText();
+		code = this.txtCode.getText();
+		nom  = this.txtNom .getText();
 
 		/*--------------------------*/
 		/* Vérification des Erreurs */
 		/*--------------------------*/
 
-		List<String> lstErreurs = new ArrayList<String>();
+		lstErreurs = new ArrayList<String>();
 
 		// Vérification du champ "code".
 		if (code.isEmpty())
@@ -61,7 +68,7 @@ public class PanelCreationRessource extends PanelEditRessource
 		// Si des erreurs ont été détectées, affichage d'un message d'erreur.
 		if(lstErreurs.size() != 0)
 		{
-			String message = "La ressource n'a pas été enregistrée pour les raisons suivantes :\n";
+			message = "La ressource n'a pas été enregistrée pour les raisons suivantes :\n";
 			for(String msgErr : lstErreurs)
 				message += " • " + msgErr + '\n';
 	
