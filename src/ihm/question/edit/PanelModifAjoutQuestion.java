@@ -27,6 +27,7 @@ public class PanelModifAjoutQuestion extends PanelAjoutQuestion
 
 	/**
 	 * Constructeur de la classe PanelModifAjoutQuestion
+	 * 
 	 * @param ctrl  le contrôleur.
 	 * @param frame le frame d'édition de questions.
 	 * @param idQst l'id de la question qu'on veut modifier.

@@ -49,6 +49,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Constructeur de la classe PanelInitQuestion.
+	 * 
 	 * @param ctrl  le contrôleur.
 	 * @param frame le frame d'édition de questions.
 	 */
@@ -273,6 +274,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Récupère l'index du type de question choisi dans la liste déroulante.
+	 * 
 	 * @return l'index du type de question choisi dans la liste déroulante.
 	 */
 	public int getIndexTypeQuestion() 
@@ -282,6 +284,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Récupère la ressource sélectionnée.
+	 * 
 	 * @return la ressource sélectionnée.
 	 */
 	public Ressource getRessource() 
@@ -291,6 +294,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Récupère la notion sélectionnée.
+	 * 
 	 * @return la notion sélectionnée.
 	 */
 	public Notion getNotion() 
@@ -300,6 +304,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Récupère la difficultée sélectionnée.
+	 * 
 	 * @return la difficultée sélectionnée.
 	 */
 	public int getDifficulte() 
@@ -322,6 +327,7 @@ public class PanelInitQuestion extends JPanel implements ActionListener, ItemLis
 
 	/**
 	 * Récupère le nombre de points saisi.
+	 * 
 	 * @return le nombre de points saisi.
 	 */
 	public String getPoints() 

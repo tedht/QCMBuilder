@@ -376,6 +376,7 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 	/**
 	 * Ajoute un bouton radio au ButtonGroupe qui gère les réponses correctes.
 	 * Cette méthode est utilisée lorsqu'on s'occupe de questons QCM et élimination.
+	 * 
 	 * @param rbReponse le bouton radio qu'on veut ajouter.
 	 */
 	public void ajouterRbResponse(JRadioButton rbReponse)
@@ -383,8 +384,9 @@ public class PanelAjoutQuestion extends JPanel implements ActionListener, ItemLi
 		this.btgReponse.add(rbReponse);
 	}
 	/**
-	 * Supprime un bouton radio au ButtonGroupe qui gère les réponses correctes.
+	 * Supprime un bouton radio du ButtonGroup qui gère les réponses correctes.
 	 * Cette méthode est utilisée lorsqu'on s'occupe de questons QCM et élimination.
+	 * 
 	 * @param rbReponse le bouton radio qu'on veut supprimer.
 	 */
 	public void supprimerRbResponse(JRadioButton rbReponse) 
