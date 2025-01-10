@@ -413,6 +413,23 @@ public class Questionnaire
 		return jsBuilder.toString();
 	}
 
+
+	/**
+     * Formate une chaîne pour JavaScript en supprimant les sauts de ligne (\n)
+     * et en échappant les guillemets (").
+     *
+     * @param input La chaîne d'entrée à formater.
+     * @return La chaîne formatée.
+     */
+    public static String formatForJavaScript(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input
+                .replace("\n", " ")        // Remplace les sauts de ligne par un espace
+                .replace("\"", "\\\"");    // Échappe les guillemets
+    }
+
 	/**
 	 * Ajoute les informations de base d'une question au JS.
 	 * 
@@ -435,7 +452,7 @@ public class Questionnaire
 
 		jsBuilder.append(String.format("\t\t\"type\": \"%s\",\n", type));
 		
-		jsBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", question.getIntitule()));
+		jsBuilder.append(String.format("\t\t\"intitule\": \"%s\",\n", formatForJavaScript(question.getIntitule())));
 
 		// Gestion de la difficulté
 		difficulte = "" + question.getDifficulte();
@@ -494,15 +511,15 @@ public class Questionnaire
 		{
 			prop = question.getProposition(i);
 
-			propositionsList   .add("\"" + prop.getText() + "\"");
+			propositionsList   .add("\"" + formatForJavaScript(prop.getText()) + "\"");
 			
 			if (prop.estReponse()) 
 			{
-				reponsesList   .add("\"" + prop.getText() + "\"");
+				reponsesList   .add("\"" + formatForJavaScript(prop.getText()) + "\"");
 			} 
 			else 
 			{
-				eliminationList.add("\"" + prop.getText() + "\"");
+				eliminationList.add("\"" + formatForJavaScript(prop.getText()) + "\"");
 				ptsPerdusList  .add(prop.getNbPtsPerdus());
 			}
 		}
@@ -554,8 +571,8 @@ public class Questionnaire
 		{
 			prop = (PropositionAssociation) question.getProposition(i);
 
-			gaucheList.add("\"" + prop.getTextGauche() + "\"");  // Texte gauche
-			droiteList.add("\"" + prop.getTextDroite() + "\"");  // Texte droite
+			gaucheList.add("\"" + formatForJavaScript(prop.getTextGauche()) + "\"");  // Texte gauche
+			droiteList.add("\"" + formatForJavaScript(prop.getTextDroite()) + "\"");  // Texte droite
 	
 			// Formater les réponses sous forme de tableau de tableaux [gauche, droite]
 			pair = String.format("[\"%s\", \"%s\"]", prop.getTextGauche(), prop.getTextDroite());
@@ -596,7 +613,7 @@ public class Questionnaire
 		{
 			prop = (PropositionQCM) question.getPropositions().get(i);
 
-			jsBuilder.append("\t\t\t\"" + prop.getText() + "\"");
+			jsBuilder.append("\t\t\t\"" + formatForJavaScript(prop.getText()) + "\"");
 
 			if (i < question.getPropositions().size() - 1)
 				jsBuilder.append(",");
@@ -612,7 +629,7 @@ public class Questionnaire
 			prop = (PropositionQCM) question.getPropositions().get(i);
 
 			if (prop.estReponse())
-				reponsesList.add("\"" + prop.getText() + "\"");
+				reponsesList.add("\"" + formatForJavaScript(prop.getText()) + "\"");
 		}
 
 		jsBuilder.append("\t\t\"reponses\": [\n");
@@ -634,7 +651,7 @@ public class Questionnaire
 
 		jsBuilder.append(String.format(          "\t\t\"temps\": %d,\n"       , question.getTemps      ()));
 		jsBuilder.append(String.format(Locale.US,"\t\t\"note\": %f,\n"        , question.getNote       ()));
-		jsBuilder.append(String.format(          "\t\t\"feedback\": \"%s\",\n", question.getExplication()));
+		jsBuilder.append(String.format(          "\t\t\"feedback\": \"%s\",\n", formatForJavaScript(question.getExplication())));
 	
 		jsBuilder.append(String.format("\t\t\"notion\": \"%s\",\n"  , this.qcmBuilder.getNotion(question.getIdNot()).getNom()));
 
