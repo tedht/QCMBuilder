@@ -24,9 +24,9 @@ public class PanelPropAssoc extends PanelProp
 	 * Constructeur de la classe PanelPropAssoc.
 	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
 	 */
-	public PanelPropAssoc(PanelAjoutQuestion panelEditQuestion)
+	public PanelPropAssoc(PanelAjoutQuestion panelAjoutQuestion)
 	{
-		super(panelEditQuestion);
+		super(panelAjoutQuestion);
 
 		JPanel[] tabPanelBtnSupprimer;
 		

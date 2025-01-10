@@ -24,7 +24,7 @@ public class FrameEditQuestion extends JFrame
 {
 	private Controleur         ctrl;
 	private IHM                ihm;
-	private PanelInitQuestion  panelParametresQuestion;
+	private PanelInitQuestion  panelInitQuestion;
 	private PanelAjoutQuestion panelAjoutQuestion;
 	
 	/**
@@ -42,8 +42,8 @@ public class FrameEditQuestion extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelParametresQuestion = new PanelInitQuestion(ctrl, this);
-		this.panelAjoutQuestion      = new PanelAjoutQuestion     (this);
+		this.panelInitQuestion  = new PanelInitQuestion(ctrl, this);
+		this.panelAjoutQuestion = new PanelAjoutQuestion     (this);
 
 		this.pagePrecedente();
 	}
@@ -64,7 +64,7 @@ public class FrameEditQuestion extends JFrame
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
-		this.panelParametresQuestion = new PanelModifInitQuestion(ctrl, this, idQst);
+		this.panelInitQuestion = new PanelModifInitQuestion(ctrl, this, idQst);
 		this.panelAjoutQuestion      = new PanelModifAjoutQuestion     (ctrl, this, idQst);
 
 		this.pagePrecedente();
@@ -77,7 +77,7 @@ public class FrameEditQuestion extends JFrame
 	{
 		this.remove    (this.panelAjoutQuestion); 
 		this.setSize   (IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_1);
-		this.add       (this.panelParametresQuestion);
+		this.add       (this.panelInitQuestion);
 
 		this.revalidate();
 		this.repaint   ();
@@ -88,7 +88,7 @@ public class FrameEditQuestion extends JFrame
      */
 	public void pageSuivante()
 	{
-		this.remove    (this.panelParametresQuestion); 
+		this.remove    (this.panelInitQuestion); 
 		this.setSize   (IHM.LARGEUR_EDIT_QUESTION, IHM.HAUTEUR_EDIT_QUESTION_PAGE_2);
 		this.add       (this.panelAjoutQuestion);
 
@@ -116,14 +116,14 @@ public class FrameEditQuestion extends JFrame
 	public boolean enregistrer(Integer idQst) 
 	{
 		// Récupération des valeurs saisies par l'utilisateur.
-		String codeRes     = this.panelParametresQuestion.getRessource        ().getCode();
-		int    idNot       = this.panelParametresQuestion.getNotion           ().getIdNot();
-		int    valDiff     = this.panelParametresQuestion.getDifficulte       (); 
+		String codeRes     = this.panelInitQuestion.getRessource        ().getCode();
+		int    idNot       = this.panelInitQuestion.getNotion           ().getIdNot();
+		int    valDiff     = this.panelInitQuestion.getDifficulte       (); 
 		      
-		int    indexType   = this.panelParametresQuestion.getIndexTypeQuestion();
+		int    indexType   = this.panelInitQuestion.getIndexTypeQuestion();
 
-		String sTemps      = this.panelParametresQuestion.getTemps            ();          
-		String sPoints     = this.panelParametresQuestion.getPoints           ();  
+		String sTemps      = this.panelInitQuestion.getTemps            ();          
+		String sPoints     = this.panelInitQuestion.getPoints           ();  
 
 		String intitule    = this.panelAjoutQuestion     .getIntitule         ();          
 		String explication = this.panelAjoutQuestion     .getExplication      ();  
@@ -197,7 +197,7 @@ public class FrameEditQuestion extends JFrame
 		else
 		{
 			boolean reponse = false;
-			switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
+			switch (this.panelInitQuestion.getIndexTypeQuestion()) 
 			{
 				case 0  -> // Question à Choix Multiple à Réponse Unique
 				{
@@ -330,7 +330,7 @@ public class FrameEditQuestion extends JFrame
 
 		detailsQuestion += codeRes+"\t"+idNot+"\t"+valDiff+"\t"+indexType+"\t"+sTemps+"\t"+sPoints+"\t"+pieceJointe+"\t";
 
-		switch (this.panelParametresQuestion.getIndexTypeQuestion()) 
+		switch (this.panelInitQuestion.getIndexTypeQuestion()) 
 		{
 			case 0  -> // Question à Choix Multiple à Réponse Unique
 			{
@@ -403,7 +403,7 @@ public class FrameEditQuestion extends JFrame
 	 */
 	public int getIndexTypeQuestion() 
 	{
-		return this.panelParametresQuestion.getIndexTypeQuestion();
+		return this.panelInitQuestion.getIndexTypeQuestion();
 	}
 
 	/**

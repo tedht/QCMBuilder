@@ -31,9 +31,9 @@ public class PanelPropElim extends PanelProp implements ItemListener
 	 * Constructeur de la classe PanelPropElim.
 	 * @param panelAjoutQuestion le panel qui gère l'ajout de propositions.
 	 */
-	public PanelPropElim(PanelAjoutQuestion panelEditQuestion)
+	public PanelPropElim(PanelAjoutQuestion panelAjoutQuestion)
 	{
-		super(panelEditQuestion);
+		super(panelAjoutQuestion);
 
 		JPanel panelBtnSupprimer, panelElim, panelTxtOrdreElim, panelCbReponse, panelTxtPointsPerdus;
 
@@ -140,7 +140,10 @@ public class PanelPropElim extends PanelProp implements ItemListener
      * 
      * @return le nombre de points perdus sous forme de chaine de caractères.
      */
-	public String  getPointsPerdus() { return this.txtPointsPerdus.getText   (); }
+	public String  getPointsPerdus() 
+	{ 
+		return this.txtPointsPerdus.getText(); 
+	}
 
 	/*---------*/
 	/* Setters */
