@@ -16,9 +16,6 @@ import java.io.OutputStreamWriter;
 
 import java.io.FileNotFoundException;
 
-import metier.entite.Notion;
-import metier.entite.Ressource;
-
 import metier.entite.question.*;
 
 import metier.entite.question.association.*;
