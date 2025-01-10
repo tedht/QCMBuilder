@@ -79,6 +79,8 @@ public class PanelRessource extends PanelEntite
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		int choix;
+		
 		if(e.getSource() == this.btnModifier)
 		{
 			this.ihm.editRessource(this.code);
@@ -86,7 +88,7 @@ public class PanelRessource extends PanelEntite
 
 		if(e.getSource() == this.btnSupprimer)
 		{
-			int choix = JOptionPane.showConfirmDialog(
+			choix = JOptionPane.showConfirmDialog(
 				this.frame,
 				"Voulez-vous vraiment supprimer la ressource \"" + this.lblTitre.getText() + "\" ?",
 				"Confirmation de suppression",

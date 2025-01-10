@@ -21,7 +21,7 @@ public abstract class PanelEditRessource extends PanelEditNom
 {
 	protected JTextField txtCode;
 
-	private JPanel     panelInfoCode;
+	private   JPanel     panelInfoCode;
 	
 	/**
 	 * Constructeur de la classe PanelEditRessource.
