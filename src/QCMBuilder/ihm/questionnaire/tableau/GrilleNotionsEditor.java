@@ -4,6 +4,7 @@ package QCMBuilder.ihm.questionnaire.tableau;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.*;
+
 import QCMBuilder.metier.entite.question.Difficulte;
 
 /**

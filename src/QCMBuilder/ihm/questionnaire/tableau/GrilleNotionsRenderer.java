@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import QCMBuilder.metier.entite.Notion;
 import QCMBuilder.metier.entite.question.Difficulte;
 

@@ -6,6 +6,7 @@ import QCMBuilder.ihm.IHM;
 import QCMBuilder.ihm.shared.PanelEditNom;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;

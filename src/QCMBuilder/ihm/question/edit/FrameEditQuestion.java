@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import QCMBuilder.controleur.Controleur;
+
 import QCMBuilder.ihm.IHM;
+
 import QCMBuilder.ihm.question.edit.proposition.PanelProp;
 import QCMBuilder.ihm.question.edit.proposition.PanelPropAssoc;
 import QCMBuilder.ihm.question.edit.proposition.PanelPropElim;

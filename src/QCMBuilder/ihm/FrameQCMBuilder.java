@@ -1,7 +1,8 @@
 package QCMBuilder.ihm;
 
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  * Classe représentant la fenêtre principale de l'application.

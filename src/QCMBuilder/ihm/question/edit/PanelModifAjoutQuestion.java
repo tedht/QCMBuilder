@@ -2,15 +2,17 @@ package QCMBuilder.ihm.question.edit;
 
 
 import QCMBuilder.controleur.Controleur;
+
 import QCMBuilder.ihm.question.edit.proposition.PanelPropAssoc;
 import QCMBuilder.ihm.question.edit.proposition.PanelPropElim;
 import QCMBuilder.ihm.question.edit.proposition.PanelPropQCM;
 import QCMBuilder.ihm.question.edit.proposition.PanelPropQRM;
+
 import QCMBuilder.metier.entite.question.Question;
 import QCMBuilder.metier.entite.question.TypeQuestion;
+
 import QCMBuilder.metier.entite.question.association.Association;
-import QCMBuilder.metier.entite.question.elimination.Elimination;
-import QCMBuilder.metier.entite.question.elimination.PropositionElimination;
+import QCMBuilder.metier.entite.question.elimination.*;
 import QCMBuilder.metier.entite.question.qcm.QCM;
 
 /** 

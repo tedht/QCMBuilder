@@ -4,9 +4,12 @@ package QCMBuilder.ihm.ressource;
 import QCMBuilder.controleur.Controleur;
 import QCMBuilder.ihm.IHM;
 import QCMBuilder.ihm.shared.PanelGestion;
+
 import java.awt.event.ActionEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import QCMBuilder.metier.entite.Ressource;
 
 /**

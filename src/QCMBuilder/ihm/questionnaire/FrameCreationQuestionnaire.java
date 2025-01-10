@@ -3,6 +3,7 @@ package QCMBuilder.ihm.questionnaire;
 
 import QCMBuilder.controleur.Controleur;
 import QCMBuilder.ihm.IHM;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 

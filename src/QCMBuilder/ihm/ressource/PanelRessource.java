@@ -4,10 +4,13 @@ package QCMBuilder.ihm.ressource;
 import QCMBuilder.controleur.Controleur;
 import QCMBuilder.ihm.IHM;
 import QCMBuilder.ihm.shared.PanelEntite;
+
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
